@@ -1,3 +1,17 @@
 \chapter{Focked up quantum error correction}\label{ch:focked-up}
 
 In this final chapter, we leave the comforts of the qubit realm behind, and bring the ZX-calculus to bear on the world of continuous-variable QEC.
+Historically, extending the ZX-calculus from qubits to all finite-dimensional qudits was relatively straightforward, but extending this again to continuous-variable (CV) quantum mechanics proved less so.
+The roadblock was essentially an annoying technical hurdle from category theory, and the solution employed by Shaikh, Yeh and Gogioso in TODO was a fun detour into the land of non-standard analysis.
+Interesting as they are, we concern ourselves in this thesis with neither of these points; all we care about is that a ZX-calculus for CV quantum mechanics has now been defined, and therefore many topics in CV QEC have become accessible to the integrally-challenged but diagrammatically-inclined.
+A key feature of this CV ZX-calculus is the introduction of a third spider, the \textit{Fock spider}, from which the calculus derives its tongue-in-cheek name, the \textit{Focked up ZX-calculus}.
+
+\teague{waffle about generalising the notions of Pauli webs and fault-equivalence to CV land.}
+
+Within CV QEC, we focus entirely on GKP codes.
+These can be viewed as the CV analogue of Pauli qubit stabilizer codes.
+\teague{More spiel about GKP stuff}.
+
+We start this chapter with introductions to both GKP codes and the Focked up ZX-calculus, before defining generalisations of Pauli webs and fault-equivalent rewrites to the CV world, and finally applying these tools to the problem of designing good syndrome extraction circuits for general GKP codes.
+
+\input{focked_up/pauli_webs}
