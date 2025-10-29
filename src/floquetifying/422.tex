@@ -1,8 +1,8 @@
-\section{Floquetifying the $\mathbf{\qcode{4, 2, 2}}$ code}\label{sec:floquetifying_422}
+\section[Floquetifying the $\qcode{4, 2, 2}$ code]{Floquetifying the $\mathbf{\qcode{4, 2, 2}}$ code}\label{sec:floquetifying_422}
+% Optional argument used by table of contents - no mathbf needed.
 
 Let's warm up with one of the simplest interesting codes around: the $\qcode{4, 2, 2}$ code.
-This is a stabilizer code, which we'll define as
-$\MMM = [\langle Z_1 Z_2 Z_3 Z_4 \rangle, \langle X_1 X_2 X_3 X_4 \rangle]$.
+This is the static stabilizer code $\MMM = [\langle Z_1 Z_2 Z_3 Z_4 \rangle, \langle X_1 X_2 X_3 X_4 \rangle]$.
 The aim of this section is to prove the following:
 \begin{theorem}\label{thm:4_2_2_double_hexagon_equivalence}
 The $\qcode{4, 2, 2}$ stabilizer code is equivalent as a ZX-diagram to a $\qcode{12, 2, 2}$ Floquet code with period 6,
@@ -65,7 +65,7 @@ a natural geometry would be a `double hexagon', as in the rightmost diagram of \
 
 In fact, recalling the diagrammatic equation\
 \includegraphics[height=1.1\baselineskip, valign=c]{figures/floquetifying/zx_calculus/single_qubit_measurement_splits}\ ,
-which says non-destructive single qubit Pauli measurements disconnect wires,
+which says that non-destructive single qubit Pauli measurements disconnect wires,
 we can also interpret all one-legged spiders as one half of such a measurement.
 This interpretation is valid,
 in that the timestep at which the world-line of qubit $(i, j)$ `ends' at a one-legged spider
@@ -89,33 +89,34 @@ we can write down the measurements that each qubit undergoes at each timestep,
 and consequently we can define the measurement schedule described by this diagram.
 We get $\MMM = [\MMM_0, \ldots, \MMM_5]$, where:
 \begin{equation}\label{eq:floquetified_4_2_2_measurement_schedule}
-\MMM_t = \stretchleftright[1000]
-{<}
-{\begin{array}{c}
-     X_{(t, 0)}, \\
-     X_{(t, 1)}, \\
-     X_{(t+1, 0)}X_{(t+2, 0)}, \\
-     X_{(t+1, 1)}X_{(t+2, 1)}, \\
-     X_{(t+3, 0)}X_{(t+3, 1)}, \\
-     X_{(t+4, 0)}X_{(t+5, 0)}, \\
-     X_{(t+4, 1)}X_{(t+5, 1)} \\
-\end{array}}
-{>}
-\text{~~if $t$ even,}
-\qquad\qquad
-\MMM_t = \stretchleftright[1000]
-{<}
-{\begin{array}{c}
-     Z_{(t, 0)}, \\
-     Z_{(t, 1)}, \\
-     Z_{(t+1, 0)}Z_{(t+2, 0)}, \\
-     Z_{(t+1, 1)}Z_{(t+2, 1)}, \\
-     Z_{(t+3, 0)}Z_{(t+3, 1)}, \\
-     Z_{(t+4, 0)}Z_{(t+5, 0)}, \\
-     Z_{(t+4, 1)}Z_{(t+5, 1)} \\
-\end{array}}
-{>}
-\text{~~if $t$ odd.}
+    \begin{aligned}
+        \MMM_t &= \stretchleftright[1000]
+        {<}
+        {\begin{array}{c}
+             X_{(t, 0)}, \\
+             X_{(t, 1)}, \\
+             X_{(t+1, 0)}X_{(t+2, 0)}, \\
+             X_{(t+1, 1)}X_{(t+2, 1)}, \\
+             X_{(t+3, 0)}X_{(t+3, 1)}, \\
+             X_{(t+4, 0)}X_{(t+5, 0)}, \\
+             X_{(t+4, 1)}X_{(t+5, 1)} \\
+        \end{array}}
+        {>}
+        \text{~~if $t$ even,} \\[10pt]
+        \MMM_t &= \stretchleftright[1000]
+        {<}
+        {\begin{array}{c}
+             Z_{(t, 0)}, \\
+             Z_{(t, 1)}, \\
+             Z_{(t+1, 0)}Z_{(t+2, 0)}, \\
+             Z_{(t+1, 1)}Z_{(t+2, 1)}, \\
+             Z_{(t+3, 0)}Z_{(t+3, 1)}, \\
+             Z_{(t+4, 0)}Z_{(t+5, 0)}, \\
+             Z_{(t+4, 1)}Z_{(t+5, 1)} \\
+        \end{array}}
+        {>}
+        \text{~~if $t$ odd.}
+    \end{aligned}
 \end{equation}
 One can then calculate the group $\isg{t}$, and consequently $\lpg{t}$.
 It turns out $\isg{t}$ is established whenever $t \geq T = 3$,

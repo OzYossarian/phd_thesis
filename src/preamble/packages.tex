@@ -15,6 +15,15 @@
 
 % Custom stuff
 
+% Page formatting via geometry package
+%\usepackage[
+%    a4paper,
+%    top=2.5cm,
+%    bottom=2.5cm,
+%    left=4.5cm,
+%    right=4.5cm
+%]{geometry}
+
 % Input .tikzdefs ASAP - some packages are installed there.
 \input{preamble/fockedup.tikzdefs}
 \input{preamble/fockedup.tikzstyles}
@@ -41,6 +50,8 @@
 \usepackage{scalerel}
 % For including object type in references.
 \usepackage[nameinlink]{cleveref}
+% cleveref by default calls a subsection a `section' - override this.
+\crefname{subsection}{subsection}{subsections}
 % For defining custom 'clevercite' commands in definitions.tex.
 \usepackage{xstring}
 % For defining commands with optional arguments.
@@ -51,3 +62,14 @@
 % For strikethrough text via \sout.
 % Adding option 'normalem' stops package from overwriting the \emph command.
 \usepackage[normalem]{ulem}
+% Table of contents customization
+\usepackage{tocloft}
+% For more flexibility when drawing tables.
+\usepackage{tabularray}
+\usepackage{multirow}
+% For line breaks within table cells.
+\usepackage{makecell}
+% For calling commands with key-val arguments
+\usepackage{xkeyval}
+% For playing card suit symbols (hearts, clubs, etc)
+\usepackage{wasysym}
