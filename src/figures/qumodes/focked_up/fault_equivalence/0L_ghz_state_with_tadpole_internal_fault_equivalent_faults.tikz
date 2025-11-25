@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-2.5, 0) {};
+		\node [style=none] (1) at (-1, 1) {};
+		\node [style=none] (2) at (-1, -1) {};
+		\node [style=none] (3) at (-1.5, 0.2) {$\vdots$};
+		\node [style={gn_phase}] (4) at (-5, 0) {$0_L$};
+		\node [style={rn_phase}] (5) at (-3.75, 0) {$\chi_p$};
+		\node [style=none] (7) at (3, 1) {};
+		\node [style=none] (8) at (3, -1) {};
+		\node [style=none] (9) at (3.75, 0.2) {$\vdots$};
+		\node [style={gn_phase}] (10) at (1.5, 0) {$0_L$};
+		\node [style={rn_phase}] (11) at (3, 1) {$\chi_{p}$};
+		\node [style={rn_phase}] (12) at (3, -1) {$\chi_{p}$};
+		\node [style=none] (13) at (5.5, 1) {};
+		\node [style=none] (14) at (5.5, -1) {};
+		\node [style=none] (15) at (0, 0) {$=$};
+		\node [style={gn_phase}] (16) at (4.5, 1) {$\chi_{q_1}$};
+		\node [style={gn_phase}] (17) at (4.5, -1) {$\chi_{q_m}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1.center) to (0);
+		\draw [in=180, out=-75] (0) to (2.center);
+		\draw (0) to (4);
+		\draw [in=75, out=-180] (7.center) to (10);
+		\draw [in=180, out=-75] (10) to (8.center);
+		\draw (11) to (13.center);
+		\draw (12) to (14.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

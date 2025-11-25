@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (0, 0) {$k\pi$};
+		\node [style=none] (1) at (-1.5, 1) {};
+		\node [style=none] (2) at (-1.5, -1) {};
+		\node [style=none] (3) at (1.5, 1) {};
+		\node [style=none] (4) at (1.5, -1) {};
+		\node [style=none] (5) at (1.25, 0.25) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-1.25, -0.25) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (-1.5, 0.5) {};
+		\node [style=none] (8) at (1.5, -0.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (1.center) to (0);
+		\draw [bend right] (2.center) to (0);
+		\draw [bend left] (0) to (3.center);
+		\draw [style=zweb, bend right] (0) to (4.center);
+		\draw [bend left=15] (7.center) to (0);
+		\draw [style=zweb, bend right=15] (0) to (8.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

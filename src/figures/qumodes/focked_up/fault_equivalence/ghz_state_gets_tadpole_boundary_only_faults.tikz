@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (3, 0) {};
+		\node [style={rn_phase}] (1) at (4.5, 1) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (2) at (4.5, -1) {$\chi_{p_2}$};
+		\node [style=none] (3) at (5.25, 0.2) {$\vdots$};
+		\node [style=gn] (4) at (1.5, 0) {};
+		\node [style=none] (5) at (0, 0) {$=$};
+		\node [style=gn] (6) at (-5.5, 0) {};
+		\node [style=none] (9) at (-3.25, 0.2) {$\vdots$};
+		\node [style=none] (10) at (7, 1) {};
+		\node [style=none] (11) at (7, -1) {};
+		\node [style={gn_phase}] (12) at (6, 1) {$\chi_{q_1}$};
+		\node [style={gn_phase}] (13) at (6, -1) {$\chi_{q_2}$};
+		\node [style={rn_phase}] (14) at (-4, 1) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (15) at (-4, -1) {$\chi_{p_2}$};
+		\node [style=none] (16) at (-1.5, 1) {};
+		\node [style=none] (17) at (-1.5, -1) {};
+		\node [style={gn_phase}] (18) at (-2.5, 1) {$\chi_{q_1}$};
+		\node [style={gn_phase}] (19) at (-2.5, -1) {$\chi_{q_2}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1) to (0);
+		\draw [in=180, out=-75] (0) to (2);
+		\draw (0) to (4);
+		\draw (1) to (10.center);
+		\draw (2) to (11.center);
+		\draw (14) to (16.center);
+		\draw (15) to (17.center);
+		\draw [in=75, out=-180] (14) to (6);
+		\draw [in=180, out=-75] (6) to (15);
+	\end{pgfonlayer}
+\end{tikzpicture}

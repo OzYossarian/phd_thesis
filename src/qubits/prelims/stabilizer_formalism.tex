@@ -1,0 +1,345 @@
+\section{The stabilizer formalism}\label{sec:stabilizer_formalism}
+
+We now recap Gottesman's stabilizer formalism, which provides a group-theoretic framework for efficiently tracking quantum states and their evolution under Clifford unitaries and Pauli measurements.
+The key idea is to represent quantum states via their \emph{stabilizer group} $\mathcal{S}$.
+Almost all of this is standard material (e.g.\ see the textbook TODO from the man himself), with the exception of the presentation of the effect of Clifford unitaries and Pauli measurements on the \textit{stabilizer space} $\VVV_\SSS$ and the \textit{logical Pauli group} $\mathcal{N}(\mathcal{S})/\mathcal{S}$, which I feel is always a little neglected in the literature.
+
+\subsection{Stabilizer group and stabilizer space}\label{subsec:stabilizer-group}
+
+A (non-trivial) (Pauli) \emph{stabilizer group} $\mathcal{S}$ is any subgroup of the $n$-qubit Pauli group $\mathcal{P}_n$ that does not contain $-I$.
+As a result of this condition, it's Abelian.
+For a stabilizer group $\mathcal{S}$ with $r$ independent generators, we have $|\mathcal{S}| = 2^r$, and we can define the \emph{stabilizer space}
+\begin{equation}
+\mathcal{V}_{\mathcal{S}} = \{ \ket{\psi} \in \mathbb{C}^{2^n} : S \ket{\psi} = \ket{\psi} \text{ for all } S \in \mathcal{S} \},
+\end{equation}
+which is a $2^{n-r}$-dimensional subspace of the full Hilbert space.
+The definition of stabilizer space explains the condition $-I \notin \SSS$; if it were in $\SSS$, the stabilizer space would always be $\{0\}$.
+In theory a stabilizer group can also contain non-Pauli operators, but we will not consider this generalisation in this thesis.
+
+When we say a system of $n$ qubits is described by stabilizer group $\mathcal{S}$, we mean that the system is in \emph{some} pure state within $\mathcal{V}_{\mathcal{S}}$.
+If $\mathcal{S}$ is \emph{maximal} (has $n$ independent generators), then $|\mathcal{S}| = 2^n$ and $\mathcal{V}_{\mathcal{S}}$ is one-dimensional, uniquely determining a single pure state $\ket{\psi}$ up to global phase.
+In this case, $\ket{\psi}$ is called the \emph{stabilizer state} corresponding to $\mathcal{S}$.
+If $\mathcal{S}$ is \emph{non-maximal} (has $r < n$ generators), then $\mathcal{V}_{\mathcal{S}}$ has dimension $2^{n-r} > 1$, and we have only partial information about the state.
+As we'll see in a moment, this situation arises naturally in quantum error correction, where $\mathcal{S}$ describes the code stabilizers and $\mathcal{V}_{\mathcal{S}}$ is the codespace.
+The limiting case $\mathcal{S} = \{I\}$ corresponds to having zero information: the system could be in any pure state whatsoever.
+
+\begin{example}\label{ex:422_stabilizer_group}
+    Suppose we have four qubits described by stabilizer group $\SSS = \pres{X_1 X_2 X_3 X_4, Z_1 Z_2 Z_3 Z_4}$.
+    This doesn't contain $-I$ so is non-trivial.
+    The two generators are independent so the group has rank $2$.
+    Therefore $\VVV_\SSS$ has dimension $2^{n - r} = 2^{4 - 2} = 2^2$.
+\end{example}
+
+\begin{example}\label{ex:bacon_shor_stabilizer_group}
+    Suppose again we have four qubits, and consider stabilizer groups $\SSS = \pres{X_1 X_2 X_3 X_4, Z_1 Z_3, Z_2 Z_4}$ and $\SSS' = \pres{X_1 X_2, X_3 X_4, Z_1 Z_2 Z_3 Z_4}$.
+    Both are non-trivial stabilizer groups of rank $3$.
+    So stabilizer subspaces $\VVV_\SSS$ and $\VVV_{\SSS'}$ both have dimension $2^{4 - 3} = 2$.
+\end{example}
+
+\begin{example}\label{ex:teleportation_stabilizer_group}
+    Suppose we have three qubits, one in an unknown pure state, and the other two in a Bell state.
+    The stabilizer group describing this system is $\SSS = \langle X_2 X_3, Z_2 Z_3 \rangle$.
+    This doesn't contain $-I$ so is indeed non-trivial.
+    The stabilizer subspace has dimension $2^{3 - 2} = 2$.
+\end{example}
+
+\subsection{Evolution of $\mathcal{S}$}
+
+\begin{theorem}\label{thm:stabilizer_group_update_clifford}
+    If a system with stabilizer group $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ undergoes evolution by a Clifford unitary $U$, the new stabilizer group is
+    \begin{equation}
+        \mathcal{S}' = U \mathcal{S} U^\dagger = \{ U g U^\dagger : g \in \mathcal{S} \} = \langle U S_1 U^\dagger, \ldots, U S_r U^\dagger \rangle.
+    \end{equation}
+\end{theorem}
+
+The effect of measuring a Pauli operator $P$ on this system splits into three cases, depending on the relationship between $P$ and the generators of $\mathcal{S}$.
+Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$), since measuring a non-Hermitian Pauli $iP$ is equivalent to measuring the Hermitian Pauli $P$ with only the outcome labels differing by a factor of $i$.
+
+\begin{theorem}\label{thm:stabilizer_group_update_measurement}
+    If a system with stabilizer group $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ undergoes a Pauli measurement $P$, the outcome $m$ and new stabilizer group $\SSS'$ are as follows.
+
+    \textbf{Case 1:} $\pm P \in \mathcal{S}$.
+    Then measurement outcome $m$ is deterministic; if $P \in \mathcal{S}$ we obtain outcome $+1$ with certainty, and if $-P \in \mathcal{S}$ we obtain outcome $-1$ with certainty.
+    The state is unchanged, and the stabilizer group remains $\mathcal{S}' = \mathcal{S}$.
+
+    \textbf{Case 2:} $P$ anticommutes with at least one element of $\mathcal{S}$.
+    Then measurement outcome $m$ is uniformly random, $\pm 1$ with equal probability $1/2$.
+    Without loss of generality, we can assume $P$ anticommutes just with generator $S_1$ and commutes with the remaining generators.
+    Then the new stabilizer group is:
+    \begin{equation}
+        \mathcal{S}' = \langle mP, S_2, \ldots, S_r \rangle.
+    \end{equation}
+
+    \textbf{Case 3:} $P$ commutes with all of $\mathcal{S}$, but $\pm P \notin \mathcal{S}$.
+    In this case, the measurement outcome depends on the particular state within $\mathcal{V}_{\mathcal{S}}$, that our system of qubits is in, and is not determined by the stabilizer group alone.
+    After obtaining outcome $m \in \{+1, -1\}$, the new stabilizer group is
+    \begin{equation}
+        \mathcal{S}' = \langle mP, S_1, \ldots, S_r \rangle.
+    \end{equation}
+\end{theorem}
+
+\begin{example}\label{ex:422_stabilizer_group_updates}
+    Consider a four-qubit system, initially with trivial stabilizer group $\mathcal{S} = \{I\}$.
+    This example will follow on from \Cref{ex:422_stabilizer_group}.
+    Measure $X_1 X_2 X_3 X_4$.
+    This is in \textbf{Case 3}: it commutes with all of $\mathcal{S}$ (trivially), but $\pm X_1 X_2 X_3 X_4 \notin \mathcal{S}$.
+    Suppose we obtain outcome $a_0 \in \{+1, -1\}$.
+    The stabilizer group becomes
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    Measure $Z_1 Z_2 Z_3 Z_4$.
+    This is \textbf{Case 3}: it commutes with $a_0 X_1 X_2 X_3 X_4$, but $\pm Z_1 Z_2 Z_3 Z_4 \notin \mathcal{S}$.
+    Suppose we obtain outcome $b_0 \in \{+1, -1\}$.
+    The stabilizer group becomes
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4, b_0 Z_1 Z_2 Z_3 Z_4 \rangle.
+    \end{equation}
+
+    Measure $X_1 X_2 X_3 X_4$ again.
+    This is \textbf{Case 1}: we have $a_0 X_1 X_2 X_3 X_4 \in \mathcal{S}$, so the measurement outcome $a_1$ is deterministically $a_0$.
+    The stabilizer group is unchanged:
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4, b_0 Z_1 Z_2 Z_3 Z_4 \rangle.
+    \end{equation}
+
+    Measure $Z_1 Z_2 Z_3 Z_4$ again.
+    This is \textbf{Case 1}: we have $b_0 Z_1 Z_2 Z_3 Z_4 \in \mathcal{S}$, so the measurement outcome $b_1$ is deterministically $b_0$.
+    The stabilizer group remains:
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4, b_0 Z_1 Z_2 Z_3 Z_4 \rangle.
+    \end{equation}
+
+    We can therefore continue measuring $X_1 X_2 X_3 X_4$ and $Z_1 Z_2 Z_3 Z_4$ and we will always be in \textbf{Case 1}; the outcomes $a_j$ and $b_j$ will deterministically be $a_0$ and $b_0$ respectively, and the stabilizer group will be unchanged.
+\end{example}
+
+\begin{example}\label{ex:bacon_shor_stabilizer_group_updates}
+    Again consider a four-qubit system with initial stabilizer group $\mathcal{S} = \{I\}$.
+    This example will follow on from \Cref{ex:bacon_shor_stabilizer_group}.
+    Measure $X_1 X_2$.
+    This is \textbf{Case 3}.
+    Suppose we obtain outcome $a_0 \in \{+1, -1\}$.
+    The stabilizer group becomes
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2 \rangle.
+    \end{equation}
+
+    Measure $X_3 X_4$.
+    This is \textbf{Case 3}: it commutes with $a_0 X_1 X_2$, but $\pm X_3 X_4 \notin \mathcal{S}$.
+    Suppose we obtain outcome $b_0 \in \{+1, -1\}$.
+    The stabilizer group becomes
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2, b_0 X_3 X_4 \rangle.
+    \end{equation}
+
+    Measure $Z_1 Z_3$.
+    This is \textbf{Case 2}: $Z_1 Z_3$ anticommutes with both $a_0 X_1 X_2$ and $b_0 X_3 X_4$.
+    \item The measurement outcome is uniformly random; suppose we obtain $c_0 \in \{+1, -1\}$.
+    In order to apply \Cref{thm:stabilizer_group_update_measurement}, we must put $\SSS$ in a form where $Z_1 Z_3$ anti-commutes with exactly one generator, e.g.:
+    \begin{equation}
+        \mathcal{S} = \langle a_0 X_1 X_2, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+    Now we can form the new stabilizer group by replacing the anti-commuting generator:
+    \begin{equation}
+        \mathcal{S} = \langle c_0 Z_1 Z_3, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    Measure $Z_2 Z_4$.
+    This is \textbf{Case 3}: $Z_2 Z_4$ commutes with both generators, but $\pm Z_2 Z_4 \notin \mathcal{S}$.
+    Suppose we obtain outcome $d_0 \in \{+1, -1\}$.
+    The stabilizer group becomes
+    \begin{equation}
+        \mathcal{S} = \langle c_0 Z_1 Z_3, d_0 Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    Now we repeat the measurement sequence.
+    Measure $X_1 X_2$ again.
+    This is \textbf{Case 2}: $X_1 X_2$ anticommutes with $c_0 Z_1 Z_3$ and $d_0 Z_2 Z_4$.
+    So first find a new presentation for $\SSS$ where only one generator anti-commutes:
+    \begin{equation}
+        \mathcal{S} = \langle c_0 Z_1 Z_3, c_0 d_0 Z_1 Z_3 Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+    The outcome is uniformly random; suppose we obtain $a_1 \in \{+1, -1\}$.
+    We replace the anticommuting generator $c_0 Z_1 Z_3$:
+    \begin{equation}
+        \mathcal{S} = \langle a_1 X_1 X_2, c_0 d_0 Z_1 Z_3 Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    Now measure $X_3 X_4$.
+    This is in \textbf{Case 1}: we have $a_0 b_0 a_1 X_3 X_4 \in \mathcal{S}$, so the outcome $b_1$ is deterministically $a_0 b_0 a_1$.
+    The stabilizer group is unchanged.
+    If we like, we can write it using a different generating set:
+    \begin{equation}
+        \mathcal{S} = \langle a_1 X_1 X_2, b_1 X_3 X_4, c_0 d_0 Z_1 Z_3 Z_2 Z_4 \rangle.
+    \end{equation}
+
+    Measure $Z_1 Z_3$.
+    This is in \textbf{Case 2}: $Z_1 Z_3$ anticommutes with both $a_1 X_1 X_2$ and $b_1 X_3 X_4$.
+    The outcome is uniformly random; suppose we obtain $c_1 \in \{+1, -1\}$.
+    Choosing a presentation for $\SSS$ such that $Z_1 Z_3$ anti-commutes with just one generator, we see that the new stabilizer group is:
+    \begin{equation}
+        \mathcal{S} = \langle c_1 Z_1 Z_3, c_0 d_0 Z_1 Z_3 Z_2 Z_4, a_1 b_1 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    Note that $a_1 b_1 = a_0 b_0$, so we can use either scalar in the presentation above.
+    Now measure $Z_2 Z_4$.
+    This is in \textbf{Case 1}: we have $c_0 d_0 c_1 Z_2 Z_4 \in \mathcal{S}$, so the outcome $d_1$ is deterministically $c_0 d_0 c_1$.
+    The stabilizer group remains unchanged; we can present it differently as:
+    \begin{equation}
+        \mathcal{S} = \langle c_1 Z_1 Z_3, d_1 Z_2 Z_4, a_1 b_1 X_1 X_2 X_3 X_4 \rangle.
+    \end{equation}
+
+    This pattern then continues; after the $n$th measurement (starting from the $0$th measurement) of $X_1 X_2$ and $X_3 X_4$ we have stabilizer group $\SSS_n$, and after the $n$th measurement of $Z_1 Z_3$ and $Z_2 Z_4$ we have stabilizer group $\SSS_n'$, where
+    \begin{equation}
+        \begin{aligned}
+            \mathcal{S}_n &= \langle a_n X_1 X_2, b_n X_3 X_4, c_0 d_0 Z_1 Z_3 Z_2 Z_4 \rangle. \\
+            \mathcal{S}_n' &= \langle c_n Z_1 Z_3, d_n Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle
+        \end{aligned}
+    \end{equation}
+\end{example}
+
+\begin{example}\label{ex:teleportation_stabilizer_group_updates}
+    Suppose as in \Cref{ex:teleportation_stabilizer_group} we have three qubits described by stabilizer group
+    \begin{equation}
+        \SSS = \langle X_2 X_3, Z_2 Z_3 \rangle
+    \end{equation}
+    So qubit 1 is in an unknown pure state.
+    We can teleport this state to qubit three by measuring $X_1 X_2$ and $Z_1 Z_2$, with outcomes $a$ and $b$ respectively, and performing Pauli correction $Z_3^{(1 - a)/2} X_3^{(1 - b/2)}$.
+    Consider the effect on $\SSS$ of measuring $X_1 X_2$.
+    This anti-commutes with $Z_2 Z_3$, so we're in \textbf{Case 2}.
+    The outcome $a$ is completely random, and the updated stabilizer group is
+    \begin{equation}
+        \SSS = \langle X_2 X_3, a X_1 X_2 \rangle
+    \end{equation}
+    Now we measure $Z_1 Z_2$.
+    This is again in \textbf{Case 2} since it anti-commutes with $X_2 X_3$, so the outcome $b$ is random and the updated stabilizer group is
+    \begin{equation}
+        \SSS = \langle a X_1 X_2, b Z_1 Z_2 \rangle
+    \end{equation}
+    So we can see that now it's the first two qubits that are in one of the four Bell states.
+    But we can't see from $\SSS$ alone that the unknown pure state that qubit 1 was in has been teleported to qubit 3.
+    We could remedy this by showing that teleportation works when qubit 1 is in $\ket{k}$ for $k = 0 , 1$, since these two states are a basis for the state space of qubit 1.
+    This would mean the system of three qubits is initially described by stabilizer group
+    \begin{equation}
+        \SSS = \langle (-1)^k Z_1, X_2 X_3, Z_2 Z_3 \rangle
+    \end{equation}
+    After measuring $X_1 X_2$ and $Z_2 Z_3$, we can show we'd have new stabilizer group
+    \begin{equation}
+        \SSS = \langle (-1)^k b Z_3, a X_1 X_2, b Z_1 Z_2 \rangle
+    \end{equation}
+    We would then apply correction $U = Z_3^{(1 - a)/2} X_3^{(1 - b/2)}$; by \Cref{thm:stabilizer_group_update_clifford} the new stabilizer group would be
+    \begin{equation}
+        \begin{aligned}
+            \SSS
+            &= \langle U ((-1)^k b Z_3) U^\dagger, U (a X_1 X_2) U^\dagger X_3, U (b Z_1 Z_2) U^\dagger \rangle \\
+            &= \langle (-1)^k Z_3, a X_1 X_2, b Z_1 Z_2 \rangle
+        \end{aligned}
+    \end{equation}
+    Thus the state has been successfully teleported to qubit 3.
+    But there's another way we can prove that this teleportation scheme works without explicitly assuming anything about the state of qubit 1, as we'll see in \Cref{ex:teleportation_logical_clifford}
+\end{example}
+
+\subsection{The quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$}
+
+The stabilizer group $\mathcal{S}$ isn't the only group of interest to us in the stabilizer formalism.
+For reasons that will become clear in the next section, we're equally interested in the \emph{normalizer} $\mathcal{N}_{\mathcal{U}(2^n)}(\mathcal{S})$ of $\mathcal{S}$ in the unitary group $\mathcal{U}(2^n)$, which we'll henceforth denote as $\mathcal{N}(\mathcal{S})$.
+In fact, we're really interested in the quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$.
+
+The normalizer of a stabilizer group $\mathcal{S}$ in $\mathcal{U}(2^n)$ is defined as the set of unitaries that preserve $\mathcal{S}$ under conjugation.
+It turns out that for stabilizer groups this is equivalent to the set of unitaries that commute with all elements of $\mathcal{S}$ (the centralizer, in group theory):
+\begin{equation}
+    \mathcal{N}(\mathcal{S}) = \{ N \in \mathcal{U}(2^n) : NS = SN \text{ for all } S \in \mathcal{S} \}.
+\end{equation}
+Since every element of $\mathcal{S}$ commutes with itself and with all other elements of $\mathcal{S}$ (as $\mathcal{S}$ is Abelian), we have $\mathcal{S} \subseteq \mathcal{N}(\mathcal{S})$.
+In fact, $\mathcal{S}$ is a normal subgroup of $\mathcal{N}(\mathcal{S})$, so we can form the quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$.
+
+The quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ consists of cosets of $\mathcal{S}$ in $\mathcal{N}(\mathcal{S})$.
+A coset is a set of the form $N\mathcal{S} = \{ NS : S \in \mathcal{S} \}$ for some $N \in \mathcal{N}(\mathcal{S})$.
+Two elements $N, M \in \mathcal{N}(\mathcal{S})$ belong to the same coset if and only if $N^{-1} M \in \mathcal{S}$.
+
+We denote cosets using an overline: $\overline{N}$ denotes the coset $N\mathcal{S}$.
+Note that this differs from some literature, where an overline is used to denote elements of $\mathcal{N}(\mathcal{S})$ rather than cosets.
+In our notation, when we want to emphasize that a Pauli operator $\mathcal{X}$ or $\mathcal{Z}$ is being considered as an element of $\mathcal{N}(\mathcal{S})$, we use calligraphic letters like $\mathcal{X}$ and $\mathcal{Z}$, as opposed to the single-qubit Pauli matrices $X$ and $Z$.
+The group operation on $\mathcal{N}(\mathcal{S})/\mathcal{S}$ is given by coset multiplication:
+\begin{equation}
+    \overline{N} \cdot \overline{M} = \overline{NM}.
+\end{equation}
+
+It turns out that the quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ is always isomorphic to the Pauli group on $n-r$ qubits.
+
+\begin{theorem}
+    Let $\mathcal{S}$ be a stabilizer group on $n$ physical qubits with $r$ independent generators.
+    Then
+    \begin{equation}
+        \mathcal{N}(\mathcal{S})/\mathcal{S} \cong \mathcal{P}_k,
+    \end{equation}
+    the Pauli group on $k$ qubits.
+\end{theorem}
+
+The quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ can therefore be presented in terms of generators that obey the usual Pauli commutation relations.
+We can choose representatives $\mathcal{X}_1, \mathcal{Z}_1, \ldots, \mathcal{X}_k, \mathcal{Z}_k \in \mathcal{N}(\mathcal{S})$ such that
+\begin{equation}
+    \mathcal{N}(\mathcal{S})/\mathcal{S} = \langle \overline{i}, \overline{\mathcal{X}}_1, \overline{\mathcal{Z}}_1, \ldots, \overline{\mathcal{X}}_k, \overline{\mathcal{Z}}_k \rangle,
+\end{equation}
+where the cosets satisfy the Pauli commutation relations:
+\begin{align}
+    \overline{\mathcal{X}}_i \cdot \overline{\mathcal{X}}_j &= \overline{\mathcal{X}}_j \cdot \overline{\mathcal{X}}_i, \\
+    \overline{\mathcal{Z}}_i \cdot \overline{\mathcal{Z}}_j &= \overline{\mathcal{Z}}_j \cdot \overline{\mathcal{Z}}_i, \\
+    \overline{\mathcal{X}}_i \cdot \overline{\mathcal{Z}}_j &=
+    \begin{cases}
+        \overline{i} \cdot \overline{\mathcal{Z}}_j \cdot \overline{\mathcal{X}}_i & \text{if } i = j, \\
+        \overline{\mathcal{Z}}_j \cdot \overline{\mathcal{X}}_i & \text{if } i \neq j.
+    \end{cases}
+\end{align}
+
+\begin{example}
+    Continuing \Cref{ex:422_stabilizer_group}, consider the stabilizer group $\SSS = \langle X_1 X_2 X_3 X_4, Z_1 Z_2 Z_3 Z_4 \rangle$ on four qubits.
+    We can verify that one presentation for $\mathcal{N(S)/S}$ that obeys the Pauli commutation relations is:
+    \begin{equation}
+        \mathcal{N(S)/S} = \langle
+            \overline{i},
+            \overline{\XXX_1} = \overline{X_1 X_2}, \overline{\ZZZ_1} = \overline{Z_1 Z_3},
+        \overline{\XXX_2} = \overline{X_1 X_3}, \overline{\ZZZ_2} = \overline{Z_1 Z_2}
+        \rangle
+    \end{equation}
+\end{example}
+
+\begin{example}
+    Coninuing \Cref{ex:bacon_shor_stabilizer_group}, consider the stabilizer groups $\SSS = \langle X_1 X_2, X_3 X_4, Z_1 Z_2 Z_3 Z_4 \rangle$ and $\SSS' = \langle X_1 X_2 X_3 X_4, Z_1 Z_3, Z_2 Z_4 \rangle$ on four qubits.
+    We can verify that presentations for $\mathcal{N(S)/S}$ and $\mathcal{N(S')/S'}$ that obey the Pauli commutation relations are:
+    \begin{equation}
+        \begin{aligned}
+            \mathcal{N(S)/S} = &\langle
+                \overline{i},
+                \overline{\XXX_1} = \overline{X_1 X_3}, \overline{\ZZZ_1} = \overline{Z_1 Z_2},
+            \rangle \\
+            \mathcal{N(S')/S'} = &\langle
+                \overline{i},
+                \overline{\XXX_1} = \overline{X_1 X_3}, \overline{\ZZZ_1} = \overline{Z_1 Z_2},
+            \rangle
+        \end{aligned}
+    \end{equation}
+    That is, we can use the same representatives for the cosets of the group in each case.
+    But note that these groups aren't identical!
+    In one case, $\overline{N}$ denotes $N\SSS$, and in the other it denotes $N\SSS'$.
+\end{example}
+
+\begin{example}
+    Continuing the teleportation example of \Cref{ex:teleportation_stabilizer_group_updates}, consider stabilizer groups $\SSS = \langle X_2 X_3, Z_2 Z_3 \rangle$ and $\SSS' = \langle a X_1 X_2, b Z_1 Z_2 \rangle$.
+    We can verify that presentations for $\mathcal{N(S)/S}$ and $\mathcal{N(S')/S'}$ that obey the Pauli commutation relations are:
+    \begin{equation}
+        \begin{aligned}
+            \mathcal{N(S)/S} = &\langle
+            \overline{i},
+            \overline{\XXX_1} = \overline{X_1}, \overline{\ZZZ_1} = \overline{Z_1},
+            \rangle \\
+            \mathcal{N(S')/S'} = &\langle
+            \overline{i},
+            \overline{\XXX_1} = \overline{X_3}, \overline{\ZZZ_1} = \overline{Z_3},
+            \rangle
+        \end{aligned}
+    \end{equation}
+\end{example}
+
+\teague{Give Pauli group as partitioned by $\NNN(\SSS)$ and then $\SSS$}

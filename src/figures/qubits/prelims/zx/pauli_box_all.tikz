@@ -1,0 +1,67 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=paulibox] (0) at (-8.75, -1.5) {$Y$};
+		\node [style=none] (1) at (-9.75, -1) {};
+		\node [style=none] (2) at (-9.75, -2) {};
+		\node [style=none] (3) at (-8.75, -1) {};
+		\node [style=none] (4) at (-7.75, -2) {};
+		\node [style=none] (5) at (-5.75, -1) {};
+		\node [style=none] (6) at (-5.75, -2) {};
+		\node [style=none] (7) at (-2, -2) {};
+		\node [style=none] (8) at (-6.75, -1.5) {$=$};
+		\node [style=gn] (9) at (-4, -2) {};
+		\node [style={rn_phase}] (10) at (-5, -2) {$\frac{\pi}{2}$};
+		\node [style={rn_phase}] (11) at (-2.75, -2) {$-\frac{\pi}{2}$};
+		\node [style=paulibox] (12) at (-8.75, 1.5) {$I$};
+		\node [style=none] (13) at (-9.75, 2) {};
+		\node [style=none] (14) at (-9.75, 1) {};
+		\node [style=none] (15) at (-8.75, 2) {};
+		\node [style=none] (16) at (-7.75, 1) {};
+		\node [style=none] (17) at (-5, 2) {};
+		\node [style=none] (18) at (-5, 1) {};
+		\node [style=none] (19) at (-2, 1) {};
+		\node [style=none] (20) at (-6.75, 1.5) {$=$};
+		\node [style=none] (21) at (-5.75, 1.5) {$\frac{1}{\sqrt{2}}$};
+		\node [style=rn] (22) at (-3.5, 2) {};
+		\node [style=paulibox] (23) at (3, 1.5) {$X$};
+		\node [style=none] (24) at (2, 2) {};
+		\node [style=none] (25) at (2, 1) {};
+		\node [style=none] (26) at (3, 2) {};
+		\node [style=none] (27) at (4, 1) {};
+		\node [style=none] (28) at (6.25, 2) {};
+		\node [style=none] (29) at (6.25, 1) {};
+		\node [style=none] (30) at (9.75, 1) {};
+		\node [style=none] (31) at (5, 1.5) {$=$};
+		\node [style=gn] (32) at (8, 1) {};
+		\node [style=hdot] (33) at (7, 1) {};
+		\node [style=hdot] (34) at (9, 1) {};
+		\node [style=paulibox] (35) at (3, -1.5) {$Z$};
+		\node [style=none] (36) at (2, -1) {};
+		\node [style=none] (37) at (2, -2) {};
+		\node [style=none] (38) at (3, -1) {};
+		\node [style=none] (39) at (4, -2) {};
+		\node [style=none] (40) at (6.25, -1) {};
+		\node [style=none] (41) at (6.25, -2) {};
+		\node [style=none] (42) at (9.75, -2) {};
+		\node [style=none] (43) at (5, -1.5) {$=$};
+		\node [style=gn] (44) at (8, -2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1.center) to (3.center);
+		\draw (2.center) to (4.center);
+		\draw (6.center) to (7.center);
+		\draw [in=90, out=0] (5.center) to (9);
+		\draw (13.center) to (15.center);
+		\draw (14.center) to (16.center);
+		\draw (18.center) to (19.center);
+		\draw (17.center) to (22);
+		\draw (24.center) to (26.center);
+		\draw (25.center) to (27.center);
+		\draw (29.center) to (30.center);
+		\draw [in=90, out=0] (28.center) to (32);
+		\draw (36.center) to (38.center);
+		\draw (37.center) to (39.center);
+		\draw (41.center) to (42.center);
+		\draw [in=90, out=0] (40.center) to (44);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (20) at (0, 0) {};
+		\node [style=squareNE] (21) at (1.5, 0) {$g$};
+		\node [style=none] (22) at (3, 1) {};
+		\node [style=none] (23) at (3, -1) {};
+		\node [style=none] (24) at (2.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=squareNE] (25) at (-1.5, 0) {$f$};
+		\node [style=none] (26) at (-3, -1) {};
+		\node [style=none] (27) at (-3, 1) {};
+		\node [style=none] (28) at (-2.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={gn_web}] (36) at (-2.5, 2) {$a_1$};
+		\node [style={rn_web}] (37) at (-2.5, 1.5) {$b_1$};
+		\node [style={gn_web}] (40) at (2.5, 2) {$c_1$};
+		\node [style={rn_web}] (41) at (2.5, 1.5) {$d_1$};
+		\node [style={gn_web}] (44) at (-2.5, -1.5) {$a_l$};
+		\node [style={rn_web}] (45) at (-2.5, -2) {$b_l$};
+		\node [style={gn_web}] (46) at (2.5, -1.5) {$c_m$};
+		\node [style={rn_web}] (47) at (2.5, -2) {$d_m$};
+		\node [style={gn_web}] (48) at (-0.5, 1.25) {$a$};
+		\node [style={rn_web}] (49) at (-0.5, 0.75) {$b$};
+		\node [style={gn_web}] (50) at (0.5, 1.25) {$c$};
+		\node [style={rn_web}] (51) at (0.5, 0.75) {$d$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=yweb, bend left] (21) to (22.center);
+		\draw [style=yweb, bend right] (21) to (23.center);
+		\draw [style=yweb] (20.center) to (21);
+		\draw [style=yweb, bend left] (25) to (26.center);
+		\draw [style=yweb, bend right] (25) to (27.center);
+		\draw [style=yweb] (25) to (20.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

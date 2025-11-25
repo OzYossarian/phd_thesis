@@ -18,8 +18,10 @@
 \newtheorem{openquestion}[theorem]{Open question}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{difference}[theorem]{Difference}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{altdefinition}[theorem]{Alternative definition}
 
-% If using Cref, it needs to know how to pluralise these non-standard theorem names.
+% Cref needs to know how to pluralise non-standard theorem names.
 \crefname{keypoint}{key point}{key points}
 \Crefname{keypoint}{Key point}{Key points}
 \crefname{difference}{difference}{differences}
@@ -30,18 +32,18 @@
 \declaretheorem[style=exampleStyle, sibling=theorem, name=Example]{example}
 \declaretheorem[style=exampleStyle, sibling=theorem, name=Example, numbered=no]{example*}
 % Define a new command for subsubsubsection
-\makeatletter
-\newcounter{subsubsubsection}[subsubsection]
-\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
-\newcommand{\subsubsubsection}[1]{%
-    \refstepcounter{subsubsubsection}%
-    \vskip 2ex \@plus 1ex \@minus .2ex% Reduced vertical space before
-        {\sffamily\normalsize% Sans-serif font family, normal size, no bold
-    \thesubsubsubsection \quad #1\par}% Put heading on its own line
-    \nobreak% Prevent page break after heading
-% \vskip 1ex \@plus .2ex% Reduced space after
-}
-\makeatother
+%\makeatletter
+%\newcounter{subsubsubsection}[subsubsection]
+%\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+%\newcommand{\subsubsubsection}[1]{%
+%    \refstepcounter{subsubsubsection}%
+%    \vskip 2ex \@plus 1ex \@minus .2ex% Reduced vertical space before
+%        {\sffamily\normalsize% Sans-serif font family, normal size, no bold
+%    \thesubsubsubsection \quad #1\par}% Put heading on its own line
+%    \nobreak% Prevent page break after heading
+%% \vskip 1ex \@plus .2ex% Reduced space after
+%}
+%\makeatother
 
 % REFERENCES
 % Define a `clever cite' command analogous to cleveref's functionality for references
@@ -62,19 +64,27 @@
 \newcommand{\citeZoo}[1]{\mbox{[\zoo{#1}]}}
 
 % CALLIGRAPHY
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\RR}{\mathbb{R}}
 \newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
 
 \newcommand{\DDD}{\mathcal{D}}
+\newcommand{\FFF}{\mathcal{F}}
 \newcommand{\GGG}{\mathcal{G}}
 \newcommand{\HHH}{\mathcal{H}}
 \newcommand{\LLL}{\mathcal{L}}
 \newcommand{\MMM}{\mathcal{M}}
 \newcommand{\NNN}{\mathcal{N}}
+\newcommand{\OOO}{\mathcal{O}}
 \newcommand{\PPP}{\mathcal{P}}
 \newcommand{\SSS}{\mathcal{S}}
 \newcommand{\TTT}{\mathcal{T}}
+\newcommand{\VVV}{\mathcal{V}}
+\newcommand{\WWW}{\mathcal{W}}
+\newcommand{\XXX}{\mathcal{X}}
+\newcommand{\YYY}{\mathcal{Y}}
+\newcommand{\ZZZ}{\mathcal{Z}}
 
 \newcommand{\one}{\mathds{1}}
 
@@ -83,15 +93,21 @@
 \newcommand{\teague}[1]{\comment{blue}{Teague}{#1}}
 
 % MATHS
-\newcommand{\defeq}{\coloneqq}
 \newcommand{\after}{\circ}
 \newcommand{\floor}[1]{\lfloor#1\rfloor}
 \newcommand{\ceil}[1]{\lceil#1\rceil}
-\newcommand{\nonNegInts}{\ZZ_{\geq 0}}
-\newcommand{\positiveInts}{\ZZ_{>0}}
-\newcommand{\groupPres}[1]{\left\langle #1 \right\rangle}
+\newcommand{\boundary}{\partial}
+\newcommand{\coboundary}{\boundary^{\text{co}}}
+\newcommand{\pres}[1]{\langle #1 \rangle}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\onenorm}[1]{\norm{#1}_1}
+\newcommand{\twonorm}[1]{\norm{#1}_2}
 
 % QUANTUM
+
+% Braket
+\newcommand{\ketbra}[2]{\ket{#1}\!\!\bra{#2}}
 
 % Paulis
 \newcommand{\allIExcept}[1]{I \otimes \ldots \otimes I \otimes #1 \otimes I \otimes \ldots \otimes I}
@@ -338,9 +354,12 @@
 % Turn @ back into a special letter
 \makeatother
 
-% LAZINESS
+% LAZINESS/MISC
 \newcommand{\ol}[1]{\overline{#1}}
 \newcommand{\qqquad}{\quad\qquad}
 \newcommand{\qqqquad}{\quad\qqquad}
 \newcommand{\qqqqquad}{\quad\qqqquad}
 \newcommand{\qqqqqquad}{\quad\qqqqquad}
+\newcommand{\bsym}[1]{\boldsymbol{#1}}
+\newcommand{\presub}[2]{{}_{#1}\!{#2}}
+

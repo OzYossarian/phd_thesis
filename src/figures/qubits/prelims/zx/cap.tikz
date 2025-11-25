@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (3) at (-0.75, -1) {};
+		\node [style=none] (4) at (-0.75, 1) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend right=90, looseness=2.50] (3.center) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

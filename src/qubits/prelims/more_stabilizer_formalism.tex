@@ -1,0 +1,586 @@
+\section{More stabilizer formalism}\label{sec:more-stabilizer-formalism}
+
+If we were sticking with static stabilizer codes, we'd have already said everything we need to about the stabilizer formalism.
+But to be able to talk about dynamic stabilizer codes, we need to know a bit more about how $\VVV_\SSS$ and $\mathcal{N(S)/S}$ evolve under applying Cliffords and measuring Paulis.
+
+\subsection{Evolution of $\VVV_\SSS$}\label{subsec:evolution-of-codespace}
+
+The result of applying a Clifford or measuring a Pauli and getting outcome $m$ is that a linear map $A_m$ is applied to our system of $n$ qubits -- i.e.\ to the Hilbert space $\mathcal{H}$.
+If a Clifford unitary $U$ is applied, the map $A_m$ is simply this Clifford.
+If a Pauli $P$ is measured, and outcome $m$ obtained, then the map $A_m$ is the projector $\Pi_{mP}$.
+In this case, after $A_m$ is applied, the post-measurement state is also renormalised.
+We are only interested in the restriction $A_m|_{\VVV_\SSS} : \VVV_\SSS \to \VVV_{\SSS'}$ of this map to the codespace $\VVV_\SSS$.
+
+\teague{Add figure of all four cases}
+
+The most straightforward case is when $A_m$ is a Clifford unitary $U$.
+Then the restriction $A_m|_{\VVV_\SSS}$ is a unitary map $\VVV_\SSS \to \VVV_{\SSS'}$.
+Not too much more complicated is \textbf{Case 1} of the Pauli measurements, where $\pm P \in \mathcal{S}$ and $A_m = \Pi_{\pm P}$.
+Given a state $\ket{\psi} \in \SSS$, we have $A_m \ket{\psi} = \Pi_{\pm P} \ket{\psi} = \ket{\psi}$, hence $A_m|_{\VVV_\SSS}$ is in fact the identity when restricted to this subspace.
+In \textbf{Case 2} we measure a $P$ that anti-commutes with exactly one generator $S_1$ of $\SSS$, with random outcome $m$ and map $A_m = \Pi_{mP}$.
+Since the outcome $m$ is uniformly random across all states in $\VVV_\SSS$, the post-measurement renormalisation is the same for all states -- we just multiply by $1/{\sqrt{1/2}} = \sqrt{2}$.
+Hence the overall map applied to $\VVV_\SSS$ is $\sqrt{2} A_m|_{\VVV_\SSS}$
+We can show that this is in fact a unitary $\VVV_\SSS \to \VVV_{\SSS'}$.
+
+\begin{proposition}\label{prop:A_m_unitary_up_to_normalisation}
+    In \textbf{Case 2}, the restriction of $\sqrt{2} A_m$ to $\VVV_\SSS$ is a unitary $\VVV_\SSS \to \VVV_{\SSS'}$.
+    \begin{proof}
+        Will show $\sqrt{2} A_m|_{\VVV_\SSS}$ really does map states in $\VVV_\SSS$ to states in $\VVV_{\SSS'}$, and also preserves inner products, making it an isometry $\VVV_\SSS \to \VVV_{\SSS'}$.
+        But since we know the dimensions of $\VVV_\SSS$ and $\VVV_{\SSS'}$ are equal, this in fact makes $\sqrt{2} A_m|_{\VVV_\SSS}$ a unitary.
+        So, to show $im(\sqrt{2} A_m|_{\VVV_\SSS}) \leq \VVV_{\SSS'}$, it suffices to show that for any $\ket{\psi} \in \VVV_\SSS$ its image $\sqrt{2} A_m\ket{\psi}$ is stabilized by all generators of $\SSS' = \langle mP, S_2, \ldots, S_r \rangle$.
+        First, show $mP$ stabilizes $\sqrt{2} A_m\ket{\psi}$:
+        \begin{equation}\label{eq:mP_stabilizes_new_state}
+        \begin{aligned}
+            mP(\sqrt{2} A_m\ket{\psi})
+            &= mP(\sqrt{2} \cdot \frac{1}{2}(I + mP))\ket{\psi} \\
+            &= \sqrt{2} \cdot \frac{1}{2}(mP + m^2 P^2) \ket{\psi} \\
+            &= \sqrt{2} \cdot \frac{1}{2}(mP + I) \ket{\psi} \\
+            &= \sqrt{2} A_m\ket{\psi} \\
+        \end{aligned}
+        \end{equation}
+        For the remaining stabilizers, since $[P, S_j] = 0$ for all $j \geq 2$, we get:
+        \begin{equation}\label{eq:S_j_stabilizes_new_state}
+        \begin{aligned}
+            S_j(\sqrt{2} A_m\ket{\psi})
+            &= S_j(\sqrt{2} \cdot \frac{1}{2}(I + mP))\ket{\psi} \\
+            &= (\sqrt{2} \cdot \frac{1}{2}(I + mP)) S_j \ket{\psi} \\
+            &= \sqrt{2} \cdot \frac{1}{2}(I + mP) \ket{\psi} \\
+            &= \sqrt{2} A_m\ket{\psi} \\
+        \end{aligned}
+        \end{equation}
+        Now just need to show $\sqrt{2} A_m|_{\VVV_\SSS}$ preserves inner products.
+        Consider $\ket{\psi}, \ket{\phi} \in \VVV_\SSS$.
+        First, note that $\braket{\psi | P | \phi} = 0$ because it's equal to its negation:
+        \begin{equation}\label{eq:P_phi_orthogonal_to_psi}
+        \braket{\psi | P | \phi}
+        = \braket{\psi | S_1 P S_1| \phi}
+        = - \braket{\psi | P S_1 S_1| \phi}
+        = - \braket{\psi | P | \phi}
+        \end{equation}
+        Therefore $\bra{\psi} (\sqrt{2} A_m)^\dagger (\sqrt{2} A_m) \ket{\phi} = \braket{\psi | \phi}$:
+        \begin{equation}\label{eq:A_preserves_inner_products}
+        \begin{aligned}
+            \braket{\psi | (\sqrt{2} A_m)^\dagger (\sqrt{2} A_m) | \phi}
+            &= \braket{\psi | 2 \Pi_{mP}^\dagger \Pi_{mP} | \phi} \\
+            &= \braket{\psi | 2\Pi_{mP} | \phi} \\
+            &= \braket{\psi | (I + mP) | \phi} \\
+            &= \braket{\psi | I | \phi} + 0\\
+            &= \braket{\psi | \phi} \\
+        \end{aligned}
+        \end{equation}
+    \end{proof}
+\end{proposition}
+
+Finally, in \textbf{Case 3}, we measure a non-trivial logical operator $P \in \NNN(\SSS) - (\pm \SSS)$, getting outcome $m$ and map $A_m = \Pi_{mP}$.
+This continues to be a projection when restricted just to the codespace $\VVV_\SSS$; its image is exactly the new codespace $\VVV_{\SSS'}$.
+
+\begin{proposition}
+    In \textbf{Case 3}, the restriction of $A_m$ to $\VVV_\SSS$ is a projector $\VVV_\SSS \to \VVV_{\SSS'}$
+    \begin{proof}
+        Will again show $A_m|_{\VVV_\SSS}$ really does map states in $\VVV_\SSS$ to states in $\VVV_{\SSS'}$, and then show it's self-adjoint and idempotent, i.e.\ a projector.
+        Can prove the former exactly as in the previous proposition, by showing that for any $\ket{\psi} \in \VVV_\SSS$ its image $A_m\ket{\psi}$ is stabilized by all generators of $\SSS' = \langle mP, S_1, S_2, \ldots, S_r \rangle$, where $[P, S_j] = 0$ for all $j$.
+        Then to prove the latter, first note that we can write $A_m|_{\VVV_\SSS}$ in terms of the codespace projector $\Pi_\SSS \coloneqq \prod_{j} \Pi_{S_j} = \prod_{j} \frac{1}{2}(I + S_j)$.
+        Namely, we have $A_m|_{\VVV_\SSS} = A_m \Pi_\SSS$.
+        But since the image of this is in $\VVV_{\SSS'} \leq \VVV_\SSS$, we can add an extra $\Pi_\SSS$ term: $A_m|_{\VVV_\SSS} = \Pi_\SSS A_m \Pi_\SSS$.
+        Then since $A_m = \Pi_{mP}$ and $\Pi_{\SSS}$ are both projectors, they're self-adjoint.
+        So $A_m|_{\VVV_\SSS}$ is too:
+        \begin{equation}\label{eq:A_m_restriction_self_adjoint}
+            A_m|_{\VVV_\SSS}^\dagger
+            = (\Pi_\SSS A_m \Pi_\SSS)^\dagger
+            = \Pi_\SSS^\dagger A_m^\dagger \Pi_\SSS^\dagger
+            = \Pi_\SSS A_m \Pi_\SSS
+            = A_m|_{\VVV_\SSS}
+        \end{equation}
+        Then show it's idempotent; note that since $[P, S_j] = 0$ for all $j$, the map $A_m = \Pi_{mP} = \frac{1}{2}(I + mP)$ commutes with the codespace projector $\Pi_\SSS = \prod_{j} \Pi_{S_j} = \prod_{j} \frac{1}{2}(I + S_j)$.
+        Combining this with idempotence of projectors $A_m$ and $\Pi_{\SSS}$, we get:
+        \begin{equation}\label{eq:A_m_restriction_idempotent}
+%            \begin{aligned}
+%                A_m|_{\VVV_\SSS}^2
+%                &= (A_m \Pi_\SSS)(A_m \Pi_\SSS) \\
+%                &= A_m A_m \Pi_\SSS \Pi_\SSS \\
+%                &= A_m \Pi_\SSS \\
+%                &= A_m|_{\VVV_\SSS}
+%            \end{aligned}
+            A_m|_{\VVV_\SSS}^2
+            = (A_m \Pi_\SSS)(A_m \Pi_\SSS)
+            = A_m A_m \Pi_\SSS \Pi_\SSS
+            = A_m \Pi_\SSS
+            = A_m|_{\VVV_\SSS}
+        \end{equation}
+    \end{proof}
+\end{proposition}
+
+We can package all of the above into a single theorem.
+
+\begin{theorem}\label{thm:codespace_maps}
+    Given a stabilizer group $\SSS$, the effect of applying a Clifford and \textbf{Cases 1 and 2} of measuring a Pauli on the codespace $\VVV_\SSS$ is that it is mapped unitarily to the new codespace $\VVV_{\SSS'}$.
+    In \textbf{Case 3}, it is mapped projectively onto the new codespace $\VVV_{\SSS'}$.
+\end{theorem}
+
+\begin{example}\label{ex:bacon_shor_codespace_updates}
+    In \Cref{ex:bacon_shor_stabilizer_group_updates}, we started with a trivial stabilizer group $\SSS_{-1}$ on $4$ qubits and repeatedly measured $X_1 X_2$, $X_3 X_4$, $Z_1 Z_3$ and $Z_2 Z_4$, in that order.
+    So initially the codespace is $\HHH$, the whole Hilbert space.
+    Both of the first two measurements $X_1 X_2$ and $X_3 X_4$ are in Case 3 of \Cref{thm:stabilizer_group_update_measurement}, so the resulting maps are projections that each halve the dimension of the codespace:
+    \begin{equation}
+        \VVV_{\SSS_{-1}}
+        \xrightarrow{\Pi_{a_0 X_1 X_2}}
+        \VVV_{\SSS_0}
+        \xrightarrow{\Pi_{b_1 X_3 X_4}|_{\VVV_{\SSS_{0}}}}
+        \VVV_{\SSS_0'}
+    \end{equation}
+    The next measurement $Z_1 Z_3$ is in \textbf{Case 2}, so maps us unitarily to the next codespace $\SSS_0''$.
+    Then the measurement $Z_2 Z_4$ is in \textbf{Case 3}, so another projector is applied, mapping from $\SSS_0''$ to the new codespace $\SSS_0'''$, which is again half the size:
+    \begin{equation}
+        \VVV_{\SSS_{0}'}
+        \xrightarrow{\sqrt{2}\Pi_{c_0 Z_1 Z_3}|_{\VVV_{\SSS_{0}'}}}
+        \VVV_{\SSS_0''}
+        \xrightarrow{\Pi_{d_0 Z_2 Z_4}|_{\VVV_{\SSS_{0}''}}}
+        \VVV_{\SSS_0'''}
+    \end{equation}
+    Now we start the next round of measurements.
+    Measuring $X_1 X_2$ is this time in \textbf{Case 2}.
+    Writing the new stabilizer group as $\SSS_1$, this measurement thus maps us unitarily from $\VVV_{\SSS_0'''}$ to $\VVV_{\SSS_1}$.
+    Measuring $X_3 X_4$ is in \textbf{Case 1}, so at the level of the codespace just applies the identity map to $\VVV_{\SSS_1}$.
+    The same holds analogously when measuring $Z_1 Z_3$ and $Z_2 Z_4$; the first of these is in \textbf{Case 2} and maps unitarily from $\VVV_{\SSS_1}$ to $\VVV_{\SSS_1'}$, then the second is in \textbf{Case 1} and applies the identity to $\VVV_{\SSS_1'}$.
+    This pattern repeats for every subsequent round of measurements.
+    So the measurements from round 1 onwards implement a sequence of unitary maps:
+    \begin{equation}
+        \VVV_{\SSS_0'''}
+        \xrightarrow{\sqrt{2}\Pi_{a_1 X_1 X_2}|_{\VVV_{\SSS_0'}}}
+        \VVV_{\SSS_1}
+        \xrightarrow{\sqrt{2}\Pi_{c_1 Z_1 Z_3}|_{\VVV_{\SSS_1}}}
+        \VVV_{\SSS_1'}
+        \xrightarrow{\sqrt{2}\Pi_{a_1 X_1 X_2}|_{\VVV_{\SSS_1'}}}
+        \VVV_{\SSS_2}
+        \ldots
+    \end{equation}
+\end{example}
+
+\begin{example}\label{ex:teleportation_codespace_updates}
+    Recall the teleportation example of \Cref{ex:teleportation_stabilizer_group_updates}.
+    Starting from $\SSS = \langle X_2 X_3, Z_2 Z_3 \rangle$, we measured $X_1 X_2$ then $Z_2 Z_3$.
+    Both of these were \textbf{Case 2} measurements, so together they unitarily map us from $\VVV_\SSS$ to $\VVV_{\SSS''}$:
+    \begin{equation}
+        \VVV_{\SSS}
+        \xrightarrow{\sqrt{2}\Pi_{a X_1 X_2}|_{\VVV_{\SSS}}}
+        \VVV_{\SSS'}
+        \xrightarrow{\sqrt{2}\Pi_{b Z_1 Z_2}|_{\VVV_{\SSS'}}}
+        \VVV_{\SSS''}
+    \end{equation}
+    We then applied Pauli correction $U = Z_3^{\frac{1 - a}{2}} X_3^{\frac{1 - b}{2}}$.
+    Since this is particular a Clifford unitary, this too applies a unitary to our codespace:
+    \begin{equation}
+        \VVV_{\SSS''}
+        \xrightarrow{U|_{\VVV_{\SSS''}}}
+        \VVV_{\SSS'''}
+    \end{equation}
+    But as in \Cref{ex:teleportation_stabilizer_group_updates} this is still not enough to conclude that this teleportation scheme works as advertised!
+    We want to show that the resulting unitary map is in some sense `the identity map' from $\VVV_{\SSS}$ to $\VVV_{\SSS'''}$.
+    That is, if we've picked particular operators to represent logical $X$ and $Z$ in $\VVV_{\SSS}$ and $\VVV_{\SSS'''}$ respectively, then we want to show that the unitary map this teleportation scheme ultimately implements is the one that identifies these operators.
+    The way we'll do this is via the induced homomorphism on the logical Pauli groups, as in \Cref{ex:teleportation_logical_pauli_group_updates}.
+\end{example}
+
+\subsection{Evolution of $\mathcal{N}(\mathcal{S})/\mathcal{S}$}\label{subsec:evolution_of_logical_pauli_group}
+
+Let $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ be a stabilizer group, and $\mathcal{N}(\mathcal{S})/\mathcal{S} = \langle \ol{i}, \ol{\XXX}_1, \ol{\ZZZ}_1, \ldots, \ol{\XXX}_k, \ol{\ZZZ}_k \rangle $ the logical Pauli group.
+In this subsection, we give a presentation for the new logical Pauli group $\mathcal{N}(\mathcal{S}')/\mathcal{S}'$ after applying a Clifford or measuring a Pauli.
+We also give an induced homomorphism $\phi: \mathcal{N}(\mathcal{S}')/\mathcal{S}' \to \mathcal{N}(\mathcal{S})/\mathcal{S}$, which captures how the logical operators of the new codespace relate to logical operators of the old codespace.
+Note the arrow goes the `wrong' way!
+The relationship it captures is the following.
+For all $L' \in \NNN(\SSS)$ and $L \in \NNN(\SSS)$ with $\overline{L} \in im(\phi)$:
+\begin{equation}\label{eq:induced_homomorphism_iff_relation}
+    \phi(\overline{L'}) = \overline{L} \iff (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS}
+\end{equation}
+where $A_m$ is the induced linear map on $\mathcal{H}$ from the last subsection.
+The second equality can be equivalently phrased in terms of projectors:
+\begin{equation}\label{eq:induced_homomorphism_iff_relation_via_projector}
+    (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS} \iff L' A_m \Pi_{\SSS} = A_m L \Pi_{\SSS}
+\end{equation}
+Intuitively, this condition says that the logical action of $L'$ on the new codespace is exactly that of $L$ on the old codespace.
+In fact, this induced homomorphism actually defines a logical Clifford unitary on our codespace.
+For tidiness' sake we defer discussion of this and the proofs that condition~\eqref{eq:induced_homomorphism_iff_relation} is satisfied in each case to its own subsection below.
+
+After applying Clifford unitary $U$, we've seen (\Cref{thm:stabilizer_group_update_clifford}) that the new stabilizer group is $\mathcal{S}' = U\mathcal{S}U^\dagger = \langle U S_1 U^\dagger, \ldots, U S_r U^\dagger \rangle$.
+The new logical Pauli group is updated similarly.
+
+\begin{theorem}\label{thm:logical_pauli_group_update_clifford}
+    If a system with stabilizer group $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ and logical Pauli group $\mathcal{N}(\mathcal{S})/\mathcal{S} = \langle \overline{i}, \overline{\mathcal{X}}_1, \overline{\mathcal{Z}}_1, \ldots, \overline{\mathcal{X}}_k, \overline{\mathcal{Z}}_k \rangle$ undergoes evolution by a Clifford unitary $U$, the new logical Pauli group is
+    \begin{equation}\label{eq:new_logical_Pauli_group}
+        \mathcal{N}(\mathcal{S}')/\mathcal{S}' = U (\mathcal{N}(\mathcal{S})/\mathcal{S}) U^\dagger = \langle \ol{i}, \ol{U \XXX_1 U^\dagger}, \ol{U \ZZZ_1 U^\dagger}, \ldots, \ol{U \XXX_k U^\dagger},  \ol{U \ZZZ_k U^\dagger} \rangle
+    \end{equation}
+
+    The induced group homomorphism $\phi : \mathcal{N}(\mathcal{S}')/\mathcal{S}' \to \mathcal{N}(\mathcal{S})/\mathcal{S}$ is defined to be $\phi(\overline{P'}) = \overline{U^\dagger P' U}$.
+    In this case, this is in fact an isomorphism.
+    Equivalently, this can be defined by its action on generators:
+    \begin{equation}
+    %    \begin{aligned}
+    %        \ol{i} &\mapsto \ol{i} \\
+    %        \ol{\XXX}_j &\mapsto \ol{U^\dagger \XXX_j U} \text { for all $1 \leq j \leq k$} \\
+    %        \ol{\ZZZ}_j &\mapsto \ol{U^\dagger \ZZZ_j U} \text { for all $1 \leq j \leq k$} \\
+    %    \end{aligned}
+        \ol{i} \mapsto \ol{i}, \quad
+        \ol{\XXX}_j \mapsto \ol{U^\dagger \XXX_j U}, \quad
+        \ol{\ZZZ}_j \mapsto \ol{U^\dagger \ZZZ_j U}, \quad
+        \text { for all $1 \leq j \leq k$}
+    \end{equation}
+\end{theorem}
+
+The effect of measuring a Pauli operator $P$ on the logical Pauli group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ depends on which of the three cases we are in.
+
+\begin{theorem}\label{thm:logical_pauli_group_update_measurement}
+    If a system with stabilizer group $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ and logical Pauli group $\mathcal{N}(\mathcal{S})/\mathcal{S} = \langle \overline{i}, \overline{\mathcal{X}}_1, \overline{\mathcal{Z}}_1, \ldots, \overline{\mathcal{X}}_k, \overline{\mathcal{Z}}_k \rangle$ undergoes evolution by a Pauli measurement $P$, the effect is as follows.
+
+    \textbf{Case 1:} $\pm P \in \mathcal{S}$.
+    The measurement outcome is deterministic and the state is unchanged.
+    The stabilizer group and logical Pauli group remain the same: $\mathcal{S}' = \mathcal{S}$ and $\mathcal{N}(\mathcal{S}')/\mathcal{S}' = \mathcal{N}(\mathcal{S})/\mathcal{S}$.
+    The induced homomorphism is the identity $\phi = id$; this is trivially an isomorphism.
+
+
+    \textbf{Case 2:} $P$ anticommutes with at least one element of $\mathcal{S}$.
+    The measurement outcome $m \in \{+1, -1\}$ is uniformly random.
+    Without loss of generality, assume $P$ anticommutes only with $S_1$ and commutes with $S_2, \ldots, S_r$.
+    Also without loss of generality, assume $P$ commutes with all representatives $\XXX_j$ and $\ZZZ_j$.
+    Then the new logical Pauli group can be presented by the same representatives:
+    That is:
+    \begin{equation}
+        \mathcal{N}(\mathcal{S}')/\mathcal{S}' = \langle \ol{i}, \ol{\XXX}_1, \ol{\ZZZ}_1, \ldots, \ol{\XXX}_k, \ol{\ZZZ}_k \rangle
+    \end{equation}
+    The induced homomorphism is defined as $\phi(\overline{L'}) = \overline{L'}$, assuming without loss of generality that the representative $L'$ commutes with $S_1$ and hence all of $\SSS$.
+    This is again an isomorphism.
+    Equivalently, this can be defined by its action on generators:
+    \begin{equation}
+    %    \begin{aligned}
+    %        \ol{i} &\mapsto \ol{i} \\
+    %        \ol{\XXX}_j &\mapsto \ol{\XXX}_j \text { for all $1 \leq j \leq k$} \\
+    %        \ol{\ZZZ}_j &\mapsto \ol{\ZZZ}_j \text { for all $1 \leq j \leq k$} \\
+    %    \end{aligned}
+        \ol{i} \mapsto \ol{i}, \quad
+        \ol{\XXX}_j \mapsto \ol{\XXX}_j, \quad
+        \ol{\ZZZ}_j \mapsto \ol{\ZZZ}_j, \quad
+        \text { for all $1 \leq j \leq k$}
+    \end{equation}
+
+    \textbf{Case 3:} $P$ commutes with all of $\mathcal{S}$, but $\pm P \notin \mathcal{S}$.
+    In this case, $P$ is in $\NNN(\SSS) - (\pm \SSS)$, so is a non-trivial element of the logical Pauli group $\mathcal{N}(\mathcal{S})/\mathcal{S}$.
+    Without loss of generality, we can in fact assume $P = \pm \ZZZ_j$ or $\pm \XXX_j$ for some $1 \leq j \leq k$.
+    So we're measuring one logical qubit in a Pauli basis, effectively removing a logical qubit from the system.
+    Accordingly, the new logical Pauli group can be presented as
+    \begin{equation}
+        \mathcal{N}(\mathcal{S}')/\mathcal{S}' = \langle \ol{i}, \ol{\XXX}_1, \ol{\ZZZ}_1, \ldots, \ol{\XXX}_{j-1}, \ol{\ZZZ}_{j-1}, \ol{\XXX}_{j+1}, \ol{\ZZZ}_{j+1}, \ldots, \ol{\XXX}_{k}, \ol{\ZZZ}_{k} \rangle
+    \end{equation}
+    The induced homomorphism is defined as $\phi(\overline{L'}) = \overline{L'}$, assuming without loss of generality that the representative $L'$ commutes with $\mathcal{X}_j$ if $P = \pm \ZZZ_j$, or with $\ZZZ_j$ if $P = \pm \XXX_j$.
+    Equivalently, it can be defined by its action on generators:
+    \begin{equation}\label{eq:case_3_phi_definition_generators}
+        \ol{i} \mapsto \ol{i}, \quad
+        \ol{\XXX}_l \mapsto \ol{\XXX}_l, \quad
+        \ol{\ZZZ}_l \mapsto \ol{\ZZZ}_l, \quad
+        \text { for all $0 \leq l \leq k$ with $l \neq j$}
+    \end{equation}
+\end{theorem}
+
+Note that in \textbf{Case 2}, the new logical Pauli group might look identical to the old one, but it isn't!
+The cosets $\overline{L}$ in the two groups are different; in the old group $\overline{L} = L\SSS$ and in the new group $\overline{L} = L\SSS'$, where $\SSS \neq \SSS'$.
+Similarly, despite appearances, the induced homomorphism isn't the identity.
+Case 3 is the only one in which the induced homomorphism isn't an isomorphism, since the new logical Pauli group is smaller than the original.
+In both Cases 2 and 3, we said that without loss of generality we could make assumptions about the commutativity relations between $P$ and representatives $\XXX_j$ and $\ZZZ_j$, which we now spell out.
+
+\teague{TODO: WLOG lemmas}
+
+\begin{example}\label{ex:bacon_shor_logical_pauli_group_updates}
+    Recall \Cref{ex:bacon_shor_stabilizer_group_updates,ex:bacon_shor_codespace_updates}, in which we started with a trivial stabilizer group on four qubits and repeatedly measured $X_1 X_2$, $X_3 X_4$, $Z_1 Z_3$ and $Z_2 Z_4$, in that order.
+    We spelled out how the stabilizer group and codespace changes throughout.
+    Now we'll do the same for the logical Pauli group.
+    Initially, since $\SSS_{-1} = \{I\}$, the following presentation obeys the Pauli commutation relations:
+    \begin{equation}
+        \NNN(\SSS_{-1})/\SSS_{-1} = \langle
+            \overline{i},
+            \overline{X_1}, \overline{Z_1},
+            \overline{X_2}, \overline{Z_2},
+            \overline{X_3}, \overline{Z_3},
+            \overline{X_4}, \overline{Z_4},
+        \rangle
+    \end{equation}
+    The first measurement $X_1 X_2$ is in \textbf{Case 3}.
+    To apply \Cref{thm:logical_pauli_group_update_measurement}, we need a new presentation for $\NNN(\SSS_{-1})/\SSS_{-1}$ in which $X_1 X_2$ is a representative $\mathcal{X}_j$ or $\mathcal{Z}_j$, and in which the Pauli commutativity relations are still obeyed.
+    Following Lemma TODO, we can write
+    \begin{equation}
+        \NNN(\SSS_{-1})/\SSS_{-1} = \langle
+        \overline{i},
+        \overline{X_1 X_2}, \overline{Z_1},
+        \overline{X_2}, \overline{Z_1 Z_2},
+        \overline{X_3}, \overline{Z_3},
+        \overline{X_4}, \overline{Z_4},
+        \rangle
+    \end{equation}
+    After measurement, the new group is:
+    \begin{equation}
+        \NNN(\SSS_{0})/\SSS_{0} = \langle
+        \overline{i},
+        \overline{X_2}, \overline{Z_1 Z_2},
+        \overline{X_3}, \overline{Z_3},
+        \overline{X_4}, \overline{Z_4},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi_0: \NNN(\SSS_{0})/\SSS_{0} \to \NNN(\SSS_{-1})/\SSS_{-1}$ is $\phi_0(\overline{L}) = \overline{L}$, assuming without loss of generality that $L$ commutes with $Z_1$.
+    Next, we measure $X_3 X_4$, which is in \textbf{Case 3}.
+    We again first require a new presentation:
+    \begin{equation}
+        \NNN(\SSS_{0})/\SSS_{0} = \langle
+            \overline{i},
+            \overline{X_2}, \overline{Z_1 Z_2},
+            \overline{X_3 X_4}, \overline{Z_3},
+            \overline{X_4}, \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    Now we can apply \Cref{thm:logical_pauli_group_update_measurement}; the new logical Pauli group is
+    \begin{equation}
+        \NNN(\SSS_{0}')/\SSS_{0}' = \langle
+            \overline{i},
+            \overline{X_2}, \overline{Z_1 Z_2},
+            \overline{X_4}, \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi_0': \NNN(\SSS_{0}')/\SSS_{0}' \to \NNN(\SSS_{0})/\SSS_{0}$ is $\phi_0'(\overline{L'}) = \overline{L'}$, assuming without loss of generality that $L'$ commutes with $Z_3$.
+    Next, we measure $Z_1 Z_3$, which is our first \textbf{Case 2} measurement.
+    This already commutes with all coset representatives in our presentation of the logical Pauli group, so we can directly apply \Cref{thm:logical_pauli_group_update_measurement}, which says that the new group can be presented using exactly the same coset representatives as before:
+    \begin{equation}
+        \NNN(\SSS_{0}'')/\SSS_{0}'' = \langle
+        \overline{i},
+        \overline{X_2}, \overline{Z_1 Z_2},
+        \overline{X_4}, \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi_0'': \NNN(\SSS_{0}'')/\SSS_{0}'' \to \NNN(\SSS_{0}')/\SSS_{0}'$ is $\phi_0''(\overline{L''}) = \overline{L''}$, assuming without loss of generality that $L''$ commutes with all of $\SSS_{0}' = \langle a_0 X_1 X_2, b_0 X_1 X_3 \rangle$.
+    The final measurement in round $0$ is $Z_2 Z_4$, which is in \textbf{Case 3}.
+    To apply \Cref{thm:logical_pauli_group_update_measurement}, we need $Z_2 Z_4$ to be a representative of a coset in $\NNN(\SSS_{0}'')/\SSS_{0}''$.
+    So first apply Lemma TODO to get:
+    \begin{equation}
+        \NNN(\SSS_{0}'')/\SSS_{0}'' = \langle
+        \overline{i},
+        \overline{X_2}, \overline{Z_1 Z_2 Z_3 Z_4},
+        \overline{X_2 X_4}, \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    Now recall that at this point $c_0 Z_1 Z_3$ is a stabilizer, so we can `pull it out' of $\overline{Z_1 Z_2 Z_3 Z_4}$ to get a new representative $c_0 Z_2 Z_4$ of this coset.
+    Now we can apply \Cref{thm:logical_pauli_group_update_measurement} to see the new group is:
+    \begin{equation}
+        \NNN(\SSS_{0}''')/\SSS_{0}''' = \langle
+        \overline{i},
+        \overline{X_2 X_4}, \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    From now on, we can always present the logical Pauli group with these representatives!
+    This is because future measurements are always either in \textbf{Case 1} or \textbf{Case 2}, and the representatives above commute with all of $X_1 X_2$, $X_3 X_4$, $Z_1 Z_3$ and $Z_2 Z_4$.
+\end{example}
+
+\begin{example}\label{ex:teleportation_logical_pauli_group_updates}
+    Recall the teleportation scheme we looked at in \Cref{ex:teleportation_stabilizer_group_updates,ex:teleportation_codespace_updates}.
+    We now look at this scheme's effect on the logical Pauli group.
+    We start with $\SSS = \langle X_2 X_3, Z_2 Z_3 \rangle$, hence:
+    \begin{equation}
+        \NNN(\SSS)/\SSS = \langle
+            \overline{i},
+            \overline{X_1}, \overline{Z_1},
+        \rangle
+    \end{equation}
+    We measure $X_1 X_2$ and get outcome $a$.
+    This is a Case 2 measurement, so to apply \Cref{thm:logical_pauli_group_update_measurement} we need a new presentation whose representatives commute with $X_1 X_2$.
+    Noting that $Z_2 Z_3$ is a stabilizer, we can use:
+    \begin{equation}
+        \NNN(\SSS)/\SSS = \langle
+            \overline{i},
+            \overline{X_1}, \overline{Z_1 Z_2 Z_3},
+        \rangle
+    \end{equation}
+    Now \Cref{thm:logical_pauli_group_update_measurement} says the new group can be presented by these same representatives, so:
+    \begin{equation}
+        \NNN(\SSS')/\SSS' = \langle
+        \overline{i},
+        \overline{X_1}, \overline{Z_1 Z_2 Z_3},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi$ maps $\phi(\overline{L'}) = \overline{L'}$, assuming without loss of generality that $L'$ commutes with all of $\SSS = \langle X_2 X_3, Z_2 Z_3 \rangle$.
+    Next we measure $Z_1 Z_2$ and are in a symmetric situation; this is in Case 2, so we get random outcome $b$, and since $X_2 X_3$ is a stabilizer a suitable new presentation for the logical Pauli group is:
+    \begin{equation}
+        \NNN(\SSS')/\SSS' = \langle
+        \overline{i},
+        \overline{X_1 X_2 X_3}, \overline{Z_1 Z_2 Z_3},
+        \rangle
+    \end{equation}
+    Hence these same representatives can be used to present the new group:
+    \begin{equation}
+        \NNN(\SSS'')/\SSS'' = \langle
+        \overline{i},
+        \overline{X_1 X_2 X_3}, \overline{Z_1 Z_2 Z_3},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi''$ maps $\phi(\overline{L''}) = \overline{L''}$, assuming without loss of generality that $L''$ commutes with all of $\SSS' = \langle X_2 X_3, a X_1 X_2 \rangle$.
+    Since at this point $\SSS'' = \langle a X_1 X_2, b Z_1 Z_2 \rangle$, we can pull out new representatives for each coset:
+    \begin{equation}
+        \NNN(\SSS'')/\SSS'' = \langle
+        \overline{i},
+        \overline{a X_3}, \overline{b Z_3},
+        \rangle
+    \end{equation}
+    Finally, we apply Pauli correction $U = Z_3^{\frac{1 - a}{2}} X_3^{\frac{1 - b}{2}}$.
+    This gives the new group:
+    \begin{equation}
+        \NNN(\SSS''')/\SSS''' = \langle
+        \overline{i},
+        \overline{X_3}, \overline{Z_3},
+        \rangle
+    \end{equation}
+    The induced homomorphism $\phi'''$ maps $\phi(\overline{L'''}) = \overline{L'''}$, assuming without loss of generality that $L'''$ commutes with all of $\SSS'' = \langle a X_1 X_2, b Z_1 Z_2 \rangle$.
+    We can now almost see that this teleportation scheme works as intended!
+    We can at least check the images of $\overline{X_3}$ and $\overline{Z_3}$ under the composition $\phi \circ \phi' \circ \phi'' \circ \phi''' \circ \phi''''$ of all the induced homomorphisms are $\overline{X_1}$ and $\overline{Z_1}$ respectively.
+    That is, writing cosets in full as $L\SSS$ rather than $\overline{L}$, we have:
+%    \begin{equation}
+%        \begin{aligned}
+%            X_3\SSS'''
+%            &\xmapsto{\phi'''} a X_3\SSS'' = X_1 X_2 X_3 \SSS'' \\
+%            &\xmapsto{\phi''} X_1 X_2 X_3 \SSS' = X_1 \SSS' \\
+%            &\xmapsto{\phi'} X_1\SSS
+%        \end{aligned}
+%    \end{equation}
+%    \begin{equation}
+%        \begin{aligned}
+%            Z_3\SSS'''
+%            &\xmapsto{\phi'''} b Z_3\SSS'' = Z_1 Z_2 Z_3 \SSS'' \\
+%            &\xmapsto{\phi''} Z_1 Z_2 Z_3 \SSS' = Z_1 \SSS' \\
+%            &\xmapsto{\phi'} Z_1\SSS
+%        \end{aligned}
+%    \end{equation}
+    \begin{align}
+        X_3\SSS'''
+        &\xmapsto{\phi'''} a X_3\SSS'' = X_1 X_2 X_3 \SSS''
+        \xmapsto{\phi''} X_1 X_2 X_3 \SSS' = X_1 \SSS'
+        \xmapsto{\phi'} X_1\SSS \\
+        Z_3\SSS'''
+        &\xmapsto{\phi'''} b Z_3\SSS'' = Z_1 Z_2 Z_3 \SSS''
+        \xmapsto{\phi''} Z_1 Z_2 Z_3 \SSS' = Z_1 \SSS'
+        \xmapsto{\phi'} Z_1\SSS \\
+    \end{align}
+    Combining this with the defining relation \Cref{eq:induced_homomorphism_iff_relation} for the induced homomorphism, this says intuitively that $\overline{X_3}$ and $\overline{Z_3}$ at the end of the teleportation scheme perform the same logical operation as $\overline{X_1}$ and $\overline{Z_1}$ at the start of the scheme.
+    Rigorously, we'll show in the next subsection that whenever the induced homomorphism is in fact an isomorphism, it uniquely determines a logical Clifford unitary action on our codespace.
+    In this case here, this logical Clifford is the identity, so the state of qubit 1 really is being teleported to qubit 3.
+\end{example}
+
+\subsection{The induced homomorphism $\phi$}\label{subsec:the-induced-homomorphism}
+
+As promised, we now show two things.
+First, we'll show that whenever this homomorphism is in fact an isomorphism then it uniquely determines a logical Clifford unitary that's applied to our codespace.
+Then, we show that in each of the four settings above (applying a Clifford and the three cases of Pauli measurements), the induced homomorphism $\phi: \NNN(\SSS') / \SSS' \to \NNN(\SSS) / \SSS$ satisfies the required iff relationship \eqref{eq:induced_homomorphism_iff_relation}.
+
+So, first assume the homomorphism is an isomorphism, which occurs iff all operations are Clifford unitaries, or Case 1 or 2 Pauli measurements.
+Recall the defining iff relation for the induced homomorphism as in \Cref{eq:induced_homomorphism_iff_relation}.
+Namely, for all $L' \in \NNN(\SSS)$ and $L \in \NNN(\SSS)$:
+\begin{equation}
+    \phi(\overline{L'}) = \overline{L}
+    \iff (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS}
+    \iff L' A_m \Pi_{\SSS} = A_m L \Pi_{\SSS}
+\end{equation}
+(We've omitted the extra condition that $\overline{L} \in im(\phi)$ because it's irrelevant if $\phi$ is an isomorphism).
+In the cases we're considering, we've seen that the linear map $A_m|_{\VVV_\SSS} = A_m \Pi_\SSS$ applied to the codespace is unitary.
+Also note that any $\overline{L} \in \NNN(\SSS)/\SSS$ by definition commutes with all $S \in \SSS$, so in particular commutes with $\Pi_\SSS$.
+Therefore $A_m L \Pi_{\SSS} = A_m \Pi_{\SSS} L$, and we can multiply both sides of $L' A_m \Pi_{\SSS} = A_m L \Pi_{\SSS} = A_m \Pi_{\SSS} L$ by the adjoint of the unitary $A_m \Pi_\SSS$ to get $L' = (A_m \Pi_{\SSS}) L (A_m \Pi_{\SSS})^\dagger$.
+So we're saying that the net effect of applying this physical Clifford unitary or performing this physical Pauli measurement is that a unitary map $A_m \Pi_{\SSS}$ is applied to our codespace, which acts via conjugation on logical Pauli operators.
+Furthermore, it conjugates these Paulis $L$ back to Paulis $L' = (A_m \Pi_{\SSS}) L (A_m \Pi_{\SSS})^\dagger$.
+It is then a standard result (e.g.\ Gottesman TODO) that this map $A_m \Pi_{\SSS}$ must be a uniquely determined logical Clifford (unique up to global phase, at least).
+
+\begin{example}\label{ex:teleportation_logical_clifford}
+    We can finally finish our running example of a teleportation scheme (\Cref{ex:teleportation_logical_pauli_group_updates}).
+    Our initial logical Pauli group was $\pres{\ol{i}, \ol{\XXX} = \ol{X_1}, \ol{\ZZZ} = \ol{Z_1}}$, and our final logical Pauli group is $\pres{\ol{i}, \ol{\XXX} = \ol{X_3}, \ol{\ZZZ} = \ol{Z_3}}$.
+    We showed that the overall induced isomorphism sends:
+    \begin{equation}
+        \XXX\SSS''' = X_3\SSS''' \mapsto X_1\SSS = \XXX\SSS
+        \quad\text{and}\quad
+        \ZZZ\SSS''' = Z_3\SSS''' \mapsto Z_1\SSS = \ZZZ\SSS
+    \end{equation}
+    Taking the inverse of this, we're saying that overall a logical unitary $U$ is applied that conjugates $\ol{\XXX} \mapsto U\ol{\XXX} U^\dagger = \ol{\XXX}$ and $\ol{\ZZZ} \mapsto U\ol{\ZZZ} U^\dagger = \ol{\ZZZ}$.
+    One Clifford that has this action is the identity map, and since $U$ is uniquely determined (up to global phase), $U$ must in fact be the identity.
+\end{example}
+
+Finally, we give the proofs that the induced homomorphism satisfies the defining iff relation \Cref{eq:induced_homomorphism_iff_relation} in each case.
+Throughout, we'll make use of the following lemma.
+
+\begin{lemma}\label{lem:paulis_equal_on_codespace_are_equal_up_to_stabilizer}
+    Given stabilizer group $\SSS$, if Paulis $P$ and $Q$ satisfy $P|_{\VVV_\SSS} = Q|_{\VVV_{\SSS}}$, i.e. $P \Pi_{\SSS} = Q \Pi_\SSS$, then we must have $P\SSS = Q\SSS$, i.e. $P = QS$ for some $S \in \SSS$.
+    \begin{proof}
+        TODO
+    \end{proof}
+\end{lemma}
+
+We start with the Clifford unitary case.
+
+\begin{proposition}
+    After applying a Clifford $U$, the induced homomorphism $\phi$ satisfies \Cref{eq:induced_homomorphism_iff_relation}.
+    That is, $\phi(\overline{L'}) = \overline{L} \iff (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS}$, where $A_m = U$.
+    \begin{proof}
+        In one direction, assume $\overline{L} = \phi(\overline{L'}) = \overline{U^\dagger L' U}$.
+        Hence $L = U^\dagger L' U S$ for some $S \in \SSS$.
+        So the right hand side of the iff condition becomes $(L' U)|_{\VVV_\SSS} = (U U^\dagger L' U S)|_{\VVV_\SSS}$, and these are indeed equal!
+        Conversely, suppose $L$ and $L'$ satisfy the right hand side $(L' U)|_{\VVV_\SSS} = (U L)|_{\VVV_\SSS}$.
+        Therefore $(U^\dagger L' U)|_{\VVV_\SSS} = (U L)|_{\VVV_\SSS}$,
+        and hence $U^\dagger L' U \SSS = P \SSS$ by \Cref{lem:paulis_equal_on_codespace_are_equal_up_to_stabilizer}.
+        So indeed $\phi(\overline{L'}) = \overline{U^\dagger L' U} = \overline{L}$, as required.
+    \end{proof}
+\end{proposition}
+
+Now for the Pauli measurements.
+Hopefully it's clear that in \textbf{Case 1} there's really nothing to prove!
+But \textbf{Case 2} and \textbf{Case 3} are non-trivial.
+
+\begin{proposition}
+    In \textbf{Case 2}, the induced homomorphism $\phi$ satisfies \Cref{eq:induced_homomorphism_iff_relation}.
+    That is, after measuring $P$ and getting outcome $m$, we have $\phi(\overline{L'}) = \overline{L} \iff (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS}$, where $A_m = \Pi_{mP}$.
+    \begin{proof}
+        In one direction, assume $\overline{L} = \phi(\overline{L'}) \coloneqq \overline{L'}$, for $L \in \NNN(\SSS)$ and $L' \in \NNN(\SSS')$.
+        Hence $L = L'S$ for some $S \in \SSS$.
+        The right hand side of the iff condition becomes $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$.
+        Subbing $L = L'S$ into the right hand side and absorbing the $S$, this becomes $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L')|_{\VVV_\SSS}$.
+        Now note that since $L' \in \NNN(\SSS')$ and $mP \in \SSS'$, we know $L'$ and $P$ commute, hence so do $L'$ and $\Pi_{mP}$, so $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L')|_{\VVV_\SSS}$ as required.
+
+        Conversely, suppose $L \in \NNN(\SSS)$ and $L' \in \NNN(\SSS')$ satisfy the right hand side equality $(L'
+        \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$.
+%        Conversely, suppose $L \in \NNN(\SSS)$ and $L' \in \NNN(\SSS')$ satisfy the right hand side equality $(L'
+%        \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$,
+%        or equivalently $\Pi_{\SSS} L' \Pi_{mP} \Pi_{\SSS} = \Pi_{\SSS} \Pi_{mP} L \Pi_{\SSS}$.
+        By definition $L'$ commutes with $mP$ because $mP \in \SSS'$, hence $(\Pi_{mP} L')|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$.
+        Now, since $L'$ and $L$ restricted to $\VVV_\SSS$ have images again inside $\VVV_\SSS$, and we've shown $\Pi_{mP}|_{\VVV_\SSS}$ is a unitary up to normalisation, we can cancel the $\Pi_{mP}$ from both sides to get $L'|_{\VVV_\SSS} = L|_{\VVV_\SSS}$
+        Then by \Cref{lem:paulis_equal_on_codespace_are_equal_up_to_stabilizer} we have $L'\SSS = L\SSS$, i.e. $\overline{L} = \phi(\overline{L'}) \coloneqq \overline{L'}$ as required.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    In \textbf{Case 3}, the induced homomorphism $\phi$ satisfies \Cref{eq:induced_homomorphism_iff_relation}.
+    That is, after measuring $P$ and getting outcome $m$, we have $\phi(\overline{L'}) = \overline{L} \iff (L' A_m)|_{\VVV_\SSS} = (A_m L)|_{\VVV_\SSS}$, where $A_m = \Pi_{mP}$.
+    \begin{proof}
+        The first direction is proved word for word as it was in the previous proposition.
+%        The first direction goes exactly as in the previous proposition.
+%        Suppose $\overline{L} = \phi(\overline{L'}) \coloneqq \overline{L'}$, for $L \in \NNN(\SSS)$ and $L' \in \NNN(\SSS')$.
+%        Hence $L = L'S$ for some $S \in \SSS$.
+%        The right hand side of the iff condition becomes $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$.
+%        Subbing $L = L'S$ into the right hand side and absorbing the $S$, this becomes $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L')|_{\VVV_\SSS}$.
+%        Now note that since $L' \in \NNN(\SSS')$ and $mP \in \SSS'$, we know $L'$ and $P$ commute, hence so do $L'$ and $\Pi_{mP}$, so $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L')|_{\VVV_\SSS}$ as required.
+        Conversely, suppose $L' \in \NNN(\SSS')$ and $L \in \NNN(\SSS)$ with $\overline{L} \in im(\phi)$ satisfy the right hand side equality $(L' \Pi_{mP})|_{\VVV_\SSS} = (\Pi_{mP} L)|_{\VVV_\SSS}$, or equivalently $L' \Pi_{mP} \Pi_{\SSS} = \Pi_{mP} L \Pi_{\SSS}$.
+        By \Cref{lem:if_in_im_phi_then_commutes_with_P}, since $L \in im(\phi)$ it must commute with $P$, hence with $\Pi_{mP}$, so we get $L' \Pi_{mP} \Pi_{\SSS} = L \Pi_{mP} \Pi_{\SSS}$.
+        Next, note $\Pi_{mP} \Pi_{\SSS}$ is exactly $\Pi_{\SSS'}$, so we have $L' \Pi_{\SSS'} = L \Pi_{\SSS'}$, and hence by \Cref{lem:paulis_equal_on_codespace_are_equal_up_to_stabilizer} $L' = LS'$ for some $S' \in \SSS'$.
+        But the only difference between $\SSS$ and $\SSS'$ is that the latter has the extra generator $mP$.
+        So we can write $S' = S(mP)^a$ for $a \in \{0, 1\}$ and $S \in \SSS$.
+        We want to show that $\overline{L} = \phi(\overline{L'}) \coloneqq \overline{L'}$.
+        In the definition of $\phi(\overline{Q'})$, we assumed without loss of generality that the representative $Q'$ commuted with $\XXX_k$; if not, we can multiply it by the stabilizer $m\ZZZ_k = mP$.
+        Hence when applying $\phi$ to the coset containing $L' = LS(mP)^a$ above, we take the representative $L' = LS$.
+        Thus $\phi(\overline{L'}) = \phi(\overline{LS}) = \overline{LS} = \overline{L}$ as required.
+    \end{proof}
+\end{proposition}
+
+\begin{lemma}\label{lem:if_in_im_phi_then_commutes_with_P}
+    In \textbf{Case 3}, if $\overline{L} \in im(\phi)$ then $L$ commutes with $P$.
+    \begin{proof}
+        Without loss of generality we assume $P = \ZZZ_k$.
+        $L \in \NNN(\SSS)$ can be written $i^c \XXX_1^{a_1} \ZZZ_1^{b_1} \ldots \XXX_k^{a_k} \ZZZ_k^{b_k} S$, where $S \in \SSS$.
+        This anti-commutes with $P = \ZZZ_k$ iff $a_k = 1$.
+        But no such $L$ is in $im(\phi)$, because $im(\phi) = \langle \ol{i}, \ol{\XXX}_1, \ol{\ZZZ}_1, \ldots, \ol{\XXX}_{k-1}, \ol{\ZZZ}_{k-1} \rangle \leq \NNN(\SSS)/\SSS$, as can be seen from the definition of $\phi$ in terms of generators in \Cref{eq:case_3_phi_definition_generators}.
+    \end{proof}
+\end{lemma}
+

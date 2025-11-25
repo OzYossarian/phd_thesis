@@ -1,0 +1,82 @@
+\section{Stabilizer codes}\label{sec:stabilizer_codes}
+
+A \emph{stabilizer code} is defined by a stabilizer group $\mathcal{S}$ on $n$ physical qubits.
+The \emph{codespace} is the corresponding stabilizer subspace $\mathcal{V}_{\mathcal{S}}$, which has dimension $2^k$ where $k = n - r$ and $r$ is the rank of $\SSS$.
+We say $k$ is the number of \emph{logical qubits} encoded by the code.
+
+The quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ is then called the \emph{logical Pauli group}.
+As we saw above, this quotient group is isomorphic to $\mathcal{P}_k$, the Pauli group on $k$ qubits (hence the name!).
+Cosets in this group represent logical Pauli operations on the encoded qubits: any two representatives $P$ and $Q$ from the same coset $\overline{P} = \overline{Q}$ implement the same logical operation (they differ by an element of $\mathcal{S}$, which by definition acts as the identity on the codespace).
+
+\subsection{Implementation}\label{subsec:stabilizer_codes_implementation}
+
+Operationally, a stabilizer code is implemented as follows.
+Given $n$ qubits, we repeatedly measure a generating set $\{S_1, \ldots, S_r\}$ of the stabilizer group to project the system into the codespace and keep it there.
+In the absence of any errors, each measurement $S_j$ should give the outcome $+1$ in every round, confirming that the state is still stabilized by $\mathcal{S}$.
+We say each pair of measurements of $S_j$ in consecutive rounds form a \textit{detector}.
+
+In general, a detector is a set of Pauli measurements $\{P_1, \ldots, P_d\}$ with the property that the product of their measurement outcomes is deterministic in the absence of errors.
+Labelling their measurement outcomes as $m_1, \ldots, m_d$, we'll write detectors as \textit{formal products} $D = m_1 \ldots m_d$ with powers modulo $2$.
+I personally think writing these as formal products is incredibly convenient, but I seem to have found myself in a bit of a minority there.
+So an explainer is perhaps in order.
+
+`Formal' just means we're viewing $m_j$ as a variable rather than a number $\pm 1$, much like when we write something like $x^2 + x + 1$.
+`Product' means we are allowed to multiply these variables $m_j$ and $m_k$ together to get $m_j m_k$, which we can in turn multiply with other such expressions, and so on.
+It also lets us use the variable $1$, which behaves as expected: $1 \cdot m_j = m_j = m_j \cdot 1$.
+We can use power notation for multiplication: $m_j m_j \eqqcolon m_j^2$.
+That we're taking `powers modulo 2' just means $m_j^n \coloneqq m_j^{n \text{ mod } 2}$, so for example $m_j^2 = m_j^0 = 1$.
+The reason we enforce this is that ultimately these formal products will be \textit{evaluated} by assigning numbers $\pm 1$ to each variable $m_j$ (just like evaluating a polynomial $f(x_1, \ldots, x_d)$).
+Since $(\pm 1)^2 = 1$, we enforce this at the formal level too.
+We note that the set of all detectors form a group $\DDD$ under this product; if $D = m_1 \ldots m_d$ and $D' = m_1' \ldots m'_{d'}$ are detectors, then by definition in the absence of noise they evaluate to determinstic values $\pm 1$.
+But then certainly the product of these two values is again deterministic, so $DD' = m_1 \ldots m_d m_1' \ldots m'_{d'}$ is another detector.
+We denote the group of all detectors on a given circuit by $\DDD$.
+
+Explainer over -- let's get back to it.
+If a detector $D = m_1 \ldots m_d$ deterministically evaluates to $\pm 1$ in the absence of errors, but during a given implementation of the code evaluates to $\mp 1$ instead, then we say the detector has been \textit{violated}.
+The set of all violated detectors during this implementation of the code is the \textit{syndrome}.
+The syndrome is what's passed to a \textit{decoder}.
+A decoder is a classical algorithm whose job is to figure out what errors are likely to have caused these detectors to be violated, then correct these errors.
+We will discuss this later in \Cref{sec:decoding}.
+
+\begin{example}\label{ex:422_stabilizer_code}
+    Consider $\SSS = \langle X_1 X_2 X_3 X_4, Z_1 Z_2 Z_3 Z_4 \rangle \leq \PPP_4$, as in \Cref{ex:422_stabilizer_group_updates}.
+    Viewed as a stabilizer code, this is called the $\qcode{4, 2, 2}$ code (it uses $4$ physical qubits to encode $2$ logical qubits with an \textit{algebraic distance} of $2$; more on distance later).
+    It has logical Pauli group:
+    \begin{equation}
+        \mathcal{N(S)/S} = \langle
+            \overline{i},
+            \overline{\XXX_1} = \overline{X_1 X_2}, \overline{\ZZZ_1} = \overline{Z_1 Z_3},
+            \overline{\XXX_2} = \overline{X_1 X_3}, \overline{\ZZZ_2} = \overline{Z_1 Z_2}
+        \rangle
+    \end{equation}
+    To implement this stabilizer code, we can just repeatedly measure the stabilizer generating set of $X_1 X_2 X_3 X_4$ and $Z_1 Z_2 Z_3 Z_4$.
+    As we saw in \Cref{ex:422_stabilizer_group_updates}, after the initial $0$th round of measurements, every measurement will be deterministic.
+    That is, every such measurement will form a detector.
+    In the notation of \Cref{ex:422_stabilizer_group_updates}, every $a_j a_{j+1}$ and $b_j b_{j+1}$ will be a detector, for all $j \geq 0$.
+\end{example}
+
+\begin{example}\label{ex:colour_code_stabilizer_code}
+    Suppose we place a honeycomb lattice on a torus, as in Figure TODO.
+    Let $V, E, F$ denote the vertices, edges and faces of this lattice respectively.
+    The honeycomb lattice has the property that it's three-valent; every vertex has degree three.
+    It's also three-face-colourable; every face can be assigned one of three colours such that no faces that share an edge have the same colour.
+    (In fact, we can define the colour code on any planar graph with this property -- it need not be the honeycomb code specifically.)
+    Edges then inherit a colouring -- an edge $e$ that borders faces $f_{\kappa}$ and $f_{\kappa'}$ of colours $\kappa \neq \kappa'$ respectively is assigned the third colour $\kappa''$.
+    Throughout this thesis, we use colours cyan ($\colourful{c}$), magenta ($\colourful{m}$) and yellow ($\colourful{y}$).
+    So we can partition faces $F$ into $F = F_{\colourful{c}} \cup F_{\colourful{m}} \cup F_{\colourful{y}}$, and edges $E = E_{\colourful{c}} \cup E_{\colourful{m}} \cup E_{\colourful{y}}$.
+
+    Now, at every vertex $v \in V$, suppose we place a qubit, and for every face $f_\kappa \in F$ define weight-six \textit{face operators} $\dcccOp{f}{\kappa}{X} = \prod_{v \in f_{\kappa}} X_v$ and $\dcccOp{f}{\kappa}{Z} = \prod_{v \in f_{\kappa}} Z_v$, where $v \in f$ means $v$ is a vertex of face $f$.
+    Define:
+    \begin{equation}
+        \SSS = \pres{\dcccOp{f}{\kappa}{X}, \dcccOp{f}{\kappa}{Z} : f_{\kappa} \in F} \leq \PPP_{|V|}
+    \end{equation}
+    This stabilizer group $\SSS$ defines the \textit{colour code}, a well-known static stabilizer code.
+    On a torus it has logical Pauli group $\NNN(\SSS)/\SSS \cong \PPP_4$, so encodes $4$ logical qubits.
+    For any edge $e = (u, v)$, define \textit{edge operators} $\dcccOp{e}{\kappa}{X} = X_u X_v$ and $\dcccOp{e}{\kappa}{Z} = Z_u Z_v$.
+    We can choose representatives $\XXX_j$ and $\ZZZ_j$ for a generating set of cosets of $\NNN(\SSS)/\SSS$ to be certain `loops' of these edge operators.
+    That is, we can arbitrarily pick two colours $\kappa$ and $\kappa'$, and consider `loop' operators as shown in Figure TODO for Paulis $X$ and $Z$.
+    We have two Paulis $X$ and $Z$, two non-trivial loops on a torus, and two colours; each of these eight combinations gives one of $\XXX_1, \ZZZ_1, \ldots, \XXX_4, \ZZZ_4$.
+
+    To implement this code, we again just measure the given generators of $\SSS$ -- here it's the $X$ and $Z$ face operators.
+    After the initial $0$th round of measurements, every such measurement is deterministic, so forms a detector.
+\end{example}

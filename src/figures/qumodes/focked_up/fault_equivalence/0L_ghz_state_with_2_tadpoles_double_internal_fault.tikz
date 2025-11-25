@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (3.5, 0) {};
+		\node [style=none] (1) at (5, 1) {};
+		\node [style=none] (2) at (5, -1) {};
+		\node [style=none] (3) at (4.5, 0.2) {$\vdots$};
+		\node [style={rn_phase}] (4) at (2, 1) {$\chi_p$};
+		\node [style={rn_phase}] (5) at (2, -1) {$\chi_p$};
+		\node [style={gn_phase}] (8) at (0.5, 1) {$0_L$};
+		\node [style={gn_phase}] (9) at (0.5, -1) {$0_L$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1.center) to (0);
+		\draw [in=180, out=-75] (0) to (2.center);
+		\draw [in=0, out=105] (0) to (4);
+		\draw [in=-105, out=0] (5) to (0);
+		\draw (4) to (8);
+		\draw (9) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

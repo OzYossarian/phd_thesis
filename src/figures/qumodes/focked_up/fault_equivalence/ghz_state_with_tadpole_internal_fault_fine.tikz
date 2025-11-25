@@ -1,0 +1,50 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-6, 0) {};
+		\node [style=none] (1) at (-4.5, 1) {};
+		\node [style=none] (2) at (-4.5, -1) {};
+		\node [style=none] (3) at (-5, 0.2) {$\vdots$};
+		\node [style=gn] (4) at (-9.5, 0) {};
+		\node [style={gn_phase}] (10) at (-7, 0) {$\chi_{q}$};
+		\node [style={rn_phase}] (11) at (-8.5, 0) {$\chi_{p}$};
+		\node [style=gn] (20) at (-0.5, 0) {};
+		\node [style=none] (21) at (1, 1) {};
+		\node [style=none] (22) at (1, -1) {};
+		\node [style=none] (23) at (0.5, 0.2) {$\vdots$};
+		\node [style=gn] (24) at (-2.5, 0) {};
+		\node [style={gn_phase}] (25) at (-1.5, 0) {$\chi_{q}$};
+		\node [style=gn] (27) at (4.5, 0) {};
+		\node [style=none] (29) at (6, -1) {};
+		\node [style=none] (30) at (6, 0.2) {$\vdots$};
+		\node [style=gn] (31) at (3, 0) {};
+		\node [style={gn_phase}] (32) at (6, 1) {$\chi_{q}$};
+		\node [style=none] (35) at (-3.5, 0) {$=$};
+		\node [style=none] (36) at (2, 0) {$=$};
+		\node [style=none] (37) at (7, 1) {};
+		\node [style=none] (38) at (7, -1) {};
+		\node [style=gn] (39) at (9, 0) {};
+		\node [style=none] (40) at (10.5, -1) {};
+		\node [style=none] (41) at (10.5, 0.2) {$\vdots$};
+		\node [style={gn_phase}] (43) at (10.5, 1) {$\chi_{q}$};
+		\node [style=none] (44) at (8, 0) {$=$};
+		\node [style=none] (45) at (11.5, 1) {};
+		\node [style=none] (46) at (11.5, -1) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1.center) to (0);
+		\draw [in=180, out=-75] (0) to (2.center);
+		\draw (0) to (4);
+		\draw [in=75, out=-180] (21.center) to (20);
+		\draw [in=180, out=-75] (20) to (22.center);
+		\draw [in=360, out=180] (20) to (24);
+		\draw [in=180, out=-75] (27) to (29.center);
+		\draw (27) to (31);
+		\draw [in=75, out=-180] (32) to (27);
+		\draw (29.center) to (38.center);
+		\draw (32) to (37.center);
+		\draw [in=180, out=-75] (39) to (40.center);
+		\draw [in=75, out=-180] (43) to (39);
+		\draw (40.center) to (46.center);
+		\draw (43) to (45.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

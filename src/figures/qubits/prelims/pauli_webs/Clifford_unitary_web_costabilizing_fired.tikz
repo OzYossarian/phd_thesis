@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=medNE] (0) at (0, 0) {$U$};
+		\node [style=none] (3) at (-4, 1) {};
+		\node [style=none] (5) at (1, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-2.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (11) at (0, 1) {};
+		\node [style=none] (12) at (1.75, 1) {};
+		\node [style=none] (13) at (-4, -1) {};
+		\node [style=none] (14) at (0, -1) {};
+		\node [style=none] (15) at (1.75, -1) {};
+		\node [style={rn_phase}] (20) at (-1.5, 1) {$b_1\pi$};
+		\node [style={gn_phase}] (21) at (-3, 1) {$a_1\pi$};
+		\node [style={rn_phase}] (22) at (-1.5, -1) {$b_1\pi$};
+		\node [style={gn_phase}] (23) at (-3, -1) {$a_1\pi$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (11.center) to (12.center);
+		\draw (3.center) to (11.center);
+		\draw (14.center) to (15.center);
+		\draw (13.center) to (14.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,37 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (2, 3) {};
+		\node [style=none] (1) at (3, 3.5) {};
+		\node [style=none] (2) at (3, 2.5) {};
+		\node [style=none] (6) at (2, 1.45) {$\vdots$};
+		\node [style=gn] (7) at (2, -3) {};
+		\node [style=none] (8) at (3, -2.5) {};
+		\node [style=none] (9) at (3, -3.5) {};
+		\node [style=gn] (12) at (-2, 2) {};
+		\node [style=gn] (13) at (-2, -2) {};
+		\node [style=gn] (16) at (2, 0) {};
+		\node [style=none] (17) at (3, 0.5) {};
+		\node [style=none] (18) at (3, -0.5) {};
+		\node [style=none] (19) at (2, -1.3) {$\vdots$};
+		\node [style={gn_web}] (20) at (-0.25, 3) {$a_1$};
+		\node [style={gn_web}] (21) at (0.25, 2) {$a_j$};
+		\node [style={gn_web}] (22) at (-1.75, 0.5) {$a_{n/2}$};
+		\node [style={gn_web}] (23) at (-1.75, -0.5) {$-a_{1}$};
+		\node [style={gn_web}] (24) at (0.25, -2) {$-a_j$};
+		\node [style={gn_web}] (25) at (-0.25, -3.25) {$-a_{n/2}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=45, out=-180] (1.center) to (0);
+		\draw [in=180, out=-45] (0) to (2.center);
+		\draw [in=45, out=-180] (8.center) to (7);
+		\draw [in=180, out=-45] (7) to (9.center);
+		\draw [in=45, out=-180] (17.center) to (16);
+		\draw [in=180, out=-45] (16) to (18.center);
+		\draw [style=zweb, bend left=15] (12) to (16);
+		\draw [style=zweb, bend right=15] (13) to (16);
+		\draw [style=zweb] (12) to (0);
+		\draw [style=zweb] (12) to (7);
+		\draw [style=zweb] (13) to (0);
+		\draw [style=zweb] (13) to (7);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (0, 0) {};
+		\node [style=squareNE] (1) at (1.5, 0) {$g$};
+		\node [style=none] (2) at (3, 1) {};
+		\node [style=none] (3) at (3, -1) {};
+		\node [style=none] (4) at (2.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=squareNE] (5) at (-1.5, 0) {$f$};
+		\node [style=none] (6) at (-3, -1) {};
+		\node [style=none] (7) at (-3, 1) {};
+		\node [style=none] (8) at (-2.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (1) to (2.center);
+		\draw [bend right] (1) to (3.center);
+		\draw [style=zweb] (0.center) to (1);
+		\draw [style=yweb, bend left] (5) to (6.center);
+		\draw [style=zweb, bend right] (5) to (7.center);
+		\draw [style=xweb] (5) to (0.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

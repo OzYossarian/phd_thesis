@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (3) at (-1.5, 0) {};
+		\node [style=none] (4) at (1.5, 0) {};
+		\node [style=hdot] (5) at (0, 0) {};
+		\node [style={rn_phase}] (6) at (0.75, 0) {$\pi$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (3.center) to (5);
+		\draw (5) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

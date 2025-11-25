@@ -1,0 +1,26 @@
+\section{Intro}
+
+\begin{itemize}
+    \item Maybe discuss original motivation? Markus had dynamically condensed colour codes to get surface codes, and could dynamically implement Hadamard (essentially) via measurement schedule. But if he could instead condense some other code and end up with a colour code, he hoped to be able to dynamically implement the full Clifford group just via measurement. In parallel, Psi had shown that you can get to condensed colour codes from surface code using ZX. So I said I reckon I can get to condensed unknown code from colour code using ZX. And Margarita et al. did the other corner of the square, so to speak.
+    \item Note that Ben finished the story here essentially with his first paper - Floquetifying any stabilizer code to just weight one and two measurements.
+\end{itemize}
+
+In this chapter, we look at how we can take a static stabilizer code and reinterpret it as a dynamic stabilizer code in which all Pauli measurements are of weight at most one or two.
+On the face of it, this sounds like a win -- high-weight measurements are fiddly to implement without spreading errors, the most common method being to add extra flag circuitry to the syndrome extraction circuits. \teague{Add an example here? Some reasonable colour code syndrome extraction circuit? Plus naive one. Also look at Craig's colour code circuits?} Weight-one and -two measurements, on the other hand, are simple enough; weight-one measurements literally couldn't be simpler, and weight-two measurements have the nice property that implementing them via an auxiliary qubit and controlled Pauli gates are always simply-fault-tolerant under circuit-level noise \teague{TODO prove!}.
+Moreover, some hardware platforms can even implement weight-two Pauli measurements natively.
+
+However, the trade-off is that we must combine more measurement results together to form a detector.
+The more measurement results we combine together to form a detector, the more likely the detector is to be violated in any given run of the circuit, the harder the decoder's job is to figure out what faults occurred and fix them, and the more likely we are to end up with a logical error, and hence the wrong output from our logical computation.
+One can take a closer look at this trade-off analytically or empirically (or both!). \teague{Do these analytics at end of this section! For empirical approach, we have Craig's simulations of DCCCs, and Henri's work}
+
+That said, one can even object to the premise of the last two paragraphs!
+Given a stabilizer code defined by a generating set of stabilizers, some of which have weight more than two, one can point out that almost any circuit in the literature that implements this code will ultimately just use weight-one measurements of auxiliary qubits to perform the high-weight measurements.
+So is it really fair to say we've reduced the weights of the required measurements?
+I would absolutely agree with this complaint.
+These days I mostly view the Floquetification procedure we'll describe here (and its generalisation to all stabilizer codes in Ben's paper TODO) as just a rather elaborate syndrome extraction scheme.
+The key thing from a QEC perspective is to ensure that throughout the procedure one isn't introducing circuit locations where if an error occurs then it can spread to many more qubits.
+I confess that this is something we absolutely did not do during this work; my excuse is that this was the early days of the Floquet code craze, and it was novel back then to show that such a Floquetification procedure could even be found for a particular code.
+As has since been made crystal clear by Ben Rodatz, one can indeed do this for all stabilizer codes, and in a much more sensible `distance-preserving' way [TODO].
+A longer paragraph about the actual original motivation for this project is deferred to the end of this section TODO.
+
+\teague{Paragraph about connectivity constraints? We can do colour code on square lattice, Craig does honeycomb code on degree 3 lattice. But naively one can implement any code on any topology (e.g. a line) using enough SWAP gates. Other perks - if every qubit at some point gets measured out then this is good for leakage.}

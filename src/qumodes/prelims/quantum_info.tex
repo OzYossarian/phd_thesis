@@ -1,0 +1,165 @@
+\section{Pure state quantum information}
+
+Finite-dimensional quantum information theory takes place inside a complex vector space $\mathbb{C}^{d^n}$
+and $n$-qudit states are equivalence classes of vectors in this space.
+In the continuous-variable setting, just to get as far as saying what a state is takes us on a bit of a journey.
+We'll give a whistle-stop tour here, but since the technical details won't be relevant for this thesis, we'll skip all the scary bits.
+
+\subsection{The Hilbert space $\mathcal{L}^2(\mathbb{R}^n)$}
+
+The continuous-variable analogue of a qudit is called a \textit{qumode}.
+To define $n$-qumode states, we start with a particular infinite-dimensional complex vector space denoted $\mathcal{L}^2(\mathbb{R}^n)$.
+Elements of this space are equivalence classes of certain functions $\mathbb{R}^n \to \mathbb{C}$.
+These functions $f$ must be absolutely square-integrable, i.e.\ $\int_{\mathbb{R}^n} dx |f(x)|^2$ must converge.
+Strictly speaking, the integral here is the Lebesgue integral rather than the Riemann integral, but this is the first of many technicalities we'll sweep under the carpet.
+The equivalence relation is that $f \sim g \iff f - g$ is a null function, where again we won't define null functions -- for us it'll be fine to forget elements are equivalence classes, and just view them as functions.
+
+This space comes with an inner product $\langle f, g \rangle = \int_{\mathbb{R}^n} d\boldsymbol{x} f^*(\boldsymbol{x}) g(\boldsymbol{x})$, where $(-)^*$ denotes complex conjugation.
+A \textit{Hilbert space} is defined to be a \textit{complete} inner product space.
+It won't be relevant for us to say what this means; all we'll note is that $\mathcal{L}^2(\mathbb{R}^n)$ with the inner product above is indeed complete, so is a Hilbert space.
+Furthermore, one can define a \textit{topology} on this space; this is yet another detail we won't go into, but it makes it a \textit{topological vector space}, which lets us talk about notions like \textit{continuity} in the coming subsections.
+
+\teague{Something about this space being decomposable into tensor products of $\LLL^2(\RR)$}
+
+\subsection{Schwartz space and rigged Hilbert spaces}
+
+Within our Hilbert space $\mathcal{H} = \mathcal{L}^2(\mathbb{R}^n)$, there lives a subspace $\Phi \leq \mathcal{H}$ called \textit{Schwartz space}.
+This is the space of all functions that are \textit{infinitely differentiable} and \textit{rapidly decaying}.
+Intuitively, this means such functions $\psi: \mathbb{R}^n \to \mathbb{C}$ are smooth, and as $|| \boldsymbol{x} || \to \infty$ they quickly become flat and tend to $0$.
+This subspace inherits many of the nice properties of $\mathcal{L}^2(\mathbb{R}^n)$; in particular, it too is a topological Hilbert space.
+
+Now, for any topological complex vector space $V$, we can define the continuous dual space $V^*$ and continuous conjugate-dual space $V^\times$.
+The continuous dual space is the space of all continuous linear maps from $V$ to the underlying field $\mathbb{C}$.
+That is, for $f \in V^*$, the linear part means we have $f(\alpha u + \beta v) = \alpha f(u) + \beta f(v)$.
+We won't define what it means for this function to be continuous.
+Analogously, for $g \in V^\times$, we have $g(\alpha u + \beta v) = \alpha^* g(u) + \beta^* g(v)$, where $(-)^*$ denotes complex conjugation.
+So $g^*(x) \coloneqq (g(x))^*$.
+The notation is unfortunate, in that $(-)^*$ is also used for the continuous dual space, which doesn't care about complex conjugation.
+
+We will be interested in the continuous dual and conjugate-dual spaces of Schwartz space $\Phi$ and the Hilbert space $\mathcal{H} = \mathcal{L}^2(\mathbb{R}^n)$ it sits in.
+These form two chains of relations:
+\begin{equation}\label{eq:rigged_spaces_separate}
+\Phi \leq \HHH \cong \HHH^* \leq \Phi^* \quad \text{ and } \quad \Phi \leq \HHH \cong \HHH^\times \leq \Phi^{\times}
+\end{equation}
+We can squish all this into one diagram, and combine this with the fact that the continuous dual and conjugate-dual of Schwartz space are isomorphic:
+\begin{equation}\label{eq:rigged_spaces_combined}
+TODO
+\end{equation}
+Specifically, the isomorphism $\Phi^* \cong \Phi^\times$ can be written $F \mapsto F^*$, where $F^*(\psi) = (F(\psi))^*$.
+
+\subsection{Pure states}
+
+With that, we're done; we can now define pure qumode states.
+We'll divide these into two classes; \textit{physical} and \textit{generalised}.
+Physical pure $n$-qumode states are equivalence classes of vectors in the Hilbert space $\mathcal{H} = \mathcal{L}^2(\mathbb{R}^n)$, where the equivalence relation is $f \sim g \iff f = \lambda g$ for some non-zero $\lambda \in \mathbb{C}$.
+Generalised states are elements of $\Phi^*$, i.e.\ continuous linear functionals on Schwartz space.
+So by \Cref{eq:rigged_spaces_separate}, physical states are a subspace of the generalised states, up to isomorphism.
+Indeed, given physical state $f \in \mathcal{H}$, we can identify it with the functional $\psi \mapsto \langle f,\psi \rangle = \int_{\mathbb{R}^n} d\boldsymbol{x} f^*(\boldsymbol{x}) \psi(\boldsymbol{x})$.
+Going forward, if we just write `state', we mean a generalised state.
+
+\subsection{Dirac's braket notation in infinite dimensions}
+
+As in the finite-dimensional case, we can write states using Dirac's braket notation as kets $\ket{\psi}$.
+Familiarity with the braket notation is maybe more of a hindrance than a help here!
+For example, we can now write things like $\ket{\psi}(\phi)$ for $\phi \in \Phi$; this means we're applying the functional $\ket{\psi}$ to the Schwartz function $\phi$, giving us a complex number $\ket{\psi}(\phi)$.
+This possibly looks quite weird if you're only used to finite-dimensional braket notation.
+
+A bra $\bra{\psi}$ can then be defined to be the conjugate $\ket{\psi}^*$.
+That is, we define $\bra{\psi}(\phi) = \ket{\psi}^*(\phi) = (\ket{\psi}(\phi))^*$.
+The problems start when we want to define expressions of the form $\ketbra{\psi}{\phi}$ and $\braket{\psi | \phi}$.
+In analogy with the finite-dimensional case, we'd probably want $\ketbra{\psi}{\phi}$ to be something that maps a state to a state, and $\braket{\psi | \phi}$ to be a complex number.
+We can achieve the former by defining $(\ketbra{\psi}{\phi})(\ket{\theta}) = \ket{\psi}\braket{\phi|\theta}$, so now if we can just find a way to interpret $\braket{\phi|\theta}$ as a complex number we're done.
+
+Unfortunately, this isn't possible in full generality (or if it is, I can't find any references for it!).
+But it is at least possible in all the cases we'll care about in this thesis.
+Firstly, note that since $\Phi^* \cong \Phi^\times$ under the map $\ket{\psi} \mapsto \ket{\psi}^*$, we can freely identify bras and kets.
+Also, we'll identify $\Phi$ and $\mathcal{H}$ with their copies in $\Phi^*$ and $\Phi^\times$ as in \Cref{eq:rigged_spaces_combined}.
+So, when both $\ket{\psi} = f$ and $\ket{\phi} = g$ are in fact in the Hilbert space $\mathcal{H}$, then as in the finite-dimensional case we can define $\braket{\psi|\phi}$ to be the inner product $\langle \ket{\psi}, \ket{\phi} \rangle = \langle f, g \rangle = \int_{\mathbb{R}^n} d\boldsymbol{x} f^*(\boldsymbol{x}) g(\boldsymbol{x})$.
+Next, when one of the two $\ket{\psi} = F$ is in $\Phi^* - \mathcal{H}^*$ but the other one $\ket{\phi} = \phi$ is strictly in $\Phi$, then we can define $\braket{\psi|\phi}$ to be the application of functional $\ket{\psi} = F$ to the Schwartz function $\ket{\phi} = \phi$; that is, $\braket{\psi|\phi} = \ket{\psi}(\ket{\phi}) = F(\phi)$.
+If instead both $\ket{\psi}$ and $\ket{\phi}$ are in $\Phi^* - \mathcal{H}^*$, then unless we know something more about exactly what states $\ket{\psi}$ and $\ket{\phi}$ are, we're stuck.
+We'll see examples of how to proceed in certain scenarios in the next subsection.
+%For example, in the next subsection, we'll see how to proceed when $\ket{\psi}$ and $\ket{\phi}$ are \textit{generalised eigenstates} of the \textit{position and momentum operators}.
+
+\subsection{Rock, paper, scissors? Fock, position, momentum!}
+
+We now introduce the Fock states, position operator and momentum operator.
+The position and momentum operators will in turn have \textit{generalised eigenstates}.
+But we'll begin with the Fock states because they really are physical states, so they're perhaps an easier starting point.
+
+We'll first just state the definition (which is pretty horrible looking) and then break it down.
+For all $n \in \NN_0 = \{0, 1, \ldots\}$, we have:
+\begin{equation}\label{eq:fock_state_defn}
+    \ket{n}_F = \frac{1}{\sqrt{2^n n!}} \frac{1}{\pi^{1/4}} H_n(\frac{x}{\sqrt{2}}) e^{\frac{-x^2}{4}}
+\end{equation}
+The easy bit is $\frac{1}{\sqrt{2^n n!}} \frac{1}{\pi^{1/4}}$; this is just a real number, that gets (exponentially!) smaller as $n$ gets bigger.
+Then we have $e^{\frac{-x^2}{4}}$ at the end -- this is sometimes called \textit{a Gaussian envelope}.
+We can draw its graph:
+\teague{TODO}
+Finally, we have $H_n(\frac{x}{\sqrt{2}})$.
+The $\frac{1}{\sqrt{2}}$ is just a rescaling of the interesting part $H_n(x)$, the $n$th Hermite polynomial.
+These are defined recursively:
+\begin{equation}\label{eq:hermite_polynomial_defn}
+    \begin{aligned}
+        H_0(x) &= 1 \\
+        H_1(x) &= 2x \\
+        H_n(x) &= 2x H_{n-1}(x) - 2(n-1)H_{n-2}(x) \text{ for $n \geq 2$}
+    \end{aligned}
+\end{equation}
+As far as this thesis is concerned, I reckon the only thing you need to know about these (if anything!) is that $H_n$ is a degree $n$ polynomial.
+Graphed, these look like:
+
+So altogether, the Fock state $\ket{n}_F$ is essentially a degree $n$ polynomial $\mathbb{R} \to \mathbb{C}$, multiplied by a Gaussian envelope so that it flattens and decays to $0$ sufficiently quickly as $x$ tends to infinity, and multiplied by a prefactor so that TODO!
+It's also smooth (infinitely differentiable).
+Hence it's an element of not just the Hilbert space $\HHH = \LLL^2(\mathbb{R})$ but Schwartz space $\Phi \leq \HHH$.
+Furthermore, it can be shown that the Hermite polynomials form a basis for the complex vector space of functions $\mathbb{R} \to \mathbb{C}$ (TODO check), and that the Fock states in turn form a basis for Schwartz space (TODO or all of $\HHH$?).
+Hence we call $\{\ket{n}_F : n \in \NN_0\}$ the \textit{Fock basis}.
+
+Next, we define position and momentum operators.
+These are operators on Schwartz space; they map functions in $\Phi$ to new functions in $\Phi$.
+The position operator $\hat{q}$ is defined as $\hat{q}(\psi(x)) = x\psi(x)$.
+The momentum operator $\hat{p}$ is defined as $\hat{p}(\psi(x)) = -i\hbar \frac{d}{dx} \psi(x)$, where $\hbar$ is Planck's constant.
+Note this is well-defined; Schwartz space operators are infinitely differentiable so $\frac{d}{dx} \psi(x)$ exists.
+If you're new to CV quantum information, you might be wondering if it's annoying that the letter $p$ is used not for position, as one would naively assume, but momentum -- you would be correct.
+
+An eigenvector of an operator $f: \Phi \to \Phi$ on Schwartz space with eigenvalue $\lambda \in \CC$ would be a function $\psi \in \Phi$ such that $f(\psi) = \lambda \psi$.
+\teague{Is it really $\lambda \in \CC$? Or just in $\RR$?}
+A \textit{(continuous) generalised eigenvector} of $f$ with eigenvalue $\lambda \in \CC$ is instead an element $F$ of the continuous dual space $\Phi^*$ such that $F(f(-)) = \lambda F(-)$.
+That is, for all $\psi \in \Phi$, we must have $F(f(\psi)) = \lambda F(\psi)$.
+
+For example, a generalised eigenvector with eigenvalue $q \in \RR$ of the position operator $\hat{q}(\psi(x)) = x\psi(x)$ is a continuous linear functional $Q_q$ satisfying $Q_q(x(\psi(x))) = q Q_q(\psi(x))$.
+The unique functional satisfying this condition is $Q_q(\phi(x)) = \phi(q)$, i.e.\ evaluation at $q$, since then $Q_q(x(\psi(x))) = q\psi(q) = q Q_q(\psi(x))$.
+This functional is often called the \textit{Dirac distribution} and is denoted $\delta_q$.
+Similarly, a generalised eigenvector with eigenvalue $p \in \RR$ of the momentum operator $\hat{p}(\psi(x)) = -i\hbar \frac{d}{dx} \psi(x)$ is a continuous linear functional $P_p$ satisfying $P_p(-i\hbar \frac{d}{dx} \psi(x)) = p P_p(\psi(x))$.
+The unique such functional is $P_p(\phi(x)) = ?$, since then $P_p(-i\hbar \frac{d}{dx} \psi(x)) = ? = p P_p(\psi(x))$.
+In braket notation, we write position eigenstates $Q_q$ as $\ket{q}_Q$ and momentum eigenstates $P_p$ as $\ket{p}_P$.
+We can once again show that they are bases for the space of all continuous linear functionals $\Phi^*$, so we refer to $\{\ket{q}_Q : q \in \mathbb{R}\}$ and $\{\ket{p}_P : p \in \mathbb{R}\}$ as the position and momentum bases respectively.
+\teague{TODO verify everything!}
+
+In the previous subsection, we said bras were just conjugates of kets, and ketbras can be defined in terms of brakets.
+So to be able to use all four of these objects, it just remains to define brakets $\presub{A}{\braket{a | b}}_B$, where $A, B \in \{F, Q, P\}$, and $a$ and $b$ in $\mathbb{N}$ or $\mathbb{R}$ accordingly.
+For Fock states, this is no problem, because they're in Schwartz space.
+If both the bra and ket are Fock states, the braket ${}_F\braket{n | m}_F$ is defined using the inner product on $\HHH = \LLL^2(\mathbb{R})$; this is an ugly calculation but the end result is that ${}_F\braket{n | m}_F = \delta_{n,m}$, the usual Kronecker delta (not to be confused with the Dirac distribution!).
+If just one is a Fock state, the brakets ${}_Q\braket{q | n}_F$ and ${}_P\braket{p | n}_F$ are defined as the application of the functional ${}_Q\bra{q}$ or ${}_P\bra{p}$ to the Schwartz function $\ket{n}_N$.
+The result of this is that ${}_Q\braket{q | n}_F = ?$ and ${}_P\braket{p | n}_F = ?$ \teague{TODO -- if they're nice. Else just leave it as is.}
+If neither are Fock states, then we have three cases.
+First, both could be position eigenstates, so we have ${}_Q\braket{q | q'}_Q$.
+TODO.
+Alternatively, both could be momentum eigenstates, i.e.\ ${}_P\braket{p | p'}_P$.
+TODO.
+Else, we have one of each: ${}_Q\braket{q | p}_P$.
+TODO.
+
+\subsection{Phase space?}
+
+
+
+\subsection{Displacements}
+
+Writing $\HHH = \LLL^2(\RR^n)$, the displacement operator $D(\bsym{q}, \bsym{p})$ for $\bsym{q}, \bsym{p} \in \RR^{n}$ is defined as:
+\begin{equation}\label{eq:displacement_defn}
+    D(\bsym{q}, \bsym{p}) \coloneqq e^{-i2\sqrt{\pi} (\bsym{q}, \bsym{p})^T \odot (\bsym{\hat{q}}, \bsym{\hat{p}})^T}
+\end{equation}
+Equivalently, we can define it by what it does to an element $f(\bsym{x}): \RR^{n} \to \CC \in \HHH$:
+\begin{equation}\label{eq:displacement_defn_action}
+    D(\bsym{q}, \bsym{p})(f(\bsym{x})) = e^{\frac{-i}{2\hbar} \bsym{q} \cdot \bsym{p}} e^{\frac{i}{\hbar} \bsym{x} \cdot \bsym{p}} \psi(\bsym{x} - \bsym{q})
+\end{equation}

@@ -1,0 +1,52 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-6, 0) {};
+		\node [style={rn_phase}] (1) at (-4.5, 1) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (2) at (-4.5, -1) {$\chi_{p_2}$};
+		\node [style=none] (3) at (-3.75, 0.2) {$\vdots$};
+		\node [style=gn] (4) at (-9.5, 0) {};
+		\node [style=none] (10) at (-2, 1) {};
+		\node [style=none] (11) at (-2, -1) {};
+		\node [style={gn_phase}] (12) at (-3, 1) {$\chi_{q_1}$};
+		\node [style={gn_phase}] (13) at (-3, -1) {$\chi_{q_2}$};
+		\node [style={rn_phase}] (14) at (-8.5, 0) {$\chi_{p_3}$};
+		\node [style={gn_phase}] (15) at (-7, 0) {$\chi_{q_3}$};
+		\node [style=gn] (16) at (1, 0) {};
+		\node [style=none] (18) at (2.5, -1) {};
+		\node [style=none] (19) at (4, 0.2) {$\vdots$};
+		\node [style=gn] (20) at (0, 0) {};
+		\node [style=none] (21) at (6.5, 1) {};
+		\node [style=none] (22) at (6.5, -1) {};
+		\node [style={gn_phase}] (23) at (5.5, 1) {$\chi_{q_1}$};
+		\node [style={gn_phase}] (24) at (5.5, -1) {$\chi_{q_2}$};
+		\node [style={gn_phase}] (26) at (2.5, 1) {$\chi_{q_3}$};
+		\node [style=none] (27) at (-1, 0) {$=$};
+		\node [style={rn_phase}] (28) at (4, 1) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (29) at (4, -1) {$\chi_{p_2}$};
+		\node [style=gn] (30) at (8.5, 0) {};
+		\node [style=none] (32) at (10.75, 0.2) {$\vdots$};
+		\node [style=none] (34) at (12.5, 1) {};
+		\node [style=none] (35) at (12.5, -1) {};
+		\node [style={gn_phase}] (36) at (11.5, 1) {$\chi_{q_1 + q_3}$};
+		\node [style={gn_phase}] (37) at (11.5, -1) {$\chi_{q_2}$};
+		\node [style=none] (39) at (7.5, 0) {$\propto$};
+		\node [style={rn_phase}] (40) at (10, 1) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (41) at (10, -1) {$\chi_{p_2}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1) to (0);
+		\draw [in=180, out=-75] (0) to (2);
+		\draw (0) to (4);
+		\draw (1) to (10.center);
+		\draw (2) to (11.center);
+		\draw [in=180, out=-75] (16) to (18.center);
+		\draw (16) to (20);
+		\draw (18.center) to (22.center);
+		\draw [in=75, out=-180] (26) to (16);
+		\draw (26) to (21.center);
+		\draw [in=75, out=-180] (40) to (30);
+		\draw (40) to (34.center);
+		\draw [in=180, out=-75] (30) to (41);
+		\draw (41) to (35.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

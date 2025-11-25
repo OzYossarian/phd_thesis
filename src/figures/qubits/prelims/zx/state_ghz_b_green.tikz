@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (3) at (1.5, 1) {};
+		\node [style=none] (4) at (1.5, -1) {};
+		\node [style=gn] (5) at (0, 0) {};
+		\node [style=none] (6) at (1.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (2, 1.25) {};
+		\node [style=none] (8) at (2, -1.25) {};
+		\node [style=none] (9) at (2.75, 0) {\textcolor{gray}{$b$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend right=90, looseness=2.50] (3.center) to (4.center);
+		\draw [style={grey_brace}] (7.center) to (8.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

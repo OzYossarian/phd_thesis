@@ -1,0 +1,105 @@
+\section{Dynamic stabilizer codes}\label{sec:dynamic-stabilizer-codes}
+
+Essentially, if we now just add the content of the last section to what we've said so far about static stabilizer codes, we get dynamic stabilizer codes.
+A dynamic stabilizer code on $n$ qubits is defined by an \textit{operation sequence} $\mathcal{O}$.
+This is a sequence $\mathcal{O} = (\mathcal{O}_0, \mathcal{O}_1, \ldots)$ of sets of operations, each operation being either a Clifford unitary or Pauli measurement.
+All the operations within a set $\mathcal{O}_j$ must commute; a Clifford unitary $C$ and a Pauli measurement $M_P$ commute iff $C$ and $P$ commute.
+The operation sequence need not be finite.
+Dynamic stabilizer codes with finite operation sequences are also called \textit{Floquet codes}.
+In this case $\OOO_j$ is still defined for all $j \geq 0$; we just take the subscript to be modulo $|\OOO|$.
+
+This operation sequence $\OOO$ gives rise to sequences $\SSS = (\SSS_{-1}, \SSS_0, \SSS_1, \ldots)$, $\VVV = (\VVV_{-1}, \VVV_0, \VVV_1, \ldots)$ and $\LLL = (\LLL_{-1}, \LLL_0, \LLL_1)$ of stabilizer groups, codespaces and logical Pauli groups respectively, as follows.
+We start with $\SSS_{-1} = \{I\}$.
+Then $\SSS_{j}$ is the updated stabilizer group that results from performing all the operations in $\mathcal{O}_j$, as per \Cref{subsec:evolution-of-codespace}.
+The codespace $\VVV_j$ is always just defined to be the stabilizer subspace $\VVV_{\SSS_j}$ corresponding to $\SSS_j$, and likewise $\LLL_j$ is always just the logical Pauli group $\NNN(\SSS_j)/\SSS_j$.
+Note that all these objects are defined for all $j \geq 0$, even if $\OOO$ is finite.
+
+\subsection{Establishment}
+
+In \Cref{subsec:evolution-of-codespace} we said that the rank of the stabilizer group $\SSS_j$ either stays the same or increases by one after applying a Clifford or measuring a Pauli.
+Correspondingly, the dimension of the codespace $\VVV_j$ either stays the same or decreases by one, and the new logical Pauli group is either still isomorphic to $\PPP_k$ or is now isomorphic to $\PPP_{k-1}$.
+So the sequence of codespace dimensions $(k_{-1}, k_0, k_1, \ldots)$ is a non-increasing sequence of integers, starting at $k_{-1} = n$.
+Consider the smallest integer $T$ such that for all $t \geq T$ the codespace dimension $k_t$ is a constant $k$ -- if such a $T$ exists.
+If so, then we say the code becomes \textit{established} at time $T$.
+In theory, a dynamic code need without an establishment time can still be useful for computation, provided the computation finishes before all the logical qubits being used have been measured out!
+But in practice, all known useful dynamic stabilizer codes do become established,
+so in the rest of thesis we always assume this property.
+
+\subsection{Codespace maps and logical Pauli group maps}
+
+The operations in a dynamic code induce maps between elements in the sequences of codespaces and logical Pauli groups.
+In \Cref{sec:more-stabilizer-formalism} we said that every time we perform an operation $O$ (either applying a Clifford unitary or measuring a Pauli and getting outcome $m$), a linear map $A_m = A_{m, O}$ is applied to our Hilbert space.
+We looked at the restriction of this $A_{m, O}$ to the codespace $\VVV_\SSS$.
+Now we compose many of these together to get codespace maps
+\begin{equation}\label{eq:codespace_maps}
+    \mathcal{V}_{-1} \xrightarrow{C_0} \mathcal{V}_{0} \xrightarrow{C_1} \mathcal{V}_{1} \xrightarrow{C_2} \ldots
+\end{equation}
+where $C_j = \prod_{O \in \OOO_j} A_{m, O}|_{\VVV_{j-1}}$.
+If we were being completely explicit we would also parametrise $C_j$ by a vector $\bsym{m}_j$ of outcomes of Pauli measurements in $\OOO_j$, but instead we leave this implicit.
+
+Similarly, in \Cref{sec:more-stabilizer-formalism} we said each such operation $O$ induced a homomorphism $\phi = \phi_O$ on logical Pauli groups.
+Hence we get group homomorphisms
+\begin{equation}\label{eq:logical_pauli_group_maps}
+    \LLL_{-1} \xleftarrow{\phi_0} \LLL_0 \xleftarrow{\phi_1} \LLL_1 \xleftarrow{\phi_2} \ldots
+\end{equation}
+where each $\phi_j = \prod_{O \in \OOO_j} \phi_O$.
+
+After establishment at time $T$, we never again measure logical operator of the code (\textbf{Case 3} of the Pauli measurements).
+So for all $t > T$ the codespace map (plus post-measurement renormalisation) is always a unitary map from $\VVV_{t-1}$ to $\VVV_t$, as shown in \Cref{subsec:evolution-of-codespace}.
+Likewise, as per \Cref{subsec:evolution_of_logical_pauli_group}, the logical Pauli group homomorphism $\phi_t$ is now always an isomorphism $\LLL_t \to \LLL_{t-1}$ (so if we like we can now think about its inverse $\phi_t^{-1}$ instead, which goes in the `right' direction).
+
+\subsection{Induced logical Cliffords}
+
+One interesting feature of dynamic stabilizer codes is that logical Cliffords can be applied just by performing the sequence of operations in the operation sequence $\OOO$, as discussed in \Cref{subsec:the-induced-homomorphism}.
+Of course, there are trivial ways in which this is true -- e.g.\ choose your favourite static stabilizer code with a transversal Clifford gate, then define a dynamic stabilizer code whose operation sequence is `measure the stabilizers of the static code then at some point apply the transversal Clifford gate'.
+But there are also very non-trivial ways in which this is true -- e.g.\ in the next chapter we'll meet a dynamically condensed colour code that encodes two logical qubits and performs the logical gate $\pm (H \otimes H)SWAP$ every three timesteps.
+
+These logical Cliffords occur as follows.
+Suppose at some post-establishment time $t$ our stabilizer group is $\SSS_t = \langle a_1 S_1, \ldots, a_r S_r \rangle$, then at a later time $t'$ it's $\SSS_{t'} = \langle b_1 S_1, \ldots, b_r S_r \rangle$.
+That is, the stabilizer groups at $t$ and $t'$ are \textit{equal up to signs}.
+Then the logical Pauli groups $\LLL_t$ and $\LLL_{t'}$ can be presented using the same representatives $\XXX_j$ and $\ZZZ_j$ at both timesteps.
+Let $\phi_{t, t'} = (\phi_{t+1} \circ \ldots \circ \phi_{t'})^{-1}$ be the induced isomorphism from $\LLL_{t}$ to $\LLL_{t'}$.
+This therefore uniquely (up to global phase) defines a logical Clifford; namely the Clifford $U$ that acts by conjugation on $\ol{\XXX_j}$ and $\ol{\ZZZ_j}$ as $U\ol{\XXX_j} U^\dagger = \phi_{t,t'}(\ol{\XXX_j})$ and $U\ol{\ZZZ_j} U^\dagger = \phi_{t,t'}(\ol{\ZZZ_j})$.
+
+\subsection{Implementation}
+
+To implement a dynamic stabilizer code, one just takes a system of $n$ qubits and performs all of the operations in $\mathcal{O}_0$, then in $\mathcal{O}_1$, and so on.
+Every time we measure some $P$ such that $\pm P$ was already in the stabilizer group, we form a detector.
+If instead $P$ anti-commuted with some at least one stabilizer, we move unitarily from some codespace $\VVV$ to a new one $\VVV'$, as per \Cref{prop:A_m_unitary_up_to_normalisation}, and possibly have to update the representatives of our logical operators, as per Lemma TODO.
+As in the static case, the set of all violated detectors form the syndrome, and this is passed to a decoder, whose job it is to figure out what errors occurred and correct them.
+
+\begin{example}
+    Recall \Cref{ex:bacon_shor_stabilizer_group_updates,ex:bacon_shor_codespace_updates,ex:bacon_shor_logical_pauli_group_updates}, in which we repeatedly measured $X_1 X_2$, $X_3 X_4$, $Z_1 Z_3$ and $Z_2 Z_4$, in that order.
+    We can now view this as a dynamic stabilizer code; we define the operation sequence to be:
+    \begin{equation}
+        \OOO = (\OOO_1 = \{X_1 X_2, X_3 X_4\}, \OOO_2 = \{Z_1 Z_3, Z_2 Z_4\})
+    \end{equation}
+    As we've seen in the examples referenced above, this becomes established at time $T=1$, after the first measurement of $Z_2 Z_4$.
+    Thereafter, we have:
+    \begin{equation}
+        \begin{aligned}
+            \mathcal{S}_t &= \langle a_t X_1 X_2, b_t X_3 X_4, c_1 d_1 Z_1 Z_3 Z_2 Z_4 \rangle \quad \text{if $t \geq 1$ even} \\
+            \mathcal{S}_t &= \langle c_t Z_1 Z_3, d_t Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle \quad \text{if $t \geq 1$ odd}
+%            \mathcal{S}_t &= \langle m_{t,X_1 X_2} X_1 X_2, m_{t,X_3 X_4} X_3 X_4, m_{1,Z_1 Z_3}m_{1,Z_2 Z_4} Z_1 Z_3 Z_2 Z_4 \rangle \text{if $t \geq 1$ even} \\
+%            \mathcal{S}_t &= \langle m_{t,Z_1 Z_3} Z_1 Z_3, m_{t,Z_2 Z_4} Z_2 Z_4, m_{0,X_1 X_2}m_{0,X_3 X_4} X_1 X_2 X_3 X_4 \rangle \text{if $t \geq 1$ odd}
+        \end{aligned}
+    \end{equation}
+    where $a_t$ denotes the outcome of measuring $X_1 X_2$ at time $t$, $b_t$ the outcome of $X_3 X_4$, $c_t$ of $Z_1 Z_3$, and $d_t$ of $Z_2 Z_4$.
+    So this code encodes a single logical qubit.
+    The codespace maps move us unitarily between the corresponding codespaces:
+    \begin{equation}
+        \ldots \xrightarrow{C_t} \mathcal{V}_{t} \xrightarrow{C_{t+1}} \mathcal{V}_{t+1} \xrightarrow{C_{t+2}} \ldots
+    \end{equation}
+    where $C_t = \sqrt{2}\Pi_{a_t X_1 X_2}$ if $t \geq 1$ even, or $\sqrt{2}\Pi_{c_t Z_1 Z_3}$ if $t \geq 1$ odd.
+    After establishment, the logical Pauli group can be presented using the same representatives for all $t \geq 1$:
+    \begin{equation}
+        \LLL_t = \langle
+        \overline{i},
+        \overline{\XXX} = \overline{X_2 X_4}, \overline{\ZZZ} = \overline{Z_3 Z_4},
+        \rangle
+    \end{equation}
+    The induced isomorphism $\phi_t^{-1}$ for $t > 1$ does nothing particularly interesting; it always maps $\ol{\XXX} \mapsto \ol{\XXX}$ and $\ol{\ZZZ} \mapsto \ol{\ZZZ}$.
+    Every two timesteps the stabilizer groups $\SSS_t$ and $\SSS_{t+2}$ are equal up to signs, so we get a well-defined logical Clifford, but this is always just the identity.
+    After establishment, every measurement of $X_3 X_4$ and $Z_2 Z_4$ is deterministic, i.e.\ forms a detector.
+    Namely, we have detectors $a_{t-2} b_{t-2} a_{t} b_{t}$ for all even $t > 1$ and $c_{t-2} d_{t-2} c_{t} d_{t}$ for all odd $t > 1$.
+\end{example}

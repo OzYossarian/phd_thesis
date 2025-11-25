@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-1.25, 1) {};
+		\node [style=gn] (1) at (-1.25, -1) {};
+		\node [style=gn] (2) at (1.25, -1) {};
+		\node [style=gn] (3) at (1.25, 1) {};
+		\node [style=none] (4) at (2.75, 1) {};
+		\node [style=none] (5) at (2.75, -1) {};
+		\node [style=none] (6) at (-2.75, 1) {};
+		\node [style=none] (7) at (-2.75, -1) {};
+		\node [style=none] (8) at (2, 1.75) {\scriptsize\textcolor{gray}{$e_7$}};
+		\node [style=none] (9) at (2, -1.75) {\scriptsize\textcolor{gray}{$e_8$}};
+		\node [style=none] (10) at (2, 0) {\scriptsize\textcolor{gray}{$e_6$}};
+		\node [style=none] (11) at (-2, 1.75) {\scriptsize\textcolor{gray}{$e_1$}};
+		\node [style=none] (12) at (-2, -1.75) {\scriptsize\textcolor{gray}{$e_2$}};
+		\node [style=none] (13) at (-2, 0) {\scriptsize\textcolor{gray}{$e_3$}};
+		\node [style=none] (14) at (0, 1.75) {\scriptsize\textcolor{gray}{$e_4$}};
+		\node [style=none] (15) at (0, -1.75) {\scriptsize\textcolor{gray}{$e_5$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (6.center) to (0);
+		\draw (0) to (3);
+		\draw (3) to (4.center);
+		\draw (2) to (5.center);
+		\draw (1) to (2);
+		\draw (7.center) to (1);
+		\draw (1) to (0);
+		\draw (3) to (2);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,50 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-5, 1.5) {};
+		\node [style=none] (1) at (-5, 0.5) {};
+		\node [style=none] (2) at (-5, -0.5) {};
+		\node [style=none] (3) at (-5, -1.5) {};
+		\node [style=none] (4) at (0, 1.5) {};
+		\node [style=none] (5) at (0, 0.5) {};
+		\node [style=none] (6) at (0, -0.5) {};
+		\node [style=none] (7) at (0, -1.5) {};
+		\node [style=hdot] (8) at (-4, 0.5) {};
+		\node [style=hdot] (9) at (-1, 0.5) {};
+		\node [style={rn_phase}] (10) at (-4, -0.5) {$\frac{\pi}{2}$};
+		\node [style={rn_phase}] (11) at (-1, -0.5) {$-\frac{\pi}{2}$};
+		\node [style=none] (12) at (4.5, 1.5) {};
+		\node [style=none] (13) at (4.5, 0.5) {};
+		\node [style=none] (14) at (4.5, -0.5) {};
+		\node [style=none] (15) at (4.5, -1.5) {};
+		\node [style=none] (16) at (9.5, 1.5) {};
+		\node [style=none] (17) at (9.5, 0.5) {};
+		\node [style=none] (18) at (9.5, -0.5) {};
+		\node [style=none] (19) at (9.5, -1.5) {};
+		\node [style={rn_phase}] (20) at (7, -0.5) {$-\frac{\pi}{2}$};
+		\node [style={rn_phase}] (21) at (8.5, -0.5) {$-\frac{\pi}{2}$};
+		\node [style=none] (22) at (1, 0) {$+$};
+		\node [style=none] (23) at (-6, 0) {$=$};
+		\node [style=none] (24) at (3, 0) {$(-1)^a e^{i\frac{\pi}{2}}$};
+		\node [style={rn_phase}] (25) at (7, 0.5) {$\pi$};
+		\node [style={gn_phase}] (26) at (5.5, -0.5) {$\pi$};
+		\node [style={gn_phase}] (27) at (7, -1.5) {$\pi$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0.center) to (4.center);
+		\draw (1.center) to (5.center);
+		\draw (2.center) to (6.center);
+		\draw (3.center) to (7.center);
+		\draw (3.center) to (7.center);
+		\draw (0.center) to (4.center);
+		\draw (2.center) to (6.center);
+		\draw (1.center) to (5.center);
+		\draw (12.center) to (16.center);
+		\draw (13.center) to (17.center);
+		\draw (14.center) to (18.center);
+		\draw (15.center) to (19.center);
+		\draw (15.center) to (19.center);
+		\draw (12.center) to (16.center);
+		\draw (14.center) to (18.center);
+		\draw (13.center) to (17.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

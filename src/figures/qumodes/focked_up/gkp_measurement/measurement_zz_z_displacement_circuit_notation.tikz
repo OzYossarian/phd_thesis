@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=long box] (0) at (0, 0) {$\begin{matrix} Z \\ Z \\ \vdots \\ Z\end{matrix}$};
+		\node [style=none] (1) at (0, 3) {};
+		\node [style=none] (2) at (-2, 1.5) {};
+		\node [style=none] (3) at (2, 1.5) {};
+		\node [style=none] (4) at (-2, -1.5) {};
+		\node [style=none] (5) at (2, -1.5) {};
+		\node [style=none] (6) at (1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (-1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=classical] (1.center) to (0);
+		\draw (2.center) to (3.center);
+		\draw (4.center) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

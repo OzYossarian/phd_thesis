@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-4.5, 0) {};
+		\node [style=none] (1) at (-1, 0) {};
+		\node [style=hdot] (2) at (-3.75, 0) {};
+		\node [style=hdot] (3) at (-1.75, 0) {};
+		\node [style=none] (4) at (0, 0) {$=$};
+		\node [style=none] (5) at (1, 0) {};
+		\node [style=none] (6) at (4, 0) {};
+		\node [style={gn_phase}] (8) at (-2.75, 0) {$\alpha$};
+		\node [style={rn_phase}] (9) at (2.5, 0) {$\alpha$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1.center) to (0.center);
+		\draw (6.center) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

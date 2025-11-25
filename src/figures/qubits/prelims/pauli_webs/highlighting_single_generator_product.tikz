@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=squareNE] (0) at (0, 0) {$f$};
+		\node [style=none] (1) at (-2.5, 1) {};
+		\node [style=none] (2) at (-2.5, -1) {};
+		\node [style=none] (3) at (2.5, 1) {};
+		\node [style=none] (4) at (2.5, -1) {};
+		\node [style=none] (5) at (2.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-2.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={gn_web}] (7) at (-1.25, 2.125) {$a_1 + a_1'$};
+		\node [style={rn_web}] (8) at (-1.25, 1.5) {$b_1 + b_1'$};
+		\node [style={gn_web}] (9) at (-1.25, -1.5) {$a_l + a_l'$};
+		\node [style={rn_web}] (10) at (-1.25, -2.125) {$b_l + b_l'$};
+		\node [style={gn_web}] (11) at (1.5, 2.125) {$c_1 + c_1'$};
+		\node [style={rn_web}] (12) at (1.5, 1.5) {$d_1 + d_1'$};
+		\node [style={gn_web}] (13) at (1.5, -1.5) {$c_m + c_m'$};
+		\node [style={rn_web}] (14) at (1.5, -2.125) {$d_m + d_m'$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=yweb, in=120, out=0] (1.center) to (0);
+		\draw [style=yweb, in=240, out=0] (2.center) to (0);
+		\draw [style=yweb, in=180, out=60] (0) to (3.center);
+		\draw [style=yweb, in=180, out=-60] (0) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

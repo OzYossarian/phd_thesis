@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=graphv] (13) at (-2.75, 0) {};
+		\node [style=graphv] (14) at (2.75, 0) {};
+		\node [style={gn_phase}] (15) at (-1.5, 0) {$\frac{\pi}{2}$};
+		\node [style={rn_phase}] (16) at (0, 0) {$\frac{\pi}{2}$};
+		\node [style={gn_phase}] (17) at (1.5, 0) {$\frac{\pi}{2}$};
+		\node [style=none] (18) at (-3.75, 0) {$e^{-i\frac{\pi}{4}}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (13) to (14);
+	\end{pgfonlayer}
+\end{tikzpicture}

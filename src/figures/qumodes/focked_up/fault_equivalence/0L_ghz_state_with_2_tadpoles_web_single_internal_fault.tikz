@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (0, 0) {};
+		\node [style=none] (1) at (1.5, 1) {};
+		\node [style=none] (2) at (1.5, -1) {};
+		\node [style=none] (3) at (1, 0.2) {$\vdots$};
+		\node [style={rn_phase}] (4) at (-1.5, 1) {$\chi_p$};
+		\node [style=none] (5) at (-1.5, -1) {};
+		\node [style={gn_web}] (6) at (-1.5, 2) {$k/2\sqrt{\pi}$};
+		\node [style={gn_web}] (7) at (-1.5, -2) {$-k/2\sqrt{\pi}$};
+		\node [style={gn_phase}] (8) at (-3, 1) {$0_L$};
+		\node [style={gn_phase}] (9) at (-3, -1) {$0_L$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=75, out=-180] (1.center) to (0);
+		\draw [in=180, out=-75] (0) to (2.center);
+		\draw [style=zweb, in=0, out=105] (0) to (4);
+		\draw [style=zweb, in=-105, out=0] (5.center) to (0);
+		\draw [style=zweb] (4) to (8);
+		\draw [style=zweb] (9) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

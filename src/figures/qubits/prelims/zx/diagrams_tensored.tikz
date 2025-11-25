@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 0.75) {};
+		\node [style=none] (1) at (1, 0.75) {};
+		\node [style=squareNE] (2) at (0, 0.75) {$f$};
+		\node [style=squareNE] (3) at (0, -0.75) {$g$};
+		\node [style=none] (4) at (-1, -0.75) {};
+		\node [style=none] (5) at (1, -0.75) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1.center) to (0.center);
+		\draw (5.center) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

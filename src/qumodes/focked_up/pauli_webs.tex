@@ -1,0 +1,272 @@
+\section{Focked up Pauli webs}\label{sec:focked-up-pauli-webs}
+
+Function $\chi_x : \mathbb{R} \to \mathbb{C}$ defined as $\chi_x(p) = e^{-i2\pi xp}$.
+Note $\chi_0(p) = e^{-i2\pi \cdot 0 \cdot p} = 1$ is the constant function $1$.
+Indeed, the function $\chi_a(x) = e^{-i2\pi ax}$ is a constant function iff $a = 0$.
+No $n \in \mathbb{N}$ such that the Kronecker delta $\delta_n: \mathbb{N} \to \mathbb{C}$ is the constant function $1$.
+
+Throughout, we will use a dot/underline/something to denote that a variable is the single argument of a function.
+For example, if writing $e^{-i2\pi \dot{x}p}$, we mean the function $x \mapsto e^{-i2\pi xp}$.
+If instead we write $e^{-i2\pi x\dot{p}}$, we mean the function $p \mapsto e^{-i2\pi xp}$.
+
+\subsection{Defining Pauli webs}\label{subsec:defining-pauli-webs}
+
+\begin{definition}\label{defn:generators}
+The \textbf{generators} of the Focked-up ZX-calculus are the three spiders:
+\begin{equation}\label{eq:generators_spiders}
+\tikzfig{qumodes/focked_up/pauli_webs/generators_spiders}
+\end{equation}
+the multiplier and $W$-node:
+\begin{equation}\label{eq:generators_mult_W_node}
+\tikzfig{qumodes/focked_up/pauli_webs/generators_mult_W_node}
+\end{equation}
+and the identity and swap maps:
+\begin{equation}\label{eq:generators_id_swap}
+\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap}
+\end{equation}
+where $f, h: \mathbb{R} \to \mathbb{C}$, $g: \mathbb{N} \to \mathbb{C}$ and $r \in \mathbb{R}$.
+\end{definition}
+
+In what follows, it might help to temporarily think of the identity and swap maps as also having a node at their center:
+\begin{equation}\label{eq:generators_id_swap_explicit}
+\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap_explicit}
+\end{equation}
+
+Note that these are an overcomplete generating set; will discuss this shortly!
+Will draw a generic generator as an asymmetric box with some label $f$ and some number of input and output legs:
+\begin{equation}\label{eq:generic_generator}
+\tikzfig{qumodes/focked_up/pauli_webs/generator}
+\end{equation}
+
+\begin{definition}\label{defn:highlighting_generator}
+A \textbf{highlighting} of a single generator is an assignment of a tuple $(a_j, b_j) \in \mathbb{R}^2$ to each of its input and output legs.
+Graphically:
+\begin{equation}\label{eq:highlighting_generator}
+\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator}
+\end{equation}
+Whenever one or both of $a_j, b_j$ are zero, we can omit the corresponding highlight from the diagram:
+\begin{equation}\label{eq:highlighting_generator_0s_omitted}
+\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator_0s_omitted}
+\end{equation}
+\end{definition}
+
+\begin{definition}\label{defn:pauli_web_generator}
+A \textbf{Pauli web} on a single generator is a highlighting:
+\begin{equation}\label{eq:pauli_web_generator_highlighting}
+\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator}
+\end{equation}
+satisfying:
+\begin{equation}\label{eq:pauli_web_generator_condition}
+\tikzfig{qumodes/focked_up/pauli_webs/pauli_web_generator_condition}
+\end{equation}
+\end{definition}
+
+\begin{definition}\label{defn:boundary_internal_edges}
+We say an edge in any ZX-diagram is a \textbf{boundary edge} if it is an input or output of the overall diagram, else it's an \textbf{internal edge}.
+\end{definition}
+
+Potential gotchas here are the diagram consisting of just the identity map, and the diagram consisting of just the swap map.
+The former has two boundary edges, not one, and similarly the latter has four boundary edges, not two:
+\begin{equation}\label{eq:generators_id_swap_explicit_boundary_edges}
+\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap_explicit}
+\end{equation}
+
+\begin{definition}\label{defn:half_edges}
+We declare that internal edges actually consist of two \textbf{half-edges}, while boundary edges are a single \textbf{half-edge}.
+\end{definition}
+
+\begin{definition}\label{defn:highlighting_general_diagram}
+A \textbf{highlighting} of a general ZX-diagram is an assignment of a tuple in $\mathbb{R}^2$ to each half-edge.
+Graphically:
+\begin{equation}\label{eq:highlighting_general_diagram}
+\tikzfig{qumodes/focked_up/pauli_webs/highlighting_general_diagram}
+\end{equation}
+Again, whenever one or both components of the tuple are zero, we may omit the corresponding highlight.
+\end{definition}
+
+\begin{definition}\label{defn:pauli_web_general_diagram}
+A \textbf{Pauli web} on a general ZX-diagram is a highlighting:
+\begin{equation}\label{eq:pauli_web_general_diagram_highlighting}
+\tikzfig{qumodes/focked_up/pauli_webs/highlighting_general_diagram}
+\end{equation}
+such the restriction to each generator and its incident half-edges is a Pauli web for that generator, and on every internal edge the pair of tuples $(a, b)$ and $(c, d)$ satisfy $c = -a$ and $d = -b$:
+\begin{equation}\label{eq:pauli_web_general_diagram_conditions}
+\tikzfig{qumodes/focked_up/pauli_webs/pauli_web_general_diagram}
+\end{equation}
+\end{definition}
+
+TODO: what to say about Pauli webs being somehow preserved under rewrites?
+i.e.\ suppose there's a Pauli web on a diagram $D$ with boundary edges labelled $(a_j, b_j)$.
+If $D = D'$ for some other diagram $D$, then there should be a valid Pauli web on $D'$ with the same boundary edge labels.
+This is a generalisation of my initial concern which was about consistency of these two definitions given that our set of generators is overcomplete - e.g.:
+\begin{equation}\label{eq:red_spider_derived}
+\tikzfig{qumodes/focked_up/pauli_webs/red_spider_derived}
+\end{equation}
+
+TODO: add intuition/explanations throughout all this
+
+TODO: can we get away with just using one label $(a, b)$ for each internal edge?
+Was thinking no - counterexample being two generators connected by a cup or cap.
+
+\subsection{Determining Pauli webs}\label{subsec:determining-pauli-webs}
+
+Will use shorthand:
+\begin{equation}\label{eq:mult_default}
+\tikzfig{qumodes/focked_up/pauli_webs/right_mult_default}
+\qqqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/left_mult_default}
+\end{equation}
+
+Recall also that:
+\begin{equation}\label{eq:mult_inverse_mult_fourier}
+\tikzfig{qumodes/focked_up/pauli_webs/mult_inverse}
+\qqqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/mult_fourier}
+\end{equation}
+
+Hence:
+\begin{equation}\label{eq:mult_default_with_fourier}
+\tikzfig{qumodes/focked_up/pauli_webs/mult_default_with_fourier}
+\end{equation}
+
+\begin{lemma}\label{lem:gate_absorb}
+\teague{Check plus/minus signs really correct}
+\begin{equation}\label{eq:gate_absorb}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb}
+\qqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_absorb}
+\end{equation}
+\begin{proof}
+    First equation makes use of the fact that $\mathcal{F}^{-1}(\mathcal{F}(f(x)) \cdot \chi_a) = f(x - a)$:
+    \begin{equation}\label{eq:red_gate_absorb_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb_proof}
+    \end{equation}
+    Second equation makes use of the dual property $\mathcal{F}(\mathcal{F}^{-1}(f(x)) \cdot \overline{\chi}_a) = f(x - a)$:
+    \begin{equation}\label{eq:green_gate_absorb_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/green_gate_absorb_proof}
+    \end{equation}
+\end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lem:gate_copy_blank_spider}
+\begin{equation}\label{eq:gate_copy_blank_spider}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider}
+\qqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy_blank_spider}
+\end{equation}
+\begin{proof}
+    Follows from state copy and bialgebra rules:
+    \begin{equation}\label{eq:red_gate_copy_blank_spider_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider_proof}
+    \end{equation}
+\end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lem:red_spider_not_flexsymmetric}
+\begin{equation}\label{eq:red_spider_not_flexsymmetric}
+\tikzfig{qumodes/focked_up/pauli_webs/red_spider_not_flexsymmetric_v2}
+\end{equation}
+\end{lemma}
+
+\begin{lemma}\label{lem:gate_copy}
+\teague{Check plus/minus signs really correct}
+\begin{equation}\label{eq:gate_copy}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy}
+\qqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy}
+\end{equation}
+\begin{proof}
+    \begin{equation}\label{eq:red_gate_copy_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_proof}
+    \end{equation}
+\end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lem:red_gate_copy_multi_inputs}
+\begin{equation}\label{eq:red_gate_copy_multi_inputs}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input}
+\end{equation}
+\end{lemma}
+
+\begin{lemma}\label{lem:red_gate_copy_cancel}
+\begin{equation}\label{eq:red_gate_copy_cancel}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_cancel}
+\end{equation}
+\end{lemma}
+
+\begin{proposition}\label{thm:general_pauli_web_green_gaussian_spider}
+A highlighting of a Gaussian $Z$ spider with phase function $e^{i(t + u\isarg{x} + v\isarg{x}^2)}$ is a Pauli web iff it's of the following form, where $2\pi \sum_j a_j = 2vb$:
+\begin{equation}\label{eq:general_pauli_web_green_linear_spider}
+\tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gaussian_spider}
+\end{equation}
+\begin{proof}
+    TODO
+\end{proof}
+\end{proposition}
+
+\begin{definition}\label{defn:indicator_function}
+For any predicate $f: \mathbb{R} \to \mathbb{B}$, we define $\indicator{f(\isarg{x})} : \mathbb{R} \to \mathbb{C}$ as:
+\begin{equation}\label{eq:indicator_function}
+\indicator{f(x)} = \begin{cases}
+                       1 &\text{ if } f(x) \\
+                       0 &\text{ else }
+\end{cases}
+\end{equation}
+\end{definition}
+
+We will also use the shorthand $x \eqmod{r} y$ to mean $x = y$ mod $r$.
+
+\begin{proposition}\label{thm:general_pauli_web_green_gkp_like_spider}
+A highlighting of a $Z$ spider with phase function $\llbracket \isarg{x} \eqmod{r} 0 \rrbracket$ is a Pauli web iff it's of the following form, where $b \eqmod{r} 0$ and $r \sum_j a_j \eqmod{1} 0$:
+\begin{equation}\label{eq:general_pauli_web_green_gkp_like_spider}
+\tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gkp_like_spider}
+\end{equation}
+\begin{proof}
+    TODO
+\end{proof}
+\end{proposition}
+
+\subsection{Undetectable faults}
+
+\begin{lemma}
+    \begin{equation}
+        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_red_green}
+    \end{equation}
+    \begin{equation}
+        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_green_red}
+    \end{equation}
+    \begin{proof}
+        The first follows from the first equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \overline{\chi}_a(x) = e^{i2\pi ax}$.
+        So $f(x + b) = e^{i2\pi a(x + b)} = e^{i2\pi ab}e^{i2\pi ax} = e^{i2\pi ab} \overline{\chi}_a(x)$, where the scalar $e^{i2\pi ab}$ can be pulled out of the spider to become a global phase.
+        The second follows from the second equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \chi_b(x) = e^{-i2\pi bx}$.
+        So $f(x + a) = e^{-i2\pi b(x + a)} = e^{-i2\pi ab}e^{-i2\pi bx} = e^{-i2\pi ab} \chi_b(x)$.
+    \end{proof}
+\end{lemma}
+
+\begin{definition}\label{defn:detectable_fault}
+    A fault $F$ on diagram $D$ is detectable iff it's non-trivial and $D^F$ is not the zero linear map.
+\end{definition}
+
+\begin{proposition}
+    Suppose we have a diagram $D$ with edges $E$ and web $w = (a_1, b_1, \ldots, a_{|E|}, b_{|E|})$.
+    A non-trivial displacement fault $F = D(p_1, q_1) \otimes \ldots \otimes D(p_{|E|}, q_{|E|})$ is detectable if $\sum_{j = 1}^{|E|} a_j p_j + b_j q_j \notin \ZZ$.
+    \begin{proof}
+        First note that any diagram that's equal to a scalar multiple $\lambda$ of itself other than $\lambda = 1$ is necessarily zero:
+        \begin{equation}
+            \tikzfig{figures/qumodes/focked_up/pauli_webs/diagram_equal_to_non_1_multiple_of_itself_is_zero}
+        \end{equation}
+        So now let's take a close look at a single edge $j$ of the diagram $D^F$ described above.
+        We can fire the Pauli web $w$, and commute the resulting displacement $D(a_j, b_j)$ past the displacement $D(p_j, q_j)$ from the fault $F$, at the cost of introducing a global phase.
+        We can then cancel out $D(a_j, b_j)$ thanks to the $D(-a_j, -b_j)$, leaving just the original displacement operator $D(p_j, q_j)$ on this edge:
+        \begin{equation}
+            \tikzfig{figures/qumodes/focked_up/pauli_webs/pauli_web_general_diagram_internal_fault_web_fired}
+        \end{equation}
+        We can repeat this process across all edges, picking up a total phase of $\lambda = exp({i2\pi \sum_{j = 1}^{|E|} a_j p_j + b_j q_j})$.
+        Since a detecting web by definition has $a_j = b_j = 0$ on any boundary edges, after performing this process for all edges we get back the original diagram but multiplied by this phase $\lambda$.
+        So if $\lambda$ isn't $1$, the diagram $D^F$ is zero, meaning $F$ is detectable.
+    \end{proof}
+\end{proposition}
+
+
+
+

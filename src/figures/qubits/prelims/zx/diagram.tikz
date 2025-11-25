@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=medNE] (0) at (0, 0) {$D$};
+		\node [style=none] (1) at (-1, 0.75) {};
+		\node [style=none] (2) at (1, 0.75) {};
+		\node [style=none] (3) at (-1, -0.75) {};
+		\node [style=none] (4) at (1, -0.75) {};
+		\node [style=none] (5) at (0.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-0.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1.center) to (2.center);
+		\draw (3.center) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

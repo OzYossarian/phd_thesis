@@ -1,0 +1,56 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (-4, 0) {$k\pi$};
+		\node [style=none] (1) at (-5.5, 1) {};
+		\node [style=none] (2) at (-5.5, -1) {};
+		\node [style=none] (3) at (-2.5, 1) {};
+		\node [style=none] (4) at (-2.5, -1) {};
+		\node [style=none] (5) at (-2.75, 0.25) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-5.25, -0.25) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (-5.5, 0.5) {};
+		\node [style=none] (8) at (-2.5, -0.5) {};
+		\node [style=none] (9) at (0, 0) {$\iff$};
+		\node [style={gn_phase}] (10) at (1.5, 0) {$k\pi$};
+		\node [style=none] (13) at (3, 1) {};
+		\node [style=none] (14) at (3, -1) {};
+		\node [style=none] (15) at (2.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (31) at (-6, -1.25) {};
+		\node [style=none] (32) at (-6, 1.25) {};
+		\node [style=none] (33) at (-2, 1.25) {};
+		\node [style=none] (34) at (-2, -1.25) {};
+		\node [style=none] (35) at (-6.5, 0) {\scriptsize\textcolor{gray}{$l$}};
+		\node [style=none] (36) at (-1.375, 0) {\scriptsize\textcolor{gray}{$m$}};
+		\node [style=none] (37) at (3.5, 1.25) {};
+		\node [style=none] (38) at (3.5, -1.25) {};
+		\node [style=none] (39) at (4.75, 0) {\scriptsize\textcolor{gray}{$l+m$}};
+		\node [style=none] (40) at (6.5, 0) {$\iff$};
+		\node [style={gn_phase}] (41) at (8, 0) {$k\pi$};
+		\node [style=none] (42) at (9.5, 1) {};
+		\node [style=none] (43) at (9.5, -1) {};
+		\node [style=none] (44) at (9.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={rn_phase}] (45) at (8.75, 0.75) {$\pi$};
+		\node [style={rn_phase}] (46) at (8.75, -0.75) {$\pi$};
+		\node [style={gn_phase}] (47) at (11.25, 0) {$k\pi$};
+		\node [style=none] (48) at (12.75, 1) {};
+		\node [style=none] (49) at (12.75, -1) {};
+		\node [style=none] (50) at (12.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (53) at (10.25, 0) {$\propto$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=xweb, bend left] (1.center) to (0);
+		\draw [style=xweb, bend right] (2.center) to (0);
+		\draw [style=xweb, bend left] (0) to (3.center);
+		\draw [style=xweb, bend right] (0) to (4.center);
+		\draw [style=xweb, bend left=15] (7.center) to (0);
+		\draw [style=xweb, bend right=15] (0) to (8.center);
+		\draw [style=xweb, bend left] (10) to (13.center);
+		\draw [style=xweb, bend right] (10) to (14.center);
+		\draw [style={grey_brace}] (31.center) to (32.center);
+		\draw [style={grey_brace}] (33.center) to (34.center);
+		\draw [style={grey_brace}] (37.center) to (38.center);
+		\draw [bend left] (41) to (42.center);
+		\draw [bend right] (41) to (43.center);
+		\draw [bend left] (47) to (48.center);
+		\draw [bend right] (47) to (49.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

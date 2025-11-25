@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3, 0) {};
+		\node [style=none] (1) at (-1, 0) {};
+		\node [style=none] (2) at (0, 0) {$=$};
+		\node [style=none] (3) at (1, 0) {};
+		\node [style=none] (4) at (5, 0) {};
+		\node [style=rmat] (5) at (2, 0) {$r$};
+		\node [style=lmat] (6) at (4, 0) {$r$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0.center) to (1.center);
+		\draw (3.center) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
