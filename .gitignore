@@ -42,6 +42,9 @@
 out/
 build/
 
+# Reference materials
+ref/
+
 # IDE
 .idea/
 *.iml
