@@ -1,0 +1,39 @@
+\section{Noise models}
+
+In the last section we considered errors $F$ on a diagram $D$ with edges $E$ to be elements of the displacement group $\hat{\DDD}_{|E|}$.
+A more in-depth discussion of errors is warranted; in particular, we will use the notion of the \textit{weight} of an error in order to discuss fault-equivalence in the next section.
+In the qubit half of this thesis, when discussing noise models, we first swapped to a traditional circuit-based view, then later showed that the ZX-based approach actually encompassed the traditional one.
+In this qumode half, we will just skip straight to the ZX-based approach.
+
+So, given a diagram $D$ with edges $E$, a \textit{noise model} $\FFF$ will again be a set $\{\FFF_1, \ldots, \FFF_m\}$ of probability distributions, where each $\FFF_j = \{(F_{j,k}, p_{j,k})\}_k$ consists of errors $F_{j,k}$ and their probability $p_{j,k}$ of occurring, and errors $F_{j,k}$ are displacements in $\hat{\DDD}_{|E|}$.
+We call errors $F_{j,k}$ that actually appear in one of the probability distributions \textit{atomic errors}.
+Atomic errors can be composed to form general errors $F \in \hat{\DDD}_{|E|}$.
+The probability of a general error $F$ occurring is the sum of the probabilities of all the different ways it can be made from atomic errors when sampling only one atomic error from each distribution.
+
+The most accurate way to then reason about the behaviour of errors is using these probabilities.
+But calculations here can get a bit involved.
+We can take a dual approach that's a little more heuristic; rather than assigning each atomic error $F_{j,k}$ a probability $p_{j,k}$ of occurring, we can assign it a \textit{weight} $w_{j,k} = \wt(F_{j,k})$.
+For this approach to be useful, a higher weight should correspond to a lower probability.
+We can then define the weight of a general error $F \in \hat{\DDD}_{|E|}$ as some combination of weights of atomic errors that can be composed to make $F$.
+How exactly this is defined isn't fixed -- we can choose.
+If we want to distinguish this weighted approach from the one that used probabilities, we call this a \textit{weighted noise model}.
+
+For example, given diagram $D$ with edges $E$, consider the (weighted) noise model in which atomic errors are displacements $D(\binom{v_j}{u_j})$ on each edge $e_j$, and each such atomic error has weight:
+\begin{equation}\label{eq:weight_atomic_error_zx_noise}
+    \wt(\hat{D}(\tbinom{v_j}{u_j})) = \twonorm{\tbinom{v_j}{u_j}} = \sqrt{v_j^2 + u_j^2}
+\end{equation}
+Then define the weight of a general error $\hat{D}(\binom{\bsym{v}}{\bsym{u}})$ as:
+\begin{equation}\label{eq:weight_atomic_error_zx_noise}
+    \begin{aligned}
+        \wt(\hat{D}(\tbinom{\bsym{v}}{\bsym{u}}))
+        &= \wt(\hat{D}(\tbinom{v_1}{u_1}) \otimes \ldots \otimes \hat{D}(\tbinom{v_{|E|}}{u_{|E|}})) \\
+        &\coloneqq \wt(\hat{D}(\tbinom{v_1}{u_1})) + \ldots + \wt(\hat{D}(\tbinom{v_{|E|}}{u_{|E|}})) \\
+        &= \onenorm{\left(\twonorm{\tbinom{v_1}{u_1}}, \ldots, \twonorm{\tbinom{v_{|E|}}{u_{|E|}}}\right)^T}
+    \end{aligned}
+\end{equation}
+That is, we use the 2-norm on each edge, then across different edges we use the 1-norm.
+We will call this noise model the \textit{(Focked up) ZX noise model}.
+
+A natural question to ask, perhaps, is why not just use the 2-norm for everything?
+That is, for general error $\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})$, why not just define $\wt(\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})) = \twonorm{\tbinom{\bsym{v}}{\bsym{u}})}$?
+The intuition behind mixing the 1-norm and 2-norm is to represent noise on each edge being independent, much like the phenomenological noise in the circuit-based approach assumes each qumode experiences noise independently.

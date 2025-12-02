@@ -76,12 +76,12 @@ Let the data qubits be the first $n$ qubits in the indexing of the total $n + m$
 Per the convention in the preceding paragraphs, we'll say the operations in $\OOO_j$ occur at timestep $2j$ in the circuit $C$.
 
 Intuitively, the phenomenological noise model is defined as follows: after each round of operations $\OOO_j$, exactly one of the four single-qubit Paulis $X$, $Y$ and $Z$ and $I$ can occur on any of the $n$ data qubits, with probabilities $p_X$, $p_Y$, $p_Z$ and $p_I = 1 - p_X - p_Y - p_Z$ respectively, and every measurement can be erroneous with probability $p_M$.
-In the notation defined above, we write this as the set $\FFF_{Ph}$ consisting of the following probability distributions.
-First, for all $1 \leq j \leq n$ and odd $0 \leq j \leq 2T+1$, we have $\FFF_{j,t} \in \FFF_{Ph}$, where:
+In the notation defined above, we write this as the set $\FFF_{\text{Ph}}$ consisting of the following probability distributions.
+First, for all $1 \leq j \leq n$ and odd $0 \leq j \leq 2T+1$, we have $\FFF_{j,t} \in \FFF_{\text{Ph}}$, where:
 \begin{equation}
     \FFF_{j,t} = \{(X_{j,t}, p_X), (Y_{j,t}, p_Y), (Z_{j,t}, p_Z), (I_{j,t}, p_I)\}
 \end{equation}
-Then for all measurements $(J, t)$ we have $\FFF_{J, t} \in \FFF_{Ph}$, where:
+Then for all measurements $(J, t)$ we have $\FFF_{J, t} \in \FFF_{\text{Ph}}$, where:
 \begin{equation}
     \FFF_{J, t} = \{(\neg^\times_{J, t}, p_M), (id, 1 - p_M)\}
 \end{equation}
@@ -91,7 +91,7 @@ Then for all measurements $(J, t)$ we have $\FFF_{J, t} \in \FFF_{Ph}$, where:
 The phenomenological noise model was historically popular because it's simple to analyse, but these days the gold standard is the more realistic circuit-level noise model.
 Here, we make no distinction between data and auxiliary qubits, so we don't need to explicitly assume that $C$ implements a dynamic stabilizer code (though every circuit consisting of Cliffords and Pauli measurements can be viewed as one).
 Instead, intuitively, we just assume that after every operation $O$ at time $t$ on $q$ qubits, any weight-$q$ Pauli operator $P$ can occur on these qubits with some probability, and additionally if the operation is a measurement then the outcome can be erroneous.
-Formally, we define $\FFF_{CL}$ as follows.
+Formally, we define $\FFF_{\text{CL}}$ as follows.
 For every operation $O$, let $supp(O)$ denote the support of $O$ (whether $O$ is a Clifford or a measurement).
 Start by defining $\FFF_{O, t}$ for every even timestep $t$, which says which Pauli errors can occur after $O$:
 \begin{equation}
@@ -105,7 +105,7 @@ Here $\times$ denotes not the Cartesian product but the multiplication of two pr
 Finally, we define the error model to be:
 \begin{equation}
     \begin{aligned}
-        \FFF_{CL} =
+        \FFF_{\text{CL}} =
         && & \{\FFF_{O, t} : \text{ Clifford } O, \text{ even } 0 \leq t \leq 2T \} \\
         & \cup &&\{\FFF'_{O, t} : \text{ measurement } O, \text{ even } 0 \leq t \leq 2T \}
     \end{aligned}
@@ -204,3 +204,7 @@ Similarly, a circuit-level noise model is only unbiased if all operations are eq
 The latter in particular is a tall order!
 So most realistic examples of noise models are biased in some way or another.
 For the phenomenological noise model, we will quantify this; we define the \textit{measurement bias} to be $\eta_M = p_M/(p_X + p_Y + p_Z)$, and the \textit{$Z$ bias} as $\eta_Z = 2p_Z/(p_X+p_Y)$.
+
+\subsection{ZX noise}
+
+TODO

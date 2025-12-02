@@ -1,4 +1,5 @@
 % Various AMS packages
+\usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 % The \coloneqq symbols, amongst others

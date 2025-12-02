@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-1.75, 1) {};
+		\node [style=none] (1) at (-5, 1) {};
+		\node [style=none] (2) at (1.25, 1) {};
+		\node [style=none] (3) at (-5, -2) {};
+		\node [style=none] (4) at (1.25, -2) {};
+		\node [style=none] (5) at (-0.25, -0.5) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-3.5, -0.5) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (-2.5, -1.25) {};
+		\node [style={fn_phase}] (8) at (-3.5, 1) {$e^{i\theta_1 \isarg{n}}$};
+		\node [style={fn_phase}] (9) at (-0.25, 1) {$e^{-i\theta_1 \isarg{n}}$};
+		\node [style=none] (10) at (-2.25, 1.5) {};
+		\node [style=none] (11) at (-2.5, 1.5) {};
+		\node [style=none] (12) at (-2.25, 3) {};
+		\node [style=none] (13) at (-3, 2) {};
+		\node [style=none] (14) at (-2.75, 3.5) {};
+		\node [style=none] (15) at (-3.5, 3.5) {};
+		\node [style=none] (16) at (-3.5, 2) {};
+		\node [style=lmat] (17) at (-3.5, 3.5) {$r_1$};
+		\node [style=lmat] (18) at (-3.5, 2) {$r_m$};
+		\node [style=none] (19) at (-3.5, 2.75) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (20) at (-1.75, -2) {};
+		\node [style=gn] (21) at (-1.75, -2) {};
+		\node [style=none] (22) at (-1.75, 1) {};
+		\node [style={rn_phase}] (23) at (-5, 2.75) {$0_L \cdot \chi_a$};
+		\node [style={fn_phase}] (24) at (-3.5, -2) {$e^{i\theta_m \isarg{n}}$};
+		\node [style={fn_phase}] (25) at (-0.25, -2) {$e^{-i\theta_m \isarg{n}}$};
+		\node [style=none] (26) at (-1.75, -0.5) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=180, out=0] (1.center) to (2.center);
+		\draw (3.center) to (4.center);
+		\draw (10.center) to (12.center);
+		\draw [bend right=45] (12.center) to (14.center);
+		\draw (7.center) to (11.center);
+		\draw [bend right=45] (11.center) to (13.center);
+		\draw (14.center) to (15.center);
+		\draw (13.center) to (16.center);
+		\draw [bend left=45, looseness=0.75] (20.center) to (7.center);
+		\draw [bend left=45] (22.center) to (10.center);
+		\draw [bend left=15] (18) to (23);
+		\draw [bend right=15] (17) to (23);
+	\end{pgfonlayer}
+\end{tikzpicture}

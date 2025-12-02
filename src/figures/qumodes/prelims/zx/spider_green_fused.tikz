@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (0, 0) {$fg$};
+		\node [style=none] (2) at (-1.5, 1.25) {};
+		\node [style=none] (3) at (-1.5, 0.25) {};
+		\node [style=none] (4) at (-1.5, -0.25) {};
+		\node [style=none] (5) at (-1.5, -1.25) {};
+		\node [style=none] (6) at (1.5, 1.25) {};
+		\node [style=none] (7) at (1.5, 0.25) {};
+		\node [style=none] (8) at (1.5, -0.25) {};
+		\node [style=none] (9) at (1.5, -1.25) {};
+		\node [style=none] (10) at (1.25, 0.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (11) at (1.25, -0.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (12) at (-1.25, -0.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (13) at (-1.25, 0.75) {$\raisebox{1.3ex}{\vdots}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=360, out=120, looseness=0.75] (0) to (2.center);
+		\draw [in=165, out=0, looseness=0.75] (3.center) to (0);
+		\draw [in=180, out=60, looseness=0.75] (0) to (6.center);
+		\draw [in=-180, out=15, looseness=0.75] (0) to (7.center);
+		\draw [in=-165, out=0, looseness=0.75] (4.center) to (0);
+		\draw [in=-120, out=0, looseness=0.75] (5.center) to (0);
+		\draw [in=-180, out=-15, looseness=0.75] (0) to (8.center);
+		\draw [in=180, out=-60, looseness=0.75] (0) to (9.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

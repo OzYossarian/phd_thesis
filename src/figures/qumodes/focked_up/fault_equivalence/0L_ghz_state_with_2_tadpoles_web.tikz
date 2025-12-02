@@ -6,8 +6,8 @@
 		\node [style=none] (3) at (1, 0.2) {$\vdots$};
 		\node [style={gn_phase}] (4) at (-2.5, 1) {$0_L$};
 		\node [style={gn_phase}] (5) at (-2.5, -1) {$0_L$};
-		\node [style={gn_web}] (6) at (-1, 1.75) {$k/2\sqrt{\pi}$};
-		\node [style={gn_web}] (7) at (-1, -1.75) {$-k/2\sqrt{\pi}$};
+		\node [style={gn_web}] (6) at (-1, 1.75) {$k$};
+		\node [style={gn_web}] (7) at (-1, -1.75) {$-k$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw [in=75, out=-180] (1.center) to (0);

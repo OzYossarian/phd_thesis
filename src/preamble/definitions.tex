@@ -63,8 +63,14 @@
 % Use this one if the only thing being cited is the zoo.
 \newcommand{\citeZoo}[1]{\mbox{[\zoo{#1}]}}
 
+% COMMENTS
+\newcommand{\comment}[3]{\textcolor{#1}{[#2: #3]}}
+\newcommand{\teague}[1]{\comment{blue}{Teague}{#1}}
+
 % CALLIGRAPHY
+\newcommand{\BB}{\mathbb{B}}
 \newcommand{\CC}{\mathbb{C}}
+\newcommand{\FF}{\mathbb{F}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\ZZ}{\mathbb{Z}}
@@ -88,11 +94,16 @@
 
 \newcommand{\one}{\mathds{1}}
 
-% COMMENTS
-\newcommand{\comment}[3]{\textcolor{#1}{[#2: #3]}}
-\newcommand{\teague}[1]{\comment{blue}{Teague}{#1}}
+% LAZINESS/MISC
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\qqquad}{\quad\qquad}
+\newcommand{\qqqquad}{\quad\qqquad}
+\newcommand{\qqqqquad}{\quad\qqqquad}
+\newcommand{\qqqqqquad}{\quad\qqqqquad}
+\newcommand{\bsym}[1]{\boldsymbol{#1}}
+\newcommand{\presub}[2]{{}_{#1}\!{#2}}
 
-% MATHS
+% GENERAL MATHS
 \newcommand{\after}{\circ}
 \newcommand{\floor}[1]{\lfloor#1\rfloor}
 \newcommand{\ceil}[1]{\lceil#1\rceil}
@@ -100,9 +111,15 @@
 \newcommand{\coboundary}{\boundary^{\text{co}}}
 \newcommand{\pres}[1]{\langle #1 \rangle}
 \newcommand{\abs}[1]{\left| #1 \right|}
-\newcommand{\norm}[1]{\abs{\abs{#1}}}
+%\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\norm}[1]{\left| \! \left| #1 \right| \! \right|}
 \newcommand{\onenorm}[1]{\norm{#1}_1}
 \newcommand{\twonorm}[1]{\norm{#1}_2}
+
+% Operators
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\wt}{\operatorname{wt}}
 
 % QUANTUM
 
@@ -119,6 +136,10 @@
 \newcommand{\dsg}[1]{\DDD_{#1}}
 \newcommand{\qcode}[1]{\llbracket#1\rrbracket}
 \newcommand{\ccode}[1]{[#1]}
+
+% ZX
+\newcommand{\zxmodchi}{\text{ZX}/\chi}
+\newcommand{\zxmodpi}{\text{ZX}/\pi}
 
 % Dynamically condensed colour codes
 %\newcommand{\dcccOp}[3]{#1_{\colourful{#2}, \colourful{#3}}}
@@ -353,13 +374,3 @@
 }
 % Turn @ back into a special letter
 \makeatother
-
-% LAZINESS/MISC
-\newcommand{\ol}[1]{\overline{#1}}
-\newcommand{\qqquad}{\quad\qquad}
-\newcommand{\qqqquad}{\quad\qqquad}
-\newcommand{\qqqqquad}{\quad\qqqquad}
-\newcommand{\qqqqqquad}{\quad\qqqqquad}
-\newcommand{\bsym}[1]{\boldsymbol{#1}}
-\newcommand{\presub}[2]{{}_{#1}\!{#2}}
-

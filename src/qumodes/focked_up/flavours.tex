@@ -1,0 +1,141 @@
+\section{Unifying flavours of GKP codes}
+
+In \Cref{ch:floquetifying}, we referenced the PsiQuantum paper TODO that `unified flavours of fault-tolerance' using the ZX-calculus; they took a ZX-diagram representing the surface code as a static stabilizer code, and showed that this was only a few ZX-diagram rewrites away from an interpretation as a dynamic stabilizer code.
+They went further still, showing a different set of rewrites land you at a \textit{measurement-based} implementation of the code.
+Measurement-based quantum computation (MBQC) is a whole world of its own, and we'll give it the briefest of introductions shortly.
+
+We can now play this same `unifying flavours' game in the CV setting, using rewrites to transform between a static GKP code, a dynamic GKP code, and a measurement-based code.
+Moreover, we can do this in a fault-equivalent way, ensuring that we're maintaining the original static code's resilience to noise (under the ZX noise model, at least).
+We will just demonstrate this on a specific example code -- namely the single-mode square GKP code.
+One can imagine extending this to some algorithm that performs this process on any GKP diagram, in the same way Ben Rodatz specified an algorithm for this process in the qubit case.
+
+\subsection{A Floquetified GKP code}
+
+First, we give the ZX-diagram that corresponds to repeatedly performing the two measurements that define the single-mode square lattice GKP code.
+Time should be interpreted as going left to right:
+\begin{equation}\label{eq:gkp_square_circuit}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit}
+\end{equation}
+
+
+
+\teague{Maybe give logical and detecting webs already?}
+As discussed in \Cref{subsec:zx_mod_chi}, we can choose a different representative of this diagram in the $\text{ZX}/\chi$ calculus, and the group of all Pauli webs on the two diagrams will be identical (up to global scalar).
+In other words, we can get rid of the $\chi_{a_j}$ terms, and all error correction properties are preserved:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis}
+\end{equation}
+We give the Pauli webs that define the error correcting properties of this diagram -- namely, the logicals and detectors.
+We just give two detecting webs; the remainder are just translations of these two.
+We use the convention set right at the end of \Cref{sec:focked-up-pauli-webs} that lets us label whole edges instead of half-edges.
+Here $k \in\ZZ$ can be any integer, as per
+\begin{align}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_web_logical_x} \\[20pt]
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_web_logical_z} \\[20pt]
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_web_detector_x} \\[20pt]
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_web_detector_z}
+\end{align}
+
+Now let's start to manipulate this diagram.
+First, we'll reinterpret it as a dynamic stabilizer code.
+We can apply the identity rule and the tadpole rule of \Cref{prop:tadpole_rule_fe}, both of which are fault-equivalent \teague{TODO}:
+\begin{equation}
+    \begin{aligned}
+        &\phantom{=} \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis} \\[10pt]
+        &= \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cnot_ids} \\[10pt]
+        &= \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cnot_ids_tadpoles}
+    \end{aligned}
+\end{equation}
+
+We can freely add $\chi_{b_j}$ terms back in (formally, choose another representative of this in the $\zxmodchi$-calculus):
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot}
+\end{equation}
+
+Now for the fun step: so long as we ensure that each edge between a red and green spider doesn't swap which spider it's an input of and which it's an output of, we can freely move the spiders around (only connectivity matters!).
+Let's do this:
+\begin{equation}
+%    \begin{aligned}
+%    &\phantom{=} \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot} \\[20pt]
+%    &= \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse}
+%    \end{aligned}
+    = \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse}
+\end{equation}
+We can then reinterpret the time direction, just like we did in \Cref{ch:floquetifying}.
+Rather than read it as going left to right, we can view it as going from the bottom left to the top right -- in the diagram below, strips separated by grey dashed lines denote timesteps.
+So we can view this not as a single qumode, but as four qumodes:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse_timed}
+\end{equation}
+To perhaps make this clearer, we can extend the repeating pattern here (equivalently, we can imagine we started with a longer diagram representing the static GKP code in~\eqref{eq:gkp_square_circuit}, rather than just the five measurements we gave).
+Let's also colour the world-line of one of the qumodes blue:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse_extended_timed_blue}
+\end{equation}
+So this qumode is initialised in the GKP codestate $\ket{0_\square}$, then undergoes a CSUM gate with its neighbour on the left, then on the right, before being measured out in the position basis via a homodyne measurement.
+It's then reinitialised in the same GKP codestate $\ket{0_\square}$, and the same process repeats indefinitely.
+Every qumode undergoes the same set of operations, up to a basis change.
+
+Since the only things we did here were choose new representatives in the $\zxmodchi$-calculus and apply fault-equivalent rewrites, the resulting diagram has exactly the same error correcting properties as the original static GKP code.
+The result is a dynamic stabilizer code (indeed, a Floquet code).
+For example, we can draw the Pauli webs corresponding to the logical $X$ and $Z$ operators; this shows that the support of these operators aren't constant across all timesteps, which distinguishes dynamic stabilizer codes from static ones.
+We have omitted the web labels, because every highlighted edge is just labelled $k$ for some fixed integer $k \in \mathbb{Z}$.
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse_extended_web_logical_x}
+\end{equation}
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse_extended_web_logical_z}
+\end{equation}
+We also give the general form of detecting webs in the new dynamic stabilizer code; all other detectors are just translations of these two:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_floquet_cnot_reuse_extended_web_detectors}
+\end{equation}
+
+\subsection{A measurement-based GKP code}
+
+Measurement-based quantum computation works only slightly differently to `circuit-based' quantum computation.
+To introduce the concept, we restrict ourselves to qubits.
+In the circuit-based model, we take a set of qubits, each initialised in some single-qubit state, and then we apply operations (unitaries and measurements) to them to perform our desired computation.
+In measurement-based quantum computation (MBQC), we instead start with a set of qubits initialised in some big entangled state (a \textit{cluster state}), and the only operations we apply thereafter are measurements.
+The specific measurements we choose actually carry out the desired computation.
+For certain cluster states and certain sets of measurements, this model is still universal -- we can perform any quantum computation we like.
+The cluster state is typically formed by initialising all qubits in the $\ket{+}$ state and then performing $CZ$ gates between pairs of qubits according to some pattern.
+
+Returning to our GKP code, we will show how a different set of rewrites to those of the previous paragraph take us from a circuit implementation to an MBQC implementation.
+Recall our starting point, with the $\chi_{a_j}$ terms removed, to be read left to right:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis}
+\end{equation}
+We can apply a series of colour change and multiplier rules, each of which we've shown to be fault-equivalent (TODO):
+\begin{equation}
+    \begin{aligned}
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc1} \\[10pt]
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2} \\[10pt]
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2_i1} \\[10pt]
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2_i2} \\[10pt]
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2_czs}
+    \end{aligned}
+\end{equation}
+We can then apply the tadpole rule of \Cref{prop:tadpole_rule_fe}, and add back in some $\chi_{c_j}$ terms:
+\begin{equation}
+    \begin{aligned}
+        &=\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2_czs_tadpoles} \\[10pt]
+        &\sim_{\chi}\quad \tikzfig{qumodes/focked_up/flavours/gkp_square_circuit_no_chis_cc2_czs_tadpoles_chis}
+    \end{aligned}
+\end{equation}
+Now for our usual trick -- reinterpret the time direction.
+Viewing time as going upwards rather than left to right, this diagram represents a set of five qumodes, each initialised in the GKP codestate $\ket{+_\square}$, then undergoing a $CZ$ gate with its left and right neighbours to form a `one-dimensional' cluster state, before being measured out in the position basis via a homodyne measurement.
+Had we started with a diagram in the circuit model that showed more than five GKP measurements, we would have ended up with an MBQC diagram on more than five qumodes.
+We give the logical and detecting webs -- there's just one type of detector now, and it repeats periodically as before.
+We include the web labels explicitly here because the Fourier gate flips some signs -- it's no longer true that all edges are labelled by some fixed $k \in \mathbb{Z}$.
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_mbqc_web_logical_x}
+\end{equation}
+\vspace{10pt}
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_mbqc_web_logical_z}
+\end{equation}
+\vspace{10pt}
+\begin{equation}
+    \tikzfig{qumodes/focked_up/flavours/gkp_square_mbqc_web_detector}
+\end{equation}

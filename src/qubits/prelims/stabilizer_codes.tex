@@ -11,10 +11,13 @@ Cosets in this group represent logical Pauli operations on the encoded qubits: a
 \subsection{Implementation}\label{subsec:stabilizer_codes_implementation}
 
 Operationally, a stabilizer code is implemented as follows.
-Given $n$ qubits, we repeatedly measure a generating set $\{S_1, \ldots, S_r\}$ of the stabilizer group to project the system into the codespace and keep it there.
+Given $n$ qubits in some state, we first apply an encoding circuit that puts them in a codestate.
+Then we repeatedly measure a generating set $\{S_1, \ldots, S_r\}$ of the stabilizer group.
 In the absence of any errors, each measurement $S_j$ should give the outcome $+1$ in every round, confirming that the state is still stabilized by $\mathcal{S}$.
-We say each pair of measurements of $S_j$ in consecutive rounds form a \textit{detector}.
+Often we might not actually care if we end up in the codespace of $\{S_1, \ldots, S_r\}$ exactly, or just up to signs -- i.e.\ we end up in the codespace of $\{m_1 S_1, \ldots, m_r S_r\}$ for some $m_j$ (though we need to know which $m_j$ they are!).
+If this is the case, one possible encoding circuit is just to start measuring the generators $S_j$ -- up to signs measurement outcomes $m_j$, this will project us into the codespace of $\SSS$.
 
+We say each pair of measurements of $S_j$ in consecutive rounds form a \textit{detector}.
 In general, a detector is a set of Pauli measurements $\{P_1, \ldots, P_d\}$ with the property that the product of their measurement outcomes is deterministic in the absence of errors.
 Labelling their measurement outcomes as $m_1, \ldots, m_d$, we'll write detectors as \textit{formal products} $D = m_1 \ldots m_d$ with powers modulo $2$.
 I personally think writing these as formal products is incredibly convenient, but I seem to have found myself in a bit of a minority there.

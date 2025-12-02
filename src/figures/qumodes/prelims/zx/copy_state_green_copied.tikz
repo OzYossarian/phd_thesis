@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (-0.75, 0.75) {$\overline{\chi}_u$};
+		\node [style={gn_phase}] (1) at (-0.75, -0.75) {$\overline{\chi}_u$};
+		\node [style=none] (2) at (0.75, -0.75) {};
+		\node [style=none] (3) at (0.75, 0.75) {};
+		\node [style=none] (4) at (0, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (5) at (-2, 0) {$f(u)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (3.center);
+		\draw (1) to (2.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

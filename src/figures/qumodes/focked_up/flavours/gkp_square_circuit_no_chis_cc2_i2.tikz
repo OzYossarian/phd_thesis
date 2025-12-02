@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-7, 0) {};
+		\node [style=gn] (1) at (-5, 0) {};
+		\node [style={rn_phase}] (2) at (-6.5, -1.5) {$0_\square$};
+		\node [style=gn] (3) at (-2.5, 0) {};
+		\node [style={rn_phase}] (4) at (-4, -1.5) {$0_\square$};
+		\node [style=gn] (5) at (0, 0) {};
+		\node [style={rn_phase}] (6) at (-1.5, -1.5) {$0_\square$};
+		\node [style=gn] (7) at (3, 0) {};
+		\node [style={rn_phase}] (8) at (1.5, -1.5) {$0_\square$};
+		\node [style=none] (9) at (7.5, 0) {};
+		\node [style=gn] (22) at (5.5, 0) {};
+		\node [style={rn_phase}] (23) at (4, -1.5) {$0_\square$};
+		\node [style={fn_phase}] (24) at (-3.75, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (26) at (-1.25, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (27) at (1.5, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (29) at (4.25, 0) {$i^{\isarg{n}}$};
+		\node [style=rmat] (30) at (0.75, 0) {};
+		\node [style=lmat] (31) at (2.25, 0) {};
+		\node [style=SWmat] (32) at (-0.75, -0.75) {};
+		\node [style=SWmat] (33) at (2.25, -0.75) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (2);
+		\draw (3) to (4);
+		\draw (5) to (6);
+		\draw (7) to (8);
+		\draw (0.center) to (9.center);
+		\draw (22) to (23);
+	\end{pgfonlayer}
+\end{tikzpicture}

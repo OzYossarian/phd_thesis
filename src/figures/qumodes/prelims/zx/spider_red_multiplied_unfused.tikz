@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (1) at (1.25, -0.75) {};
+		\node [style=none] (2) at (1.25, 0.75) {};
+		\node [style=none] (3) at (1.25, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style={rn_phase}] (4) at (0, 0) {$f(p)$};
+		\node [style=none] (5) at (-1.25, 0.75) {};
+		\node [style=none] (6) at (-1.25, -0.75) {};
+		\node [style=none] (7) at (-1.25, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (8) at (-2, 0.75) {};
+		\node [style=none] (9) at (-2, -0.75) {};
+		\node [style=none] (10) at (2, 0.75) {};
+		\node [style=none] (11) at (2, -0.75) {};
+		\node [style=rmat] (12) at (-1.25, 0.75) {$m$};
+		\node [style=rmat] (14) at (-1.25, -0.75) {$m$};
+		\node [style=lmat] (15) at (1.25, -0.75) {$m$};
+		\node [style=lmat] (16) at (1.25, 0.75) {$m$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=0, out=-120] (4) to (6.center);
+		\draw [in=0, out=120] (4) to (5.center);
+		\draw [in=180, out=60] (4) to (2.center);
+		\draw [in=180, out=-60] (4) to (1.center);
+		\draw (2.center) to (10.center);
+		\draw (1.center) to (11.center);
+		\draw (6.center) to (9.center);
+		\draw (8.center) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,4 +1,160 @@
 \section{Measuring GKP code stabilizers}
 
+A second application of our CV fault-equivalence is in coming up with good stabilizer measurement circuits (often called \textit{syndrome extraction circuits}) for general GKP codes.
+Suppose we have an $m$-qumode GKP code defined by the stabilizer group:
+\begin{equation}
+    \SSS = \langle \hat{D}(\tbinom{\bsym{q}_1}{\bsym{p}_1}), \ldots, \hat{D}(\tbinom{\bsym{q}_{2m}}{\bsym{p}_{2m}}) \rangle
+\end{equation}
+Recall that GKP codes are implemented by measuring $\hat{H}_j \bmod 1$ for $1 \leq j \leq 2m$, where $\hat{H}_j = \tbinom{\bsym{q}_j}{\bsym{p}_j} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}$, hence $\hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j}) = e^{-i2\pi\hat{H}}$.
+The projector associated with the outcome $a \in \mathbb{R}$ of this measurement is:
+\begin{equation}
+    \Pi_j \coloneqq \sum_{k \in \ZZ} e^{-i2\pi a k}\hat{D}(\tbinom{\bsym{q_j}}{\bsym{p_j}})^{a k}
+\end{equation}
+For clarity, let's drop the subscript $j$ temporarily, and call this $\Pi$.
+We will need polar coordinates: for $\tbinom{\bsym{q}}{\bsym{p}} = (q_1, \ldots, q_m, p_1, \ldots, p_m)$, define $r_j e^{i\theta_j} = q_j + ip_j$.
+We showed in TODO that we can represent this projector in the ZX-calculus as:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement_outcome_a}
+\end{equation}
+Since we only care about the error correcting properties of this diagram, we can choose the representative of this diagram in the $\zxmodchi$-calculus that has $a = 0$:
+\begin{equation}\label{eq:measurement_general_displacement}
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement}
+\end{equation}
+This diagram features an $m$-legged $0_\square$-labelled spider; this represents a GHZ state in the multimode square GKP code.
+%This diagram features an $m$-legged $0_\square$-labelled spider; this represents a \textit{cat state} in the multimode square GKP code.
+%A cat state is just a $\ket{\text{GHZ}_m}$ state but in the other basis:
+%\begin{equation}
+%    \ket{\text{cat}_m} = H^{\otimes m} \ket{\text{GHZ}_m}
+%\end{equation}
+Preparing this state with a low error rate is tricky.
+Supposing we wanted to actually implement this diagram, it would be more realistic to assume that at best we can start with single-qumode square GKP states $\ket{+_\square}$.
+So a natural question is: can we find a circuit that's fault-equivalent to the diagram in~\eqref{eq:measurement_general_displacement} above, but which only uses single-qumode GKP states?
+In other words, can we find a circuit that measures this GKP stabilizer generator and has the same behaviour under noise as the diagram above (at least for the ZX noise model)?
+The following proposition is all we need.
 
+\begin{proposition}\label{prop:GHZ_prep_even_fault_equiv}
+    For all real $r \neq 0$ and integer $m \geq 1$, the following diagrams are fault-equivalent:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_braces}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_braces}
+    \end{equation}
+    \begin{proof}
+        Call these diagrams $D_1 = D_2$.
+        The direction $D_2 \mapsto D_1$ is certainly fault-accounting, so it remains to show $D_1 \mapsto D_2$ is too.
+        Errors on output errors only are easily accounted for, as are green $\hat{Z}(p)$ errors on internal edges, so just consider an error $F_2$ consisting of red $\hat{X}(q)$ errors on internal edges:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_j_error}
+        \end{equation}
+        Suppose that this error is undetectable (otherwise it doesn't need accounting for).
+        Note that $D_2$ has detecting webs of the following form, for $1 \leq j \leq m$ and all $a_j \in \frac{1}{r}\mathbb{Z}$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_j_web_detector}
+        \end{equation}
+        For error $F_2$ above to not be detected by this web, \Cref{prop:detecting_web_detects_error} tells us that we must have $a_j (t_j + u_j - v_j) \in \mathbb{Z}$ for all $a_j \in \frac{1}{r}\mathbb{Z}$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_j_web_detector_error}
+        \end{equation}
+        This in fact occurs iff it's true for $a_j = \frac{1}{r}$, since all other values of $a_j$ are just integer multiples of this.
+        So we get $t_j + u_j - v_j = r k_j$, for some $k_j \in \ZZ$.
+        Using another web, we can in fact show all these $k_j$ are equal.
+        Consider the following web, which exists for all $a \in \RR$ and all $2 \leq j \leq m$, with $F_2$ also drawn:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_j_web_pairwise_detector_error}
+        \end{equation}
+        \Cref{prop:detecting_web_detects_error} tells us $F_2$ is undetected by this web iff:
+        \begin{equation}
+            \begin{aligned}
+                \phantom{\iff}&& a (t_1 + u_1 - v_1) - a(t_j + u_j - v_j) &\in \mathbb{Z} \\
+                \iff&& ark_1 - ark_j &\in \ZZ \\
+                \iff&& ar(k_1 - k_j) &\in \ZZ \\
+            \end{aligned}
+        \end{equation}
+        And since this holds for all real $a$, this forces $k_1 - k_j = 0$, i.e.\ $k_1 = k_j$.
+        So write $k = k_1 = \ldots = k_m$.
+        Plug in $t_j = r k_j - u_j + v_j$ and perform a few rewrites:
+        \begin{equation}
+            \begin{aligned}
+                \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error}
+                &~~=~~ \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error_sub_1} \\[10pt]
+                &~~=~~ \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error_sub_2}
+            \end{aligned}
+        \end{equation}
+        Now note that the $m$ spiders labelled $\chi_{rk}$ are a stabilizer of the comb spider labelled $\indicator{x \eqmod{r} 0}$, so we can remove them, and push the rest out onto the output legs:
+        \begin{equation}
+                =~~ \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error_sub_3}
+                ~~=~~ \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error_sub_4}
+        \end{equation}
+        This error $F_1$ on the output legs only is therefore an equivalent error in $D_1$ of $F_2$.
+        So if its weight is less than or equal to that of $F_2$, we're done.
+        \begin{align}
+            \wt(F_2) &= \sum_{j=1}^m |t_j| + |u_j| + |v_j| \geq \sum_{j=1}^m |t_j| + \sum_{j=1}^m |v_j - u_j| \\
+            \wt(F_1) &= \sum_{j=1}^m |v_j| + \sum_{j=1}^m |v_j - u_j|
+        \end{align}
+        So if $\sum_{j=1}^m |v_j| \leq \sum_{j=1}^m |t_j|$, we're in business.
+        Unfortunately we don't have such a guarantee, but all is not lost!
+        Had we swapped the roles of the $t_j$ and $v_j$ terms throughout, we would have ended up with a different equivalent error $F_1'$ for $F_2$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error}
+            ~~=~~
+            \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_error_sub_4_alt}
+        \end{equation}
+        This weights of $F_2$ and $F_1'$ are then:
+        \begin{align}
+            \wt(F_2) &= \sum_{j=1}^m |t_j| + |u_j| + |v_j| \geq \sum_{j=1}^m |v_j| + \sum_{j=1}^m |t_j + u_j| \\
+            \wt(F_1') &= \sum_{j=1}^m |t_j| + \sum_{j=1}^m |t_j + u_j|
+        \end{align}
+        In this case, we want the other inequality: if $\sum_{j=1}^m |t_j| \leq \sum_{j=1}^m |v_j|$ then $\wt(F_1') \leq \wt(F_2)$.
+        Since the inequality has to hold in one direction, and we have an equivalent error of equal or smaller weight in each case, we're done.
+    \end{proof}
+\end{proposition}
 
+Let's look at this in action.
+
+\begin{example}
+    The $E_8$ lattice in $\RR^{8}$ is defined as the span of the columns of the following \textit{generator matrix}:
+    \begin{equation}\label{eq:E8_lattice_generator}
+        M =
+        \begin{pmatrix}
+            1 & 0 & 0 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
+            -1 & 1 & 0 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
+            0 & -1 & 1 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
+            0 & 0 & -1 & 1 & 0 & 0 & 0 & \frac{1}{2} \\
+            0 & 0 & 0 & -1 & 1 & 0 & 0 & \frac{1}{2} \\
+            0 & 0 & 0 & 0 & -1 & 1 & 0 & \frac{1}{2} \\
+            0 & 0 & 0 & 0 & 0 & -1 & 1 & \frac{1}{2} \\
+            0 & 0 & 0 & 0 & 0 & 0 & -1 & \frac{1}{2}
+        \end{pmatrix}
+    \end{equation}
+    For any integer $d \geq 2$, this lattice gives rise to a four-qumode GKP code encoding four $d$-dimensional qudits.
+    Define $M_d = \sqrt{d}M$ and let the lattice $\Gamma_d$ be the span of the columns of $M_d$.
+    We'll take $d = 2$, so that this encodes four qubits.
+    Take column $j$ of $M_d$, reorder it into $qqpp$ order (\Cref{subsec:phase_space}), and denote it by $\boldsymbol{\xi}_j$.
+    The GKP code is defined by the stabilizer group:
+    \begin{equation}
+        \SSS = \pres{\hat{D}(\boldsymbol{\xi}_1), \ldots, \hat{D}(\boldsymbol{\xi}_n)}
+    \end{equation}
+    So to implement it, we need to measure a generating set for it -- may as well choose the one we've given above.
+    And the generator we're particularly interested in is the one corresponding to the final column of $M_2$:
+    \begin{equation}
+        \hat{D}(\boldsymbol{\xi}_8) = \hat{D}(\sqrt{2}(\frac{1}{2}, \ldots, \frac{1}{2})^T)
+    \end{equation}
+    To write the corresponding projector in the ZX-calculus, we need polar coordinates: $\sqrt{2}(\frac{1}{2} + \frac{1}{2}i) = e^{i\pi / 4}$.
+    Then the projector is:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8}
+    \end{equation}
+    In particular, the given diagram contains a 4-qumode GHZ state.
+    We saw in \Cref{prop:GHZ_prep_even_fault_equiv} above how to rewrite this fault-equivalently to a diagram containing only one-legged $0_L$ states:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1}
+    \end{equation}
+    TODO continue -- how to post-select away the bad measurement outcomes?
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1_meas1}
+    \end{equation}
+\end{example}

@@ -59,12 +59,12 @@ For specific highlightings, the group product corresponds to `overlaying' one di
 Next we define highlightings on diagrams consisting of multiple generators.
 For a diagram $D$ with edges $E$, we will write the internal edges as $E_\circ$ and the boundary edges as $E_{\boundary}$.
 We now declare that internal edges are in fact made of two \textit{half-edges}, and boundary edges are all half-edges.
-So we write these as $E_{1/2} = E_\circ \sqcup E_\circ \cup E_\boundary$, where we use $\sqcup$ to specifically denote the disjoint product, i.e.\ we take two copies of the internal edges.
+So we write these as $E_{1/2} = E_\circ \sqcup E_\circ \cup E_\boundary$, where we use $\sqcup$ to specifically denote the disjoint union, i.e.\ we take two copies of the internal edges.
 Note that in accordance with our disclaimer~\eqref{eq:qubit_generators_id_swap_explicit} above, the identity map consists of two half-edges and the swap map of four half-edges.
 
 \begin{definition}\label{defn:highlighting_general}
     A highlighting $H$ of a general diagram $D$ is an assignment of a tuple $(a_j, b_j) \in \mathbb{F}_2^2$ to each half-edge $e_j$.
-    In other words, a highlighting on $D$ is an element of the group $H \in \mathbb{F}_2^{|E_{1/2}|}$.
+    In other words, a highlighting on $D$ is an element of the group $H \in \mathbb{F}_2^{2|E_{1/2}|}$.
     Graphically:
     \begin{equation}
         \tikzfig{qubits/prelims/pauli_webs/highlighting_fg}
@@ -131,7 +131,7 @@ Formally:
 Now let's consider general diagrams.
 
 \begin{definition}\label{defn:pauli_web_general}
-    A Pauli web $W$ on a general diagram $D$ with edges $E$ is a highlighting $W \in \mathbb{F}_2^{|E_{1/2}|}$ with the following two properties.
+    A Pauli web $W$ on a general diagram $D$ with edges $E$ is a highlighting $W \in \mathbb{F}_2^{2|E_{1/2}|}$ with the following two properties.
     First, the restriction $W|_f$ to every generator $f$ and its incident half-edges must be a Pauli web for $f$.
     Secondly, all pairs of half-edges that form a single internal edge must have identical labels $(a, b)$ and $(c, d)$:
     \begin{equation}
@@ -139,7 +139,7 @@ Now let's consider general diagrams.
     \end{equation}
 \end{definition}
 
-Note that since labels on pairs of half-edges that make up an internal edge must be identical, we can equivalently view Pauli webs as elements of $\mathbb{F}_2^{|E|}$ rather than $\mathbb{F}_2^{|E_{1/2}|}$.
+Note that since labels on pairs of half-edges that make up an internal edge must be identical, we can equivalently view Pauli webs as elements of $\mathbb{F}_2^{|E|}$ rather than $\mathbb{F}_2^{2|E_{1/2}|}$.
 We will signpost clearly whenever we're using this convention.
 %By the subgroup test, one can again see that Pauli webs form a subgroup of all highlightings on $D$.
 
@@ -323,10 +323,10 @@ Since Pauli webs on general diagrams must restrict to Pauli webs on each generat
     \end{equation}
 \end{example}
 
-\subsection{The ZX$_{\pi}$ calculus}
+\subsection{The $\text{ZX}/\pi$ calculus}
 
 TODO? Say that Pauli webs don't care about $\pi$-spiders.
-Definition some kind of `$D$ has same QEC properties ass $D'$' relationship iff they're equal in the ZX$_{\pi}$ calculus?
+Definition some kind of `$D$ has same QEC properties as $D'$' relationship iff they're equal in the ZX$_{\pi}$ calculus?
 
 \subsection{Categorising Pauli webs}
 
@@ -590,7 +590,7 @@ We can rephrase the definition of a Pauli web on a single generator in terms of 
 
 \begin{altdefinition}[\Cref{defn:pauli_web_single_generator}]
     A highlighting $H$ on a generator $f$ is a Pauli web iff the result $f^{H}$ of firing $f$ according to $H$ is proportional to $f$ again.
-    That is, iff $f^{H)} = \lambda_{H|_f} f$ for some non-zero $\lambda_{H|_f} \in \CC$.
+    That is, iff $f^{H} = \lambda_{H|_f} f$ for some non-zero $\lambda_{H|_f} \in \CC$.
     \begin{equation}
         \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator}
         ~~
@@ -646,7 +646,7 @@ Then we have:
 \end{lemma}
 
 Finally, we can get to the good stuff.
-Reminder: we can always view a Pauli web $W$ on a diagram $D$ with edges $E$ as an element of $\mathbb{F}_2^{|E|}$ rather than the usual $\mathbb{F}_2^{|E_{1/2}|}$, if we want -- this is fine because half-edges making up internal edges have identical labels.
+Reminder: we can always view a Pauli web $W$ on a diagram $D$ with edges $E$ as an element of $\mathbb{F}_2^{|E|}$ rather than the usual $\mathbb{F}_2^{2|E_{1/2}|}$, if we want -- this is fine because half-edges making up internal edges have identical labels.
 We take this approach in the next proposition.
 Also recall that if $D$ consists of Cliffords and Pauli measurements with outcomes $m_j$, and $D = 0$, then
 

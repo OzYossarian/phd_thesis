@@ -1,30 +1,26 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=none] (1) at (1.5, 1) {};
-		\node [style=none] (2) at (1.5, -1) {};
-		\node [style=none] (3) at (1, 0.2) {$\vdots$};
-		\node [style={gn_phase}] (4) at (-3.25, 1) {$0_L$};
-		\node [style={gn_phase}] (5) at (-3.25, -1) {$0_L$};
-		\node [style={gn_web}] (6) at (-5, 1) {$k_j/2\sqrt{\pi}$};
-		\node [style={gn_web}] (7) at (-5, -1) {$k_{j+1}/2\sqrt{\pi}$};
-		\node [style=none] (8) at (-1.75, 2.2) {$\vdots$};
-		\node [style={gn_phase}] (10) at (-3.25, 3.25) {$0_L$};
-		\node [style={gn_web}] (11) at (-5, 3.25) {$k_1/2\sqrt{\pi}$};
-		\node [style={gn_phase}] (12) at (-3.25, -3.25) {$0_L$};
-		\node [style={gn_web}] (13) at (-5, -3.25) {$k_m/2\sqrt{\pi}$};
-		\node [style=gn] (14) at (0, 0) {};
-		\node [style=none] (15) at (-1.75, -1.8) {$\vdots$};
-		\node [style={rn_phase}] (16) at (-1.75, 1) {$\chi_{p_j}$};
-		\node [style={rn_phase}] (17) at (-1.75, -1) {$\chi_{p_{j+1}}$};
-		\node [style={rn_phase}] (18) at (-1.75, 3) {$\chi_{p_1}$};
-		\node [style={rn_phase}] (19) at (-1.75, -3) {$\chi_{p_{m}}$};
+		\node [style={rn_phase}] (16) at (-1.5, 0) {$\chi_{p_j}$};
+		\node [style={rn_phase}] (18) at (-1.5, 2) {$\chi_{p_1}$};
+		\node [style={rn_phase}] (19) at (-1.5, -1.75) {$\chi_{p_{m}}$};
+		\node [style=none] (20) at (1.5, 1) {};
+		\node [style=none] (21) at (1.5, -1) {};
+		\node [style={gn_phase}] (22) at (-3, 0) {$0_L$};
+		\node [style={gn_web}] (23) at (-4, 0) {$k_j$};
+		\node [style={gn_phase}] (24) at (-3, 2.25) {$0_L$};
+		\node [style={gn_web}] (25) at (-4, 2.25) {$k_1$};
+		\node [style={gn_phase}] (26) at (-3, -2) {$0_L$};
+		\node [style={gn_web}] (27) at (-4, -2) {$k_m$};
+		\node [style=gn] (28) at (0, 0) {};
+		\node [style=none] (29) at (-3, 1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (30) at (-3, -1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (31) at (1.25, 0) {$\raisebox{1.3ex}{\vdots}$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
-		\draw [style=zweb, in=-105, out=0] (12) to (14);
-		\draw [style=zweb, in=0, out=105] (14) to (10);
-		\draw [in=75, out=-180] (1.center) to (14);
-		\draw [in=180, out=-75] (14) to (2.center);
-		\draw [style=zweb, in=0, out=120, looseness=0.75] (14) to (4);
-		\draw [style=zweb, in=-120, out=0, looseness=0.75] (5) to (14);
+		\draw [style=zweb, in=-105, out=0] (26) to (28);
+		\draw [style=zweb, in=0, out=105] (28) to (24);
+		\draw [in=75, out=-180] (20.center) to (28);
+		\draw [in=180, out=-75] (28) to (21.center);
+		\draw [style=zweb] (28) to (22);
 	\end{pgfonlayer}
 \end{tikzpicture}

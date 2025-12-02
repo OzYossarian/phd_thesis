@@ -1,272 +1,275 @@
 \section{Focked up Pauli webs}\label{sec:focked-up-pauli-webs}
 
-Function $\chi_x : \mathbb{R} \to \mathbb{C}$ defined as $\chi_x(p) = e^{-i2\pi xp}$.
-Note $\chi_0(p) = e^{-i2\pi \cdot 0 \cdot p} = 1$ is the constant function $1$.
-Indeed, the function $\chi_a(x) = e^{-i2\pi ax}$ is a constant function iff $a = 0$.
-No $n \in \mathbb{N}$ such that the Kronecker delta $\delta_n: \mathbb{N} \to \mathbb{C}$ is the constant function $1$.
+We now generalise the definition of Pauli webs from qubits to qumodes.
+In a nutshell, everything is exactly the same, except we replace $\mathbb{F}_2$ with $\mathbb{R}$ throughout, and we replace Paulis $X^a$ and $Z^b$ with displacements $D(\binom{a}{0})$ and $D(\binom{0}{b})$.
+\teague{Maybe define $X(a) \coloneqq D(\binom{a}{0})$? And analogous for $Z(b)$?}
+For instance, we start in the same way, by defining a highlighting.
+Recall for a diagram $D$ with edges $E = E_\circ \cup E_{\boundary}$ partitioned into internal and boundary edges, we denoted the half-edges as $E_{1/2} = E_\circ \sqcup E_\circ \cup E_{\boundary}$.
 
-Throughout, we will use a dot/underline/something to denote that a variable is the single argument of a function.
-For example, if writing $e^{-i2\pi \dot{x}p}$, we mean the function $x \mapsto e^{-i2\pi xp}$.
-If instead we write $e^{-i2\pi x\dot{p}}$, we mean the function $p \mapsto e^{-i2\pi xp}$.
-
-\subsection{Defining Pauli webs}\label{subsec:defining-pauli-webs}
-
-\begin{definition}\label{defn:generators}
-The \textbf{generators} of the Focked-up ZX-calculus are the three spiders:
-\begin{equation}\label{eq:generators_spiders}
-\tikzfig{qumodes/focked_up/pauli_webs/generators_spiders}
-\end{equation}
-the multiplier and $W$-node:
-\begin{equation}\label{eq:generators_mult_W_node}
-\tikzfig{qumodes/focked_up/pauli_webs/generators_mult_W_node}
-\end{equation}
-and the identity and swap maps:
-\begin{equation}\label{eq:generators_id_swap}
-\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap}
-\end{equation}
-where $f, h: \mathbb{R} \to \mathbb{C}$, $g: \mathbb{N} \to \mathbb{C}$ and $r \in \mathbb{R}$.
+\begin{definition}
+    A highlighting $H$ on a Focked up ZX diagram $D$ with edges $E$ is an element of $\RR^{2|E_{1/2}|}$.
+    We write $H = (a_1, b_1, \ldots, a_{|E_{1/2}|}, b_{|E_{1/2}|})$.
+    Graphically, we highlight each half-edge $e_j$ in $D$ red and green and label it $(a_j, b_j)$.
+    If either of $a_j$ or $b_j$ are zero we can omit the red or green highlight, respectively.
 \end{definition}
 
-In what follows, it might help to temporarily think of the identity and swap maps as also having a node at their center:
-\begin{equation}\label{eq:generators_id_swap_explicit}
-\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap_explicit}
-\end{equation}
-
-Note that these are an overcomplete generating set; will discuss this shortly!
-Will draw a generic generator as an asymmetric box with some label $f$ and some number of input and output legs:
-\begin{equation}\label{eq:generic_generator}
-\tikzfig{qumodes/focked_up/pauli_webs/generator}
-\end{equation}
-
-\begin{definition}\label{defn:highlighting_generator}
-A \textbf{highlighting} of a single generator is an assignment of a tuple $(a_j, b_j) \in \mathbb{R}^2$ to each of its input and output legs.
-Graphically:
-\begin{equation}\label{eq:highlighting_generator}
-\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator}
-\end{equation}
-Whenever one or both of $a_j, b_j$ are zero, we can omit the corresponding highlight from the diagram:
-\begin{equation}\label{eq:highlighting_generator_0s_omitted}
-\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator_0s_omitted}
-\end{equation}
-\end{definition}
-
-\begin{definition}\label{defn:pauli_web_generator}
-A \textbf{Pauli web} on a single generator is a highlighting:
-\begin{equation}\label{eq:pauli_web_generator_highlighting}
-\tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator}
-\end{equation}
-satisfying:
-\begin{equation}\label{eq:pauli_web_generator_condition}
-\tikzfig{qumodes/focked_up/pauli_webs/pauli_web_generator_condition}
-\end{equation}
-\end{definition}
-
-\begin{definition}\label{defn:boundary_internal_edges}
-We say an edge in any ZX-diagram is a \textbf{boundary edge} if it is an input or output of the overall diagram, else it's an \textbf{internal edge}.
-\end{definition}
-
-Potential gotchas here are the diagram consisting of just the identity map, and the diagram consisting of just the swap map.
-The former has two boundary edges, not one, and similarly the latter has four boundary edges, not two:
-\begin{equation}\label{eq:generators_id_swap_explicit_boundary_edges}
-\tikzfig{qumodes/focked_up/pauli_webs/generators_id_swap_explicit}
-\end{equation}
-
-\begin{definition}\label{defn:half_edges}
-We declare that internal edges actually consist of two \textbf{half-edges}, while boundary edges are a single \textbf{half-edge}.
-\end{definition}
-
-\begin{definition}\label{defn:highlighting_general_diagram}
-A \textbf{highlighting} of a general ZX-diagram is an assignment of a tuple in $\mathbb{R}^2$ to each half-edge.
-Graphically:
+We redeploy our usual example of a single internal edge within a general diagram $D$:
 \begin{equation}\label{eq:highlighting_general_diagram}
 \tikzfig{qumodes/focked_up/pauli_webs/highlighting_general_diagram}
 \end{equation}
-Again, whenever one or both components of the tuple are zero, we may omit the corresponding highlight.
+
+We can generalise the notion of firing a subset of generators in a diagram according to a highlighting
+TODO
+
+To define Pauli webs, we must start with single generators.
+We're considering the generators of the diagram to be the three spider species, the multiplier, the identity map and the swap map.
+Recall we don't allow spiderless cups and caps.
+
+\begin{definition}\label{defn:pauli_web_generator}
+    A \textbf{Pauli web} $W$ on a generator $f$ with edges $E$ is a highlighting $W \in \RR^{2|E_{1/2}|}$ such that the result $f^W$ of firing $f$ according to $W$ is proportional to $f$ again: $f^W \propto f$.
+    Graphically it's a highlighting:
+    \begin{equation}\label{eq:pauli_web_generator_highlighting}
+        \tikzfig{qumodes/focked_up/pauli_webs/highlighting_generator}
+    \end{equation}
+    satisfying:
+    \begin{equation}\label{eq:pauli_web_generator_condition}
+        \tikzfig{qumodes/focked_up/pauli_webs/pauli_web_generator_condition}
+    \end{equation}
 \end{definition}
+
+This then lets us define Pauli webs on general diagrams.
 
 \begin{definition}\label{defn:pauli_web_general_diagram}
-A \textbf{Pauli web} on a general ZX-diagram is a highlighting:
-\begin{equation}\label{eq:pauli_web_general_diagram_highlighting}
-\tikzfig{qumodes/focked_up/pauli_webs/highlighting_general_diagram}
-\end{equation}
-such the restriction to each generator and its incident half-edges is a Pauli web for that generator, and on every internal edge the pair of tuples $(a, b)$ and $(c, d)$ satisfy $c = -a$ and $d = -b$:
-\begin{equation}\label{eq:pauli_web_general_diagram_conditions}
-\tikzfig{qumodes/focked_up/pauli_webs/pauli_web_general_diagram}
-\end{equation}
+    A \textbf{Pauli web} $W$ on a general ZX-diagram $D$ with edges $E$ is a highlighting $W \in \RR^{2|E_{1/2}|}$ such that the restriction $W|_f$ to each generator $f$ is a Pauli web on $f$, and for every pair of half-edges in an internal edge the labels $(a, b)$ and $(c, d)$ satisfy $c = -a$ and $d = -b$.
 \end{definition}
-
-TODO: what to say about Pauli webs being somehow preserved under rewrites?
-i.e.\ suppose there's a Pauli web on a diagram $D$ with boundary edges labelled $(a_j, b_j)$.
-If $D = D'$ for some other diagram $D$, then there should be a valid Pauli web on $D'$ with the same boundary edge labels.
-This is a generalisation of my initial concern which was about consistency of these two definitions given that our set of generators is overcomplete - e.g.:
-\begin{equation}\label{eq:red_spider_derived}
-\tikzfig{qumodes/focked_up/pauli_webs/red_spider_derived}
+Graphically, on an internal edge of a general diagram, we have:
+\begin{equation}\label{eq:pauli_web_general_diagram_conditions}
+    \tikzfig{qumodes/focked_up/pauli_webs/pauli_web_general_diagram}
 \end{equation}
 
-TODO: add intuition/explanations throughout all this
+Given diagram $D$ with edges $E$, in the qubit case, the condition that half-edges making up an internal edge had to have the same label in $W$ meant we could freely consider a Pauli web $W \in \FF_2^{2|E_{1/2}|}$ to in fact be an element of $\FF_2^{|E|}$.
+For qumodes, we don't immediately have this freedom, because the half-edge labels need only be negations of one another.
+But since we've forbidden spiderless cups and caps, every internal edge is the output of one generator and the input of another.
+So we can define the convention that labelling an internal edge $(a, b)$ means the output half-edge has the label $(a, b)$, and the input half-edge has the label $(-a, -b)$.
+\teague{Pic}
 
-TODO: can we get away with just using one label $(a, b)$ for each internal edge?
-Was thinking no - counterexample being two generators connected by a cup or cap.
+By definition the set of all highlightings on a diagram $D$ with edges $E$ form a group (we defined highlightings as the group $\mathbb{R}^{2|E_{1/2}|}$ and just gave it a graphical interpretation).
+One can again show that the set of all Pauli webs on $D$ is a subgroup of this via the subgroup test, and will as before denote this group as $\WWW(D)$.
 
-\subsection{Determining Pauli webs}\label{subsec:determining-pauli-webs}
+\subsection{Pauli webs on Gaussian + comb diagrams}
 
-Will use shorthand:
-\begin{equation}\label{eq:mult_default}
-\tikzfig{qumodes/focked_up/pauli_webs/right_mult_default}
-\qqqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/left_mult_default}
-\end{equation}
-
-Recall also that:
-\begin{equation}\label{eq:mult_inverse_mult_fourier}
-\tikzfig{qumodes/focked_up/pauli_webs/mult_inverse}
-\qqqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/mult_fourier}
-\end{equation}
-
-Hence:
-\begin{equation}\label{eq:mult_default_with_fourier}
-\tikzfig{qumodes/focked_up/pauli_webs/mult_default_with_fourier}
-\end{equation}
-
-\begin{lemma}\label{lem:gate_absorb}
-\teague{Check plus/minus signs really correct}
-\begin{equation}\label{eq:gate_absorb}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb}
-\qqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/green_gate_absorb}
-\end{equation}
-\begin{proof}
-    First equation makes use of the fact that $\mathcal{F}^{-1}(\mathcal{F}(f(x)) \cdot \chi_a) = f(x - a)$:
-    \begin{equation}\label{eq:red_gate_absorb_proof}
-    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb_proof}
-    \end{equation}
-    Second equation makes use of the dual property $\mathcal{F}(\mathcal{F}^{-1}(f(x)) \cdot \overline{\chi}_a) = f(x - a)$:
-    \begin{equation}\label{eq:green_gate_absorb_proof}
-    \tikzfig{qumodes/focked_up/pauli_webs/green_gate_absorb_proof}
-    \end{equation}
-\end{proof}
-\end{lemma}
-
-\begin{lemma}\label{lem:gate_copy_blank_spider}
-\begin{equation}\label{eq:gate_copy_blank_spider}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider}
-\qqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy_blank_spider}
-\end{equation}
-\begin{proof}
-    Follows from state copy and bialgebra rules:
-    \begin{equation}\label{eq:red_gate_copy_blank_spider_proof}
-    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider_proof}
-    \end{equation}
-\end{proof}
-\end{lemma}
-
-\begin{lemma}\label{lem:red_spider_not_flexsymmetric}
-\begin{equation}\label{eq:red_spider_not_flexsymmetric}
-\tikzfig{qumodes/focked_up/pauli_webs/red_spider_not_flexsymmetric_v2}
-\end{equation}
-\end{lemma}
-
-\begin{lemma}\label{lem:gate_copy}
-\teague{Check plus/minus signs really correct}
-\begin{equation}\label{eq:gate_copy}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy}
-\qqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy}
-\end{equation}
-\begin{proof}
-    \begin{equation}\label{eq:red_gate_copy_proof}
-    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_proof}
-    \end{equation}
-\end{proof}
-\end{lemma}
-
-\begin{lemma}\label{lem:red_gate_copy_multi_inputs}
-\begin{equation}\label{eq:red_gate_copy_multi_inputs}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input}
-\end{equation}
-\end{lemma}
-
-\begin{lemma}\label{lem:red_gate_copy_cancel}
-\begin{equation}\label{eq:red_gate_copy_cancel}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_cancel}
-\end{equation}
-\end{lemma}
+From now on, we'll focus on the Gaussian + comb fragment only.
+First, single Gaussian spiders.
 
 \begin{proposition}\label{thm:general_pauli_web_green_gaussian_spider}
-A highlighting of a Gaussian $Z$ spider with phase function $e^{i(t + u\isarg{x} + v\isarg{x}^2)}$ is a Pauli web iff it's of the following form, where $2\pi \sum_j a_j = 2vb$:
+A highlighting of a Gaussian $Z$ spider with phase function $e^{i2\pi(t + u\isarg{x} + v\isarg{x}^2)}$ is a Pauli web iff it's of the following form, where $\sum_j a_j = -2vb$:
 \begin{equation}\label{eq:general_pauli_web_green_linear_spider}
-\tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gaussian_spider}
+    \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gaussian_spider}
 \end{equation}
 \begin{proof}
-    TODO
+    Start with a generic highlighting on a Gaussian spider, and fire it to get:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gaussian_spider_fired}
+    \end{equation}
+    Now copy the red $\chi_{b_1}$ displacement through the Gaussian spider, commute the green displacements through the red ones, and fuse them into the central spider:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gaussian_spider_proof_1}
+    \end{equation}
+    Here we've defined $a$ and $\lambda$ to be
+    \begin{equation}
+        a = \sum_{j=1}^{l+m} a_j
+        \qqquad
+        \lambda = e^{i2\pi(\sum_{j=2}^{l} a_j (b_j - b_1) + \sum_{j=l+1}^{l+m} a_j(b_j + b_1))}
+    \end{equation}
+    This is proportional to the original Gaussian spider iff all the red spiders disappear and the new function in the central spider is equal the original Gaussian function.
+    The former means $b_2 = \ldots = b_l = b_1$ and $b_{l+1} = \ldots = b_{l+m} = -b_1$.
+    Note that then $\lambda = 1$.
+    Defining $b \coloneqq b_1$, the latter means:
+    \begin{equation}
+        \begin{aligned}
+            e^{i2\pi(t + u\isarg{x} + v\isarg{x}^2)}
+            &= e^{i2\pi(t + (u + 2vb)\isarg{x} + v\isarg{x}^2)}\overline{\chi}_a \\
+            &= e^{i2\pi(t + (u + 2vb)\isarg{x} + v\isarg{x}^2)}e^{i2\pi a\isarg{x}} \\
+            &= e^{i2\pi(t + (u + 2vb + a)\isarg{x} + v\isarg{x}^2)} \\
+        \end{aligned}
+    \end{equation}
+    This occurs iff $2vb + a = 0$.
 \end{proof}
 \end{proposition}
 
-\begin{definition}\label{defn:indicator_function}
-For any predicate $f: \mathbb{R} \to \mathbb{B}$, we define $\indicator{f(\isarg{x})} : \mathbb{R} \to \mathbb{C}$ as:
-\begin{equation}\label{eq:indicator_function}
-\indicator{f(x)} = \begin{cases}
-                       1 &\text{ if } f(x) \\
-                       0 &\text{ else }
-\end{cases}
-\end{equation}
-\end{definition}
+We give spiders labelled $\chi_c$ as a concrete example.
 
-We will also use the shorthand $x \eqmod{r} y$ to mean $x = y$ mod $r$.
-
-\begin{proposition}\label{thm:general_pauli_web_green_gkp_like_spider}
-A highlighting of a $Z$ spider with phase function $\llbracket \isarg{x} \eqmod{r} 0 \rrbracket$ is a Pauli web iff it's of the following form, where $b \eqmod{r} 0$ and $r \sum_j a_j \eqmod{1} 0$:
-\begin{equation}\label{eq:general_pauli_web_green_gkp_like_spider}
-\tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_gkp_like_spider}
-\end{equation}
-\begin{proof}
-    TODO
-\end{proof}
-\end{proposition}
-
-\subsection{Undetectable faults}
-
-\begin{lemma}
+\begin{example}
+    A highlighting of a $Z$ spider with phase function $\chi_c(x) = e^{-i2\pi cx}$ is a Pauli web iff it's of the following form, where $\sum_j a_j = 0$.
     \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_red_green}
+        TODO
     \end{equation}
-    \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_green_red}
-    \end{equation}
+\end{example}
+
+Next, single comb spiders.
+We'll in fact restrict our attention to comb spiders with label $\indicator{x \eqmod{r} c}$ where $\frac{c}{r - c}$ is rational, assuming without loss of generality that $0 \leq c < r$.
+This therefore includes the cases $\indicator{x \eqmod{1} 0}$ and $\indicator{x \eqmod{1} \frac{1}{2}}$ that are relevant for GKP codes.
+We'll start with separate lemmas about symmetries of the function $\indicator{x \eqmod{r} c}$, for certain $c$.
+We consider the cases $c = 0$ and $0 < c < r$ separately.
+
+\begin{lemma}\label{lem:comb_function_symmetries_0}
+    Consider the function $\indicator{x \eqmod{r} 0}$.
+    We have $\indicator{x \eqmod{r} - b} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{r} 0}$ iff $b \in r\mathbb{Z}$ and $a \in \frac{1}{r}\mathbb{Z}$.
     \begin{proof}
-        The first follows from the first equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \overline{\chi}_a(x) = e^{i2\pi ax}$.
-        So $f(x + b) = e^{i2\pi a(x + b)} = e^{i2\pi ab}e^{i2\pi ax} = e^{i2\pi ab} \overline{\chi}_a(x)$, where the scalar $e^{i2\pi ab}$ can be pulled out of the spider to become a global phase.
-        The second follows from the second equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \chi_b(x) = e^{-i2\pi bx}$.
-        So $f(x + a) = e^{-i2\pi b(x + a)} = e^{-i2\pi ab}e^{-i2\pi bx} = e^{-i2\pi ab} \chi_b(x)$.
+        This is best done geometrically, I reckon.
+        Picture the function $\indicator{x \eqmod{r} 0}$, to start with; this forms a comb with teeth at all points in $r\mathbb{Z}$:
+        \begin{equation}
+            Picture!
+        \end{equation}
+        The effect of transforming the function to $\indicator{x \eqmod{r} - b}$ is to shift it leftwards by $b$, and the effect of multiplying this by $\overline{\chi}_a(x) = e^{i2\pi ax}$ is to twist the whole function around the real axis with a period of $1/a$:
+        \begin{equation}
+            Picture!
+        \end{equation}
+        From this, one can hopefully already see that in order for this new function to equal the original the shift by $b$ must be of a multiple of $r$, i.e.\ $b \in r\mathbb{Z}$.
+        Assuming this is the case, the question is then when $\indicator{x \eqmod{r} 0} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{r} 0}$.
+        We can see that twisting by $\overline{\chi}_a(x) = e^{i2\pi ax}$ leaves the comb invariant iff the twist period $\frac{1}{a}$ is an integer divisor of $r$.
+        That is, iff there's an integer $k$ such that $k\frac{1}{a} = r$, or equivalently iff $a \in \frac{1}{r}\mathbb{Z}$.
     \end{proof}
 \end{lemma}
 
-\begin{definition}\label{defn:detectable_fault}
-    A fault $F$ on diagram $D$ is detectable iff it's non-trivial and $D^F$ is not the zero linear map.
+\begin{lemma}\label{lem:comb_function_symmetries_c}
+    Consider the function $\indicator{x \eqmod{r} c}$ where $c > 0$.
+    Further assume $\frac{c}{r - c}$ is rational, and without loss of generality $0 < c < r$.
+    We can write $\frac{c}{r - c} = \frac{u}{v}$ for fully simplified $\frac{u}{v}$ (i.e.\ $u$ and $v$ are coprime).
+    We have $\indicator{x \eqmod{r} c - b} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{r} c}$ iff $b \in r\mathbb{Z}$ and either $a \in \frac{u}{c}\mathbb{Z}$ if $c \leq r - c$ else $a \in \frac{v}{r - c}\mathbb{Z}$ if $c > r - c$.
+    \begin{proof}
+        The first part of the proof is exactly the same as the previous lemma, and we again find the shift by $b$ needs to be a multiple of $r$.
+        Supposing this is the case, the question is then when $\indicator{x \eqmod{r} c} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{r} c}$.
+        Assume that $c \leq r - c$; if not, consider instead $\frac{r - c}{c} = \frac{v}{u}$ in what follows.
+        We can write both $c$ and $r - c$ as integer multiples of $\frac{c}{u}$:
+        \begin{equation}
+            c = u \cdot \frac{c}{u}
+            \qqquad
+            r - c = v \cdot \frac{c}{u}
+        \end{equation}
+        Since $\frac{u}{v}$ is fully simplified, $\frac{c}{u}$ is in fact the largest common integer divisor of $c$ and $r - c$.
+        We can therefore see that twisting by $\overline{\chi}_a(x) = e^{i2\pi ax}$ leaves the comb invariant iff the twist period $\frac{1}{a}$ is an integer divisor of $\frac{c}{u}$.
+        That is, iff $a \in \frac{u}{c}\mathbb{Z}$.
+        (If instead $r - c < c$, we end up with the iff condition that $\frac{1}{a}$ must divide $\frac{r - c}{v}$, hence $a \in \frac{v}{r - c}\mathbb{Z}$).
+        \teague{Add pictures}
+    \end{proof}
+\end{lemma}
+
+Since the second lemma in particular is a bit of a mouthful, we give the cases of the GKP combs concretely.
+
+\begin{example}
+    Consider the function $\indicator{x \eqmod{1} 0}$.
+    We have $\indicator{x \eqmod{1} - b} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{1} 0}$ iff $a, b \in \mathbb{Z}$.
+\end{example}
+
+\begin{example}
+    Consider the function $\indicator{x \eqmod{1} \frac{1}{2}}$.
+    So setting $r = 1$ and $c = 1/2$, we have $c \leq r - c$ and $c/r-c = 1/2 \eqqcolon u/v$.
+    We get $\indicator{x \eqmod{1} \frac{1}{2} - b} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{1} \frac{1}{2}}$ iff $b \in \mathbb{Z}$ and $a \in 2\mathbb{Z}$.
+\end{example}
+
+We can now prove the main result about the Pauli webs on these spiders.
+It's again cleaner to split this into the cases $c = 0$ and $c > 0$.
+
+\begin{proposition}\label{thm:general_pauli_web_green_comb_spider_0}
+    A highlighting of a $Z$ spider with phase function $\indicator{x \eqmod{r} 0}$ is a Pauli web iff it's of the following form, where $b \in r\mathbb{Z}$ and $\sum_j a_j \in \frac{1}{r}\mathbb{Z}$:
+    \begin{equation}\label{eq:general_pauli_web_green_comb_spider_0}
+        \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_comb_spider}
+    \end{equation}
+    \begin{proof}
+        The proof has exactly the same structure as for Gaussian spiders.
+        Take a general highlighting of the given comb spider and fire it:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_comb_spider_0_fired}
+        \end{equation}
+        As we did for Gaussian spiders, we can copy the red $\chi_{b_1}$ displacement through the comb spider, then copy the green displacements through the red ones and fuse them into the central spider:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_comb_spider_0_proof}
+        \end{equation}
+        Again, we've defined $a$ and $\lambda$ to be
+        \begin{equation}
+            a = \sum_{j=1}^{l+m} a_j
+            \qqquad
+            \lambda = e^{i2\pi(\sum_{j=2}^{l} a_j (b_j - b_1) + \sum_{j=l+1}^{l+m} a_j(b_j + b_1))}
+        \end{equation}
+        It's hopefully again clear that this equals the original comb spider iff the red spiders disappear and the function labelling the central spider equals the original function.
+        The former means $b_2 = \ldots = b_l = b_1$ and $b_{l+1} = \ldots = b_{l+m} = -b_1$, which in turn gives $\lambda = 1$.
+        So let's define $b = b_1$.
+        Now we just need the conditions under which $\indicator{x \eqmod{r} c - b} \cdot \overline{\chi}_a(x) = \indicator{x \eqmod{r} c}$, which is exactly what \Cref{lem:comb_function_symmetries_0} was about.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}\label{thm:general_pauli_web_green_gkp_like_spider}
+    Consider the function $\indicator{x \eqmod{r} c}$ where $\frac{c}{r - c}$ is rational, and without loss of generality $0 \leq c < r$.
+    We can write $\frac{c}{r - c} = \frac{u}{v}$ for fully simplified $\frac{u}{v}$ (i.e.\ $u$ and $v$ are coprime).
+    A highlighting of a $Z$ spider with phase function $\indicator{x \eqmod{r} c}$ is a Pauli web iff it's of the following form, where $b \in r\mathbb{Z}$ and either $\sum_j a_j \in \frac{u}{c}\mathbb{Z}$ if $c \leq r - c$ else $\sum_j a_j \in \frac{v}{r - c}\mathbb{Z}$ if $c > r - c$.
+    \begin{equation}\label{eq:general_pauli_web_green_gkp_like_spider}
+    \tikzfig{qumodes/focked_up/pauli_webs/general_pauli_web_green_comb_spider}
+    \end{equation}
+    \begin{proof}
+        Exactly the same as the previous proposition, except we use \Cref{lem:comb_function_symmetries_c} instead of \Cref{lem:comb_function_symmetries_0}.
+    \end{proof}
+\end{proposition}
+
+We'll again spell this out for the GKP spiders.
+
+\begin{example}
+    Consider the function $\indicator{x \eqmod{1} 0}$.
+    A highlighting of a $Z$ spider with phase function $\indicator{x \eqmod{1} 0}$ is a Pauli web iff it's of the following form, where $b \in \mathbb{Z}$ and $\sum_j a_j \in \mathbb{Z}$.
+\end{example}
+
+\begin{example}
+    Consider the function $\indicator{x \eqmod{1} \frac{1}{2}}$.
+    So setting $r = 1$ and $c = 1/2$, we have $c \leq r - c$ and $\frac{c}{r - c} = \frac{1}{2} \eqqcolon \frac{u}{v}$.
+    A highlighting of a $Z$ spider with phase function $\indicator{x \eqmod{1} \frac{1}{2}}$ is a Pauli web iff it's of the following form, where $b \in \mathbb{Z}$ and $\sum_j a_j \in 2\mathbb{Z}$.
+\end{example}
+
+\subsection{The ZX$/\chi$ calculus}\label{subsec:zx_mod_chi}
+
+TODO
+
+\subsection{Classifying Pauli webs}
+
+As in the qubit case, we can classify webs on a diagram $D$ into four categories: detecting webs, (co)stabilizing webs, and logical webs.
+Detecting webs are those that highlight no input or output edges of the diagram, and form a group $\WWW_\DDD(D)$.
+Stabilizing webs are those that highlight no input edges and form a group $\WWW_\SSS(D)$ that contains $\WWW_\DDD(D)$ as a subgroup.
+Dually, costabilizing webs are those that highlight output edges and form a group $\WWW^\SSS(D)$ that contains $\WWW_\DDD(D)$ as a subgroup.
+We again let $\WWW_\SSS^\SSS(D)$ denote the group generated by all stabilizing and costabilizing webs.
+The group of logical webs is then the quotient group $\WWW(D)/\WWW_\SSS^\SSS(D)$, with (non-trivial) logical webs being elements of (non-trivial) cosets, or perhaps sometimes cosets themselves.
+As in the qubit case, one can surely show group isomorphisms connecting Pauli webs to the CV stabilizer formalism -- I have run out of time to do this, so leave it as a loose end of this thesis, to be tied up later, perhaps.
+
+\subsection{Detecting webs detect errors}
+
+What we will look at is exactly which errors detecting webs can detect.
+We'll discuss error models a bit more carefully in the next section, but for now let's just say, for a diagram $D$ with edges $E$, errors are displacements $e^{i\theta}D(\binom{\bsym{q}}{\bsym{p}}) \in \hat{\DDD}_{|E|}$.
+We use the same notation as before, with $D^F$ denoting the diagram $D$ with the error $F$ applied to the corresponding edges.
+Error $F$ is \textit{trivial} iff $D^F \propto D$, and errors $F$ and $F'$ are \textit{equivalent} iff $D^F = D^{F'}$.
+In the qubit case, because of the link we established between webs and the stabilizer formalism, we could truly show that detectable errors changed products of measurement outcomes that were otherwise deterministic in the absence of errors.
+Since we haven't established such a link here, we'll take a shortcut and just \textit{define} detectable errors appropriately.
+
+\begin{definition}\label{defn:detectable_error}
+    An error $F$ on diagram $D$ is detectable iff it's non-trivial and $D^F$ is not the zero linear map.
 \end{definition}
 
-\begin{proposition}
-    Suppose we have a diagram $D$ with edges $E$ and web $w = (a_1, b_1, \ldots, a_{|E|}, b_{|E|})$.
-    A non-trivial displacement fault $F = D(p_1, q_1) \otimes \ldots \otimes D(p_{|E|}, q_{|E|})$ is detectable if $\sum_{j = 1}^{|E|} a_j p_j + b_j q_j \notin \ZZ$.
+\begin{proposition}\label{prop:detecting_web_detects_error}
+    Suppose we have a diagram $D$ with edges $E$ and web $W = (a_1, b_1, \ldots, a_{|E|}, b_{|E|}) = \binom{\bsym{a}}{\bsym{b}}$.
+    A non-trivial error $F = \hat{D}(\binom{\bsym{q}}{\bsym{p}})$ is detectable iff $\binom{\bsym{a}}{\bsym{b}} \odot \binom{\bsym{q}}{\bsym{p}} \notin \ZZ$, or equivalently iff the displacement $\hat{D}(\binom{\bsym{a}}{\bsym{b}})$ doesn't commute with $F$.
     \begin{proof}
-        First note that any diagram that's equal to a scalar multiple $\lambda$ of itself other than $\lambda = 1$ is necessarily zero:
+        First recall that any diagram that's equal to a scalar multiple $\lambda$ of itself other than $\lambda = 1$ is necessarily zero:
         \begin{equation}
             \tikzfig{figures/qumodes/focked_up/pauli_webs/diagram_equal_to_non_1_multiple_of_itself_is_zero}
         \end{equation}
-        So now let's take a close look at a single edge $j$ of the diagram $D^F$ described above.
-        We can fire the Pauli web $w$, and commute the resulting displacement $D(a_j, b_j)$ past the displacement $D(p_j, q_j)$ from the fault $F$, at the cost of introducing a global phase.
-        We can then cancel out $D(a_j, b_j)$ thanks to the $D(-a_j, -b_j)$, leaving just the original displacement operator $D(p_j, q_j)$ on this edge:
+        So now let's take a close look at a single internal edge $j$ of the diagram $D^F$ described above.
+        We can fire the Pauli web $W$, and commute the resulting displacement $\hat{D}(\binom{a_j}{b_j})$ past the displacement $\hat{D}(\binom{q_j}{p_j})$ from the fault $F$, at the cost of introducing a global phase (\Cref{lem:displacement_commutation_relation_zx}).
+        We can then cancel out $\hat{D}(\binom{a_j}{b_j})$ thanks to the $\hat{D}(\binom{-a_j}{-b_j})$, leaving just the original displacement operator $\hat{D}(\binom{q_j}{p_j})$ on this edge:
         \begin{equation}
             \tikzfig{figures/qumodes/focked_up/pauli_webs/pauli_web_general_diagram_internal_fault_web_fired}
         \end{equation}
-        We can repeat this process across all edges, picking up a total phase of $\lambda = exp({i2\pi \sum_{j = 1}^{|E|} a_j p_j + b_j q_j})$.
+        We can repeat this process across all edges, picking up a total phase of
+        \begin{equation}
+            \lambda = e^{i2\pi \sum_{j = 1}^{|E|} a_j p_j - b_j q_j} = e^{i2\pi \binom{\bsym{a}}{\bsym{b}} \odot \binom{\bsym{q}}{\bsym{p}}}
+        \end{equation}
         Since a detecting web by definition has $a_j = b_j = 0$ on any boundary edges, after performing this process for all edges we get back the original diagram but multiplied by this phase $\lambda$.
         So if $\lambda$ isn't $1$, the diagram $D^F$ is zero, meaning $F$ is detectable.
     \end{proof}
 \end{proposition}
-
-
-
-

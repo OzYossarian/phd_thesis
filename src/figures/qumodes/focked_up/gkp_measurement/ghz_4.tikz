@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (2, 1.5) {};
+		\node [style=none] (1) at (2, -1.5) {};
+		\node [style=none] (2) at (2, -0.5) {};
+		\node [style={rn_phase}] (3) at (0, 0) {$0_L$};
+		\node [style=none] (4) at (2, 0.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=690, out=-180, looseness=0.75] (2.center) to (3);
+		\draw [in=30, out=-180, looseness=0.75] (4.center) to (3);
+		\draw [bend left] (1.center) to (3);
+		\draw [bend right] (0.center) to (3);
+	\end{pgfonlayer}
+\end{tikzpicture}

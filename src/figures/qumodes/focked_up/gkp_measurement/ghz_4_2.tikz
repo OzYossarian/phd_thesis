@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (1, 1.5) {};
+		\node [style=none] (1) at (1, -1.5) {};
+		\node [style=none] (2) at (1, -0.5) {};
+		\node [style={rn_phase}] (3) at (0, 1) {$0_L$};
+		\node [style=none] (4) at (1, 0.5) {};
+		\node [style={rn_phase}] (5) at (0, -1) {$0_L$};
+		\node [style=none] (6) at (4, 1.5) {};
+		\node [style=none] (7) at (4, 0.5) {};
+		\node [style=none] (8) at (4, -0.5) {};
+		\node [style=none] (9) at (4, -1.5) {};
+		\node [style=rn] (10) at (1.5, 1.5) {};
+		\node [style=rn] (11) at (2, -0.5) {};
+		\node [style=rn] (12) at (2.5, 0.5) {};
+		\node [style=rn] (13) at (3, -1.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=675, out=-180] (4.center) to (3);
+		\draw [in=45, out=180] (0.center) to (3);
+		\draw [in=180, out=45] (5) to (2.center);
+		\draw [in=180, out=-45] (5) to (1.center);
+		\draw (1.center) to (9.center);
+		\draw (2.center) to (8.center);
+		\draw (4.center) to (7.center);
+		\draw (0.center) to (6.center);
+		\draw (10) to (11);
+		\draw (12) to (13);
+	\end{pgfonlayer}
+\end{tikzpicture}

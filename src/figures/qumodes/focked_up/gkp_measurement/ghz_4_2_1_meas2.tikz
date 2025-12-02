@@ -1,0 +1,61 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={rn_phase}] (3) at (-3.25, 2.5) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=none] (6) at (4, 1.75) {};
+		\node [style=none] (7) at (4, 0.25) {};
+		\node [style=none] (8) at (4, -1.75) {};
+		\node [style=none] (9) at (4, -3.25) {};
+		\node [style=rn] (10) at (0.25, 2.5) {};
+		\node [style=rn] (11) at (0.75, -1) {};
+		\node [style=rn] (12) at (1.75, 1) {};
+		\node [style=rn] (13) at (2.25, -2.5) {};
+		\node [style={rn_phase}] (14) at (-3.25, 1) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=rn] (15) at (-1.25, 2.5) {};
+		\node [style=rn] (16) at (-1, 1) {};
+		\node [style={rn_phase}] (18) at (-3.25, -1) {$\indicator{x \eqmod{r} 0}$};
+		\node [style={rn_phase}] (20) at (-3.25, -2.5) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=rn] (21) at (-1.25, -1) {};
+		\node [style=rn] (22) at (-1, -2.5) {};
+		\node [style={gn_phase}] (23) at (-1.125, 1.75) {$\chi_{c_1}$};
+		\node [style={gn_phase}] (24) at (-1.125, -1.75) {$\chi_{c_2}$};
+		\node [style={gn_phase}] (25) at (0.375, 1.75) {$\chi_{c_3}$};
+		\node [style={gn_phase}] (26) at (2.125, -1.75) {$\chi_{c_4}$};
+		\node [style=rn] (37) at (3.25, 2.5) {};
+		\node [style=rn] (38) at (3.25, 1) {};
+		\node [style=rn] (39) at (3.25, -1) {};
+		\node [style=rn] (40) at (3.25, -2.5) {};
+		\node [style={rn_phase}] (41) at (4.75, 2.5) {$\chi_{d_1}$};
+		\node [style=rn] (42) at (3.25, 1) {};
+		\node [style={rn_phase}] (43) at (4.75, 1) {$\chi_{d_1}$};
+		\node [style=rn] (44) at (3.25, -1) {};
+		\node [style={rn_phase}] (45) at (4.75, -1) {$\chi_{d_1}$};
+		\node [style=rn] (46) at (3.25, -2.5) {};
+		\node [style={rn_phase}] (47) at (4.75, -2.5) {$\chi_{d_1}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (10) to (11);
+		\draw (12) to (13);
+		\draw (15) to (16);
+		\draw (21) to (22);
+		\draw (3) to (15);
+		\draw (15) to (10);
+		\draw (14) to (16);
+		\draw (16) to (12);
+		\draw (18) to (21);
+		\draw (21) to (11);
+		\draw (20) to (22);
+		\draw (22) to (13);
+		\draw (37) to (41);
+		\draw (42) to (43);
+		\draw (44) to (45);
+		\draw (46) to (47);
+		\draw (6.center) to (37);
+		\draw (37) to (10);
+		\draw (13) to (46);
+		\draw (46) to (9.center);
+		\draw (11) to (44);
+		\draw (44) to (8.center);
+		\draw (12) to (42);
+		\draw (42) to (7.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

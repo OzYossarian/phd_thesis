@@ -1,0 +1,63 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-5, -1.25) {};
+		\node [style=gn] (1) at (-5.75, 0.25) {};
+		\node [style={rn_phase}] (2) at (-7.5, -1.5) {$0_\square$};
+		\node [style=rn] (3) at (-2.75, 0.25) {};
+		\node [style={gn_phase}] (4) at (-4.25, -1.25) {$0_\square$};
+		\node [style={rn_phase}] (6) at (-1.5, -1.5) {$0_\square$};
+		\node [style={gn_phase}] (8) at (1.5, -1.5) {$0_\square$};
+		\node [style=gn] (22) at (0.25, 6.25) {};
+		\node [style={rn_phase}] (23) at (-1.5, 4.5) {$0_\square$};
+		\node [style=gn] (24) at (-4.75, 1.25) {};
+		\node [style=rn] (25) at (-1.75, 1.25) {};
+		\node [style=gn] (26) at (0.25, 0.25) {};
+		\node [style=rn] (27) at (3.25, 0.25) {};
+		\node [style=gn] (28) at (1.25, 1.25) {};
+		\node [style=rn] (29) at (4.25, 1.25) {};
+		\node [style={gn_phase}] (30) at (-3, 3) {$\chi_{c_1}$};
+		\node [style={gn_phase}] (31) at (3.5, 3.5) {$\chi_{c_3}$};
+		\node [style={rn_phase}] (32) at (0, 3) {$\chi_{c_2}$};
+		\node [style={rn_phase}] (33) at (6, 3) {$\chi_{c_4}$};
+		\node [style=none] (47) at (1.25, 7.25) {};
+		\node [style=none] (60) at (0.5, 7.5) {};
+		\node [style=none] (61) at (6, 2) {};
+		\node [style=none] (62) at (-1.25, 5.75) {};
+		\node [style=none] (63) at (4.25, 0.25) {};
+		\node [style=none] (64) at (-2.75, 4.25) {};
+		\node [style=none] (65) at (2.75, -1.25) {};
+		\node [style=none] (68) at (-4.25, 2.75) {};
+		\node [style=none] (69) at (0, -1.5) {};
+		\node [style=none] (70) at (-5.75, 1.25) {};
+		\node [style=none] (71) at (-3, -1.5) {};
+		\node [style=none] (72) at (-7.25, -0.25) {};
+		\node [style=none] (73) at (-6, -1.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (2);
+		\draw (3) to (4);
+		\draw (22) to (23);
+		\draw (1) to (24);
+		\draw (24) to (3);
+		\draw (3) to (25);
+		\draw [in=285, out=120, looseness=0.75] (0.center) to (1);
+		\draw (26) to (28);
+		\draw (28) to (27);
+		\draw (27) to (29);
+		\draw (26) to (6);
+		\draw (27) to (8);
+		\draw (25) to (26);
+		\draw (29) to (22);
+		\draw (24) to (30);
+		\draw (25) to (32);
+		\draw (28) to (31);
+		\draw (29) to (33);
+		\draw (22) to (47.center);
+		\draw [style={grey_dashed}, in=315, out=135] (61.center) to (60.center);
+		\draw [style={grey_dashed}, in=315, out=135] (63.center) to (62.center);
+		\draw [style={grey_dashed}, in=315, out=135] (65.center) to (64.center);
+		\draw [style={grey_dashed}, in=315, out=135] (69.center) to (68.center);
+		\draw [style={grey_dashed}, in=315, out=135] (71.center) to (70.center);
+		\draw [style={grey_dashed}] (73.center) to (72.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

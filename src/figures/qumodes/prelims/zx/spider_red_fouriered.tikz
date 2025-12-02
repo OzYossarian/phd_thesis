@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={rn_phase}] (23) at (0, 0) {$f$};
+		\node [style=none] (24) at (-1.5, 1) {};
+		\node [style=none] (25) at (-1.5, -1) {};
+		\node [style=none] (26) at (1.5, 1) {};
+		\node [style=none] (27) at (1.5, -1) {};
+		\node [style=none] (28) at (1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (29) at (-1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (30) at (-2.5, 1) {};
+		\node [style=none] (31) at (-2.5, -1) {};
+		\node [style=none] (32) at (3, -1) {};
+		\node [style=none] (33) at (3, 1) {};
+		\node [style={fn_phase}] (34) at (1.5, -1) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (35) at (1.5, 1) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (36) at (-1.5, 1) {$(-i)^{\isarg{n}}$};
+		\node [style={fn_phase}] (37) at (-1.5, -1) {$(-i)^{\isarg{n}}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (24.center) to (23);
+		\draw [bend right] (25.center) to (23);
+		\draw [bend left] (23) to (26.center);
+		\draw [bend right] (23) to (27.center);
+		\draw (33.center) to (26.center);
+		\draw [in=180, out=0] (27.center) to (32.center);
+		\draw (24.center) to (30.center);
+		\draw (31.center) to (25.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

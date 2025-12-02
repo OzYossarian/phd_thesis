@@ -1,0 +1,73 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-7, -5.5) {};
+		\node [style=gn] (1) at (-8.25, -3.75) {};
+		\node [style={rn_phase}] (2) at (-10, -5.5) {$0_\square$};
+		\node [style=rn] (3) at (-5.25, -3.75) {};
+		\node [style={gn_phase}] (4) at (-6.5, -5) {$0_\square$};
+		\node [style={rn_phase}] (6) at (-4, -5.5) {$0_\square$};
+		\node [style={gn_phase}] (8) at (-1, -5.5) {$0_\square$};
+		\node [style=gn] (22) at (-2.25, 2.25) {};
+		\node [style={rn_phase}] (23) at (-4, 0.5) {$0_\square$};
+		\node [style=gn] (24) at (-7.25, -2.75) {};
+		\node [style=rn] (25) at (-4.25, -2.75) {};
+		\node [style=gn] (26) at (-2.25, -3.75) {};
+		\node [style=rn] (27) at (0.75, -3.75) {};
+		\node [style=gn] (28) at (-1.25, -2.75) {};
+		\node [style=rn] (29) at (1.75, -2.75) {};
+		\node [style={gn_phase}] (30) at (-5.5, -1) {$\chi_{c_1}$};
+		\node [style={gn_phase}] (31) at (1, -0.5) {$\chi_{c_3}$};
+		\node [style={rn_phase}] (32) at (-2.5, -1) {$\chi_{c_2}$};
+		\node [style={rn_phase}] (33) at (3.5, -1) {$\chi_{c_4}$};
+		\node [style=rn] (34) at (0.75, 2.25) {};
+		\node [style={gn_phase}] (35) at (-0.5, 1) {$0_\square$};
+		\node [style={rn_phase}] (36) at (2, 0.5) {$0_\square$};
+		\node [style={gn_phase}] (37) at (5, 0.5) {$0_\square$};
+		\node [style=rn] (39) at (1.75, 3.25) {};
+		\node [style=gn] (40) at (3.75, 2.25) {};
+		\node [style=rn] (41) at (6.75, 2.25) {};
+		\node [style=gn] (42) at (4.75, 3.25) {};
+		\node [style=rn] (43) at (7.75, 3.25) {};
+		\node [style={gn_phase}] (44) at (7, 5.5) {$\chi_{c_7}$};
+		\node [style={rn_phase}] (45) at (3.5, 5) {$\chi_{c_6}$};
+		\node [style={rn_phase}] (46) at (9.5, 5) {$\chi_{c_8}$};
+		\node [style=gn] (47) at (-1.25, 3.25) {};
+		\node [style={gn_phase}] (48) at (0.5, 5) {$\chi_{c_5}$};
+		\node [style=none] (51) at (5.75, 5.5) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=xweb] (28) to (31);
+		\draw [style=xweb] (1) to (2);
+		\draw (3) to (4);
+		\draw [style=xweb] (22) to (23);
+		\draw [style=xweb] (1) to (24);
+		\draw [style=xweb] (24) to (3);
+		\draw [style=xweb] (3) to (25);
+		\draw [style=xweb] (0.center) to (1);
+		\draw [style=xweb] (26) to (28);
+		\draw [style=xweb] (28) to (27);
+		\draw [style=xweb] (27) to (29);
+		\draw [style=xweb] (26) to (6);
+		\draw (27) to (8);
+		\draw [style=xweb] (25) to (26);
+		\draw [style=xweb] (29) to (22);
+		\draw [style=xweb] (24) to (30);
+		\draw (25) to (32);
+		\draw (29) to (33);
+		\draw (34) to (35);
+		\draw [style=xweb] (34) to (39);
+		\draw [style=xweb] (40) to (42);
+		\draw [style=xweb] (42) to (41);
+		\draw [style=xweb] (41) to (43);
+		\draw [style=xweb] (40) to (36);
+		\draw (41) to (37);
+		\draw [style=xweb] (39) to (40);
+		\draw (39) to (45);
+		\draw [style=xweb] (42) to (44);
+		\draw (43) to (46);
+		\draw [style=xweb] (47) to (48);
+		\draw [style=xweb] (47) to (34);
+		\draw [style=xweb] (22) to (47);
+		\draw [style=xweb] (51.center) to (43);
+	\end{pgfonlayer}
+\end{tikzpicture}

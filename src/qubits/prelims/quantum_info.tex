@@ -8,7 +8,7 @@ A representative $\ket{\psi}$ is normalised if it has unit length.
 \subsection{Evolution}
 
 A pure quantum state evolves under the action of unitary operators and measurements.
-A unitary operator is a linear map $U: \mathcal{H} \to \mathcal{H}$ satisfying $UU^\dagger U^\dagger U = I$,
+A unitary operator is a linear map $U: \mathcal{H} \to \mathcal{H}$ satisfying $UU^\dagger = U^\dagger U = I$,
 where $U^\dagger$ denotes the conjugate transpose.
 If a system is in state $\ket{\psi}$ and we apply a unitary $U \in \mathcal{U}(2^n)$, the new state is $U\ket{\psi}$ -- no surprises here.
 
@@ -17,9 +17,9 @@ A \emph{measurement} on a quantum system is specified by a collection of linear 
     \sum_{m \in \mathcal{M}} M_m^\dagger M_m = I.
 \end{equation}
 Note that $\mathcal{M}$ can be any set -- the measurement outcome labels need not be real numbers (or even numbers at all!).
-When we perform the measurement on a normalised state $\ket{\psi}$, the \textit{Born rule} we obtain outcome $m \in \mathcal{M}$ with probability
+When we perform the measurement on a normalised state $\ket{\psi}$, the \textit{Born rule} says we obtain outcome $m \in \mathcal{M}$ with probability
 \begin{equation}\label{eq:born_rule}
-    p(m | \psi) = \bra{\psi} M_m^\dagger M_m \ket{\psi} = \| M_m \ket{\psi} \|^2,
+    p(m | \psi) = \bra{\psi} M_m^\dagger M_m \ket{\psi}
 \end{equation}
 It's important that we're using a normalised representative of a state at this point, otherwise we get the wrong probabilities!
 The renormalized post-measurement state is

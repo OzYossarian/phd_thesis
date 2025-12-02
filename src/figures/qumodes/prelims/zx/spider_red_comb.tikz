@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={rn_phase}] (0) at (0, 0) {$\indicator{p \eqmod{r} c}$};
+		\node [style=none] (1) at (-2, 1) {};
+		\node [style=none] (2) at (-2, -1) {};
+		\node [style=none] (3) at (2, 1) {};
+		\node [style=none] (4) at (2, -1) {};
+		\node [style=none] (5) at (1.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-1.75, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=135, out=0] (1.center) to (0);
+		\draw [in=225, out=0] (2.center) to (0);
+		\draw [in=180, out=45] (0) to (3.center);
+		\draw [in=180, out=-45] (0) to (4.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

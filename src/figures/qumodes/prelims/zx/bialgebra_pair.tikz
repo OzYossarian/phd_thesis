@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (11) at (0.5, 0) {};
+		\node [style=none] (12) at (1.75, 0.75) {};
+		\node [style=none] (13) at (1.75, -0.75) {};
+		\node [style=none] (14) at (1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=rn] (15) at (-0.5, 0) {};
+		\node [style=none] (16) at (-1.75, 0.75) {};
+		\node [style=none] (17) at (-1.75, -0.75) {};
+		\node [style=none] (18) at (-1.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (11) to (12.center);
+		\draw [bend right] (11) to (13.center);
+		\draw [bend left] (16.center) to (15);
+		\draw [bend right] (17.center) to (15);
+		\draw (15) to (11);
+	\end{pgfonlayer}
+\end{tikzpicture}

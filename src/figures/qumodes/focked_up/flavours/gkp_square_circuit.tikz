@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-7, 0) {};
+		\node [style=gn] (1) at (-5, 0) {};
+		\node [style={rn_phase}] (2) at (-6.5, -1.5) {$0_\square \cdot \chi_{a_1}$};
+		\node [style=rn] (3) at (-2.5, 0) {};
+		\node [style={gn_phase}] (4) at (-4, -1.5) {$0_\square \cdot \chi_{a_2}$};
+		\node [style=gn] (5) at (0, 0) {};
+		\node [style={rn_phase}] (6) at (-1.5, -1.5) {$0_\square \cdot \chi_{a_3}$};
+		\node [style=rn] (7) at (2.5, 0) {};
+		\node [style={gn_phase}] (8) at (1, -1.5) {$0_\square \cdot \chi_{a_4}$};
+		\node [style=none] (9) at (7, 0) {};
+		\node [style=gn] (10) at (5, 0) {};
+		\node [style={rn_phase}] (11) at (3.5, -1.5) {$0_\square \cdot \chi_{a_5}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (2);
+		\draw (3) to (4);
+		\draw (5) to (6);
+		\draw (7) to (8);
+		\draw (0.center) to (9.center);
+		\draw (10) to (11);
+	\end{pgfonlayer}
+\end{tikzpicture}

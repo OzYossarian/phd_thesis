@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (7) at (0.75, -0.75) {};
+		\node [style=none] (8) at (0.75, 0.75) {};
+		\node [style=none] (9) at (0, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (10) at (-2, 0) {$f(m)$};
+		\node [style={fn_phase}] (11) at (-0.75, 0.75) {$\delta_m$};
+		\node [style={fn_phase}] (12) at (-0.75, -0.75) {$\delta_m$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (11) to (8.center);
+		\draw (12) to (7.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

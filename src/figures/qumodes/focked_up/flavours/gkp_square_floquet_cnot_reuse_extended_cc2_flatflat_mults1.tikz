@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={rn_phase}] (23) at (7.5, -2.5) {$0_\square$};
+		\node [style={gn_phase}] (48) at (11, 1) {$\chi_{c_5}$};
+		\node [style={rn_phase}] (65) at (-8.5, -2.5) {$0_\square$};
+		\node [style={rn_phase}] (67) at (-4.5, -2.5) {$0_\square$};
+		\node [style={rn_phase}] (68) at (-0.5, -2.5) {$0_\square$};
+		\node [style={rn_phase}] (69) at (3.5, -2.5) {$0_\square$};
+		\node [style=gn] (70) at (-2.75, -0.75) {};
+		\node [style=gn] (73) at (1.25, -0.75) {};
+		\node [style=gn] (74) at (5.25, -0.75) {};
+		\node [style={gn_phase}] (75) at (3, 1) {$\chi_{c_3}$};
+		\node [style={gn_phase}] (76) at (-1, 1) {$\chi_{-c_2}$};
+		\node [style={gn_phase}] (77) at (7, 1) {$\chi_{-c_4}$};
+		\node [style=gn] (78) at (-6.75, -0.75) {};
+		\node [style={gn_phase}] (79) at (-5, 1) {$\chi_{c_1}$};
+		\node [style={fn_phase}] (82) at (-4.75, -0.75) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (86) at (-0.75, -0.75) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (88) at (3.25, -0.75) {$i^{\isarg{n}}$};
+		\node [style=none] (93) at (-9.75, -0.75) {};
+		\node [style={fn_phase}] (94) at (7.25, -0.75) {$i^{\isarg{n}}$};
+		\node [style=gn] (95) at (9.25, -0.75) {};
+		\node [style=none] (96) at (13.25, -0.75) {};
+		\node [style=rmat] (97) at (-3.5, -0.75) {};
+		\node [style=lmat] (98) at (2, -0.75) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (70) to (76);
+		\draw (73) to (75);
+		\draw (74) to (77);
+		\draw (78) to (79);
+		\draw (95) to (96.center);
+		\draw (95) to (48);
+		\draw (78) to (65);
+		\draw (70) to (67);
+		\draw (73) to (74);
+		\draw (73) to (68);
+		\draw (74) to (69);
+		\draw (70) to (73);
+		\draw (78) to (70);
+		\draw (95) to (74);
+		\draw (78) to (93.center);
+		\draw (95) to (23);
+	\end{pgfonlayer}
+\end{tikzpicture}

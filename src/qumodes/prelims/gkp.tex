@@ -1,4 +1,94 @@
 \section{GKP codes}
 
+What to actually say here!?
+\begin{enumerate}
+    \item Lattice
+    \item GKP definition
+    \item Logicals??
+    \item
+\end{enumerate}
+
 As mentioned at the start of this chapter, GKP codes can be viewed as the generalisation to the CV case of Pauli qubit stabilizer codes.
-They are once again defined by a stabilizer group $\mathcal{S}$, but elements of this group are now displacement operators $e^{i\theta}D(\bsym{q}, \bsym{p})$
+Unlike in \Cref{ch:qubit_prelims}, where we went into a fair amount of detail about stabilizer codes, here we write the minimum needed to fully define GKP codes, then look at some examples.
+We start by defining \textit{lattices}.
+
+\subsection{Lattices}
+
+We will define a \textit{lattice} to be a \textit{discrete} subgroup $\Lambda$ of a vector space $\VVV$, where discrete means every point $\bsym{\eta} \in \Lambda$ has some open ball around it containing no other lattice points.
+We define the rank $\rank{\Lambda}$ of a lattice to be the dimension of the vector space spanned by its points.
+A lattice is then full-rank iff $\rank{\Lambda} = \rank{\VVV}$.
+If $\VVV$ is in fact a \textit{symplectic} vector space with symplectic product $\odot$, we can go further.
+\teague{Ensure symplectic product defined long before this.}
+As a reminder, we can always view $\VVV = \mathbb{R}^{2n}$ as a symplectic vector space via the standard symplectic product $\binom{\bsym{v}}{\bsym{u}} \odot \binom{\bsym{v}'}{\bsym{u}'} = \bsym{v} \cdot \bsym{u'} - \bsym{u} \cdot \bsym{v'}$.
+For such $V$, we can define the (symplectic) dual lattice:
+\begin{equation}\label{eq:sympletic_dual_lattice}
+    \Lambda^{\perp} \coloneqq \{\bsym{\eta} \in \VVV \mid \forall \bsym{\xi} \in \Lambda,\ \bsym{\eta} \odot \bsym{\xi} \in \mathbb{Z}\}
+\end{equation}
+A lattice $\Lambda$ is then (symplectically) integral iff $\Lambda \leq \Lambda^\perp$, and (symplectically) self-dual iff in fact $\Lambda = \Lambda^\perp$.
+
+\subsection{GKP codes}
+
+A (non-trivial) $n$-qumode GKP code is then defined by a stabilizer group of the form:
+\begin{equation}\label{eq:GKP_stabilizer}
+    \SSS = \langle e^{i\theta_1} D(\bsym{\eta_1}), \ldots, e^{i\theta_{2n}} D(\bsym{\eta_{2n}}) \rangle
+\end{equation}
+where the set of vectors $\Lambda_\SSS = \{\bsym{\eta} \mid \exists \theta: e^{i\theta}D(\bsym{\eta}) \in \SSS\}$ forms a full-rank, (symplectically) integral lattice in $\mathbb{R}^{2n}$.
+\teague{Actually better to say $-I \notin \SSS$ and as a result the lattice is integral?}
+There are no conditions on the set of phases $e^{i\theta_j}_j$, which we call the \textit{sector} of the code.
+(Contrast this with the qubit case)
+Written out in full, the (infinite) stabilizer group is:
+\begin{equation}
+    \mathcal{S} = \left\{ \prod_{j=1}^{2m} \hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j})^{a_j} \ | \ \bsym{a} \in \mathbb{Z}^{2m} \right\}
+\end{equation}
+The codespace is the joint $+1$ eigenspace of all the stabilizer elements.
+
+In discussing the codespace projector, it's useful to compare the GKP case to the qubit case.
+So consider also a qubit stabilizer code defined by
+\begin{equation}
+    \SSS' = \pres{S_1, \ldots, S_r} \leq \PPP_n
+\end{equation}
+This has codespace projector defined as $\Pi_{\SSS'} = \frac{1}{|\SSS'|}\sum_{S \in \SSS'} S$, which can be rewritten as a product of projectors:
+\begin{equation}
+    \Pi_\SSS = \prod_{j = 1}^r \frac{1}{2}(I + S_j) = \prod_{j = 1}^r \Pi_{S_j}
+\end{equation}
+Each such projector $\Pi_{S_j} = \frac{1}{2}(I + S_j)$ happens to be the projector corresponding to the outcome $m=1$ in the projective measurement defined by $S_j$.
+So we can just measure this generating set of stabilizers and this will project us into the codespace (more accurately, it'll project us into the codespace of $\pres{m_1 S_1, \ldots, m_r S_r}$, where $m_j$ are the outcomes of these measurements.)
+
+Now, the GKP code's projector $\Pi_\SSS = \sum_{S \in \SSS} S$ is the same, minus the normalization (which is impossible, since $\SSS$ is infinite).
+This can again be written as a product of projectors:
+\begin{equation}\label{eq:GKP_codespace_projector}
+    \Pi_{\SSS}
+    = \sum_{S \in \SSS} S
+    = \sum_{\bsym{a} \in \ZZ^{2m}} \prod_{j=1}^{2m} \hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j})^{a_j}
+    = \prod_{j=1}^{2m} \sum_{a_j \in \ZZ} \hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j})^{a_j}
+\end{equation}
+The difference here is that $\Pi_j \coloneqq \sum_{a_j \in \ZZ} \hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j})^{a_j}$ is not one of the projectors making up the projective measurement defined by the normal operator $\hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j})$.
+So unlike in the qubit case, we can't just say that we're measuring a generating set of stabilizers and having that project us into the codespace (up to sector).
+However, $\Pi_j$ is a projector in the projective measurement defined by the related operator $\hat{H}_j \bmod 1$, where $\hat{H}_j = \tbinom{\bsym{q}_j}{\bsym{p}_j} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}$.
+ By~\eqref{eq:displacement_defn}, the relation to the displacement operator is simply that $\hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j}) = e^{-i2\pi\hat{H}}$.
+So in the GKP setting, when we say we're measuring a stabilizer generator, this isn't literally true like it was in the qubit setting, but rather what we really mean is we're measuring $\hat{H}_j \bmod 1$.
+
+To implement a GKP code,
+
+\begin{example}
+    Square lattice single-mode GKP
+\end{example}
+
+\begin{example}
+    Hexagonal lattice single-mode GKP
+\end{example}
+
+\begin{example}
+    Square lattice multi-mode GKP
+\end{example}
+
+\begin{example}
+    One other interesting multi-mode code?
+\end{example}
+
+
+
+
+
+
+

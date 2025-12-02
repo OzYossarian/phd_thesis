@@ -1,2 +1,370 @@
 \section{The Focked up ZX-calculus}
 
+With the basic algebra of continuous-variable quantum information theory covered, we can switch to a graphical approach via the Focked up ZX-calculus.
+
+\subsection{Generators}
+
+As with qubits, one can just think of these ZX-diagrams as being really good notation for linear maps.
+Whereas for qubits we started with the green and red spiders, for qumodes we will start with the Fock spider:
+\begin{align}\label{eq:fock_spider_defn}
+    \tikzfig{qumodes/prelims/zx/spider_fock_braces}
+    \quad &= \quad
+    \sum_{n \in \NN_0} f(n) \ket{n}_F^{\otimes m}\bra{n}_F^{\otimes l}
+\end{align}
+Here $f$ can be any function $\NN_0 \to \CC$.
+Throughout, we will use the shorthand $\isarg{x}$ to denote that $x$ is the variable in a single-argument function.
+For example, the expression $i^{\isarg{n}}$ is a shorthand for the function $n \mapsto i^{n}$.
+Examples of familiar objects defined using the Fock basis are:
+\begin{equation}\label{eq:fock_spider_examples}
+    \tikzfig{qumodes/prelims/zx/state_fock} ~~=~~ \ket{m}_F
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/fourier_transform} ~~=~~ \mathcal{F}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/fourier_transform_inverse} ~~=~~ \mathcal{F}^{-1}
+\end{equation}
+Anytime the function label is omitted from a spider, it means the function is the map $x \mapsto 1$.
+Next we introduce the green and red spiders:
+\begin{align}\label{eq:green_and_fock_spiders_defn}
+    \tikzfig{qumodes/prelims/zx/spider_green_braces}
+    \quad &= \quad
+    \int_{\mathbb{R}} dq\ f(q) \ket{q}_Q^{\otimes m} \bra{q}_Q^{\otimes l} \\
+    \tikzfig{qumodes/prelims/zx/spider_red_braces}
+    \quad &= \quad
+    \int_{\mathbb{R}} dp\ g(p)\ket{p}_P^{\otimes m}\bra{p}_P^{\otimes l}
+\end{align}
+Here $f$ and $g$ are any functions $\mathbb{R} \to \mathbb{C}$.
+These two spiders are related via Fourier transforms; graphically, this is:
+\begin{equation}\label{eq:green_red_spiders_related}
+    \tikzfig{qumodes/prelims/zx/spider_red}
+    \quad=\quad
+    \tikzfig{qumodes/prelims/zx/spider_green_fouriered}
+\end{equation}
+Letting the function $\chi_a(x) = e^{-i2\pi ax}$, we can write down some familiar objects via the green and red spiders:
+\begin{equation}
+    TODO
+\end{equation}
+Importantly, unlike in the qubit case, the green cup is not equal to the red cup:
+\begin{equation}
+    \tikzfig{qubits/prelims/zx/state_bell_green}
+    ~~\neq~~
+    \tikzfig{qubits/prelims/zx/state_bell_red}
+\end{equation}
+So whereas in the qubit case we could define the `spiderless' cup to be the green or red cup without any problems, we can't do this for qumodes.
+There are multiple ways to handle this -- the most common is just to define the spiderless cup to be the green cup.
+We won't take this approach -- we'll instead forbid cups and caps from being spiderless.
+Whatever resolution we choose, a consequence is that we lose the very desirable property that only connectivity matters!
+For example, we can no longer draw (the CV analogue of) the CNOT gate with a vertical edge, because it's ambiguous which of two unequal diagrams this would mean:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/cnot_green_first}
+    \quad \neq \quad
+    \tikzfig{qumodes/prelims/zx/cnot_red_first}
+\end{equation}
+We must therefore make clear whether an edge is an input or output of a given spider.
+This could be indicated by making edges directed, which restores only connectivity matters, but I personally find this even more confusing:
+\begin{equation}
+    TODO
+\end{equation}
+So instead we'll define that edges incident to the leftmost half of a generator are strictly inputs, and edges incident to the rightmost half of a generator are strictly outputs.
+The cost of changing the direction of an edge between a red and green spider is the addition of a \textit{dualiser} to that edge:
+\begin{equation}\label{eq:}
+    TODO
+\end{equation}
+
+The final non-trivial generator we'll need is the multiplier:
+\begin{equation}\label{eq:multiplier_defn}
+    \tikzfig{qumodes/prelims/zx/multiplier}
+    \quad = \quad
+    \int_{\mathbb{R}} dq\ \ket{mq}_Q \bra{q}_Q
+\end{equation}
+This can be expressed in terms of existing generators:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/multiplier}
+    \quad = \quad
+    \begin{cases}
+        \tikzfig{qumodes/prelims/zx/multiplier_decomposed_m} &\text{ if $m \neq 0$} \\[5pt]
+        \tikzfig{qumodes/prelims/zx/multiplier_decomposed_0_padded} &\text{ if $m = 0$}
+    \end{cases}
+\end{equation}
+
+As with qubits, vertical and horizontal composition of diagrams correspond respectively to tensor products and composition of linear maps.
+Conjugation of a diagram corresponds to conjugating all labels, transposition corresponds to reflection across a vertical line, and taking the adjoint means performing both of these operations.
+We also classify the identity and SWAP maps as generators.
+
+\subsection{Rewrite rules}
+
+In the qubit case, we gave seven rules, and said these were complete for the Clifford fragment.
+In the CV case, we do again have a set of rules complete for the analogous \textit{Gaussian fragment} (more on that in a second), but more than seven rules are required!
+Here we give the subset of those rules that involve the three spider species and the multiplier.
+
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/spider_green_unfused}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_green_fused}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/spider_fock_unfused}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_fock_fused}
+\end{equation}
+\vspace{5pt}
+\begin{equation}\label{eq:copy_state_green_red}
+    \tikzfig{qumodes/prelims/zx/copy_state_green_uncopied}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/copy_state_green_copied}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/copy_state_red_uncopied}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/copy_state_red_copied}
+\end{equation}
+\vspace{5pt}
+\begin{equation}\label{eq:copy_state_fock}
+    \tikzfig{qumodes/prelims/zx/copy_state_fock_uncopied}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/copy_state_fock_copied}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/bialgebra_pair}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/bialgebra_bipartite}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/spider_green_multiplied_unfused}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_green_multiplied_fused}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/spider_red_multiplied_unfused}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_red_multiplied_fused}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/spider_green_scalar_in}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_green_scalar_out}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/spider_fock_scalar_in}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_fock_scalar_out}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/state_green_f}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/state_red_f_fourier}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/state_red_f}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/state_green_f_fourier_inverse}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/state_green_f}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/state_fock_f_hermite}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/state_fock_f}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/state_green_f_hermite_inverse}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/id_green}
+    ~~=~~ \tikzfig{qumodes/prelims/zx/id_red}
+    ~~=~~ \tikzfig{qumodes/prelims/zx/id_fock}
+    ~~=~~ \tikzfig{qumodes/prelims/zx/id}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/multiplier_unmultiplied}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/multiplier_multiplied}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/multiplier_unadded}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/multiplier_added}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/rotation}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/rotation_decomposed}
+\end{equation}
+
+Many of these rules will look familiar from the qubit case.
+Numerous useful rules can then be derived from these.
+For example, we can extend the green and red `state copy' rules~\eqref{eq:copy_state_green_red} to `gate copy' rules.
+This requires a couple of preparatory lemmas.
+Will use shorthand:
+\begin{equation}\label{eq:mult_default}
+\tikzfig{qumodes/focked_up/pauli_webs/right_mult_default}
+\qqqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/left_mult_default}
+\end{equation}
+
+Recall also that:
+\begin{equation}\label{eq:mult_inverse_mult_fourier}
+\tikzfig{qumodes/focked_up/pauli_webs/mult_inverse}
+\qqqqqquad
+\tikzfig{qumodes/focked_up/pauli_webs/mult_fourier}
+\end{equation}
+
+Hence:
+\begin{equation}\label{eq:mult_default_with_fourier}
+\tikzfig{qumodes/focked_up/pauli_webs/mult_default_with_fourier}
+\end{equation}
+
+Now, consider the case of `copying' a position or momentum displacement operator through a one-legged spider.
+
+\begin{lemma}\label{lem:gate_absorb}
+\teague{Check plus/minus signs really correct}
+\begin{equation}\label{eq:gate_absorb}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb}
+\qqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_absorb}
+\end{equation}
+\begin{proof}
+    Start with the first equation.
+    We can change the one-legged spider's colour twice, using fusion in between:
+    \begin{equation}\label{eq:gate_absorb_red_proof}
+    \tikzfig{qumodes/prelims/zx/gate_absorb_red_proof_1}
+    \end{equation}
+    Then just use the standard Fourier transform property introduced in \Cref{eq:fourier_chi_relations}: $\mathcal{F}^{-1}(\mathcal{F}(f(x)) \cdot \chi_a) = f(x - a)$.
+    The second equation is proved almost identically, making use of the dual property $\mathcal{F}(\mathcal{F}^{-1}(f(x)) \cdot \overline{\chi}_a) = f(x - a)$:
+    \begin{equation}\label{eq:gate_absorb_green_proof}
+    \tikzfig{qumodes/prelims/zx/gate_absorb_green_proof_1}
+    \end{equation}
+\end{proof}
+\end{lemma}
+
+Then consider the case of copying through a phaseless spider.
+
+\begin{lemma}\label{lem:gate_copy_blank_spider}
+\begin{equation}\label{eq:gate_copy_blank_spider}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider}
+\qqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy_blank_spider}
+\end{equation}
+\begin{proof}
+    Both equations are proved identically so we just show one.
+    Follows from state copy and bialgebra rules:
+    \begin{equation}\label{eq:red_gate_copy_blank_spider_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_blank_spider_proof}
+    \end{equation}
+\end{proof}
+\end{lemma}
+
+%\begin{lemma}\label{lem:red_spider_not_flexsymmetric}
+%\begin{equation}\label{eq:red_spider_not_flexsymmetric}
+%\tikzfig{qumodes/focked_up/pauli_webs/red_spider_not_flexsymmetric_v2}
+%\end{equation}
+%\end{lemma}
+
+Now we can prove the full result.
+
+\begin{proposition}\label{prop:gate_copy}
+\teague{Check plus/minus signs really correct}
+\begin{equation}\label{eq:gate_copy}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy}
+\qqquad
+\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy}
+\end{equation}
+\begin{proof}
+    \begin{equation}\label{eq:red_gate_copy_proof}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_proof}
+    \end{equation}
+\end{proof}
+\end{proposition}
+
+This in turn can be extended to the case where just one of many input and output legs has a position or momentum displacement on it.
+
+\begin{lemma}\label{lem:red_gate_copy_multi_inputs}
+\begin{equation}\label{eq:red_gate_copy_multi_inputs}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input}
+\end{equation}
+\end{lemma}
+
+Or we can rephrase this in terms of displacement operators `stabilizing' the diagram, up to changing the argument to $f$.
+
+\begin{lemma}\label{lem:red_gate_copy_cancel}
+\begin{equation}\label{eq:red_gate_copy_cancel}
+\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_cancel}
+\end{equation}
+\end{lemma}
+
+An important special case of this rule is the commutation relation between displacement operators $\hat{X}(a)$ and $\hat{Z}(b)$.
+
+\begin{lemma}\label{lem:displacement_commutation_relation_zx}
+    \begin{equation}
+        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_red_green}
+    \end{equation}
+    \begin{equation}
+        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_green_red}
+    \end{equation}
+    \begin{proof}
+        The first follows from the first equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \overline{\chi}_a(x) = e^{i2\pi ax}$.
+        So:
+        \begin{equation}
+            f(x + b) = e^{i2\pi a(x + b)} = e^{i2\pi ab}e^{i2\pi ax} = e^{i2\pi ab} \overline{\chi}_a(x)
+        \end{equation}
+        where the scalar $e^{i2\pi ab}$ can be pulled out of the spider to become a global phase.
+        The second follows from the second equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \chi_b(x) = e^{-i2\pi bx}$.
+        So:
+        \begin{equation}
+            f(x + a) = e^{-i2\pi b(x + a)} = e^{-i2\pi ab}e^{-i2\pi bx} = e^{-i2\pi ab} \chi_b(x)
+        \end{equation}
+    \end{proof}
+\end{lemma}
+
+These rules are key to defining and working with Focked up Pauli webs, as we'll see in the next chapter.
+
+\subsection{The Gaussian + combs fragment}
+
+We said earlier the CV analogue of Clifford unitaries are the Gaussian unitaries.
+The CV analogue of the Clifford fragment of the qubit ZX-calculus is the Gaussian fragment.
+This is exactly the space of diagrams generated by green and red spiders whose function labels are quadratics, plus the vacuum state.
+That is, it's all diagrams generated by:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/spider_green_quadratic}
+    \qqqquad
+    \tikzfig{qumodes/prelims/zx/spider_red_quadratic}
+    \qqqquad
+    \tikzfig{qumodes/prelims/zx/state_vacuum}
+\end{equation}
+We will in fact be interested in adding one more type of spider to the mix.
+For any predicate $f: X \to \BB$, i.e.\ any function that returns true or false, let $\indicator{f(x)}$ be the function that's $1$ if $f(x)$ is true and $0$ if not.
+Then also let $x \eqmod{r} c$ mean $x = c \text{ mod } r$.
+So:
+\begin{equation}
+   \indicator{x \eqmod{r} c} =
+   \begin{cases}
+       1 &\text{ if $x = c \text{ mod } r$} \\
+       0 &\text{ else}
+   \end{cases}
+\end{equation}
+We call spiders with these labels \textit{comb spiders}:
+\begin{align}\label{eq:green_and_red_comb_spiders}
+    \tikzfig{qumodes/prelims/zx/spider_green_comb}
+    \quad &= \quad
+    \sum_{k \in \ZZ} \ket{c + kr}_Q^{\otimes m} \bra{c + kr}_Q^{\otimes l} \\
+    \tikzfig{qumodes/prelims/zx/spider_red_comb}
+    \quad &= \quad
+    \sum_{k \in \ZZ} \ket{c + kr}_P^{\otimes m} \bra{c + kr}_P^{\otimes l}
+\end{align}
+The name comes from the fact that one-legged comb spiders are infinite sums of Dirac distributions $\ket{q}_Q$ (in the green spider case) and the Fourier transform of these $\ket{p}_P$ (in the red spider case).
+The Dirac distribution $\delta_c$ is often informally pictured as the limit of the Gaussian curve $\delta_{c,\epsilon}(x) = (2\pi\epsilon)^{-1/2} e^{-(x-c)^2/(2\epsilon)}$ as $\epsilon \to 0^+$, i.e.\ as this gets narrower and taller.
+Hence a sum of a regularly spaced set of such distributions as in the spiders below resembles a comb.
+\begin{align}\label{eq:green_and_red_comb_states}
+    \tikzfig{qumodes/prelims/zx/state_green_comb}
+    \quad &= \quad
+    \sum_{k \in \ZZ} \ket{c + kr}_Q \\
+    \tikzfig{qumodes/prelims/zx/state_red_comb}
+    \quad &= \quad
+    \sum_{k \in \ZZ} \ket{c + kr}_P
+\end{align}
+
+\subsection{GKP spiders}
+
+TODO
+
+

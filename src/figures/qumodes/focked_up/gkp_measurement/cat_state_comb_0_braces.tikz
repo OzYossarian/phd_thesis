@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (0, 0) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=none] (3) at (2, 1) {};
+		\node [style=none] (4) at (2, -1) {};
+		\node [style=none] (8) at (1.5, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (10) at (2.5, 1.25) {};
+		\node [style=none] (11) at (2.5, -1.25) {};
+		\node [style=none] (12) at (3.5, 0) {\scriptsize\textcolor{gray}{$2m$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=180, out=60] (0) to (3.center);
+		\draw [in=-180, out=-60] (0) to (4.center);
+		\draw [style={grey_brace}] (10.center) to (11.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

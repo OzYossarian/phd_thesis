@@ -10,7 +10,7 @@
 		\node [style=none] (43) at (-2.5, 1) {};
 		\node [style=none] (44) at (-2.5, -1) {};
 		\node [style=none] (45) at (-2, 0) {\raisebox{1.3ex}{$\vdots$}};
-		\node [style={gn_phase}] (46) at (0, 0) {$e^{i(t + u\isarg{x} + v\isarg{x}^2)}$};
+		\node [style={gn_phase}] (46) at (0, 0) {$e^{i2\pi(t + u\isarg{x} + v\isarg{x}^2)}$};
 		\node [style={rn_web}] (47) at (-1.75, 1.5) {$b$};
 		\node [style={rn_web}] (48) at (1.75, 1.5) {$-b$};
 		\node [style={rn_web}] (49) at (1.75, -1.5) {$-b$};
