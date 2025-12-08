@@ -97,7 +97,6 @@ For example, the detectors in the unrepeated $X^1 Y^1 Z^1$ and $X^1 Z^1$ codes a
 In a repeated version with $r_t$ set to some $r$ for all $t$, these detectors would have volume $6 \cdot ((4-1)r + 1)$ (\Cref{fig:detector_if_measurements_done_twice}).
 
 On the other hand, the number of measurements per face detector remains exactly the same -- e.g.\ $12$ for any $\mathbf{r}$-repeated $X^a Y^b Z^c$ code, and 6 for any $\mathbf{r}$-repeated $X^a Z^b$ code.
-\teague{Notation: $X^a Y^b Z^c$ code not yet defined}
 Thanks to the new edge detectors, however, which always have volume two and consist of two measurements, the \emph{average} detector volume and \emph{average} number of measurements per detector decreases.
 Indeed, in the limit where $r_t \to \infty$ for all $t$, the edge detectors dominate, and these averages both tend to two.
 For our two favourite DCCCs, we compute these averages exactly in \Cref{tab:repeated_xyz_css_averages}.
@@ -461,23 +460,26 @@ In particular, noise models biased towards measurement errors will see less bene
     \centering
     \begingroup
     \renewcommand*{\arraystretch}{1.2}
-    \begin{tabular}{|r|c|c|c|c|c|c|}
-        \hline
-        & \multicolumn{3}{c|}{$X^r Y^r Z^r$} & \multicolumn{3}{c|}{$X^r Z^r$} \\
-        \hline
-        & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} \\
-        \hline
-        $d_{s, E}$ & $n_E$ & $r n_E \to \infty$ & $n_E$ & $n_E$ & $r n_E \to \infty$ & $n_E$ \\
-        \hline
-        $d_{s, M}$ & $\frac{4}{3}n_M$ & $r \frac{4}{3}n_M \to \infty$ & $\frac{4}{3}n_{M}$ & $\frac{4}{3}n_M$ & $r \frac{4}{3}n_M \to \infty$ & $\infty$ \\
-        \hline
-        $d_{t, E}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\frac{h_\mathbf{r}}{2}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\min\{\frac{h_\mathbf{r}}{2r}, \frac{h_\mathbf{r}}{4}\} \to 0$ & $\frac{h_\mathbf{r}}{4}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ \\
-        \hline
-        $d_{t, M}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\frac{h_\mathbf{r}}{2}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\min\{\frac{h_\mathbf{r}}{2r}, \frac{h_\mathbf{r}}{4}\} \to 0$ & $\frac{h_\mathbf{r}}{4}$ & $\infty$ \\
-        \hline
-        $p_h$ & $\frac{2}{9} + \frac{1}{3r} \to \frac{2}{9}$& $\frac{1}{r} \to 0$ & $\frac{1}{3}$ & $\frac{2}{9}$ & $0$ & $0$ \\
-        \hline
-    \end{tabular}
+    \scalebox{0.8}
+    {
+        \begin{tabular}{|r|c|c|c|c|c|c|}
+            \hline
+            & \multicolumn{3}{c|}{$X^r Y^r Z^r$} & \multicolumn{3}{c|}{$X^r Z^r$} \\
+            \hline
+            & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} \\
+            \hline
+            $d_{s, E}$ & $n_E$ & $r n_E \to \infty$ & $n_E$ & $n_E$ & $r n_E \to \infty$ & $n_E$ \\
+            \hline
+            $d_{s, M}$ & $\frac{4}{3}n_M$ & $r \frac{4}{3}n_M \to \infty$ & $\frac{4}{3}n_{M}$ & $\frac{4}{3}n_M$ & $r \frac{4}{3}n_M \to \infty$ & $\infty$ \\
+            \hline
+            $d_{t, E}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\frac{h_\mathbf{r}}{2}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\min\{\frac{h_\mathbf{r}}{2r}, \frac{h_\mathbf{r}}{4}\} \to 0$ & $\frac{h_\mathbf{r}}{4}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ \\
+            \hline
+            $d_{t, M}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\frac{h_\mathbf{r}}{2}$ & $\frac{h_\mathbf{r}}{2r} \to 0$ & $\min\{\frac{h_\mathbf{r}}{2r}, \frac{h_\mathbf{r}}{4}\} \to 0$ & $\frac{h_\mathbf{r}}{4}$ & $\infty$ \\
+            \hline
+            $p_h$ & $\frac{2}{9} + \frac{1}{3r} \to \frac{2}{9}$& $\frac{1}{r} \to 0$ & $\frac{1}{3}$ & $\frac{2}{9}$ & $0$ & $0$ \\
+            \hline
+        \end{tabular}
+    }
     \endgroup
     \caption{
         Comparison of the $X^r Y^r Z^r$ and $X^r Z^r$ codes, for $r > 1$.

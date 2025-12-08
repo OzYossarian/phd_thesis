@@ -19,11 +19,8 @@ Note that all these objects are defined for all $j \geq 0$, even if $\OOO$ is fi
 In \Cref{subsec:evolution-of-codespace} we said that the rank of the stabilizer group $\SSS_j$ either stays the same or increases by one after applying a Clifford or measuring a Pauli.
 Correspondingly, the dimension of the codespace $\VVV_j$ either stays the same or decreases by one, and the new logical Pauli group is either still isomorphic to $\PPP_k$ or is now isomorphic to $\PPP_{k-1}$.
 So the sequence of codespace dimensions $(k_{-1}, k_0, k_1, \ldots)$ is a non-increasing sequence of integers, starting at $k_{-1} = n$.
-Consider the smallest integer $T$ such that for all $t \geq T$ the codespace dimension $k_t$ is a constant $k$ -- if such a $T$ exists.
-If so, then we say the code becomes \textit{established} at time $T$.
-In theory, a dynamic code need without an establishment time can still be useful for computation, provided the computation finishes before all the logical qubits being used have been measured out!
-But in practice, all known useful dynamic stabilizer codes do become established,
-so in the rest of thesis we always assume this property.
+Therefore there is always some integer $T$ such that for all $t \geq T$ the codespace dimension $k_t$ is a constant $k$ -- even if it just means $k = 0$ eventually (though this would then be useless for computing!).
+We say the code becomes \textit{established} at time $T$.
 
 \subsection{Codespace maps and logical Pauli group maps}
 
@@ -44,7 +41,7 @@ Hence we get group homomorphisms
 \end{equation}
 where each $\phi_j = \prod_{O \in \OOO_j} \phi_O$.
 
-After establishment at time $T$, we never again measure logical operator of the code (\textbf{Case 3} of the Pauli measurements).
+After establishment at time $T$, we never again measure a logical operator of the code (\textbf{Case 3} of the Pauli measurements).
 So for all $t > T$ the codespace map (plus post-measurement renormalisation) is always a unitary map from $\VVV_{t-1}$ to $\VVV_t$, as shown in \Cref{subsec:evolution-of-codespace}.
 Likewise, as per \Cref{subsec:evolution_of_logical_pauli_group}, the logical Pauli group homomorphism $\phi_t$ is now always an isomorphism $\LLL_t \to \LLL_{t-1}$ (so if we like we can now think about its inverse $\phi_t^{-1}$ instead, which goes in the `right' direction).
 

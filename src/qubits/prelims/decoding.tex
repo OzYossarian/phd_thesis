@@ -1,17 +1,16 @@
 \section{Decoding}\label{sec:decoding}
 
-We move on to another QEC building block: decoding.
+The final QEC building block we'll discuss is decoding.
 Suppose we have a circuit $C$ and noise model $\FFF$.
 We can run this circuit and look at the resulting syndrome -- the list of violated detectors on this particular run.
-We saw earlier how to tell if an error violates an individual detector.
-\teague{TODO}
+We saw in \Cref{subsec:detecting_webs_detect_errors} how to tell if an error violates an individual detector.
 But now we have a whole set of violated detectors, and we have to find errors that would have violated exactly these detectors and no others.
 
 To make life more complicated (perhaps counterintuitively), we don't even actually have to find the exact error that occurred!
-Earlier we defined \textit{trivial} errors -- errors $F$ satisfying $C^F \propto C$, i.e.\ if they occur, they don't actually harm our computation.
+We say an error $F$ on circuit $C$ is \textit{trivial} iff $C^F \propto C$, i.e.\ if they occur, they don't actually harm our computation.
 By definition, they also don't violate any detectors.
 %We showed two errors $F$ and $F'$ are equivalent iff $F' = FT$ for some trivial error $T$.
-So it makes no difference at all (to either the syndrome nor the overall computation) whether error $F$ occurs or an equivalent error $F' = FT$, where $T$ is some trivial error.
+So it makes no difference at all (to either the syndrome nor the overall computation) whether error $F$ occurs or an \textit{equivalent error} $F' = FT$, where $T$ is some trivial error.
 This property of different equivalent errors having the same syndrome is called \textit{degeneracy}.
 Letting $\TTT$ denote the set of all trivial errors on $C$, what we're really looking for is the most likely coset $F\TTT$ that the actual error belonged to.
 A \textit{decoder} is any algorithm that aims to tackle this problem.
@@ -28,14 +27,27 @@ One set of vertices $V_\DDD$ is in bijection with the group $\DDD$ of all detect
 The other set of vertices $V_\FFF$ is in bijection with the set of all possible errors in $\FFF$.
 That is, for each probability distribution $\FFF_j = \{(F_{j,k}, p_{j,k})\}_k$ in $\FFF$, we add a vertex labelled $(F_{j,k}, p_{j,k})$.
 An edge connects detector vertex $(D, e)$ with error vertex $(F, p)$ iff error $F$ would violate detector $D$.
-\teague{Check I've given good definitions of errors violating detectors by this point.}
 Vertices corresponding to errors that violate no detectors can be removed from the graph.
-\teague{Was going to say if multiple error vertices are incident to exactly the same set of detector vertices, they can be combined -- but no longer sure that's true! What if the errors differ by a logical!? Then it isn't the case that it doesn't matter which one is picked by the decoder??}
+For example, we show the decoding graph for the circuit consisting of consecutive $Z_1 Z_2$ measurements under phenomenological noise:
+\begin{equation*}
+    \tikzfig{qubits/prelims/decoding/meas_zz_twice_phenom_decoding_graph}
+\end{equation*}
+This circuit has one detector, so the decoding graph has one detector vertex.
+This is labelled $(m_a m_b, e)$, where $m_a = (-1)^a$ and $m_b = (-1)^b$, and we know $m_a m_b = 1$ in the absence of any errors, so $e = 1$.
+There are eight error locations, denoted using dashed lines in both the circuit and the decoding graph.
+In total there are 28 possible errors -- though 8 of these are the identity so can be omitted from the graph since they can never violate any detectors.
+A simplified version is therefore:
+\begin{equation}
+    \tikzfig{qubits/prelims/decoding/meas_zz_twice_phenom_decoding_graph_simpler}
+\end{equation}
 
 This is the `abstract' decoding graph, if you like.
 Then on any given run of the circuit $C$, we create a copy $G'$ of $G$ that also records the syndrome (set of detectors that were actually violated during this run).
 We do this by updating the labels of all detector vertices from $(D, e)$ to $(D, eD)$, where (confusingly, I admit) the first element $D = m_1 \ldots m_r$ is a formal product, while the second element $eD = \pm 1$ the result of multiplying the expected value $e = \pm 1$ with the actual evaluation $D = m_1 \ldots m_r = \pm 1$ obtained on this run of the circuit.
 As a result, vertices labelled $(D, -1)$ in $G'$ correspond to violated detectors, while vertices labelled $(D, 1)$ correspond to non-violated detectors.
+\begin{equation}
+    \tikzfig{qubits/prelims/decoding/meas_zz_twice_phenom_decoding_graph_simpler_violated}
+\end{equation}
 
 This $G'$ can then be given as input to a decoder.
 In the next subsection, we'll look at one such decoder, called \textit{belief propagation}.
@@ -57,10 +69,14 @@ We can still use belief propagation as a preprocessing algorithm to update our p
 
 Suppose we have a decoding graph $G = ((V_\DDD, V_\FFF), E)$ in which every error vertex $(F, p) \in V_\FFF$ is incident to at most two vertices.
 Let's augment this with a boundary detector vertex labelled $(\boundary, e_{\boundary})$, where $\boundary$ is the formal product $\boundary = \prod_{D \in \DDD} D$ of all detectors in the circuit, and $e_{\boundary}$ is the expected evaluation of this in the absence of noise, which (again, confusingly -- apologies!) uses the same notation: $e_{\boundary} = \prod_{D \in \DDD} D = \pm 1$.
-We will explain shortly exactly why we choose this label for the boundary vertex.
-In the meantime, let's connect this boundary vertex to all error vertices that are only incident to one edge, so that now all error vertices connect to exactly two edges.
+This value for $e_{\boundary}$ is chosen so that there will always be an even number of violated detectors total.
+Let's connect this boundary vertex to all error vertices that are only incident to one edge, so that now all error vertices connect to exactly two edges.
 This means we can actually just think of them as edges rather than vertices!
-Let's do exactly this, and call the resulting graph TODO $(V_\DDD \cup \{(\boundary, e_\boundary)\}, V_\FFF)$.
+Let's do exactly this, and call the resulting graph $G_\boundary = (V_\DDD \cup \{(\boundary, e_\boundary)\}, V_\FFF)$.
+We show this process for the circuit that measures $Z_1 Z_2$ under a noise model that only allows measurement errors:
+\begin{equation}
+    \tikzfig{qubits/prelims/decoding/meas_zz_thrice_decoding_graph_boundary}
+\end{equation}
 
 So now the decoding problem is: find the minimum weight set of edges $\{(F_k, p_k)\}_k$ whose \textit{boundary} is the set of vertices $\{(D, s) : s = -1\}$ corresponding to violated detectors.
 Here the weight of a set of edges is $wt(\{(F_k, p_k)\}_k) = \sum_k -log(p_k)$.
@@ -75,41 +91,30 @@ Unlike belief propagation, this algorithm works perfectly well in the quantum se
 
 The drawback of the minimum weight perfect matching decoder is that it requires a decoding graph whose error vertices have degree at most two.
 Most decoding graphs fail to satisfy this.
-However, we can efficiently transform many decoding graphs into a new decoding graph with this property, at the cost of the probability $p$ in an error vertex label $(F, p)$ becoming an approximation of the true probability of $F$ occurring.
-We won't give an exact procedure here, but instead just give a couple of examples to give the idea.
-Full details can be found in TODO.
-
-\teague{Copy pasting}
-We start by `decomposing' errors that violate more than $2$ detectors into sets of errors that violate at most $2$ detectors.
-For example, if the decoding graph contains a hyperedge $d_1 d_2 d_3 d_4$ with weight $p$,
-but also a hyperedge $d_1 d_2$ with weight $p_{12}$ and a hyperedge $d_3 d_4$ with weight $p_{34}$,
-then we can delete the hyperedge $d_1 d_2 d_3 d_4$ and update the weights $p_{12}$ and $p_{34}$ in some way.
-In fact, even if the graph only contains hyperedges $d_1 d_2 d_3 d_4$ with weight $p$ and $d_1 d_2$ with weight $p_{12}$,
-we can delete $d_1 d_2 d_3 d_4$, update $p_{12}$ and add a new \emph{remnant edge} $d_3 d_4$ with some weight $p_{34}$.
-In this work, we use the Clifford circuit simulator Stim~\cite{Gidney2021stimfaststabilizer} extensively,
-and Stim's implementation of decomposing errors is described in \Ccite{stim_command_line_doc} and explained in \Ccite{gidney2022stim_error_model}.
-The way in which the edge weights are updated is explained in Appendix C of \Ccite{higgott2022fragile}.
-After decomposing all such hyperedges, we add a new virtual \emph{boundary vertex} $\partial$, and we replace every hyperedge spanning a single vertex $d$ with a new ordinary edge with endpoints $d$ and $\partial$ \cite{higgott2025sparse}.
-At this point, every hyperedge will span exactly two vertices.
+However, we can efficiently transform many decoding graphs into a new decoding graph with this property, at the cost of losing some information about the probabilities of errors occurring.
+The loss of this information ultimately reduces decoding accuracy.
+We won't give an exact procedure here, but will give a quick example, and refer the reader wanting full details to TODO.
+Consider the case below, where an error vertex of degree 4 is removed and the probabilities $p_1$ and $p_3$ are updated:
+\begin{equation}
+     \tikzfig{qubits/prelims/decoding/remove_hyperedge}
+\end{equation}
+The new probability $p_1'$ is the probability that either $f_1$ occurred, or $f_2 f_3$, but not both: $p_1' = p_1 + p_2 p_3 - p_1 p_2 p_3$.
+Likewise for $p_3'$.
+In the decoding graph on the left, the violations of $D_1$ and $D_2$, and of $D_3$ and $D_4$, are dependent events -- the error $f_2$ violates all four of them.
+In the decoding graph on the right, however, the violations of $D_1$ and $D_2$, and of $D_3$ and $D_4$, are treated as independent events.
 
 \subsection{Belief propagation as a pre-processor}
 
-Applying the degree reduction process hinted at above lets us use minimum weight perfect matching, but at the cost of a loss of accuracy, because our error probabilites are only approximations of the true probability of a given error occurring.
+Applying the degree reduction process hinted at above lets us use minimum weight perfect matching, but at the cost of a loss of accuracy.
 We can mitigate this effect by first running belief matching on our decoding graph $G'$, then applying the transformation above, and then applying MWPM.
 This whole pipeline is referred to as \textit{belief matching}.
-Intuitively, this works because TODO.
-One of the main questions we investigate in the next chapter is the performance of belief matching versus minimum weight perfect matching on certain members of a family of dynamic stabilizer codes.
-
-\teague{Copy pasting}
-
-In belief matching, we add a pre-processing step which first adjusts the weights of the hyperedges in the marked decoding graph.
-This pre-processing step is the classical decoding algorithm \textit{belief propagation} (BP)~\cite{McKay,Leifer,PhysRevResearch.2.043423}, which is run on the full decoding hypergraph to estimate the marginal probability of each error mechanism (whether it is an edge or hyperedge).
-These marginal probabilities are then used to update the edge weights when converting to a graph for MWPM~\cite{higgott2022fragile}.
-The details of exactly what this does are unimportant for us,
-but the key intuition is that it recovers some of the information about the probabilities of errors occurring that's otherwise lost when transforming hyperedges into ordinary edges (i.e.~it exploits knowledge of the hyperedge errors when decoding a given syndrome).
-This allows for more accurate decoding for error models containing hyperedges,
-at the cost of slowing down the overall decoding process.
-For those interested, a longer discussion of this trade-off can be found in \Ccite{higgott2022fragile}.
-
-\teague{Alternatively, could say a lot less about MWPM and belief matching here, and save them for the next chapter where we have a more concrete setting we're applying them to?}
-
+Intuitively, this works because belief matching partially recovers information that's lost when we delete error vertices with degree greater than two.
+For example, given the decoding graph above, suppose on a given run all four detectors are violated.
+Running BP updates the probabilities associated with each error, and on this particular run will increase the probability $p_2 \mapsto p_2'$ significantly.
+\begin{equation}
+    \tikzfig{qubits/prelims/decoding/four_detector_decoding_graph_all_violated_bp}
+\end{equation}
+When we now delete the degree four error vertex update the probabilities of $p_1'$ and $p_3'$, we encode some of this dependency between the violations of $D_1$ and $D_2$, and of $D_3$ and $D_{4}$, into the updated probabilities (i.e.\ $p_1'' = p_1' + p_2' p_3' - p_1' p_2' p_3'$, similar for $p_3''$).
+\begin{equation}
+    \tikzfig{qubits/prelims/decoding/four_detector_decoding_graph_all_violated_bp_reduced}
+\end{equation}

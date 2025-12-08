@@ -294,12 +294,12 @@ In the case of the $+1$-eigenspace projector, these diagrams become even simpler
 \end{equation}
 
 We can also reason graphically about probabilities of obtaining measurement outcomes.
-Suppose we have a normalised state $\ket{\psi}$ and we measure Pauli $P$; by the Born rule of~\eqref{eq:born_rule}, the probability $p(m|\psi)$ of getting outcome $m$ is $\braket{\psi|\Pi_{mP}|\psi}$:
+Suppose we have a normalised state $\ket{\psi}$ and we measure Pauli $P$.
+By the Born rule of~\eqref{eq:born_rule}, the probability $p(m|\psi)$ of getting outcome $m$ is $\braket{\psi|\Pi_{mP}|\psi}$:
 \begin{equation}
     \tikzfig{qubits/prelims/zx/born_rule_measure_P_zx}
 \end{equation}
-where $a = \frac{1 - m}{2}$
-
+where $a = \frac{1 - m}{2}$.
 More generally, suppose we have a circuit $C$ consisting of Clifford unitaries $U_j$ and Pauli measurements $P_j$ with outcomes $m_j$, and an initial normalised state $\ket{\psi}$.
 Assume the final operation in $C$ is the measurement of $P_T$ with outcome $m_T$, and let $C'$ denote the circuit consisting of everything before this point.
 We can write the probability $\braket{\psi | C \Pi_{m_T P_T} C^\dagger | \psi}$ of getting outcome $m_T$ when measuring $P_T$ as:
@@ -317,11 +317,11 @@ In particular, we have the following lemma, which we'll use later:
         Let $D'$ denote the circuit up to this point, and $U$ denote the composition of any remaining Clifford unitaries.
         The probability of this sequence of measurement outcomes occurring is:
         \begin{equation}
-            \tikzfig{qubits/prelims/zx/born_rule_diagram_D_final_meas}
-            =
-            \tikzfig{qubits/prelims/zx/born_rule_diagram_D_final_meas_U}
-            =
-            \tikzfig{qubits/prelims/zx/born_rule_diagram_D}
+            \begin{aligned}
+                \tikzfig{qubits/prelims/zx/born_rule_diagram_D_final_meas}
+                &= \tikzfig{qubits/prelims/zx/born_rule_diagram_D_final_meas_U} \\[10pt]
+                &= \tikzfig{qubits/prelims/zx/born_rule_diagram_D}
+            \end{aligned}
         \end{equation}
         Since $D = 0$, this whole thing is zero.
     \end{proof}
@@ -346,7 +346,7 @@ Well, strictly speaking, from what we've written so far we can represent any lin
 The last question is whether any equality between linear maps can be proved purely diagrammatically using the rewrite rules above; if a calculus has this property, it's said to be \textit{complete}.
 The rules given above are complete for the Clifford fragment; any equality of linear maps that can be represented in the ZX-calculus using only spiders with phases in $\frac{\pi}{2}\mathbb{Z}$ can be proved using the seven rules above.
 To get completeness for all linear maps $\mathbb{C}^{2^n} \to \mathbb{C}^{2^m}$, we need to add one more rule: the Euler rule.
-This rule tells for what angles $\alpha_j$ and $\beta_j$ a composition of rotation gates $Z(\alpha_3)X(\alpha_2)Z(\alpha_1)$ is equal to the composition $X(\beta_3)Z(\beta_2)X(\beta_1)$, up to some scalar that also depends on the $\alpha_j$ and $\beta_j$:
+This rule tells us for what angles $\alpha_j$ and $\beta_j$ a composition of rotation gates $Z(\alpha_3)X(\alpha_2)Z(\alpha_1)$ is equal to the composition $X(\beta_3)Z(\beta_2)X(\beta_1)$, up to some scalar that also depends on the $\alpha_j$ and $\beta_j$:
 \begin{equation}\label{eq:euler_rule}
     \tikzfig{qubits/prelims/zx/euler_rule}
 \end{equation}

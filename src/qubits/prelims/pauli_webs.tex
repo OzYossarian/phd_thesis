@@ -84,10 +84,25 @@ At this point we can define Pauli webs.
 We again start by defining them for single generators, before giving the general case.
 For a generator with $l+m$ legs, since Pauli webs are highlightings, they are elements of $\mathbb{F}_2^{l+m}$.
 Intuitively, a Pauli web $W$ on a generator $f$ declares that the diagram formed by replacing the highlighted edges around $f$ with the corresponding Pauli operator $I$, $X$, $Y$ or $Z$ is in fact proportional to the original diagram $f$.
-Formally:
+Formally, we phrase this in terms of \textit{firing} generators.
+
+Firing a generator $f$ according to a highlighting $H$ means adding $X$ gates around $f$ if its incident legs are highlighted red, and then $Z$ gates for incident legs highlighted green.
+For example, suppose we have the following diagram:
+\begin{equation}
+    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_eg}
+\end{equation}
+On the left below we fire both generators $f$ and $g$, while on the right we fire just $g$:
+\begin{equation}
+    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
+    \qqqqquad
+    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
+\end{equation}
+We choose the convention that $X$ gates are added first around each generator (they're the `inner gates') and then $Z$ gates (`outer gates') -- it isn't important which way round we choose this, just that we pick one option and stick with it.
+Given a diagram $D$ generators $V$ and a highlighting $H$, we write the diagram with all generators fired according to $H$ as $D^H$.
+If only firing a subset of generator $V' \subseteq V$, we write the resulting diagram as $D^{H|_{V'}}$.
 
 \begin{definition}\label{defn:pauli_web_single_generator}
-    A Pauli web $W$ on a generator $f$ is a highlighting on $f$ with the following additional property:
+    A Pauli web $W$ on a generator $f$ is a highlighting $W$ on $f$ with the property that $f^W \propto f$:
     \begin{equation}
         \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator}
         ~~
@@ -121,7 +136,8 @@ Formally:
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator_product}
         \end{equation}
-        Replacing each highlighted edge with the corresponding spiders, we see that the defining equation does indeed hold:
+        Firing the generator according to $W + W'$, we see that the defining equation does indeed hold:
+        \teague{break tikzfig into many, allow page break between them. Doesn't work for aligned inside equation env, need to use align directly.}
         \begin{equation}\label{eq:webs_single_generator_form_subgroup}
         \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup}
         \end{equation}
@@ -163,7 +179,7 @@ We will signpost clearly whenever we're using this convention.
     For a given diagram $D$, we denote the group of all its Pauli webs by $\WWW(D)$.
 \end{notation}
 
-\subsection{Pauli webs on Clifford diagrams}
+\subsection{Pauli webs on Clifford diagrams}\label{subsec:pauli_webs_clifford_diagrams}
 
 If we restrict ourselves to just Clifford ZX-diagrams, then we can give generators for the groups of all Pauli webs on single generators, and hence on all Pauli webs on all Clifford diagrams.
 The following spiders, along with the identity and swap maps, generate all Clifford ZX-diagrams:
@@ -199,7 +215,7 @@ We start by giving a set of Pauli webs on each of these two types of spider.
         \tikzfig{qubits/prelims/pauli_webs/spider_Pauli_green_web_green_last}
     \end{equation}
     \begin{proof}
-        For the first web, replace the highlighted legs by the corresponding $\pi$-spiders, apply the gate copy rule of \Cref{eq:copy_rules}, and fuse spiders again afterwards to make them disappear:
+        For the first web, fire the central spider according to this web, apply the gate copy rule of \Cref{eq:copy_rules}, and fuse spiders again afterwards to make them disappear, noting that $-k\pi = k\pi$ mod $2\pi$:
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/spider_Pauli_green_web_red_realised}
         \end{equation}
@@ -225,6 +241,7 @@ We start by giving a set of Pauli webs on each of these two types of spider.
         For the webs in which pairs of edges are highlighted green, we again just use spider fusion, as in the proof above.
         For the first web, we use almost the same proof as above, except now when applying the gate copy rule we negate the phase $\pm \frac{\pi}{2}$ to $\mp \frac{\pi}{2}$.
         But the extra green highlighted leg fixes this up:
+        \teague{Split into multiple tikzfigures, align right}
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/spider_Clifford_green_web_red_realised}
         \end{equation}
@@ -322,6 +339,29 @@ Since Pauli webs on general diagrams must restrict to Pauli webs on each generat
         \tikzfig{qubits/prelims/pauli_webs/hadamard_x_after}
     \end{equation}
 \end{example}
+
+We close this subsection by noting down the exact global scalars that appear in the definition of Pauli webs on single Clifford generators, since we will need these when discussing which errors detecting webs detect in \Cref{subsec:detecting_webs_detect_errors}.
+In a nutshell, a green spider with no legs highlighted red and a red spider with no legs highlighted green contribute no global phase:
+\begin{equation*}
+    \tikzfig{qubits/prelims/pauli_webs/spider_m_green_web_green_first_realised_exact}
+    \qqquad
+    \tikzfig{qubits/prelims/pauli_webs/spider_m_red_web_red_first_realised_exact}
+\end{equation*}
+A green $m\frac{\pi}{2}$ spider with all legs highlighted red picks up a phase of $e^{im\frac{\pi}{2}}$.
+We split this into the two cases of Pauli spiders and strictly Clifford spiders.
+\begin{align}
+    \tikzfig{qubits/prelims/pauli_webs/spider_Pauli_green_web_red_realised_exact} \\
+    \tikzfig{qubits/prelims/pauli_webs/spider_Clifford_green_web_red_realised_exact}
+\end{align}
+And a red $m\frac{\pi}{2}$ spider with all legs highlighted green picks up a phase of $e^{-im\frac{\pi}{2}}$.
+Again, first we show this for Pauli spiders:
+\begin{equation}
+    \tikzfig{qubits/prelims/pauli_webs/spider_Pauli_red_web_green_realised_exact}
+\end{equation}
+Then for strictly Clifford:
+\begin{equation}
+    \tikzfig{qubits/prelims/pauli_webs/spider_Clifford_red_web_green_realised_exact}
+\end{equation}
 
 \subsection{The $\text{ZX}/\pi$ calculus}
 
@@ -422,7 +462,7 @@ But to simplify the discussion here we haven't gone down this route.}
     \begin{proof}
         Again, a full proof is given in Rodatz' paper TODO.
         Here we just state the actual isomorphism -- it's analogous to the one in the previous proof, only we're now mapping into a quotient group.
-        For logical web $W$, we map the coset $\overline{W} = W\WWW_\SSS^\SSS(D)$ to $\ol{Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}} = (Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m})\SSS_D$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$:
+        For logical web $W$, we map the coset $\overline{W} = W \cdot \WWW_\SSS^\SSS(D)$ to $\ol{Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}} = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} \cdot \SSS_D$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$:
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_logical_Z}
             ~~\mapsto~~
@@ -437,14 +477,15 @@ But to simplify the discussion here we haven't gone down this route.}
 \end{proposition}
 
 So we've dealt with stabilizing webs and logical webs.
-It remains to discuss costabilizing webs and detecting webs.
-Costabilizing webs will turn out to be in bijection with measurements of logical Paulis.
-This includes measuring stabilizers, since these are exactly the elements that make up the identity coset in the logical Pauli group.
-Detecting webs -- which are a subtype of costabilizing web -- will turn out to be in bijection with measurements of stabilizers specifically.
-That is, they'll be in bijection with detectors.
+The final type we will want to discuss is detecting webs.
+%Costabilizing webs will turn out to be in bijection with measurements of logical Paulis.
+%This includes measuring stabilizers, since these are exactly the elements that make up the identity coset in the logical Pauli group.
+%Detecting webs -- which are a subtype of costabilizing web -- will turn out to be in bijection with measurements of stabilizers specifically.
+%That is, they'll be in bijection with detectors.
+These will turn out to be in bijection with measurements of stabilizers; i.e.\ with detectors.
 We start with a couple of lemmas.
 
-\teague{TODO change - fails a bit at edges cases, e.g. costabilizing web then detecting web. Current argument doesn't tell us the actual logical that was measured out. Think we can fix it by replacing the condition on $t$ -- not the final operation before the web is closed, but the final operation before the web corresponds to a stabilizer? (Usually the identity, but this handles edge cases -- e.g. detecting web starts before costabilizing web has ended). This argument in turn fails for detecting webs, because they start with identity web, but fine to have a different proof for those I think. Argument below works well for detectors already. Edge cases there are things like two detectors in one web -- doesn't really make sense to say 'which' Pauli is being measured in a detector. Does make sense to say which logical is being measured in a costabilizing web.}
+%\teague{TODO change - fails a bit at edges cases, e.g. costabilizing web then detecting web. Current argument doesn't tell us the actual logical that was measured out. Think we can fix it by replacing the condition on $t$ -- not the final operation before the web is closed, but the final operation before the web corresponds to a stabilizer? (Usually the identity, but this handles edge cases -- e.g. detecting web starts before costabilizing web has ended). This argument in turn fails for detecting webs, because they start with identity web, but fine to have a different proof for those I think. Argument below works well for detectors already. Edge cases there are things like two detectors in one web -- doesn't really make sense to say 'which' Pauli is being measured in a detector. Does make sense to say which logical is being measured in a costabilizing web.}
 
 \begin{lemma}\label{lem:Clifford_unitary_no_stabilizing_web}
     A Clifford unitary cannot have a non-identity stabilizing or costabilizing web on it.
@@ -489,54 +530,62 @@ We start with a couple of lemmas.
     \end{proof}
 \end{lemma}
 
-Now, suppose we have a non-detecting costabilizing web $W \in \WWW^\SSS(S) - \WWW_\DDD(S)$ on diagram $D$ consisting of Cliffords and Pauli measurements.
-Let $L = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label in $W$ of the $j$th input edge of $D$:
+%Now, suppose we have a non-detecting costabilizing web $W \in \WWW^\SSS(S) - \WWW_\DDD(S)$ on diagram $D$ consisting of Cliffords and Pauli measurements.
+%Let $L = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label in $W$ of the $j$th input edge of $D$:
+%
+%TODO diagram
+%
+%Without loss of generality, we can assume every operation in $D$ is implemented at a unique integer timestep $t$ starting at $0$.
+%For each $t \geq 0$, let $D_t$ and $W_t$ denote the diagram and web formed by truncating $D$ and $W$ right before time $t$.
+%Define $L_t = Z_1^{a_1'} X_1^{b_1'} \ldots Z_m^{a_m'} X_m^{b_m'}$, where $(a_j', b_j')$ is the label in $W_t$ of the $j$th output edge of $D_t$:
+%
+%TODO diagram
+%
+%So in particular $L = L_0$, and this is in a non-trivial coset of the logical Pauli group $\NNN(\SSS_{D_0})/\SSS_{D_0}$.
+%Let $T$ be the first timestep with the property that $L_{T+1}$ is a stabilizer of the truncated diagram, i.e.\ is in $\SSS_{D_{T+1}}$.
+%Then for all $t \geq T$, the web $W_t$ on $D_t$ is a non-trivial logical web \teague{TODO lemma}.
+%So by \Cref{prop:logical_webs_iso} $L_t$ must be a non-trivial logical operator at this point, and by \teague{TODO} the operation at time $T$ must measure out $L_t$.
+%Now, by induced homomorphism stuff from earlier, we can map $L_t$ back to $L_0$, and conclude that at the logical operator corresponding to $L_0$ at time $t=0$ has been measured out \teague{TODO flesh out, make rigorous!}
+%
+%\teague{Proof below spells things out because at time of writing it was coming before stuff about costabilizing webs above -- can move diagrams to costabilizing stuff and streamline below.}
+%For a detecting web $W$, the above strategy doesn't work because by definition the truncated web $W_t$ is always a stabilizer.
+%Instead, consider the final operation before the detecting web is `closed up' --
 
-TODO diagram
-
+Now, suppose we have a non-identity detecting web $W$.
 Without loss of generality, we can assume every operation in $D$ is implemented at a unique integer timestep $t$ starting at $0$.
 For each $t \geq 0$, let $D_t$ and $W_t$ denote the diagram and web formed by truncating $D$ and $W$ right before time $t$.
-Define $L_t = Z_1^{a_1'} X_1^{b_1'} \ldots Z_m^{a_m'} X_m^{b_m'}$, where $(a_j', b_j')$ is the label in $W_t$ of the $j$th output edge of $D_t$:
-
-TODO diagram
-
-So in particular $L = L_0$, and this is in a non-trivial coset of the logical Pauli group $\NNN(\SSS_{D_0})/\SSS_{D_0}$.
-Let $T$ be the first timestep with the property that $L_{T+1}$ is a stabilizer of the truncated diagram, i.e.\ is in $\SSS_{D_{T+1}}$.
-Then for all $t \geq T$, the web $W_t$ on $D_t$ is a non-trivial logical web \teague{TODO lemma}.
-So by \Cref{prop:logical_webs_iso} $L_t$ must be a non-trivial logical operator at this point, and by \teague{TODO} the operation at time $T$ must measure out $L_t$.
-Now, by induced homomorphism stuff from earlier, we can map $L_t$ back to $L_0$, and conclude that at the logical operator corresponding to $L_0$ at time $t=0$ has been measured out \teague{TODO flesh out, make rigorous!}
-
-\teague{Proof below spells things out because at time of writing it was coming before stuff about costabilizing webs above -- can move diagrams to costabilizing stuff and streamline below.}
-For a detecting web $W$, the above strategy doesn't work because by definition the truncated web $W_t$ is always a stabilizer.
-Instead, consider the final operation before the detecting web is `closed up' --
-that is, the operation occurring at the latest time step $t$ such that the truncated web $W_t$ would be a non-identity stabilizing web.
+Then consider the final operation before the detecting web is `closed up' -- that is, the operation occurring at the latest time step $T$ such that the truncated web $W_T$ would be a non-identity stabilizing web.
 Such an operation always exists.
 For example, suppose we have the following detecting web:
 \begin{equation}
     \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector}
 \end{equation}
-The latest operation with the property above is the second measurement of $Z_1 Z_2$ -- if we truncated $D$ right before this point, the truncated web $W_t$ on $D_t$ would be a non-identity stabilizer web:
+The latest operation with the property above is the second measurement of $Z_1 Z_2$ -- if we truncated $D$ right before this point, the truncated web $W_T$ on $D_T$ would be a non-identity stabilizer web:
 \begin{equation}
     \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector}
     \quad \xmapsto{\text{truncate}} \quad
     \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector_truncated}
 \end{equation}
-Since the restriction of the non-truncated web $W$ to this operation is a non-identity costabilizing web, this operation must be a measurement, by \Cref{lem:Clifford_unitary_no_stabilizing_web}.
-Therefore, by \Cref{lem:only_costabilizing_web_on_pauli_measurement}, the Pauli being measured must be $P = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label of output edge $j$ in the stabilizing web $W_t$.
-By \Cref{prop:stabilizer_webs_iso}, this $P$ is a stabilizer $S \in \SSS_{D_t}$ right before it gets measured.
+Since the restriction of the non-truncated web $W$ to this final operation is a non-identity costabilizing web, this operation must be a measurement, by \Cref{lem:Clifford_unitary_no_stabilizing_web}.
+Therefore, by \Cref{lem:only_costabilizing_web_on_pauli_measurement}, the Pauli being measured must be $P = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label of output edge $j$ in the stabilizing web $W_T$.
+By \Cref{prop:stabilizer_webs_iso}, this $P$ is a stabilizer $S \in \SSS_{D_T}$ right before it gets measured.
 Hence when it's measured its outcome should be deterministic, i.e.\ a detector is formed.
 
-\teague{Converse!?!}
-Hopefully one can see that the converse -- every measurement of a logical Pauli operator gives rise to a costabilizing web -- is also true, by basically the same reasoning.
-Indeed, we get a bijection.
+The converse is also true; every detector corresponds to a detecting web.
+To see this, let the measurement of $P_T$ at time $T$ be the final measurement in the detector.
+So right before $P_T$ is measured, $\pm P_T$ must be in the stabilizer group $\SSS_{D_T}$.
+Therefore by \Cref{prop:stabilizer_webs_iso} there's a stabilizing web $W_T$ that corresponds to this, in that the output legs are labelled $(a_j, b_j)$ such that $Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} = \pm P_T$.
+(In fact, there's an equivalence class $W_T \cdot \WWW_\DDD(D_T)$).
+And by \Cref{lem:only_costabilizing_web_on_pauli_measurement} there's a costabilizing web on the measurement of $P_T$ whose input legs are also labelled $(a_j, b_j)$ such that $Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} = \pm P_T$.
+The composition of these two webs then forms a detecting web.
 
-\begin{proposition}
-    For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW^\SSS(D)/\WWW_\DDD(D)$ of costabilizing webs modulo detectors is in bijection with the set of all non-trivial logical operators that are measured during the implementation of $D$.
+So we have an iff relation, and with a little more careful thinking about the equivalence class $W_T \cdot \WWW_\DDD(D_T)$ in the proof above, we in fact get a bijection, which we record as a proposition.
+
+\begin{proposition}\label{prop:detecting_webs_bijection}
+    For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\DDD(D)$ of detecting webs is in bijection with the set of all detectors in $D$.
 \end{proposition}
 
-\teague{No bijection for detecting webs and detectors?}
-
-\subsection{Detecting webs detect errors}
+\subsection{Detecting webs detect errors}\label{subsec:detecting_webs_detect_errors}
 
 We've shown that detecting webs correspond to detectors, and detectors detect errors, in that in the absence of errors the measurement outcomes that make up a detector have a deterministic product.
 So if this isn't the case, an error must have occurred.
@@ -556,59 +605,66 @@ We write $D^F$ to mean the diagram $D$ with the error $F$ applied to it -- for e
     D^F = \tikzfig{figures/qubits/prelims/pauli_webs/measure_ZZ_twice_1_outcomes_edges_labelled_error_applied}
 \end{equation}
 Likewise if $F$ is a Pauli operator on the half-edges of $D$, we can write $D^F$ for the diagram $D$ with this Pauli applied to these half-edges.
-We will also need to introduce the notion of \textit{firing} a set of generators according to a highlighting.
-\teague{Could have introduced firing at the start of this whole section! When defining Pauli webs, etc}
-Since the definition is going to be very wordy, but the actual concept is straightforward, we'll give an example now to guide the way.
-Suppose we have the following diagram:
-\begin{equation}
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_eg}
-\end{equation}
-Firing a generator according to a highlighting $H$ essentially means adding an $I$, $X$, $Y$ or $Z$ operator to the half-edge incident to it, depending on how that edge is highlighted.
-For example, on the left below, we fire both generators, while on the right, we fire just the rightmost one:
-\begin{equation}
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
-    \qqqqquad
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
-\end{equation}
-Now for the formal definition.
-Suppose $D$ is a ZX-diagram with generators $V$ and edges $E$, and $H$ is a highlighting $H \in \mathbb{Z}_2^{|E_{1/2}|}$.
-Recall generators are the red and green spiders, as well as the identity and swap map, which we can think of as having a dummy node in their center (\Cref{eq:qubit_generators_id_swap_explicit}).
-For any subset of generators $V'$, let $H|_{V'}$ be the restriction of the highlighting to all the half-edges incident to all generators in $V'$, and write this as $H|_{V'} = (a_{j_1}, b_{j_1}, \ldots, a_{j_m}, b_{j_m})$.
-Define the Pauli $P(H|_{V'}) \in \PPP_{|E_{1/2}|}$ on the half-edges of $D$ to be:
-\begin{equation}
-    P(H|_{V'}) = X_{j_1}^{a_{j_1}} Z_{j_1}^{b_{j_1}} \ldots X_{j_m}^{a_{j_m}} Z_{j_m}^{b_{j_m}}
-\end{equation}
+Note the similarity with the notation for firing spiders -- and for good reason.
+Given an error $F = X_1^{a_1}Z_1^{b_1} \ldots X_{|E_{1/2}|}^{a_{|E_{1/2}|}}Z_{|E_{1/2}|}^{b_{|E_{1/2}|}}$ on half-edges, consider the corresponding highlighting $H = (a_1, b_1, \ldots, a_{|E_{1/2}|}, b_{|E_{1/2}|})$.
+We have $D^F \propto D^H$; that is, up to global scalar, the diagram $D^F$ with error $F$ applied is equal to the result $D^H$ of firing all generators according to $H$.
+(The possible difference in global scalar comes from the fact that we defined a specific ordering of `inner' $X$ and `outer' $Z$ gates when firing generators).
 
-\begin{definition}\label{defn:firing_generators}
-    Let $D$ be a ZX-diagram with generators $V$ and edges $E$, and $H$ be a highlighting $H \in \mathbb{Z}_2^{|E_{1/2}|}$.
-    For any subset of generators $V' \subseteq V$, we define the diagram after firing generators $V'$ according to $W$ to be $D^{P(H|_{V'})}$, and will write it as $D^{H|_{V'}}$.
-\end{definition}
+%We will also need to introduce the notion of \textit{firing} a set of generators according to a highlighting.
+%\teague{Could have introduced firing at the start of this whole section! When defining Pauli webs, etc}
+%Since the definition is going to be very wordy, but the actual concept is straightforward, we'll give an example now to guide the way.
+%Suppose we have the following diagram:
+%\begin{equation}
+%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_eg}
+%\end{equation}
+%Firing a generator $f$ according to a highlighting $H$ essentially means adding $X$ gates around $f$ if its incident legs are highlighted red, and then $Z$ gates for incident legs highlighted green.
+%For example, on the left below, we fire both generators, while on the right, we fire just the rightmost one:
+%\begin{equation}
+%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
+%    \qqqqquad
+%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
+%\end{equation}
+%We choose the convention that $X$ gates are added first (they're the `inner gates') and then $Z$ gates (`outer gates') -- it isn't important which way round we choose this, just that we pick one option and stick with it.
+%Now for the formal definition.
 
-As warned, a horribly wordy definition for a simple concept.
-If we're firing all generators $V$, we don't need to write the restriction $H|_V$, because this is just $H$.
-We can rephrase the definition of a Pauli web on a single generator in terms of this `firing' language:
+%Now, suppose $D$ is a ZX-diagram with generators $V$ and edges $E$, and $H$ is a highlighting $H \in \mathbb{Z}_2^{|E_{1/2}|}$.
+%Recall generators are the red and green spiders, as well as the identity and swap map, which we can think of as having a dummy node in their center (\Cref{eq:qubit_generators_id_swap_explicit}).
+%For any subset of generators $V'$, let $H|_{V'}$ be the restriction of the highlighting to all the half-edges incident to all generators in $V'$, and write this as $H|_{V'} = (a_{j_1}, b_{j_1}, \ldots, a_{j_m}, b_{j_m})$.
+%Define the Pauli $P(H|_{V'}) \in \PPP_{|E_{1/2}|}$ on the half-edges of $D$ to be:
+%\begin{equation}
+%    P(H|_{V'}) = X_{j_1}^{a_{j_1}} Z_{j_1}^{b_{j_1}} \ldots X_{j_m}^{a_{j_m}} Z_{j_m}^{b_{j_m}}
+%\end{equation}
+%
+%\begin{definition}\label{defn:firing_generators}
+%    Let $D$ be a ZX-diagram with generators $V$ and edges $E$, and $H$ be a highlighting $H \in \mathbb{Z}_2^{|E_{1/2}|}$.
+%    For any subset of generators $V' \subseteq V$, we define the diagram after firing generators $V'$ according to $W$ to be $D^{P(H|_{V'})}$, and will write it as $D^{H|_{V'}}$.
+%\end{definition}
+%
+%As warned, a horribly wordy definition for a simple concept.
+%If we're firing all generators $V$, we don't need to write the restriction $H|_V$, because this is just $H$.
+%We can rephrase the definition of a Pauli web on a single generator in terms of this `firing' language:
 
-\begin{altdefinition}[\Cref{defn:pauli_web_single_generator}]
-    A highlighting $H$ on a generator $f$ is a Pauli web iff the result $f^{H}$ of firing $f$ according to $H$ is proportional to $f$ again.
-    That is, iff $f^{H} = \lambda_{H|_f} f$ for some non-zero $\lambda_{H|_f} \in \CC$.
-    \begin{equation}
-        \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator}
-        ~~
-        \begin{matrix}
-            \text{is a} \\
-            \text{Pauli} \\
-            \text{web} \\
-        \end{matrix}
-        %    \text{ is Pauli web $\iff$ }
-        ~~\iff~~
-        \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator_realised}
-        \propto
-        \tikzfig{qubits/prelims/pauli_webs/generator}
-    \end{equation}
-\end{altdefinition}
+%\begin{altdefinition}[\Cref{defn:pauli_web_single_generator}]
+%    A highlighting $H$ on a generator $f$ is a Pauli web iff the result $f^{H}$ of firing $f$ according to $H$ is proportional to $f$ again.
+%    That is, iff $f^{H} = \lambda_{H} f$ for some non-zero $\lambda_{H} \in \CC$.
+%    \begin{equation}
+%        \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator}
+%        ~~
+%        \begin{matrix}
+%            \text{is a} \\
+%            \text{Pauli} \\
+%            \text{web} \\
+%        \end{matrix}
+%        %    \text{ is Pauli web $\iff$ }
+%        ~~\iff~~
+%        \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator_realised}
+%        \propto
+%        \tikzfig{qubits/prelims/pauli_webs/generator}
+%    \end{equation}
+%\end{altdefinition}
 
 Suppose we now have a Pauli web $W$ on a general diagram $D$ with generators $V$.
-Using the above, and recalling (\Cref{defn:pauli_web_general}) that the restriction of $W$ to each generator $v \in V$ must be a Pauli web for that generator, we can see that the result $D^{H}$ of firing all generators according to $W$ is again proportional to $D$.
+Since by definition the restriction of $W$ to each generator $v \in V$ must be a Pauli web for that generator, we can see that the result $D^{H}$ of firing all generators according to $W$ is again proportional to $D$.
 That is, $D^{W} = \lambda_W D$ for non-zero $\lambda_W \coloneqq \prod_{v \in V} \lambda_{W|_v} \in \CC$.
 
 For the main result of this subsection, we will need a lemma concerning $\lambda_W$ for a detecting web $W$ on a non-zero diagram $D$.
@@ -629,15 +685,17 @@ Then we have:
         Starting from $D$, fire all generators according to $W$ to get $D^{W} = \lambda_W D$.
         Focusing on our internal edge, on the one hand we get:
         \begin{equation}
-            \tikzfig{qubits/prelims/pauli_webs/web_fg_fired}
-            \quad=\quad
-            \lambda_f \lambda_g \tikzfig{qubits/prelims/pauli_webs/web_fg_no_web}
+            \begin{aligned}
+                &\phantom{=}\quad \tikzfig{qubits/prelims/pauli_webs/web_fg_fired} \\
+                &=\quad \lambda_f \lambda_g \tikzfig{qubits/prelims/pauli_webs/web_fg_no_web}
+            \end{aligned}
         \end{equation}
         On the other hand the spiders along this internal edge must all cancel out:
         \begin{equation}
-            \tikzfig{qubits/prelims/pauli_webs/web_fg_fired}
-            \quad=\quad
-            \tikzfig{qubits/prelims/pauli_webs/web_fg_fired_internals_cancel}
+            \begin{aligned}
+                &\phantom{=}\quad \tikzfig{qubits/prelims/pauli_webs/web_fg_fired} \\
+                &=\quad \tikzfig{qubits/prelims/pauli_webs/web_fg_fired_internals_cancel}
+            \end{aligned}
         \end{equation}
         Since a detecting web exclusively highlights internal edges, \textit{all} the $\pi$-spiders introduced when firing all generators according to $W$ cancel out, leaving the original diagram $D$ again.
         So on the one hand we have $D^{W} = \lambda_W D$, while on the other we have $D^{W} = D$.
@@ -645,57 +703,105 @@ Then we have:
     \end{proof}
 \end{lemma}
 
-Finally, we can get to the good stuff.
-Reminder: we can always view a Pauli web $W$ on a diagram $D$ with edges $E$ as an element of $\mathbb{F}_2^{|E|}$ rather than the usual $\mathbb{F}_2^{2|E_{1/2}|}$, if we want -- this is fine because half-edges making up internal edges have identical labels.
-We take this approach in the next proposition.
-Also recall that if $D$ consists of Cliffords and Pauli measurements with outcomes $m_j$, and $D = 0$, then
+At the end of \Cref{subsec:pauli_webs_clifford_diagrams}, we explicitly wrote down the global phases we get from firing individual spiders.
+This gives us the following corollary.
 
-\begin{proposition}
-    \teague{Nicer notation for symplectic product? $\bsym{a} \odot \bsym{b}$?}
-    Let $D$ be a non-zero ZX-diagram consisting of Clifford and Pauli measurements.
-    Suppose it has generators $V$ and edges $E$, and let $W \in \mathbb{F}_2^{|E|}$ be a detecting web on $D$.
-    Consider an error $F = i^k X_1^{c_1} Z_1^{d_1} \ldots X_{|E|}^{c_{|E|}} Z_{|E|}^{d_{|E|}}$ on the edges of $D$.
-    Suppose $\sum_{j = 1}^{|E|} a_j d_j + b_j c_j = 1 \text{ mod } 2$, or equivalently suppose the Pauli $P = X_1^{a_1} Z_1^{b_1} \ldots X_{|E|}^{a_{|E|}} Z_{|E|}^{b_{|E|}}$ anti-commutes with $F$.
-    Then $D^F = 0$.
+\begin{corollary}\label{cor:firing-detector-web-exact-scalar}
+    Given diagram $D$ with generators $V$ and detecting web $W$.
+    Let $V_G$ be the subset of spiders that are green and have all legs highlighted red by $W$, and $V_R$ be red spiders with all legs highlighted green by $W$.
+    Then let $k_v\frac{\pi}{2}$ be the phase of each spider $v$ in $V_G \cup V_R$, and define $k_G = \sum_{v \in V_G} k_v$ and $k_R = \sum_{v \in V_R} k_v$.
+    The diagram $D$ is non-zero iff $(k_G - k_R)\frac{\pi}{2} \in 2\pi\mathbb{Z}$.
     \begin{proof}
-        Consider $D^F$.
-        Since it differs from $D$ only by the addition of two-legged $\pi$-spiders on certain edges and multiplication by a global scalar, the detecting web $W$ extends to a detecting web $W'$ on $D^F$.
-        \teague{Figure out whether I'll have already explained this or need to do it right before this proof.}
-        Now, we can fire all the generators of $D$ (not all those of $D^F$!);
-        The resulting diagram is denoted $(D^F)^{W'|_V}$, and satisfies $(D^F)^{W'|_V} = \lambda_{W'|_V} D^F$, where $\lambda_{W'|_V} \coloneqq \prod_{v \in V} \lambda_{W'|_v} = \prod_{v \in V} \lambda_{W|_v} \eqqcolon \lambda_W$.
-        But the lemma above guaranteed us $\lambda_W = 1$, so in fact $(D^F)^{W'|_V} = D^F$ on the nose.
-        On the other hand, after firing to get $(D^F)^{W'|_V}$, on each internal edge we will have $a_j\pi$- and $b_j\pi$-spiders resulting from the firing, sandwiched between $c_j\pi$- and $d_j\pi$-spiders resulting from applying $F$ to $D$:
-        \begin{equation}
-            \tikzfig{qubits/prelims/pauli_webs/web_fg_with_error_fired}
-        \end{equation}
-        We can (anti-)commute these past each other, cancelling out the spiders resulting from firing, and picking up a phase of $(-1)^{a_jd_j + b_jc_j}$:
-        \begin{equation}
-            \tikzfig{qubits/prelims/pauli_webs/web_fg_with_error_fired_internals_cancel}
-        \end{equation}
-        Since $W$ is a detecting web, only internal errors of $D$ are highlighted, so all $a_j\pi$- and $b_j\pi$-spiders cancel, leaving $D^F$ again but multiplied by the phase $(-1)^{\sum_{j = 1}^{|E|} a_j d_j + b_j c_j}$.
-        That is, we get $(D^F)^{W'|_V} = (-1)^{\sum_{j = 1}^{|E|} a_j d_j + b_j c_j} D^F$.
-        By assumption, this exponent of this global phase is odd, so the phase itself is $-1$.
-        Combining this with $(D^F)^{W'|_V} = D^F$, we get $D^F = - D^F$, which forces $D^F = 0$.
+        When fired according to $W$, each spider $v \in V_G$ contributes a scalar of $\lambda_v = e^{ik_v\frac{\pi}{2}}$, while each spider $v \in V_R$ contributes $\lambda_v = e^{-ik_v\frac{\pi}{2}}$.
+        So the overall phase $\lambda_W$ from firing all spiders according to $W$ is $\lambda_W = e^{i(k_G - k_R)\frac{\pi}{2}}$.
+        By \Cref{lem:firing_detector_web_propto}, $D$ is non-zero iff $\lambda_W = 1$, hence iff $(k_G - k_R)\frac{\pi}{2} \in 2\pi\mathbb{Z}$.
     \end{proof}
-\end{proposition}
+\end{corollary}
 
-So suppose $D$ is a circuit consisting of Cliffords and Pauli measurements $P_j$ with outcomes $m_j$.
-Recalling \Cref{lem:zero_diagram_born_rule}, $D^F = 0$ means that, regardless of the input state $\ket{\psi}$, the probability of the sequence $(m_j)_j$ of measurement outcomes occurring is zero.
-But of course we must get some outcome at each measurement, so at least one of the measurements has to end up being negated.
-Negating
-A bit more thought shows that those negated must be an odd number of the measurements $m_j$ whose corresponding $m_j^+ \pi$-labelled spider is incident to half-edges non-trivially highlighted by $W$.
-This is because negating such an edge means negating the scalar $\lambda_W$ that appears when firing generators $V$ according to $W$, which ultimately means we turn the equation $D^F = - D^F$ into $D^F = D^F$, avoiding implying $D^F = 0$.
-Conversely, negating any other $m_j$ (one whose corresponding $m_j^+ \pi$-labelled spider is incident to half-edges not highlighted by $W$) has no effect on $\lambda_W$, so we would still end up with $D^F = 0$.
+Suppose now $D$ consists of Clifford unitaries and Pauli measurements.
+We know there's a detector corresponding to $W$ (as per \Cref{prop:detecting_webs_bijection}).
+Using the corollary above, we have another way of seeing exactly what this detector is.
+A running example will be helpful here -- let's bring back our consecutive $Z_1Z_2$ measurements with detecting web $W$:
+\begin{equation}
+    \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector}
+\end{equation}
+The two red spiders labelled $a\pi$ and $b\pi$ have all legs highlighted green by $W$.
+There are no green spiders with all legs highlighted red by $W$.
+So the global scalar resulting from firing all spiders according to $W$ is $\lambda_W = e^{-i(a + b)\pi}$.
+This equals $1$ iff $a + b = 0 \bmod 2$.
+If it doesn't equal $1$, then by \Cref{lem:firing_detector_web_propto} the diagram $D$ is zero.
+In turn, \Cref{lem:zero_diagram_born_rule} then says this sequence of measurements has probability zero of occurring.
+In other words, we deterministically get $a + b = 0 \bmod 2$.
+For a general detecting web $W$ on a non-zero diagram $D$ consisting of Clifford unitaries and Pauli measurements with outcomes $m_j$, the corresponding detector is just exactly this condition on the $m_j$ terms given by \Cref{cor:firing-detector-web-exact-scalar}.
+(If we view outcomes as being in $\{-1, 1\}$, then the condition is on the product $m_1 \ldots m_d$ -- this must equal either $1$ or $-1$.)
 
-This gives two corollaries.
-First, we can see exactly which
+This corollary also tells us exactly which errors are detected by a detector!
+Suppose by the above we've found the condition on $m_1 \ldots m_d$ -- say it must equal $e = \pm 1$ in the absence of any errors.
+Now consider an error $F = i^k Z_1^{a_1}X_1^{b_1} \ldots Z_{|E|}^{a_{|E|}}X_{|E|}^{b_{|E|}}$ on the edges of $D$.
+Since we've defined errors to be Paulis, the detecting web $W$ on $D$ extends to a detecting web $W^F$ on $D^F$.
+\teague{Separate result for this somewhere!}
+Every $X_j^{b_j}$ spider in $D^F$ with both legs highlighted green by $W^F$ contributes a global scalar of $e^{ia_j\pi}$ when all spiders are fired according to $W^F$, as does every $Z_j^{a_j}$ spider with both legs highlighted red.
+So if there are an odd number of such spiders, the overall global phase becomes $-1$, the diagram becomes zero, and the specific sequence of measurements $m_1, \ldots, m_d$ has probability zero of occurring.
+Therefore the final measurement outcome $m_d$ will be negated, giving $m_1 \ldots m_d = -e$, alerting us to the fact that an error has occurred.
 
-
-
-
-
-
-
+For example, suppose the error $F = X_1$ occurs between our two consecutive $Z_1 Z_2$ measurements:
+\begin{equation}
+    \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector_error}
+\end{equation}
+The overall scalar from firing all spiders according to $W^F$ here is now $e^{-i(a + b + 1)\pi}$, so for this to be 1 we must have $a + b = 1 \bmod 2$.
+So this detector is violated by $F$.
+%
+%
+%Finally, we can get to the good stuff.
+%Reminder: we can always view a Pauli web $W$ on a diagram $D$ with edges $E$ as an element of $\mathbb{F}_2^{|E|}$ rather than the usual $\mathbb{F}_2^{2|E_{1/2}|}$, if we want -- this is fine because half-edges making up internal edges have identical labels.
+%We take this approach in the next proposition.
+%Also recall that if $D$ consists of Cliffords and Pauli measurements with outcomes $m_j$, and $D = 0$, then
+%
+%\begin{proposition}
+%    \teague{Nicer notation for symplectic product? $\bsym{a} \odot \bsym{b}$?}
+%    Let $D$ be a non-zero ZX-diagram consisting of Clifford and Pauli measurements.
+%    Suppose it has generators $V$ and edges $E$, and let $W \in \mathbb{F}_2^{|E|}$ be a detecting web on $D$.
+%    Consider an error $F = i^k X_1^{c_1} Z_1^{d_1} \ldots X_{|E|}^{c_{|E|}} Z_{|E|}^{d_{|E|}}$ on the edges of $D$.
+%    Suppose $\sum_{j = 1}^{|E|} a_j d_j + b_j c_j = 1 \text{ mod } 2$, or equivalently suppose the Pauli $P = X_1^{a_1} Z_1^{b_1} \ldots X_{|E|}^{a_{|E|}} Z_{|E|}^{b_{|E|}}$ anti-commutes with $F$.
+%    Then $D^F = 0$.
+%    \begin{proof}
+%        Consider $D^F$.
+%        Since it differs from $D$ only by the addition of two-legged $\pi$-spiders on certain edges and multiplication by a global scalar, the detecting web $W$ extends to a detecting web $W'$ on $D^F$.
+%        \teague{Figure out whether I'll have already explained this or need to do it right before this proof.}
+%        Now, we can fire all the generators of $D$ (not all those of $D^F$!).
+%        The resulting diagram is denoted $(D^F)^{W'|_V}$, and satisfies $(D^F)^{W'|_V} = \lambda_{W'|_V} D^F$, where $\lambda_{W'|_V} \coloneqq \prod_{v \in V} \lambda_{W'|_v} = \prod_{v \in V} \lambda_{W|_v} \eqqcolon \lambda_W$.
+%        But the lemma above guaranteed us $\lambda_W = 1$, so in fact $(D^F)^{W'|_V} = D^F$ on the nose.
+%        On the other hand, after firing to get $(D^F)^{W'|_V}$, on each internal edge we will have $a_j\pi$- and $b_j\pi$-spiders resulting from the firing, sandwiched between $c_j\pi$- and $d_j\pi$-spiders resulting from applying $F$ to $D$:
+%        \begin{equation}
+%            \tikzfig{qubits/prelims/pauli_webs/web_fg_with_error_fired}
+%        \end{equation}
+%        We can (anti-)commute these past each other, cancelling out the spiders resulting from firing, and picking up a phase of $(-1)^{a_jd_j + b_jc_j}$:
+%        \begin{equation}
+%            \tikzfig{qubits/prelims/pauli_webs/web_fg_with_error_fired_internals_cancel}
+%        \end{equation}
+%        Since $W$ is a detecting web, only internal errors of $D$ are highlighted, so all $a_j\pi$- and $b_j\pi$-spiders cancel, leaving $D^F$ again but multiplied by the phase $(-1)^{\sum_{j = 1}^{|E|} a_j d_j + b_j c_j}$.
+%        That is, we get $(D^F)^{W'|_V} = (-1)^{\sum_{j = 1}^{|E|} a_j d_j + b_j c_j} D^F$.
+%        By assumption, this exponent of this global phase is odd, so the phase itself is $-1$.
+%        Combining this with $(D^F)^{W'|_V} = D^F$, we get $D^F = - D^F$, which forces $D^F = 0$.
+%    \end{proof}
+%\end{proposition}
+%
+%So suppose $D$ is a circuit consisting of Cliffords and Pauli measurements $P_j$ with outcomes $m_j$.
+%Recalling \Cref{lem:zero_diagram_born_rule}, $D^F = 0$ means that, regardless of the input state $\ket{\psi}$, the probability of the sequence $(m_j)_j$ of measurement outcomes occurring is zero.
+%But of course we must get some outcome at each measurement, so at least one of the measurements has to end up being negated.
+%A bit more thought shows that those negated must be an odd number of the measurements $m_j$ whose corresponding $m_j^+ \pi$-labelled spider is incident to half-edges non-trivially highlighted by $W$.
+%This is because negating such an edge means negating the scalar $\lambda_W$ that appears when firing generators $V$ according to $W$, which ultimately means we turn the equation $D^F = - D^F$ into $D^F = D^F$, avoiding implying $D^F = 0$.
+%Conversely, negating any other $m_j$ (one whose corresponding $m_j^+ \pi$-labelled spider is incident to half-edges not highlighted by $W$) has no effect on $\lambda_W$, so we would still end up with $D^F = 0$.
+%In other words, the detector in bijection with the detecting web $W = (a_1, b_1, \ldots, a_{|E|}, b_{|E|})$ above detects the error $F = (c_1, d_1, \ldots, c_{|E|}, d_{|E|})$ iff $\tbinom{\bsym{a}}{\bsym{b}} \odot \tbinom{\bsym{c}}{\bsym{d}} = 1$.
+%
+%\begin{example}
+%
+%\end{example}
+%
+%
+%
+%
+%
 
 
 

@@ -74,7 +74,7 @@ if at time $t$ the operators $\dcccOp{E}{\kappa_t}{P_{t}}$ are measured,
 then at time $t+1$ we must choose a new set $\dcccOp{E}{\kappa_{t+1}}{P_{t+1}}$ of edges to measure,
 such that cell $(\kappa_{t+1}, P_{t+1})$ shares neither a row nor column with $(\kappa_t, P_t)$ in the boson table.
 Later, in \Cref{sec:gauge_dcccs}, we relax this restriction and investigate DCCCs with repeated measurements -- i.e. we allow $\dcccOp{E}{\kappa_{t+1}}{P_{t+1}} = \dcccOp{E}{\kappa_t}{P_t}$.
-But until then, the two DCCCs we will focus on are
+In the `unrepeated' regime, the two DCCCs we will focus on are
 the \textit{$X^1Y^1Z^1$ honeycomb code} and the \textit{$X^1Z^1$ honeycomb code}.
 These are defined by the operation sequences
 \begin{equation}\label{eq:honeycomb_codes_measurement_schedules}
@@ -94,7 +94,8 @@ These are defined by the operation sequences
     \right).
 \end{aligned}
 \end{equation}
-This chapter is concerned with the properties of these two codes and their performances under different noise models and decoders.
+Once we allow repeated measurements in \Cref{sec:gauge_dcccs}, we will extend our focus to the more general \textit{$X^aY^bZ^c$ honeycomb code} and the \textit{$X^aZ^b$ honeycomb code}, in which each round of measurements are repeated $a$, $b$ or $c$ times respectively.
+This whole chapter is concerned with the properties of these two families of codes and their performances under different noise models and decoders.
 
 \begin{figure}[tbp]
     \centering
@@ -342,3 +343,26 @@ Finally, the fault distances can be further divided into a spacelike $E$ and $M$
 As stated throughout this section, in this work we only consider DCCCs on a torus. Primarily, this is to make comparisons between different measurement schedules fair, since there are no boundaries at which they might behave differently. Helpfully, it also makes our analysis a great deal simpler. On the other hand, if one is ultimately interested in planar codes (e.g.\ because of hardware constraints) one might very reasonably question to what extent a code's performance in the toric setting is a good proxy for its performance in the planar setting.
 
 First, we note that a general theory of boundaries for DCCCs is given in \Ccite[Section 7.3]{kesselring2022anyon}, so every DCCC can indeed be made planar. Furthermore, for the $X^1 Y^1 Z^1$ and $X^1 Z^1$ codes that we focus on in this work, specific boundaries are defined in \Ccite{gidney2022benchmarking} and \Ccite{kesselring2022anyon} respectively. In the former work, it's shown numerically that the planar $X^1 Y^1 Z^1$ code performs essentially as well as the toric version. In the latter work, no numerical results were given, but the detectors at the boundary were fully worked out and depicted. Since these follow exactly the same pattern as the detectors in the bulk, we again anticipate that performance of this planar $X^1 Z^1$ code would essentially mirror that of its toric counterpart, but have not verified this.
+
+\subsection{Teraquop volume}
+
+The key metric we use to evaluate performance throughout this work is the \textit{teraquop volume}.
+It is the natural generalisation of the \emph{teraquop footprint} \cite{gidney2021fault} from a `space only' picture to a `full spacetime' picture.
+
+\begin{definition}
+    Consider a family (set) of circuits whose $j$-th member is defined on $n_j$ qubits and runs for an amount of time $T_j$.
+    Given a noise model and a decoder,
+    the \textbf{teraquop volume} is the smallest volume $n_j T_j$ such that the probability of any spacelike and timelike logical error in the $j$-th circuit is $10^{-12}$.
+\end{definition}
+
+For a given circuit, noise model and decoder, the \emph{overall logical error rate} is the probability of any logical error -- whether spacelike or timelike -- occurring after the decoder has been run and its suggested corrections applied.
+In practice, an approximation of this value will be found numerically.
+If there is no $(n_j, T_j)$ such that the overall logical error rate is less than $10^{-12}$,
+then we say the teraquop volume is infinite.
+
+In the rest of this work we describe a DCCC with $n_M$ rows and $n_E$ columns of hexagons implemented for $h$ rounds of measurements as an \textit{$(n_M, n_E, h)$-block} of this DCCC.
+(These rows are admittedly quite wonky -- for reference, in \Cref{fig:edge_and_face_operator} we showed a DCCC with $n_M = 3$ rows of and $n_E = 4$ columns.)
+We say it has \textit{block height} $h$, \textit{block width} $n_E$ and \textit{block depth} $n_M$.
+Then we'll write $\tilde{n}_M$, $\tilde{n}_E$, $\tilde{h}_M$, and $\tilde{h}_E$ for the minimum values of $n_M$, $n_E$, $h_M$, and $h_E$ such that the corresponding logical error rates are below $10^{-12}$.
+An $(\tilde{n}_M, \tilde{n}_E, \tilde{h})$-block will be referred to as a \textit{teraquop block},
+with \textit{teraquop height} $\tilde{h} = (\tilde{h}_E + \tilde{h}_M)/2$, and so on.
