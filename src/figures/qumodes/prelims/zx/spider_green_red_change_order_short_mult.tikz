@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (-3.5, 1) {$f$};
+		\node [style={rn_phase}] (1) at (-2, -1) {$g$};
+		\node [style=none] (2) at (-4.5, 1.5) {};
+		\node [style=none] (3) at (-4.5, 0.5) {};
+		\node [style=none] (4) at (-4.5, -0.5) {};
+		\node [style=none] (5) at (-4.5, -1.5) {};
+		\node [style=none] (6) at (-1, 1.5) {};
+		\node [style=none] (7) at (-1, 0.5) {};
+		\node [style=none] (8) at (-1, -0.5) {};
+		\node [style=none] (9) at (-1, -1.5) {};
+		\node [style=none] (10) at (-1.25, 1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (11) at (-1.25, -1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (12) at (-4.25, -1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (13) at (-4.25, 1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style={gn_phase}] (87) at (3.5, 1) {$f$};
+		\node [style={rn_phase}] (88) at (2, -1) {$g$};
+		\node [style=none] (89) at (1, 1.5) {};
+		\node [style=none] (90) at (1, 0.5) {};
+		\node [style=none] (91) at (1, -0.5) {};
+		\node [style=none] (92) at (1, -1.5) {};
+		\node [style=none] (93) at (4.5, 1.5) {};
+		\node [style=none] (94) at (4.5, 0.5) {};
+		\node [style=none] (95) at (4.25, -0.5) {};
+		\node [style=none] (96) at (4.25, -1.5) {};
+		\node [style=none] (97) at (4.25, 1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (98) at (4, -1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (99) at (1.25, -1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (100) at (1.25, 1) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (101) at (0, 0) {$=$};
+		\node [style=NEmat] (102) at (2.75, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (1);
+		\draw [in=360, out=135] (0) to (2.center);
+		\draw [in=-135, out=0] (3.center) to (0);
+		\draw [in=150, out=0] (4.center) to (1);
+		\draw [in=210, out=0] (5.center) to (1);
+		\draw [in=180, out=30] (0) to (6.center);
+		\draw [in=180, out=-30] (0) to (7.center);
+		\draw [in=180, out=45] (1) to (8.center);
+		\draw [in=180, out=-45] (1) to (9.center);
+		\draw [in=0, out=150] (87) to (89.center);
+		\draw [in=-150, out=0] (90.center) to (87);
+		\draw [in=135, out=0] (91.center) to (88);
+		\draw [in=-135, out=0] (92.center) to (88);
+		\draw [in=180, out=45] (87) to (93.center);
+		\draw [in=180, out=-45] (87) to (94.center);
+		\draw [in=180, out=30] (88) to (95.center);
+		\draw [in=180, out=-30] (88) to (96.center);
+		\draw (88) to (87);
+	\end{pgfonlayer}
+\end{tikzpicture}

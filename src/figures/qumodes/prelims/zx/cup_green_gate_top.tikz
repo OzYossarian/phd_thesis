@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-0.5, 0) {};
+		\node [style=none] (2) at (1, -1) {};
+		\node [style=none] (4) at (2, -1) {};
+		\node [style=none] (5) at (2, 1) {};
+		\node [style=squareNE] (6) at (1, 1) {$D$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=180, out=-75] (0) to (2.center);
+		\draw (2.center) to (4.center);
+		\draw [in=180, out=75] (0) to (6);
+		\draw (6) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

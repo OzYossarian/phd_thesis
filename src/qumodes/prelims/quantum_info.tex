@@ -5,7 +5,7 @@ and $n$-qudit states are equivalence classes of vectors in this space.
 In the continuous-variable setting, just to get as far as saying what a state is takes us on a bit of a journey.
 We'll give a whistle-stop tour here, but since the technical details won't be relevant for this thesis, we'll skip all the scary bits.
 
-\subsection{The Hilbert space $\mathcal{L}^2(\mathbb{R}^n)$}
+\subsection{The Hilbert space $\mathcal{L}^2(\mathbb{R}^n)$}\label{subsec:hilbert_space}
 
 The continuous-variable analogue of a qudit is called a \textit{qumode}.
 Throughout, we reserve the right to get sloppy and just call these \textit{modes}.
@@ -13,14 +13,25 @@ To define $n$-qumode states, we start with a particular infinite-dimensional com
 Elements of this space are equivalence classes of certain functions $\mathbb{R}^n \to \mathbb{C}$.
 These functions $f$ must be absolutely square-integrable, i.e.\ $\int_{\mathbb{R}^n} dx |f(x)|^2$ must converge.
 Strictly speaking, the integral here is the Lebesgue integral rather than the Riemann integral, but this is the first of many technicalities we'll sweep under the carpet.
-The equivalence relation is that $f \sim g \iff f - g$ is a null function, where again we won't define null functions -- for us it'll be fine to forget elements are equivalence classes, and just view them as functions.
+The equivalence relation is that $f \sim g \iff f - g$ is a \textit{null function}, i.e.\ $\int |f - g| = 0$.
+But it will almost always be fine to forget elements are equivalence classes, and just view them as functions.
+An example function (in fact, a \textit{coherent state}, as we'll see shortly) is:
+\begin{equation}\label{eq:coherent_state}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/coherent_state}
+\end{equation}
 
 This space comes with an inner product $\langle f, g \rangle = \int_{\mathbb{R}^n} d\boldsymbol{x} \overline{f(\boldsymbol{x})} g(\boldsymbol{x})$, where the overline denotes complex conjugation.
 A \textit{Hilbert space} is defined to be a \textit{complete} inner product space.
 It won't be relevant for us to say what this means; all we'll note is that $\mathcal{L}^2(\mathbb{R}^n)$ with the inner product above is indeed complete, so is a Hilbert space.
 Furthermore, one can define a \textit{topology} on this space; this is yet another detail we won't go into, but it makes it a \textit{topological vector space}, which lets us talk about notions like \textit{continuity} in the coming subsections.
 
-\teague{Something about this space being decomposable into tensor products of $\LLL^2(\RR)$}
+Just as $n$-qudit states live in $\mathbb{C}^{d^n} \cong \mathbb{C}^d \otimes \ldots \otimes \mathbb{C}^d$, we have $\mathcal{L}^2(\mathbb{R}^n) \cong \mathcal{L}^2(\mathbb{R}) \otimes \ldots \otimes \mathcal{L}^2(\mathbb{R})$.
+That is, the $n$-qumode Hilbert space is isomorphic to the $n$-fold tensor product of single-qumode Hilbert spaces.
+Formally, the isomorphism is defined on simple tensors by:
+\begin{equation}
+    (f_1 \otimes \ldots \otimes f_n)(x_1,\dots,x_n) \coloneqq f_1(x_1)\ldots f_n(x_n) \text{ for $f_i \in L^2(\mathbb{R})$}
+\end{equation}
+This identifies simple tensors with separable functions, and the resulting map extends by linearity and continuity to a unitary isomorphism $L^2(\mathbb{R})^{\otimes n} \cong L^2(\mathbb{R}^n)$.
 
 \subsection{Schwartz space and rigged Hilbert spaces}
 
@@ -41,7 +52,7 @@ These form two chains of relations:
 \end{equation}
 We can squish all this into one diagram, and combine this with the fact that the continuous dual and conjugate-dual of Schwartz space are isomorphic:
 \begin{equation}\label{eq:rigged_spaces_combined}
-TODO
+    \tikzfig{qumodes/prelims/quantum_info/rigged_hilbert_spaces}
 \end{equation}
 Specifically, the isomorphism $\Phi^* \cong \Phi^\times$ can be written $F \mapsto \overline{F}$, where $\overline{F}(\psi) \coloneqq \overline{F(\psi)}$.
 
@@ -50,7 +61,8 @@ Specifically, the isomorphism $\Phi^* \cong \Phi^\times$ can be written $F \maps
 With that, we're done; we can now define pure qumode states.
 We'll divide these into two classes; \textit{physical} and \textit{generalised}.
 Physical pure $n$-qumode states are equivalence classes of vectors in the Hilbert space $\mathcal{H} = \mathcal{L}^2(\mathbb{R}^n)$, where the equivalence relation is $f \sim g \iff f = \lambda g$ for some non-zero $\lambda \in \mathbb{C}$.
-Generalised states are elements of $\Phi^\times$, i.e.\ continuous conjugate-linear functionals on Schwartz space.
+Generalised states are equivalence classes in $\Phi^\times$, the space of continuous conjugate-linear functionals on Schwartz space.
+The equivalence relation is the same as for physical states: $F \sim G \iff F = \lambda G$ for some non-zero $\lambda \in \mathbb{C}$.
 So by \Cref{eq:rigged_spaces_separate}, physical states are a subspace of the generalised states, up to isomorphism.
 Indeed, given physical state $f \in \mathcal{H}$, we can identify it with the functional:
 \begin{equation}
@@ -68,32 +80,35 @@ This possibly looks quite weird if you're only used to finite-dimensional braket
 A bra $\bra{\psi}$ can then be defined to be the conjugate $\overline{\ket{\psi}}$.
 That is, we define $\bra{\psi}(\phi) = \overline{\ket{\psi}}(\phi) = \overline{\ket{\psi}(\phi)}$.
 The problems start when we want to define \textit{ketbras} $\ketbra{\psi}{\phi}$ and \textit{brakets} $\braket{\psi | \phi}$.
-In analogy with the finite-dimensional case, we'd probably want $\ketbra{\psi}{\phi}$ to be something that maps a state to a state, and $\braket{\psi | \phi}$ to be a complex number.
-We can achieve the former by defining $(\ketbra{\psi}{\phi})(\ket{\theta}) = \ket{\psi}\braket{\phi|\theta}$, so now if we can just find a way to interpret $\braket{\phi|\theta}$ as a complex number we're done.
+In analogy with the finite-dimensional case, we'd perhaps want $\ketbra{\psi}{\phi}$ to be something that maps a state to a state, and $\braket{\psi | \phi}$ to be a complex number.
+Unfortunately, this isn't in general possible (or if it is, I can't find any references for it!).
+It's not even the case that we can say what type of object a ketbra or braket is in general.
 
-Unfortunately, this isn't possible in full generality (or if it is, I can't find any references for it!).
-But it is at least possible in all the cases we'll care about in this thesis.
+We can, however, muddle onwards in many cases.
 Firstly, note that since $\Phi^* \cong \Phi^\times$ under the map $\ket{\psi} \mapsto \overline{\ket{\psi}} = \bra{\psi}$, we can freely identify bras and kets.
 Also, we'll identify $\Phi$ and $\mathcal{H}$ with their copies in $\Phi^*$ and $\Phi^\times$ as in \Cref{eq:rigged_spaces_combined}.
 So, when both $\ket{\psi} = f$ and $\ket{\phi} = g$ are in fact in the Hilbert space $\mathcal{H}$, then as in the finite-dimensional case we can define $\braket{\psi|\phi}$ to be the inner product $\langle \ket{\psi}, \ket{\phi} \rangle = \langle f, g \rangle = \int_{\mathbb{R}^n} d\boldsymbol{x} \overline{f(\boldsymbol{x})} g(\boldsymbol{x})$.
 Next, when one of the two $\ket{\psi} = F$ is in $\Phi^* - \mathcal{H}^*$ but the other one $\ket{\phi} = \phi$ is strictly in $\Phi$, then we can define $\braket{\psi|\phi}$ to be the application of functional $\ket{\psi} = F$ to the Schwartz function $\ket{\phi} = \phi$; that is, $\braket{\psi|\phi} = \ket{\psi}(\ket{\phi}) = F(\phi)$.
 If instead both $\ket{\psi}$ and $\ket{\phi}$ are in $\Phi^* - \mathcal{H}^*$, then unless we know something more about exactly what states $\ket{\psi}$ and $\ket{\phi}$ are, we're stuck.
 We'll see examples of how to proceed in certain scenarios in the next subsections.
+But one can absolutely be forgiven for wondering whether the braket notation is more of a hindrance than a help in infinite dimensions.
 %For example, in the next subsection, we'll see how to proceed when $\ket{\psi}$ and $\ket{\phi}$ are \textit{generalised eigenstates} of the \textit{position and momentum operators}.
 
 \subsection{Evolution}\label{subsec:qumode_evolution}
 
 In the qubit case, we said pure states evolve via unitaries and measurements.
 That's basically exactly the same here.
-Indeed, physical states in $\HHH = \LLL^2{\RR^n}$ evolve under unitaries $\HHH \to \HHH$.
-It's not entirely clear what it means for generalised states in $\Phi^\times$ to evolve -- evolution is about what physical processes can happen to states, and generalised states aren't `physical' in the first place.
-Some sources declare that these states evolve under continuous linear maps $\Phi^\times \to \Phi^\times$, where as usual we won't go into what it means to be continuous.
-What we will state is that any continuous linear map $\hat{f}: \HHH \to \HHH$ can be extended to one $\Phi^\times \to \Phi^\times$: for any $\ket{\psi} \in \Phi^\times$, define $\hat{f}(\ket{\psi})$ to be the functional that maps $\ket{\phi} \in \Phi$ to $\ket{\psi}(\hat{f}\ket{\phi})$.
+Indeed, physical states in $\HHH = \LLL^2(\RR^n)$ evolve under unitaries $\HHH \to \HHH$.
+One might assume that generalised states in $\Phi^\times$ evolve under unitaries $\Phi^\times \to \Phi^\times$, but the space $\Phi^\times$ isn't a Hilbert space so it doesn't make sense to talk about unitaries on it.
+Indeed, it's not entirely clear to me what it means for generalised states in $\Phi^\times$ to evolve -- evolution is about what physical processes can happen to states, and generalised states aren't `physical' in the first place.
+What we will state is that any continuous linear map $U: \HHH \to \HHH$ can be extended to one $\Phi^\times \to \Phi^\times$.
+This works as follows: for any $\ket{\psi} \in \Phi^\times$, define $U(\ket{\psi})$ to be the functional that maps $\ket{\phi} \in \Phi$ to $\ket{\psi}(U\ket{\phi})$.
 
-\teague{Define measurements}
+To rigorously define measurements in full generality (i.e.\ for generalised states), we'd have to introduce a bunch of measure-theoretic language which I don't personally understand.
+So instead, we'll just give examples of specific measurements as we need them later.
 
-We'll also note that in the same way that the pure state qubit ZX-calculus wasn't restricted to representing unitaries and measurements, nor will the pure state Focked up ZX-calculus be.
-So as in the qubit case, it won't be true that all ZX-diagrams correspond to physical processes that can be deterministically implemented.
+%We'll also note that in the same way that the pure state qubit ZX-calculus wasn't restricted to representing unitaries and measurements, nor will the pure state Focked up ZX-calculus be.
+%So as in the qubit case, it won't be true that all ZX-diagrams correspond to physical processes that can be deterministically implemented.
 
 \subsection{Fock states}
 
@@ -102,14 +117,18 @@ These are single-qumode states, and are not only physical (they're in $\HHH = \L
 We'll first just state the definition (which is pretty horrible looking) and then break it down.
 For all $n \in \NN_0 = \{0, 1, \ldots\}$, we have:
 \begin{equation}\label{eq:fock_state_defn}
-    \ket{n}_F = \frac{1}{\sqrt{2^n n!}} \frac{1}{\pi^{1/4}} H_n(\frac{x}{\sqrt{2}}) e^{\frac{-x^2}{4}}
+%    \ket{n}_F = \frac{1}{\sqrt{2^n n!}} \frac{1}{\pi^{1/4}} H_n(\frac{x}{\sqrt{2}}) e^{\frac{-x^2}{4}}
+    \ket{n}_F = \frac{1}{\sqrt{2^n n!}\sqrt{\pi}} H_n(\sqrt{\pi} x) e^{-\pi x^2 / 2}
 \end{equation}
-The easy bit is $1/\sqrt{2^n n!} \cdot \pi^{1/4}$; this is just a real number, which gets (exponentially!) smaller as $n$ gets bigger.
-Then we have $e^{-x^2/4}$ at the end -- this is sometimes called \textit{a Gaussian envelope}.
+The easy bit is $1/\sqrt{2^n n!}\sqrt{\pi}$; this is just a normalisation factor, which gets (exponentially!) smaller as $n$ gets bigger.
+Then we have $e^{-\pi x^2 / 2}$ at the end -- this is sometimes called \textit{a Gaussian envelope}.
 We can draw its graph:
-\teague{TODO}
-Finally, we have $H_n(\frac{x}{\sqrt{2}})$.
-The $\frac{1}{\sqrt{2}}$ is just a rescaling of the interesting part $H_n(x)$, the $n$th Hermite polynomial.
+\begin{equation}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/gaussian_envelope}
+\end{equation}
+
+Finally, we have $H_n(\sqrt{\pi} x)$.
+The $\sqrt{\pi}$ is just a rescaling of the interesting part $H_n(x)$, the $n$th Hermite polynomial.
 These are defined recursively:
 \begin{equation}\label{eq:hermite_polynomial_defn}
     \begin{aligned}
@@ -120,12 +139,19 @@ These are defined recursively:
 \end{equation}
 As far as this thesis is concerned, I reckon the only thing you need to know about these (if anything!) is that $H_n$ is a degree $n$ polynomial.
 Graphed, these look like:
+\begin{equation}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/hermite_polynomials}
+\end{equation}
 
-So altogether, the Fock state $\ket{n}_F$ is essentially a degree $n$ polynomial $\mathbb{R} \to \mathbb{C}$, multiplied by a Gaussian envelope so that it flattens and decays to $0$ sufficiently quickly as $x$ tends to infinity, and multiplied by a prefactor so that TODO!
+So altogether, the Fock state $\ket{n}_F$ is essentially a degree $n$ polynomial $\mathbb{R} \to \mathbb{C}$, multiplied by a Gaussian envelope so that it flattens and decays to $0$ sufficiently quickly as $x$ tends to infinity, and multiplied by a prefactor so that it's normalised.
 It's also smooth (infinitely differentiable).
 Hence it's an element of not just the Hilbert space $\HHH = \LLL^2(\mathbb{R})$ but Schwartz space $\Phi \leq \HHH$.
 Furthermore, it can be shown the Fock states form a basis for $\HHH$.
 Hence we call $\{\ket{n}_F : n \in \NN_0\}$ the \textit{Fock basis}.
+Graphed, the Fock states look like this:
+\begin{equation}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/fock_states}
+\end{equation}
 
 \subsection{Fourier transform}
 
@@ -140,11 +166,11 @@ Then the inverse Fourier transform is:
 \end{equation}
 In the single-qumode case $n = 1$, it can be shown that the eigendecomposition of $\mathcal{F}$ in the Fock basis is:
 \begin{equation}
-    \mathcal{F} = \sum_{n \in \NN_0} i^n \ket{n}_F \bra{n}_F
+    \mathcal{F} = \sum_{n \in \NN_0} (-i)^n \ket{n}_F \bra{n}_F
 \end{equation}
 And the inverse Fourier transform has eigendecomposition:
 \begin{equation}
-    \mathcal{F}^{-1} = \sum_{n \in \NN_0} (-i)^n \ket{n}_F \bra{n}_F
+    \mathcal{F}^{-1} = \sum_{n \in \NN_0} i^n \ket{n}_F \bra{n}_F
 \end{equation}
 In the next chapter, we will make heavy reference to the function $\chi_a(x) \coloneqq e^{-i2\pi ax} : \mathbb{R} \to \mathbb{C}$, which winds around the real axis with a period of $1/a$.
 This function, and its conjugation $\overline{\chi}_a(x) \coloneqq e^{i2\pi ax}$, satisfy the following two equations involving the Fourier transform:
@@ -160,48 +186,120 @@ The next set of states we'll meet are the position and momentum eigenstates.
 Unlike Fock states, these are not physical -- they're generalised states, i.e.\ continuous linear functionals $\Phi \to \CC$.
 Indeed, they're generalised \textit{eigen}states.
 An eigenvector of an operator $f: \Phi \to \Phi$ on Schwartz space with eigenvalue $\lambda \in \CC$ would be a function $\psi \in \Phi$ such that $f(\psi) = \lambda \psi$.
-\teague{Is it really $\lambda \in \CC$? Or just in $\RR$?}
 A \textit{(continuous) generalised eigenvector} of $f$ with eigenvalue $\lambda \in \CC$ is instead an element $F$ of the continuous dual space $\Phi^*$ such that $F(f(-)) = \lambda F(-)$.
 That is, for all $\psi \in \Phi$, we must have $F(f(\psi)) = \lambda F(\psi)$.
 
 So to define the position and momentum eigenstates, we must first define position and momentum operators.
-These are operators on Schwartz space; they map functions in $\Phi$ to new functions in $\Phi$.
-The position operator $\hat{q}$ is defined as $\hat{q}(\psi(x)) = x\psi(x)$.
-The momentum operator $\hat{p}$ is defined as $\hat{p}(\psi(x)) = \frac{-i}{2\pi} \frac{d}{dx} \psi(x)$.
-Note this is well-defined; Schwartz space operators are infinitely differentiable so $\frac{d}{dx} \psi(x)$ exists.
+These are operators $\hat{q}$ and $\hat{p}$ respectively on Schwartz space; they map functions in $\Phi$ to new functions in $\Phi$.
+We'll define them as:
+\begin{equation}
+    \begin{aligned}
+        \hat{q}(\psi(x)) &= x\psi(x) \\
+        \hat{p}(\psi(x)) &= \frac{-i}{2\pi} \frac{d}{dx} \psi(x)
+    \end{aligned}
+\end{equation}
+Note the latter is well-defined; Schwartz space operators are infinitely differentiable so $\frac{d}{dx} \psi(x)$ exists.
 If you're new to CV quantum information, you might be wondering if it's annoying that the letter $p$ is used not for position but momentum -- you would be correct, I reckon.
 
+All eigenvalues of generalised eigenvectors of the position and momentum operators are real.
 A generalised eigenvector with eigenvalue $q \in \RR$ of the position operator $\hat{q}(\psi(x)) = x\psi(x)$ is a continuous linear functional $Q_q$ satisfying $Q_q(x(\psi(x))) = q Q_q(\psi(x))$.
-The unique functional satisfying this condition is $Q_q(\phi(x)) = \phi(q)$, i.e.\ evaluation at $q$, since then $Q_q(x(\psi(x))) = q\psi(q) = q Q_q(\psi(x))$.
+The unique functional satisfying this condition is:
+\begin{equation}\label{eq:position_eigenstate}
+    Q_q(\psi(x)) = \psi(q)
+\end{equation}
+That is, $Q_q$ is just evaluation at $q$, since then $Q_q(x(\psi(x))) = q\psi(q) = q Q_q(\psi(x))$ as required.
 This functional is often called the \textit{Dirac distribution} and is denoted $\delta_q$.
+It's often informally pictured as the limit of the following Gaussian curve as $\epsilon \to 0^+$, i.e.\ as it gets narrower and taller:
+\begin{equation}
+    \delta_{q,\epsilon}(x) = (2\pi\epsilon)^{-1/2} e^{-(x-q)^2/(2\epsilon)}
+\end{equation}
+The reason for this association is that the integral $\int_\RR dx\ \psi(x) \delta_{q,\epsilon}(x)$ approaches $\psi(q)$ as $\epsilon \to 0^+$.
+\begin{equation}\label{eq:dirac_distribution_as_real_function}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/dirac_distribution_as_gaussian}
+\end{equation}
+
 Similarly, a generalised eigenvector with eigenvalue $p \in \RR$ of the momentum operator $\hat{p}(\psi(x)) = \frac{-i}{2\pi} \frac{d}{dx} \psi(x)$ is a continuous linear functional $P_p$ satisfying $P_p(\frac{-i}{2\pi} \frac{d}{dx} \psi(x)) = p P_p(\psi(x))$.
-The unique such functional is $P_p(\phi(x)) = ?$, since then $P_p(\frac{-i}{2\pi} \frac{d}{dx} \psi(x)) = ? = p P_p(\psi(x))$.
+The unique such functional is:
+\begin{equation}\label{eq:momentum_eigenstate}
+    P_p(\psi(x)) = \int dx\ e^{-i 2 \pi p x} \psi(x) = \mathcal{F}(\psi(x))(p)
+\end{equation}
+That is, $P_p$ is just evaluation at $p$ after applying the Fourier transform, since then $P_p(\frac{-i}{2\pi} \frac{d}{dx} \psi(x)) = p \int dx\ e^{-i 2 \pi p x} \psi(x) = p P_p(\psi(x))$ as required.
 In braket notation, we write position eigenstates $Q_q$ as $\ket{q}_Q$ and momentum eigenstates $P_p$ as $\ket{p}_P$.
-We can once again show that they are bases for the space of all continuous linear functionals $\Phi^*$, so we refer to $\{\ket{q}_Q : q \in \mathbb{R}\}$ and $\{\ket{p}_P : p \in \mathbb{R}\}$ as the position and momentum bases respectively.
-\teague{TODO verify everything!}
+It can be shown that these are bases for $\HHH$ viewed as a subspace of $\Phi^\times$ as in \Cref{eq:rigged_spaces_combined}.
+So we refer to $\{\ket{q}_Q : q \in \mathbb{R}\}$ and $\{\ket{p}_P : p \in \mathbb{R}\}$ as the position and momentum bases respectively.
 
 In the qubit case, the $X$ and $Z$ operators were related by conjugation by the Hadamard; $HXH^\dagger = Z$ and $HZH^\dagger = X$.
 We will not prove it, but we have an analogous relationship here between the position and momentum operators via the Fourier transform;
-namely, we have $\FFF \hat{q} \FFF^{-1} = -\hat{p}$ and $\FFF \hat{p} \FFF^{-1} = \hat{q}$.
-This extends to the eigenstates too; since $\mathcal{F}$ is a continuous operator on $\Phi$, it can be extended to a continuous operator on $\Phi^\times$ as in \Cref{subsec:qumode_evolution}, and we get $\mathcal{F}\ket{q}_Q = \ket{q}_P$ and $\mathcal{F}\ket{p}_P = \ket{-p}_Q$. \teague{verify!!!}
-
-\teague{Related by the Fourier transform}
+namely, we have:
+\begin{equation}
+    \FFF \hat{q} \FFF^{-1} = -\hat{p}
+    \qqquad
+    \FFF \hat{p} \FFF^{-1} = \hat{q}
+\end{equation}
+This extends to the eigenstates too; since $\mathcal{F}$ is a continuous operator on $\Phi$, it can be extended to a continuous operator on $\Phi^\times$ as in \Cref{subsec:qumode_evolution}, and we get:
+\begin{equation}
+    \mathcal{F}\ket{q}_Q = \ket{-q}_P
+    \qqquad
+    \mathcal{F}\ket{p}_P = \ket{p}_Q
+\end{equation}
+Furthermore, these operators and eigenstates satisfy a spectral theorem.
+For functions $f$ satisfying certain conditions (which we sweep under the carpet), we can write:
+\begin{equation}\label{eq:position_momentum_spectral_theorem}
+    \begin{aligned}
+        f(\hat{q}) &= \int_{\mathbb{R}} dq\ f(q) \ket{q}_Q \bra{q}_Q \\
+        f(\hat{p}) &= \int_{\mathbb{R}} dp\ f(p) \ket{p}_P \bra{p}_P
+    \end{aligned}
+\end{equation}
 
 \subsection{Fock, position and momentum: brakets}
 
-In \Cref{subsec:braket_notation}, we said bras were just conjugates of kets, and ketbras can be defined in terms of brakets.
-So to be able to use all four of these objects, it just remains to define brakets $\presub{A}{\braket{a | b}}_B$, where $A, B \in \{F, Q, P\}$, and $a$ and $b$ in $\mathbb{N}$ or $\mathbb{R}$ accordingly.
+In \Cref{subsec:braket_notation}, we said bras were just conjugates of kets, but ketbras and brakets are fiddly.
+We can now at least define brakets of the form $\prepostsub{A}{\braket{a | b}}{B}$, where $A, B \in \{F, Q, P\}$, and $a$ and $b$ in $\mathbb{N}$ or $\mathbb{R}$ accordingly.
 For Fock states, this is no problem, because they're in Schwartz space.
-If both the bra and ket are Fock states, the braket ${}_F\braket{n | m}_F$ is defined using the inner product on $\HHH = \LLL^2(\mathbb{R})$; this is an ugly calculation but the end result is that ${}_F\braket{n | m}_F = \delta_{n,m}$, the usual Kronecker delta (not to be confused with the Dirac distribution!).
-If just one is a Fock state, the brakets ${}_Q\braket{q | n}_F$ and ${}_P\braket{p | n}_F$ are defined as the application of the functional ${}_Q\bra{q}$ or ${}_P\bra{p}$ to the Schwartz function $\ket{n}_N$.
-The result of this is that ${}_Q\braket{q | n}_F = ?$ and ${}_P\braket{p | n}_F = ?$ \teague{TODO -- if they're nice. Else just leave it as is.}
+If both the bra and ket are Fock states, the braket $\prepostsub{F}{\braket{n | m}}{F}$ is defined using the inner product on $\HHH = \LLL^2(\mathbb{R})$; this is an ugly calculation but the end result is:
+\begin{equation}
+    \prepostsub{F}{\braket{n | m}}{F} = \delta_{n,m}
+\end{equation}
+Here $\delta_{n,m}$ is the usual Kronecker delta (not to be confused with the Dirac distribution!).
+
+If just one is a Fock state, the brakets $\prepostsub{Q}{\braket{q | n}}{F}$ and $\prepostsub{P}{\braket{p | n}}{F}$ are defined as the application of the functional $\presub{Q}{\bra{q}} = \overline{\ket{q}}_Q$ or $\presub{P}{\bra{p}} = \overline{\ket{p}}_P$ to the Schwartz function $\ket{n}_F$.
+The result isn't particularly pretty -- it's just the conjugate of the Schwartz function evaluated at $q$ in the former case, or evaluated at $p$ after applying the Fourier transform in the latter case, per \Cref{eq:position_eigenstate,eq:momentum_eigenstate}.
+
 If neither are Fock states, then we have three cases.
-First, both could be position eigenstates, so we have ${}_Q\braket{q | q'}_Q$.
-TODO.
-Alternatively, both could be momentum eigenstates, i.e.\ ${}_P\braket{p | p'}_P$.
-TODO.
-Else, we have one of each: ${}_Q\braket{q | p}_P$.
-TODO.
+In all three of these, justifying the end result would take us too far into scary maths territory, so we will effectively hardcode them as definitions:
+\begin{equation}
+    \begin{aligned}
+        \prepostsub{Q}{\braket{q | q'}}{Q} &= \delta_{q - q'} \\
+        \prepostsub{P}{\braket{p | p'}}{P} &= \delta_{p - p'} \\
+        \prepostsub{Q}{\braket{q | p}}{P} &= e^{i 2\pi p q}
+    \end{aligned}
+\end{equation}
+Here $\delta_{q - q'}$ and $\delta_{p - p'}$ are not Kronecker deltas but Dirac distributions.
+That is, $\prepostsub{Q}{\braket{q | q'}}{Q}$ and $\prepostsub{P}{\braket{p | p'}}{P}$ are functionals, not complex numbers!
+
+\subsection{Homodyne measurements}
+
+A \textit{homodyne measurement} can be viewed as the CV analogue of measuring a Pauli.
+First, we define single-qumode position and momentum homodyne measurements.
+By the spectral theorem of~\eqref{eq:position_momentum_spectral_theorem}, we get:
+\begin{equation}\label{eq:position_momentum_eigendecomposed}
+    \begin{aligned}
+        \hat{q} &= \int_{\mathbb{R}} dq\ q \ket{q}_Q \bra{q}_Q \\
+        \hat{p} &= \int_{\mathbb{R}} dp\ p \ket{p}_P \bra{p}_P
+    \end{aligned}
+\end{equation}
+So in analogy with the qubit case, we define the \textit{position homodyne measurement} to consist of operators $M_q = \{\ket{q}_Q \bra{q}_Q\}_{q \in \mathbb{R}}$.
+Given normalised state $\ket{\psi} \in \Phi^\times$, the probability density of getting outcome $q$ is $|\presub{Q}{\braket{q|\psi}}|^2$ (when this braket is a well-defined scalar!).
+For example, per the preceding section, this occurs if $\ket{\psi} \in \HHH$ is a physical state or $\ket{\psi} = \ket{p}_P$.
+The \textit{momentum homodyne measurement} consists of operators $M_p = \ket{p}_P\bra{p}_P$, and probability density $|\presub{P}{\braket{p|\psi}}|^2$.
+
+More generally, one can define the measurement of the single-qumode \textit{quadrature operator} $\hat{r}(\tbinom{v}{u}) = v \hat{p} - u \hat{q}$, for $(u, v) \neq (0, 0)$, since this also has a spectral decomposition.
+At its most general, for $n$ qumodes, a homodyne measurement means measuring a linear combination of quadratures across modes, obtaining a single real outcome.
+Concretely, given vectors $\boldsymbol{u}, \boldsymbol{v} \in \mathbb{R}^n$, we measure the multi-qumode quadrature operator:
+\begin{equation}\label{eq:multimode_quadrature_operator}
+    \hat{\bsym{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}})
+    \coloneqq \tbinom{\boldsymbol{v}}{\boldsymbol{u}} \odot \tbinom{\hat{\boldsymbol{q}}}{\hat{\boldsymbol{p}}}
+\end{equation}
 
 \subsection{Phase space}\label{subsec:phase_space}
 
@@ -221,50 +319,89 @@ So the Wigner function is just the Fourier transform of the intermediate functio
 \begin{equation}
     W_f(\tbinom{\bsym{q}}{\bsym{p}}) = \mathcal{F}(f_{\bsym{q}})(\bsym{p})
 \end{equation}
-
-We can just about extend all this to generalised states too -- that is, to continuous linear functionals.
-Keeping to the theme of this section, we won't go into the maths in detail (we'd need to justify what it means for a continuous linear functional to appear in an integral, for example), but will just give the result for the position and momentum eigenstates $Q_q$ and $P_p$:
+For example, consider the vacuum state $\ket{0}_F: \mathbb{R} \to \mathbb{C}$:
 \begin{equation}
-    W_{Q_q}(x, y) = \delta_{x - q}
-    \qquad \text{and} \qquad
-    W_{P_p}(x, y) = \delta_{y - p}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/vacuum_wavefunction_symmetric}
 \end{equation}
-Here $\delta_{a}$ is the \textit{Dirac distribution} mentioned above, that takes a Schwartz function $\psi$ and evaluates it at $a$, i.e.\ $\delta_a(\psi) = \psi(a)$.
-\teague{Phase space is nice because TODO! MAkes symmetry between position and momentum obvious. Also because it makes clear why displacements are called displacements}
+The Wigner function of this is just a bell curve:
+\begin{equation}\label{eq:wigner_vacuum_symmetric}
+    \includegraphics[valign=c, width=0.8\linewidth]{figures/qumodes/prelims/quantum_info/wigner_vacuum_symmetric}
+\end{equation}
+
+Phase space is nice because it makes clear the symmetry between the position and momentum operators (related by Fourier transforms).
+We can extend this to position and momentum eigenstates $\ket{q}_Q$ and $\ket{p}_P$ too -- but again, doing so rigorously requires a lot more maths than we've introduced here.
+So we'll again just hardcode these as definitions:
+\begin{equation}
+%    W_{\ket{q}_Q}(x, y) = \delta_{x - q}
+    W_{\ket{q}_Q} = \int_{\mathbb{R}} dy\ \delta_{(q, y)}
+    \qquad \text{and} \qquad
+%    W_{\ket{p}_P}(x, y) = \delta_{y - p}
+    W_{\ket{p}_P} = \int_{\mathbb{R}} dx\ \delta_{(x, p)}
+\end{equation}
+%Here $\delta_{a}$ is the Dirac distribution -- not a real number!
+Here $\delta_{(q, p)}$ is the two-dimensional Dirac distribution -- it takes a function $f(x, y)$ and evaluates it at the point $(q, p)$.
+One can very informally check that this seems reasonable by thinking of $\ket{q}_Q$ as the limit of a sequence of Gaussian curves, as in \Cref{eq:dirac_distribution_as_real_function}, and as $\ket{q}_Q$ as the Fourier transformed version of this.
 
 \subsection{Displacements}
 
 Displacement operators can be viewed as the continuous variable analogue of the Pauli operators.
-Writing $\HHH = \LLL^2(\RR^n)$, a displacement operator is any operator of the form $e^{i\theta} D(\bsym{v}, \bsym{u}): \HHH \to \HHH$ for $\bsym{v}, \bsym{u} \in \RR^{n}$, where:
+Writing $\HHH = \LLL^2(\RR^n)$, a displacement operator is any operator of the form $e^{i\theta} \hat{D}(\bsym{v}, \bsym{u}): \HHH \to \HHH$ for $\bsym{v}, \bsym{u} \in \RR^{n}$, where:
 \begin{equation}\label{eq:displacement_defn}
-    D(\tbinom{\bsym{v}}{\bsym{u}})
-    \coloneqq e^{-i2\pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}}
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}})
+    \coloneqq e^{-i2\pi \hat{\bsym{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}})}
+    = e^{-i2\pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}}
     = e^{-i2\pi (\bsym{v} \cdot \bsym{\hat{p}} - \bsym{u} \cdot \bsym{\hat{q}})}
 \end{equation}
 Equivalently, we can define it by what it does to an element $f \in \HHH$:
 \begin{equation}\label{eq:displacement_defn_action}
-    D(\tbinom{\bsym{v}}{\bsym{u}})(f(\bsym{x})) = e^{-i\pi \bsym{v} \cdot \bsym{u}} e^{i2\pi \bsym{x} \cdot \bsym{u}} f(\bsym{x} - \bsym{v})
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}})(f(\bsym{x})) = e^{-i\pi \bsym{v} \cdot \bsym{u}} e^{i2\pi \bsym{x} \cdot \bsym{u}} f(\bsym{x} - \bsym{v})
 \end{equation}
 But perhaps the more intuitive definition, and the reason for its name, is via its action on position and momentum operators under conjugation, or equivalently its action on Wigner functions.
 The former is:
 \begin{equation}
-    D(\tbinom{\bsym{v}}{\bsym{u}}) \hat{\bsym{q}} D(\tbinom{\bsym{v}}{\bsym{u}})^\dagger = \hat{q} - \bsym{v}
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}}) \hat{\bsym{q}} D(\tbinom{\bsym{v}}{\bsym{u}})^\dagger = \hat{\bsym{q}} - \bsym{v}
     \qqquad
-    D(\tbinom{\bsym{v}}{\bsym{u}}) \hat{\bsym{p}} D(\tbinom{\bsym{v}}{\bsym{u}})^\dagger = \hat{p} - \bsym{u}
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}}) \hat{\bsym{p}} D(\tbinom{\bsym{v}}{\bsym{u}})^\dagger = \hat{\bsym{p}} - \bsym{u}
 \end{equation}
 While the latter is:
 \begin{equation}
-    W_{D(\tbinom{\bsym{v}}{\bsym{u}})(f)}(\bsym{q}, \bsym{p}) = W_f(\bsym{q} - \bsym{v}, \bsym{p} - \bsym{u})
+    W_{\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})(f)}(\bsym{q}, \bsym{p}) = W_f(\bsym{q} - \bsym{v}, \bsym{p} - \bsym{u})
 \end{equation}
+So, for example, in \Cref{eq:coherent_state} we defined a function $f \in \LLL^2(\RR)$; this was in fact the \textit{coherent state} $f = \hat{D}(\tbinom{0}{1/4}\ket{0}_F)$.
+We gave the Wigner function of the vacuum state $\ket{0}_F$ in \Cref{eq:wigner_vacuum_symmetric}, so the Wigner function of the coherent state $\hat{D}(\tbinom{0}{1/4})\ket{0}_F$ is just this same bell curve displaced by $1/4$ along one axis.
+
 Displacement operators obey the following (anti-)commutation relation:
 \begin{equation}\label{eq:displacement_commutation}
-    D(\tbinom{\bsym{v}}{\bsym{u}}) D(\tbinom{\bsym{v}'}{\bsym{u}'}) = e^{-i 2 \pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{v}'}{\bsym{u}'}} D(\tbinom{\bsym{v}'}{\bsym{u}'}) D(\tbinom{\bsym{v}}{\bsym{u}})
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}}) \hat{D}(\tbinom{\bsym{v}'}{\bsym{u}'}) = e^{-i 2 \pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{v}'}{\bsym{u}'}} \hat{D}(\tbinom{\bsym{v}'}{\bsym{u}'}) \hat{D}(\tbinom{\bsym{v}}{\bsym{u}})
 \end{equation}
 And the product of any two displacement operators is again a displacement, with vectors $\tbinom{\bsym{v}}{\bsym{u}}$ and $\tbinom{\bsym{v}'}{\bsym{u}'}$ adding together:
 \begin{equation}\label{eq:displacement_product_is_displacement}
-    D(\tbinom{\bsym{v}}{\bsym{u}}) D(\tbinom{\bsym{v}'}{\bsym{u}'}) = e^{-i \pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{v}'}{\bsym{u}'}}  D(\tbinom{\bsym{v}}{\bsym{u}} + \tbinom{\bsym{v}'}{\bsym{u}'})
+    \hat{D}(\tbinom{\bsym{v}}{\bsym{u}}) \hat{D}(\tbinom{\bsym{v}'}{\bsym{u}'}) = e^{-i \pi \tbinom{\bsym{v}}{\bsym{u}} \odot \tbinom{\bsym{v}'}{\bsym{u}'}} \hat{D}(\tbinom{\bsym{v}}{\bsym{u}} + \tbinom{\bsym{v}'}{\bsym{u}'})
+\end{equation}
+
+We define special notation for displacements $\hat{D}(\tbinom{\bsym{v}}{\bsym{0}})$ and $\hat{D}(\tbinom{\bsym{0}}{\bsym{u}})$ in only the position or momentum directions.
+These are often called the Heisenberg-Weyl operators, and are the direct analogue of the Pauli $X$ and $Z$ operators in the qubit case.
+Accordingly, we denote these with $\hat{X}$ and $\hat{Z}$:
+\begin{equation}
+    \hat{X}(\bsym{v}) \coloneqq \hat{D}(\tbinom{\bsym{v}}{\bsym{0}})
+    \qqquad
+    \hat{Z}(\bsym{u}) \coloneqq \hat{D}(\tbinom{\bsym{0}}{\bsym{u}})
+\end{equation}
+
+As should hopefully be intuitively clear, \Cref{eq:displacement_product_is_displacement} shows every displacement can be written as a product of an $\hat{X}$ and $\hat{Z}$ displacement, up to global phase:
+\begin{equation}\label{eq:displacment_decomposed_xz}
+    \begin{aligned}
+        \hat{D}(\tbinom{\bsym{v}}{\bsym{u}})
+        &= \hat{D}(\tbinom{\bsym{v}}{\bsym{0}} + \tbinom{\bsym{0}}{\bsym{u}}) \\
+        &= e^{i 2 \pi \tbinom{\bsym{v}}{\bsym{0}} \odot \tbinom{\bsym{0}}{\bsym{u}}} \hat{D}(\tbinom{\bsym{v}}{\bsym{0}}) \hat{D}(\tbinom{\bsym{0}}{\bsym{u}}) \\
+        &= e^{i 2 \pi \bsym{v} \cdot \bsym{u}} \hat{X}(\bsym{v}) \hat{Z}(\bsym{u})
+    \end{aligned}
 \end{equation}
 
 \subsection{Gaussian unitaries}
 
-TODO!
+Just as displacements are the CV analogue of Paulis, Gaussian unitaries are the CV analogue of Clifford unitaries.
+We gave two definitions of the Cliffords -- as the normaliser of the Pauli group within the unitary group, and as the group generated by the maps $S$, $H$ and CNOT.
+We can do the same thing here.
+First, we can define the Gaussian unitaries $\mathcal{H} \to \mathcal{H}$ to be the normalizer $\NNN_{\UUU}(\hat{\DDD})$ of the displacement group within the group $\UUU$ of all unitaries $\mathcal{H} \to \mathcal{H}$.
+Equivalently, we can define them to be any operator of the form $e^{i2\pi f(\hat{q}, \hat{p})}$, where $f$ is any degree $\leq 2$ polynomial in the position and momentum operators.

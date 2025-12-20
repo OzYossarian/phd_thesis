@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (1.25, -0.75) {};
+		\node [style=none] (1) at (1.25, 0.75) {};
+		\node [style=none] (2) at (2, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (3) at (-1.25, 0.75) {};
+		\node [style=none] (4) at (-1.25, -0.75) {};
+		\node [style=none] (5) at (-2, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (6) at (-3.75, 0.75) {};
+		\node [style=none] (7) at (-3.75, -0.75) {};
+		\node [style=none] (8) at (3.75, 0.75) {};
+		\node [style=none] (9) at (3.75, -0.75) {};
+		\node [style=rmat] (10) at (-1.25, 1.5) {$m$};
+		\node [style={gn_phase}] (11) at (0, 0) {$f(q)$};
+		\node [style=none] (12) at (-1.25, 1.5) {};
+		\node [style=none] (13) at (-3.75, 1.5) {};
+		\node [style=rmat] (26) at (-1.25, -0.75) {$m$};
+		\node [style=lmat] (31) at (-2.75, -0.75) {$m$};
+		\node [style=rmat] (32) at (-1.25, 0.75) {$m$};
+		\node [style=lmat] (33) at (-2.75, 0.75) {$m$};
+		\node [style=rmat] (34) at (2.75, 0.75) {$m$};
+		\node [style=lmat] (35) at (1.25, 0.75) {$m$};
+		\node [style=rmat] (36) at (2.75, -0.75) {$m$};
+		\node [style=lmat] (37) at (1.25, -0.75) {$m$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1.center) to (8.center);
+		\draw (0.center) to (9.center);
+		\draw (4.center) to (7.center);
+		\draw (6.center) to (3.center);
+		\draw [in=0, out=105, looseness=0.75] (11) to (12.center);
+		\draw (13.center) to (12.center);
+		\draw [in=0, out=-120] (11) to (4.center);
+		\draw [in=0, out=120] (11) to (3.center);
+		\draw [in=180, out=60] (11) to (1.center);
+		\draw [in=180, out=-60] (11) to (0.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

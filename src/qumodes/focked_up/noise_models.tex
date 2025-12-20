@@ -6,13 +6,13 @@ In the qubit half of this thesis, when discussing noise models, we swapped to a 
 In this qumode half, we will stick with a ZX-based approach.
 
 So, given a diagram $D$ with edges $E$, a \textit{noise model} $\FFF$ will again be a set $\{\FFF_1, \ldots, \FFF_m\}$ of probability distributions, where each $\FFF_j = \{(F_{j,k}, p_{j,k})\}_k$ consists of errors $F_{j,k}$ and their probability $p_{j,k}$ of occurring, and errors $F_{j,k}$ are displacements in $\hat{\DDD}_{|E|}$.
-We call errors $F_{j,k}$ that actually appear in one of the probability distributions \textit{atomic errors}.
+We again call errors $F_{j,k}$ that actually appear in one of the probability distributions \textit{atomic errors}.
 Atomic errors can be composed to form general errors $F \in \hat{\DDD}_{|E|}$.
 The probability of a general error $F$ occurring is the sum of the probabilities of all the different ways it can be made from atomic errors when sampling only one atomic error from each distribution.
 
 The most accurate way to then reason about the behaviour of errors is using these probabilities.
 But calculations here can get a bit involved.
-We can take a dual approach that's a little more heuristic; rather than assigning each atomic error $F_{j,k}$ a probability $p_{j,k}$ of occurring, we can assign it a \textit{weight} $w_{j,k} = \wt(F_{j,k})$.
+We can take a dual approach that's a little simpler but less accurate; rather than assigning each atomic error $F_{j,k}$ a probability $p_{j,k}$ of occurring, we can assign it a \textit{weight} $w_{j,k} = \wt(F_{j,k})$.
 For this approach to be useful, a higher weight should correspond to a lower probability.
 We can then define the weight of a general error $F \in \hat{\DDD}_{|E|}$ as some combination of weights of atomic errors that can be composed to make $F$.
 How exactly this is defined isn't fixed -- we can choose.

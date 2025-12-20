@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=medpbox] (25) at (0, 0) {$\begin{matrix} Z \\[5pt] Z \end{matrix}$};
+		\node [style=none] (26) at (-2, 0.75) {};
+		\node [style=none] (27) at (-2, -0.75) {};
+		\node [style=none] (28) at (2, 0.75) {};
+		\node [style=none] (29) at (2, -0.75) {};
+		\node [style={rn_phase}] (30) at (0, 3.25) {$m^+ \pi$};
+		\node [style={rn_phase}] (31) at (-1, 0.75) {$\pi$};
+		\node [style={rn_phase}] (32) at (1, 0.75) {$\pi$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (26.center) to (28.center);
+		\draw (27.center) to (29.center);
+		\draw (25) to (30);
+	\end{pgfonlayer}
+\end{tikzpicture}

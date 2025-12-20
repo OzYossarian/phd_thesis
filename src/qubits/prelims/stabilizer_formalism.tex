@@ -2,7 +2,7 @@
 
 We now recap Gottesman's stabilizer formalism, which provides a group-theoretic framework for efficiently tracking quantum states and their evolution under Clifford unitaries and Pauli measurements.
 The key idea is to represent quantum states via their \emph{stabilizer group} $\mathcal{S}$.
-Almost all of this is standard material (e.g.\ see the textbook TODO from the man himself), with the exception of the presentation of the effect of Clifford unitaries and Pauli measurements on the \textit{stabilizer space} $\VVV_\SSS$ and the \textit{logical Pauli group} $\mathcal{N}(\mathcal{S})/\mathcal{S}$, which I feel is always a little neglected in the literature.
+All of this is standard material (e.g.\ see the lecture notes~\cite{gottesman2024surviving} from the man himself).
 
 \subsection{Stabilizer group and stabilizer space}\label{subsec:stabilizer-group}
 
@@ -58,19 +58,19 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
 \begin{theorem}\label{thm:stabilizer_group_update_measurement}
     If a system with stabilizer group $\mathcal{S} = \langle S_1, \ldots, S_r \rangle$ undergoes a Pauli measurement $P$, the outcome $m$ and new stabilizer group $\SSS'$ are as follows.
 
-    \textbf{Case 1:} $\pm P \in \mathcal{S}$.
+    \textbf{Case 1:}\label{thm:stabilizer_group_update_measurement:case1} $\pm P \in \mathcal{S}$.
     Then measurement outcome $m$ is deterministic; if $P \in \mathcal{S}$ we obtain outcome $+1$ with certainty, and if $-P \in \mathcal{S}$ we obtain outcome $-1$ with certainty.
     The state is unchanged, and the stabilizer group remains $\mathcal{S}' = \mathcal{S}$.
 
-    \textbf{Case 2:} $P$ anticommutes with at least one element of $\mathcal{S}$.
+    \textbf{Case 2:}\label{thm:stabilizer_group_update_measurement:case2} $P$ anticommutes with at least one element of $\mathcal{S}$.
     Then measurement outcome $m$ is uniformly random, $\pm 1$ with equal probability $1/2$.
-    Without loss of generality, we can assume $P$ anticommutes just with generator $S_1$ and commutes with the remaining generators.
+    Without loss of generality, we can assume $P$ anticommutes just with generator $S_1$ and commutes with the remaining generators (if not, multiply every other anti-commuting generator $S_j$ by $S_1$).
     Then the new stabilizer group is:
     \begin{equation}
         \mathcal{S}' = \langle mP, S_2, \ldots, S_r \rangle.
     \end{equation}
 
-    \textbf{Case 3:} $P$ commutes with all of $\mathcal{S}$, but $\pm P \notin \mathcal{S}$.
+    \textbf{Case 3:}\label{thm:stabilizer_group_update_measurement:case3} $P$ commutes with all of $\mathcal{S}$, but $\pm P \notin \mathcal{S}$.
     In this case, the measurement outcome depends on the particular state within $\mathcal{V}_{\mathcal{S}}$, that our system of qubits is in, and is not determined by the stabilizer group alone.
     After obtaining outcome $m \in \{+1, -1\}$, the new stabilizer group is
     \begin{equation}
@@ -82,7 +82,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     Consider a four-qubit system, initially with trivial stabilizer group $\mathcal{S} = \{I\}$.
     This example will follow on from \Cref{ex:422_stabilizer_group}.
     Measure $X_1 X_2 X_3 X_4$.
-    This is in \textbf{Case 3}: it commutes with all of $\mathcal{S}$ (trivially), but $\pm X_1 X_2 X_3 X_4 \notin \mathcal{S}$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}: it commutes with all of $\mathcal{S}$ (trivially), but $\pm X_1 X_2 X_3 X_4 \notin \mathcal{S}$.
     Suppose we obtain outcome $a_0 \in \{+1, -1\}$.
     The stabilizer group becomes
     \begin{equation}
@@ -90,7 +90,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $Z_1 Z_2 Z_3 Z_4$.
-    This is \textbf{Case 3}: it commutes with $a_0 X_1 X_2 X_3 X_4$, but $\pm Z_1 Z_2 Z_3 Z_4 \notin \mathcal{S}$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}: it commutes with $a_0 X_1 X_2 X_3 X_4$, but $\pm Z_1 Z_2 Z_3 Z_4 \notin \mathcal{S}$.
     Suppose we obtain outcome $b_0 \in \{+1, -1\}$.
     The stabilizer group becomes
     \begin{equation}
@@ -98,27 +98,27 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $X_1 X_2 X_3 X_4$ again.
-    This is \textbf{Case 1}: we have $a_0 X_1 X_2 X_3 X_4 \in \mathcal{S}$, so the measurement outcome $a_1$ is deterministically $a_0$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1}: we have $a_0 X_1 X_2 X_3 X_4 \in \mathcal{S}$, so the measurement outcome $a_1$ is deterministically $a_0$.
     The stabilizer group is unchanged:
     \begin{equation}
         \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4, b_0 Z_1 Z_2 Z_3 Z_4 \rangle.
     \end{equation}
 
     Measure $Z_1 Z_2 Z_3 Z_4$ again.
-    This is \textbf{Case 1}: we have $b_0 Z_1 Z_2 Z_3 Z_4 \in \mathcal{S}$, so the measurement outcome $b_1$ is deterministically $b_0$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1}: we have $b_0 Z_1 Z_2 Z_3 Z_4 \in \mathcal{S}$, so the measurement outcome $b_1$ is deterministically $b_0$.
     The stabilizer group remains:
     \begin{equation}
         \mathcal{S} = \langle a_0 X_1 X_2 X_3 X_4, b_0 Z_1 Z_2 Z_3 Z_4 \rangle.
     \end{equation}
 
-    We can therefore continue measuring $X_1 X_2 X_3 X_4$ and $Z_1 Z_2 Z_3 Z_4$ and we will always be in \textbf{Case 1}; the outcomes $a_j$ and $b_j$ will deterministically be $a_0$ and $b_0$ respectively, and the stabilizer group will be unchanged.
+    We can therefore continue measuring $X_1 X_2 X_3 X_4$ and $Z_1 Z_2 Z_3 Z_4$ and we will always be in \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1}; the outcomes $a_j$ and $b_j$ will deterministically be $a_0$ and $b_0$ respectively, and the stabilizer group will be unchanged.
 \end{example}
 
 \begin{example}\label{ex:bacon_shor_stabilizer_group_updates}
     Again consider a four-qubit system with initial stabilizer group $\mathcal{S} = \{I\}$.
     This example will follow on from \Cref{ex:bacon_shor_stabilizer_group}.
     Measure $X_1 X_2$.
-    This is \textbf{Case 3}.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}.
     Suppose we obtain outcome $a_0 \in \{+1, -1\}$.
     The stabilizer group becomes
     \begin{equation}
@@ -126,7 +126,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $X_3 X_4$.
-    This is \textbf{Case 3}: it commutes with $a_0 X_1 X_2$, but $\pm X_3 X_4 \notin \mathcal{S}$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}: it commutes with $a_0 X_1 X_2$, but $\pm X_3 X_4 \notin \mathcal{S}$.
     Suppose we obtain outcome $b_0 \in \{+1, -1\}$.
     The stabilizer group becomes
     \begin{equation}
@@ -134,7 +134,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $Z_1 Z_3$.
-    This is \textbf{Case 2}: $Z_1 Z_3$ anticommutes with both $a_0 X_1 X_2$ and $b_0 X_3 X_4$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}: $Z_1 Z_3$ anticommutes with both $a_0 X_1 X_2$ and $b_0 X_3 X_4$.
     \item The measurement outcome is uniformly random; suppose we obtain $c_0 \in \{+1, -1\}$.
     In order to apply \Cref{thm:stabilizer_group_update_measurement}, we must put $\SSS$ in a form where $Z_1 Z_3$ anti-commutes with exactly one generator, e.g.:
     \begin{equation}
@@ -146,7 +146,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $Z_2 Z_4$.
-    This is \textbf{Case 3}: $Z_2 Z_4$ commutes with both generators, but $\pm Z_2 Z_4 \notin \mathcal{S}$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}: $Z_2 Z_4$ commutes with both generators, but $\pm Z_2 Z_4 \notin \mathcal{S}$.
     Suppose we obtain outcome $d_0 \in \{+1, -1\}$.
     The stabilizer group becomes
     \begin{equation}
@@ -155,7 +155,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
 
     Now we repeat the measurement sequence.
     Measure $X_1 X_2$ again.
-    This is \textbf{Case 2}: $X_1 X_2$ anticommutes with $c_0 Z_1 Z_3$ and $d_0 Z_2 Z_4$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}: $X_1 X_2$ anticommutes with $c_0 Z_1 Z_3$ and $d_0 Z_2 Z_4$.
     So first find a new presentation for $\SSS$ where only one generator anti-commutes:
     \begin{equation}
         \mathcal{S} = \langle c_0 Z_1 Z_3, c_0 d_0 Z_1 Z_3 Z_2 Z_4, a_0 b_0 X_1 X_2 X_3 X_4 \rangle.
@@ -167,7 +167,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Now measure $X_3 X_4$.
-    This is in \textbf{Case 1}: we have $a_0 b_0 a_1 X_3 X_4 \in \mathcal{S}$, so the outcome $b_1$ is deterministically $a_0 b_0 a_1$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1}: we have $a_0 b_0 a_1 X_3 X_4 \in \mathcal{S}$, so the outcome $b_1$ is deterministically $a_0 b_0 a_1$.
     The stabilizer group is unchanged.
     If we like, we can write it using a different generating set:
     \begin{equation}
@@ -175,7 +175,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     \end{equation}
 
     Measure $Z_1 Z_3$.
-    This is in \textbf{Case 2}: $Z_1 Z_3$ anticommutes with both $a_1 X_1 X_2$ and $b_1 X_3 X_4$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}: $Z_1 Z_3$ anticommutes with both $a_1 X_1 X_2$ and $b_1 X_3 X_4$.
     The outcome is uniformly random; suppose we obtain $c_1 \in \{+1, -1\}$.
     Choosing a presentation for $\SSS$ such that $Z_1 Z_3$ anti-commutes with just one generator, we see that the new stabilizer group is:
     \begin{equation}
@@ -184,7 +184,7 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
 
     Note that $a_1 b_1 = a_0 b_0$, so we can use either scalar in the presentation above.
     Now measure $Z_2 Z_4$.
-    This is in \textbf{Case 1}: we have $c_0 d_0 c_1 Z_2 Z_4 \in \mathcal{S}$, so the outcome $d_1$ is deterministically $c_0 d_0 c_1$.
+    This is in \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1}: we have $c_0 d_0 c_1 Z_2 Z_4 \in \mathcal{S}$, so the outcome $d_1$ is deterministically $c_0 d_0 c_1$.
     The stabilizer group remains unchanged; we can present it differently as:
     \begin{equation}
         \mathcal{S} = \langle c_1 Z_1 Z_3, d_1 Z_2 Z_4, a_1 b_1 X_1 X_2 X_3 X_4 \rangle.
@@ -207,13 +207,13 @@ Without loss of generality, we assume $P$ is Hermitian (has eigenvalues $\pm 1$)
     So qubit 1 is in an unknown pure state.
     We can teleport this state to qubit three by measuring $X_1 X_2$ and $Z_1 Z_2$, with outcomes $a$ and $b$ respectively, and performing Pauli correction $Z_3^{(1 - a)/2} X_3^{(1 - b/2)}$.
     Consider the effect on $\SSS$ of measuring $X_1 X_2$.
-    This anti-commutes with $Z_2 Z_3$, so we're in \textbf{Case 2}.
+    This anti-commutes with $Z_2 Z_3$, so we're in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}.
     The outcome $a$ is completely random, and the updated stabilizer group is
     \begin{equation}
         \SSS = \langle X_2 X_3, a X_1 X_2 \rangle
     \end{equation}
     Now we measure $Z_1 Z_2$.
-    This is again in \textbf{Case 2} since it anti-commutes with $X_2 X_3$, so the outcome $b$ is random and the updated stabilizer group is
+    This is again in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2} since it anti-commutes with $X_2 X_3$, so the outcome $b$ is random and the updated stabilizer group is
     \begin{equation}
         \SSS = \langle a X_1 X_2, b Z_1 Z_2 \rangle
     \end{equation}
@@ -269,7 +269,7 @@ The group operation on $\mathcal{N}(\mathcal{S})/\mathcal{S}$ is given by coset 
 It turns out that the quotient group $\mathcal{N}(\mathcal{S})/\mathcal{S}$ is always isomorphic to the Pauli group on $n-r$ qubits.
 
 \begin{theorem}
-    Let $\mathcal{S}$ be a stabilizer group on $n$ physical qubits with $r$ independent generators.
+    \cite[Theorem 3.11]{gottesman2024surviving} Let $\mathcal{S}$ be a stabilizer group on $n$ physical qubits with $r$ independent generators.
     Then
     \begin{equation}
         \mathcal{N}(\mathcal{S})/\mathcal{S} \cong \mathcal{P}_k,

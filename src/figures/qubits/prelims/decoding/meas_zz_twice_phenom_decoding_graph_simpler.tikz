@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=greybox] (0) at (0, 0) {$(m_a m_b,  1)$};
+		\node [style=box] (1) at (-3.75, 0) {$(\neg,  p)$};
+		\node [style=box] (3) at (-1.75, 2.5) {$(X,  p)$};
+		\node [style=box] (4) at (0, 2.5) {$(Y,  p)$};
+		\node [style=box] (5) at (1.75, 2.5) {$(Z,  p)$};
+		\node [style=box] (11) at (-7.75, 2.5) {$(X,  p)$};
+		\node [style=box] (12) at (-6, 2.5) {$(Y,  p)$};
+		\node [style=box] (13) at (-4.25, 2.5) {$(Z,  p)$};
+		\node [style=box] (19) at (4.25, 2.5) {$(X,  p)$};
+		\node [style=box] (20) at (6, 2.5) {$(Y,  p)$};
+		\node [style=box] (21) at (7.75, 2.5) {$(Z,  p)$};
+		\node [style=box] (27) at (-1.75, -2.5) {$(X,  p)$};
+		\node [style=box] (28) at (0, -2.5) {$(Y,  p)$};
+		\node [style=box] (29) at (1.75, -2.5) {$(Z,  p)$};
+		\node [style=box] (35) at (-7.75, -2.5) {$(X,  p)$};
+		\node [style=box] (36) at (-6, -2.5) {$(Y,  p)$};
+		\node [style=box] (37) at (-4.25, -2.5) {$(Z,  p)$};
+		\node [style=box] (43) at (4.25, -2.5) {$(X,  p)$};
+		\node [style=box] (44) at (6, -2.5) {$(Y,  p)$};
+		\node [style=box] (45) at (7.75, -2.5) {$(Z,  p)$};
+		\node [style=box] (55) at (3.75, 0) {$(\neg,  p)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (0);
+		\draw (3) to (0);
+		\draw (4) to (0);
+		\draw (0) to (55);
+		\draw (27) to (0);
+		\draw (0) to (28);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -2,13 +2,13 @@
 % Optional argument used by table of contents - no mathbf needed.
 
 Let's return to our old friend the $\qcode{4,2,2}$ code, which we first met in \Cref{ex:422_stabilizer_code}.
-This is a static stabilizer code, so we can write it as a dynamic stabilizer code with a length-1 operation sequence $\OOO = (\{Z_1 Z_2 Z_3 Z_4, X_1 X_2 X_3 X_4\})$.
+This is a static stabilizer code, so we can write it as a dynamic stabilizer code with a length-1 operation sequence $\OOO = (\{Z_1 Z_2 Z_3 Z_4, X_1 X_2 X_3 X_4\})$ (where again we're abusing notation and just writing the Pauli $P$ to be measured, rather than the full operation $M_P$).
 %As a warm-up, we will show that this code can be reinterpreted as a 12-qubit Floquet code.
+Recall that the notation $\qcode{n, k, d}$ means the code uses $n$ physical qubits to encode $k$ logical ones with an algebraic distance of $d$, and we defined algebraic distance for static and dynamic stabilizer codes (\Cref{subsec:distance,subsec:dynamic_distance}).
 As a warm-up, we will prove the following:
 
 \begin{theorem}\label{thm:4_2_2_double_hexagon_equivalence}
-    The $\qcode{4, 2, 2}$ stabilizer code is equivalent as a ZX-diagram to a $\qcode{12, 2, 2}$ Floquet code with period 6, which we call the \textbf{double hexagon code}.
-    \teague{Replace `equivalent as a ZX-diagram' -- isn't true! TODO}
+    The $\qcode{4, 2, 2}$ stabilizer code can be reinterpreted as a $\qcode{12, 2, 2}$ Floquet code with period 6, which we call the \textbf{double hexagon code}.
 \end{theorem}
 
 In \Cref{fig:4_2_2_rewritten}, we show three equivalent ZX-diagrams depicting seven timesteps of this code.
@@ -78,34 +78,32 @@ Finally, we can see that this pattern of colours and styles repeats itself every
 From this analysis, we can now interpret the rightmost ZX-diagram as a dynamic stabilizer code;
 we can write down the measurements that each qubit undergoes at each timestep,
 and consequently we can define the operation sequence described by this diagram.
-We get $\OOO = [\OOO_0, \ldots, \OOO_5]$, where:
+We get $\OOO = (\OOO_0, \ldots, \OOO_5)$, where:
 \begin{equation}\label{eq:floquetified_4_2_2_measurement_schedule}
     \begin{aligned}
-        \OOO_t &= \stretchleftright[10000]
-        {\{}
-        {\begin{array}{c}
+        \OOO_t &= \left\{
+        \begin{array}{l}
              X_{(t, 0)}, \\
              X_{(t, 1)}, \\
              X_{(t+1, 0)}X_{(t+2, 0)}, \\
              X_{(t+1, 1)}X_{(t+2, 1)}, \\
              X_{(t+3, 0)}X_{(t+3, 1)}, \\
              X_{(t+4, 0)}X_{(t+5, 0)}, \\
-             X_{(t+4, 1)}X_{(t+5, 1)} \\
-        \end{array}}
-        {\}}
+             X_{(t+4, 1)}X_{(t+5, 1)}
+        \end{array}
+        \right\}
         \text{~~if $t$ even,} \\[10pt]
-        \OOO_t &= \stretchleftright[1000]
-        {\{}
-        {\begin{array}{c}
+        \OOO_t &= \left\{
+        \begin{array}{l}
              Z_{(t, 0)}, \\
              Z_{(t, 1)}, \\
              Z_{(t+1, 0)}Z_{(t+2, 0)}, \\
              Z_{(t+1, 1)}Z_{(t+2, 1)}, \\
              Z_{(t+3, 0)}Z_{(t+3, 1)}, \\
              Z_{(t+4, 0)}Z_{(t+5, 0)}, \\
-             Z_{(t+4, 1)}Z_{(t+5, 1)} \\
-        \end{array}}
-        {\}}
+             Z_{(t+4, 1)}Z_{(t+5, 1)}
+        \end{array}
+        \right\}
         \text{~~if $t$ odd.}
     \end{aligned}
 \end{equation}
@@ -125,54 +123,61 @@ This then proves most of \Cref{thm:4_2_2_double_hexagon_equivalence};
 namely that the double hexagon code encodes 2 logical qubits and has period 6.
 It remains to show the algebraic distance is still 2.
 
-To do this, we start with the logical webs corresponding to logical operators $\ol{\XXX}_1$ and $\ol{\ZZZ}_1$ in the $\qcode{4, 2, 2}$ code, depicted on the left hand side of \Cref{fig:double_hexagon_x_1,fig:double_hexagon_z_1}.
-Recall that, given a logical web,
-the corresponding logical operator is found by looking at which output legs are highlighted with which colours.
-For example, in the rightmost diagram of \Cref{fig:double_hexagon_x_1},
-we show seven timesteps $t \in \{0, \ldots, 6\}$ of the period-six double hexagon code.
-So looking at the output wires of this diagram tells us a representative of the logical $\ol{\XXX}_1$ at timestep $t=6$.
-Namely, re-using the notation that assigns label $(i, j)$ to the qubit with the $i$-th colour and $j$-th style,
-where $i$ and $j$ are taken modulo 6 and 2 respectively, and the ordered lists of colours and styles are
-$[
-\mathbf{purple}, ~
-\mathbf{pink}, ~
-\mathbf{orange}, ~
-\mathbf{yellow}, ~
-\mathbf{brown}, ~
-\mathbf{blue}]$
-and
-$[
-\mathbf{solid}, ~
-\mathbf{dashed}]$,
-we see the corresponding logical operator at this timestep is
-$X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$.
+For the $\qcode{4, 2, 2}$, we can essentially do this by hand.
+First, we can use the Pauli webs to find representatives of logical operators in the new code -- these are examples of logical errors under the phenomenological noise model, so give an upper bound on the algebraic distance.
+In \Cref{fig:double_hexagon_x_1} we show the logical web corresponding to logical operator $\ol{\XXX}_1$ in the new code.
+In particular, in the rightmost diagram of this figure, we show seven timesteps $t \in \{0, \ldots, 6\}$ of the period-six double hexagon code.
+So looking at the output wires of this diagram tells us a representative of the logical $\ol{\XXX}_1$ at timestep $t=6$; we see the corresponding logical operator at this timestep is $X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$.
+To see the corresponding logical operator at a different timestep $t$,
+we can just truncate the diagram after timestep $t$ and again look at the highlighted output edges.
+This is shown for timesteps $t \in \{0, 1, 2\}$ in \Cref{fig:double_hexagon_x_1_truncations} below;
+the corresponding operators are
+$X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$ after timesteps $t=0$ and $t=1$, and
+$X_{(2, 0)} X_{(2, 1)} X_{(1, 0)} X_{(1, 1)}$ after timestep $t=2$.
+In fact, truncating the rightmost diagram of \Cref{fig:double_hexagon_x_1} after \textit{any} timestep $t$
+gives a logical web whose corresponding $\ol{\XXX}_1$ representative has weight four.
+
+Next, one can find stabilizers at a given timestep $t$ with which to multiply these logical operators,
+in order to reduce their weight to two.
+One can do this algebraically,
+making use of the fact that we already worked out the stabilizer groups $\SSS_t$ of the double hexagon code for all $t$.
+Alternatively, one can do this graphically,
+using the fact that Pauli webs on the same diagram form a group
+and can thus be multiplied together.
+In \Cref{fig:double_hexagon_x_1_truncations_multiplied} below,
+we thus multiply the weight-four logical webs by appropriate stabilizing webs
+to get weight-two logical webs.
+
+This gives us an upper bound of two for the algebraic distance.
+Since this code is fairly small, we can then check by hand that for no logical error under the phenomenoloical noise model has weight one.
+Hence, the code has algebraic distance two, as promised.
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth]{figures/qubits/floquetifying/422/floquetified/x_1}
     \caption{%
-        A logical web corresponding to a representative of the logical $\ol{x_1}$ in
+        A logical web corresponding to a representative of the logical $\ol{\XXX}_1$ in
         the $\qcode{4, 2, 2}$ code (left and middle)
         and in its Floquetification, the double hexagon code (right).}
     \label{fig:double_hexagon_x_1}
 \end{figure}
 
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\linewidth]{figures/qubits/floquetifying/422/floquetified/z_1}
-    \caption{%
-        A logical web corresponding to a representative of the logical $\ol{z_1}$ in
-        the $\qcode{4, 2, 2}$ code (left and middle)
-        and in its Floquetification, the double hexagon code (right).}
-    \label{fig:double_hexagon_z_1}
-\end{figure}
+%\begin{figure}[p]
+%    \centering
+%    \includegraphics[width=\linewidth]{figures/qubits/floquetifying/422/floquetified/z_1}
+%    \caption{%
+%        A logical web corresponding to a representative of the logical $\ol{\ZZZ}_1$ in
+%        the $\qcode{4, 2, 2}$ code (left and middle)
+%        and in its Floquetification, the double hexagon code (right).}
+%    \label{fig:double_hexagon_z_1}
+%\end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth]{figures/qubits/floquetifying/422/floquetified/x_1_truncations}
     \caption{%
         The double hexagon code after timesteps $t=0$, $t=1$ and $t=2$ respectively,
-        annotated with a logical web corresponding to a representative of the logical $\ol{x_1}$.}
+        annotated with a logical web corresponding to a representative of the logical $\ol{\XXX}_1$.}
     \label{fig:double_hexagon_x_1_truncations}
 \end{figure}
 
@@ -190,41 +195,41 @@ $X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$.
     \label{fig:double_hexagon_x_1_truncations_multiplied}
 \end{figure}
 
-To see the corresponding logical operator at a different timestep $t$,
-we can just truncate the diagram after timestep $t$ and again look at the highlighted output edges.
-This is shown for timesteps $t \in \{0, 1, 2\}$ in \Cref{fig:double_hexagon_x_1_truncations} below;
-the corresponding operators are
-$X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$ after timesteps $t=0$ and $t=1$, and
-$X_{(2, 0)} X_{(2, 1)} X_{(1, 0)} X_{(1, 1)}$ after timestep $t=2$.
-In fact, truncating the rightmost diagram of \Cref{fig:double_hexagon_x_1} after \textit{any} timestep $t$
-gives a logical web whose corresponding $\ol{\XXX}_1$ representative has weight four.
-The same is true for all possible truncations of the $\ol{\ZZZ}_1$ logical web in \Cref{fig:double_hexagon_z_1},
-and would also be true if we repeated this process for the other logical operator cosets $\ol{\XXX}_2$ and $\ol{\ZZZ}_2$.
-That is, truncating after timestep $t$ would always give us a logical web whose corresponding operator had weight four.
-It would be tempting to conclude, therefore, that the double hexagon code has distance four,
-and that Floquetifying the $\qcode{4, 2, 2}$ code has increased its distance.
-But this would be wrong!
+%To see the corresponding logical operator at a different timestep $t$,
+%we can just truncate the diagram after timestep $t$ and again look at the highlighted output edges.
+%This is shown for timesteps $t \in \{0, 1, 2\}$ in \Cref{fig:double_hexagon_x_1_truncations} below;
+%the corresponding operators are
+%$X_{(0, 0)} X_{(0, 1)} X_{(5, 0)} X_{(5, 1)}$ after timesteps $t=0$ and $t=1$, and
+%$X_{(2, 0)} X_{(2, 1)} X_{(1, 0)} X_{(1, 1)}$ after timestep $t=2$.
+%In fact, truncating the rightmost diagram of \Cref{fig:double_hexagon_x_1} after \textit{any} timestep $t$
+%gives a logical web whose corresponding $\ol{\XXX}_1$ representative has weight four.
+%The same is true for all possible truncations of the $\ol{\ZZZ}_1$ logical web in \Cref{fig:double_hexagon_z_1},
+%and would also be true if we repeated this process for the other logical operator cosets $\ol{\XXX}_2$ and $\ol{\ZZZ}_2$.
+%That is, truncating after timestep $t$ would always give us a logical web whose corresponding operator had weight four.
+%It would be tempting to conclude, therefore, that the double hexagon code has distance four,
+%and that Floquetifying the $\qcode{4, 2, 2}$ code has increased its distance.
+%But this would be wrong!
+%
+%The reason is that while this process gives us logical operators in the Floquetification,
+%it doesn't necessarily give us minimum-weight ones,
+%even though we started with minimum-weight logical webs of the $\qcode{4, 2, 2}$ code in
+%the leftmost diagrams of \Cref{fig:double_hexagon_x_1,fig:double_hexagon_z_1}.
+%Indeed, one can find stabilizers at a given timestep $t$ with which to multiply these logical operators,
+%in order to reduce their weight to two.
+%One can do this algebraically,
+%making use of the fact that we already worked out the stabilizer groups $\SSS_t$ of the double hexagon code for all $t$.
+%Alternatively, one can do this graphically,
+%using the fact that Pauli webs on the same diagram form a group
+%and can thus be multiplied together.
+%In \Cref{fig:double_hexagon_x_1_truncations_multiplied} below,
+%we thus multiply the weight-four logical webs by appropriate stabilizing webs
+%to get weight-two logical webs.
 
-The reason is that while this process gives us logical operators in the Floquetification,
-it doesn't necessarily give us minimum-weight ones,
-even though we started with minimum-weight logical webs of the $\qcode{4, 2, 2}$ code in
-the leftmost diagrams of \Cref{fig:double_hexagon_x_1,fig:double_hexagon_z_1}.
-Indeed, one can find stabilizers at a given timestep $t$ with which to multiply these logical operators,
-in order to reduce their weight to two.
-One can do this algebraically,
-making use of the fact that we already worked out the stabilizer groups $\SSS_t$ of the double hexagon code for all $t$.
-Alternatively, one can do this graphically,
-using the fact that Pauli webs on the same diagram form a group
-and can thus be multiplied together.
-In \Cref{fig:double_hexagon_x_1_truncations_multiplied} below,
-we thus multiply the weight-four logical webs by appropriate stabilizing webs
-to get weight-two logical webs.
-
-Since this code is fairly small, one can use these ideas to check by hand that for all $t$,
-no logical operator at time $t$ has weight one.
-Hence, since representatives of weight two exist for the logical operator coset $\ol{x_1}$,
-the code has distance two, as promised.
-%It is interesting, however, that for the logical operator coset $\ol{z_1}$,
+%Since this code is fairly small, one can use these ideas to check by hand that for all $t$,
+%no logical operator at time $t$ has weight one.
+%Hence, since representatives of weight two exist for the logical operator coset $\ol{\XXX}_1$,
+%the code has distance two, as promised.
+%It is interesting, however, that for the logical operator coset $\ol{\ZZZ}_1$,
 %the weight of the smallest representative is four at all even timesteps,
 %and three at all odd timesteps.
 %The story is analogous on the other logical qubit;
@@ -242,7 +247,7 @@ the code has distance two, as promised.
 %    \includegraphics[width=450pt, valign=c]{figures/qubits/floquetifying/422/floquetified/x_1_truncations}
 %    \caption{%
 %        The double hexagon code after timesteps $t=0$, $t=1$ and $t=2$ respectively,
-%        annotated with a logical web corresponding to a representative of the logical $\ol{x_1}$.}
+%        annotated with a logical web corresponding to a representative of the logical $\ol{\XXX}_1$.}
 %    \label{fig:double_hexagon_x_1_truncations}
 %\end{figure}
 
@@ -254,7 +259,7 @@ We can do this for any Pauli web we like.
 For example, in \Cref{fig:detector_4_2_2_double_hexagon} we show a detecting region in the $\qcode{4, 2, 2}$ code
 and its image in the double hexagon code.
 From the rightmost diagram of this figure,
-and recalling the rules for mapping a detecting region to a detector from \Cref{subsubsec:detectors},
+and recalling the rules for mapping a detecting region to a detector from \Cref{subsec:detecting_webs_detect_errors},
 one can see that the corresponding detector in the double hexagon code consists of eight measurements.
 Specifically, in the bottom layer, we include two $Z \otimes Z$ measurements between blue and purple qubits,
 and two single qubit $Z$ measurements on pink qubits.

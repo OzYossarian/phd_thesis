@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (0, 0) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=none] (1) at (2, 1) {};
+		\node [style=none] (2) at (2, -1) {};
+		\node [style=none] (3) at (1.75, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style={rn_phase}] (4) at (1.75, 1) {$\chi_{kr}$};
+		\node [style=none] (6) at (3, 1) {};
+		\node [style=none] (7) at (3, -1) {};
+		\node [style={rn_phase}] (8) at (1.75, -1) {$\chi_{kr}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=180, out=60] (0) to (1.center);
+		\draw [in=-180, out=-60] (0) to (2.center);
+		\draw (1.center) to (6.center);
+		\draw (2.center) to (7.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

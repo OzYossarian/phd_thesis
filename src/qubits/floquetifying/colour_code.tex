@@ -2,8 +2,7 @@
 
 We can apply the same ideas as in the last section to stabilizer codes
 more interesting than the $\qcode{4, 2, 2}$ code.
-In this section, we take this more interesting stabilizer code to be the colour code,
-which we defined in \teague{TODO - define the colour code in the prelims section, as an example of a stabilizer code, since it's mentioned in this section and the last one.}
+In this section, we take this more interesting stabilizer code to be the colour code (\Cref{ex:colour_code_stabilizer_code}).
 Recall that the colour code can be defined on both a planar surface and any closed surface, like the torus.
 %Or, more accurately, we take it to be the \textit{bulk} of the colour code -
 %i.e.\ ignoring the code's global topology (whether it lives on a torus, or is planar).
@@ -57,7 +56,7 @@ The grey bars labelled by integers denote the timesteps of the new code.
 These are well-defined;
 picking any qubit world-line and following it up the page
 while noting down the integer label of every grey bar it crosses produces an increasing sequence.
-For example, doing this for the purple qubit produces the contiguous sequence $[0, 1, 2, \ldots]$.
+For example, doing this for the purple qubit produces the contiguous sequence $(0, 1, 2, \ldots)$.
 As before, we can view all one-legged spiders as halves of single-qubit measurements.
 The pattern repeats after every two timesteps of the old code (the colour code);
 one can see this by noting that the bottom and top of the diagram are identical,
@@ -287,9 +286,9 @@ this is sketched abstractly on the right hand side of \Cref{fig:drifting_spaceti
 
 Other systematic ways one might hope to obtain non-drifting boundaries involve changing the operation schedule.
 Suppose a drifting Floquetification has schedule
-$\OOO = [\OOO_0, \OOO_1, \ldots, \OOO_{T}]$.
+$\OOO = (\OOO_0, \OOO_1, \ldots, \OOO_{T})$.
 Consider a new Floquet code with schedule
-$\OOO = [\OOO_0, \OOO_1, \ldots, \OOO_{T}, \OOO_{T}, \OOO_{T-1}, \ldots, \OOO_0]$.
+$\OOO = (\OOO_0, \OOO_1, \ldots, \OOO_{T}, \OOO_{T}, \OOO_{T-1}, \ldots, \OOO_0)$.
 This new code would drift in one direction in timesteps $0 \leq t < T$,
 but then drift in exactly the opposite direction in timesteps $T \leq t < 2T$,
 and so overall it would stay within a bounded region,

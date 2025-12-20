@@ -1,0 +1,63 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (0) at (-3, 2.75) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=none] (2) at (4.5, 4.75) {};
+		\node [style=none] (3) at (4.5, 0.75) {};
+		\node [style={gn_phase}] (6) at (-3, -2.75) {$\indicator{x \eqmod{r} 0}$};
+		\node [style=none] (7) at (4.5, -0.75) {};
+		\node [style=none] (8) at (4.5, -4.75) {};
+		\node [style=gn] (11) at (0, 4.75) {};
+		\node [style=gn] (12) at (0.5, -0.75) {};
+		\node [style=gn] (13) at (2, 0.75) {};
+		\node [style=gn] (14) at (2.5, -4.75) {};
+		\node [style=none] (15) at (3.5, 3.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (16) at (3.5, -3.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (17) at (-0.75, 3.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (18) at (-0.75, -1.5) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=gn] (25) at (1, 2.75) {};
+		\node [style=gn] (26) at (1.5, -2.75) {};
+		\node [style=none] (29) at (-0.75, -3.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (30) at (-0.75, 1.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (32) at (4.5, 2.75) {};
+		\node [style=none] (33) at (4.5, -2.75) {};
+		\node [style=none] (34) at (3.5, -1.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (35) at (3.5, 1.75) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (42) at (-0.5, 4.75) {};
+		\node [style=none] (43) at (-0.5, 0.75) {};
+		\node [style={gn_web}] (52) at (-1.5, 3.25) {$a_j$};
+		\node [style={gn_web}] (54) at (-1.5, -2.25) {$-a_j$};
+		\node [style={gn_web}] (56) at (1.75, 1.75) {$a_j$};
+		\node [style=none] (57) at (-0.5, -0.75) {};
+		\node [style=none] (58) at (-0.5, -4.75) {};
+		\node [style={rn_phase}] (59) at (0.25, 1.5) {$\chi_{b_1}$};
+		\node [style={rn_phase}] (60) at (2.25, -1.5) {$\chi_{b_m}$};
+		\node [style={rn_phase}] (62) at (1.25, 0) {$\chi_{b_j}$};
+		\node [style={rn_phase}] (65) at (3.5, 4.75) {$\chi_{c_1}$};
+		\node [style={rn_phase}] (66) at (3.5, 0.75) {$\chi_{c_m}$};
+		\node [style={rn_phase}] (67) at (3.5, -0.75) {$\chi_{d_1}$};
+		\node [style={rn_phase}] (68) at (3.5, -4.75) {$\chi_{d_{m}}$};
+		\node [style={rn_phase}] (69) at (3.5, 2.75) {$\chi_{c_j}$};
+		\node [style={rn_phase}] (70) at (3.5, -2.75) {$\chi_{d_j}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=zweb] (0) to (25);
+		\draw (11) to (12);
+		\draw (13) to (14);
+		\draw [style=zweb] (25) to (26);
+		\draw [style=zweb] (6) to (26);
+		\draw (25) to (32.center);
+		\draw (26) to (33.center);
+		\draw (11) to (2.center);
+		\draw (12) to (7.center);
+		\draw (13) to (3.center);
+		\draw (14) to (8.center);
+		\draw [in=180, out=60] (6) to (57.center);
+		\draw [in=-180, out=-60] (6) to (58.center);
+		\draw (57.center) to (12);
+		\draw (58.center) to (14);
+		\draw [in=180, out=60] (0) to (42.center);
+		\draw (42.center) to (11);
+		\draw [in=-180, out=-60] (0) to (43.center);
+		\draw (43.center) to (13);
+	\end{pgfonlayer}
+\end{tikzpicture}

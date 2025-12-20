@@ -12,14 +12,14 @@
 		\node [style=none] (9) at (7, 0) {};
 		\node [style=gn] (22) at (5, 0) {};
 		\node [style={rn_phase}] (23) at (3.5, -1.5) {$0_\square$};
-		\node [style={gn_web}] (24) at (-6, 0.5) {$k$};
-		\node [style={gn_web}] (25) at (-3.75, 0.5) {$k$};
-		\node [style={gn_web}] (26) at (-1.25, 0.5) {$k$};
-		\node [style={gn_web}] (27) at (1.25, 0.5) {$k$};
-		\node [style={gn_web}] (28) at (3.75, 0.5) {$k$};
-		\node [style={gn_web}] (29) at (6, 0.5) {$k$};
-		\node [style={gn_web}] (30) at (-2.75, -1) {$k$};
-		\node [style={gn_web}] (31) at (2.25, -1) {$k$};
+		\node [style={gn_web}] (24) at (-6, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (25) at (-3.75, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (26) at (-1.25, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (27) at (1.25, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (28) at (3.75, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (29) at (6, 0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (30) at (-2, -0.75) {$k/\sqrt{2}$};
+		\node [style={gn_web}] (31) at (3, -0.75) {$k/\sqrt{2}$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (1) to (2);

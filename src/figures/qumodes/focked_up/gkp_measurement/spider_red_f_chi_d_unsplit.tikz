@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (2, 1) {};
+		\node [style=none] (1) at (2, -1) {};
+		\node [style={rn_phase}] (3) at (0, 0) {$f \cdot \chi_d$};
+		\node [style=none] (18) at (1.75, 0) {$\raisebox{1.3ex}{\vdots}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=-60, out=180] (1.center) to (3);
+		\draw [in=60, out=-180] (0.center) to (3);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,9 +1,8 @@
-\section{Noise models}
+\section{Noise models}\label{sec:noise-models}
 
-In the last section we said an error on a diagram $D$ with edges $E$ could be any element of $\PPP_{|E|}$.
-This is, in effect, a choice of \textit{noise model} (also called an \textit{error model}, or \textit{fault model}).
-In this section, we give a proper definition of a noise model in traditional circuit-centric language, introduce the two most common examples, and then relate them to the non-traditional ZX-centric approach we used throughout the last section.
-
+%In the last section we said an error on a diagram $D$ with edges $E$ could be any element of $\PPP_{|E|}$.
+%This is, in effect, a choice of \textit{noise model} (also called an \textit{error model}, or \textit{fault model}).
+In this section, we give a definition of a noise model in traditional circuit-centric language, and introduce the two most common examples.
 Throughout, suppose we have some quantum circuit $C$ on $n$ qubits consisting of Cliffords and Pauli measurements.
 Every operation $O$ in this circuit happens at some integer timestep $t$ starting at $0$.
 Let $T$ denote the timestep of the final layer of operations, so there are in total $T+1$ layers of operations.
@@ -51,7 +50,7 @@ So a measurement error negates the reported measurement outcome, falsely reporti
 \end{equation}
 
 We define errors in general to be arbitrary products of Pauli and measurement errors.
-As in the previous section, we will write $C^F$ to denote the circuit $C$ with the error $F$ applied to it.
+We will write $C^F$ to denote the circuit $C$ with the error $F$ applied to it.
 Finally, we can define a \textit{noise model} $\FFF$ on such a circuit $C$.
 This is a set of probability distributions $\FFF = \{\FFF_1, \ldots, \FFF_m\}$, where each distribution $\FFF_j = \{(F_{j,1}, p_{j,1}), \ldots, (F_{j,r_j}, p_{j,r_j})\}$ consists of \textit{atomic errors} $F_{j,k}$ and their probability $p_{j,k}$ of occurring.
 
@@ -65,20 +64,21 @@ This is a set of probability distributions $\FFF = \{\FFF_1, \ldots, \FFF_m\}$, 
 
 \subsection{Phenomenological noise}
 
-The phenomenological noise model assumes not just that we have some finite circuit $C$, but that this circuit in fact implements some dynamic stabilizer code $\OOO$.
-This means the following: letting $T+1$ denote the number of timesteps in $C$, where operations occur only on even timesteps $t \geq 0$, we require that $C$ is equivalent as a linear map to the circuit $C'$ that consists of applying exactly the sets of operations $\OOO_0, \ldots, \OOO_T$.
-It may be that $C$ is exactly $C'$!
-But it need not be -- for example, in order to implement Pauli measurements, the circuit $C$ may introduce auxiliary qubits and perform extra entangling operations on these.
-For example, we can perform a $Z_1 Z_2$ measurement via an auxiliary qubit, two CNOTs and a single-qubit $Z$ measurement:
-\begin{equation}
-    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_direct}
-    \quad = \quad
-    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_indirect}
-\end{equation}
-Call the $n$ qubits of the operation sequence $\OOO$ the \textit{data qubits}, in contrast to the $m$ \textit{auxiliary qubits}.
-Let the data qubits be the first $n$ qubits in the indexing of the total $n + m$ qubits.
-Per the convention in the preceding paragraphs, we'll say the operations in $\OOO_j$ occur at timestep $2j$ in the circuit $C$.
-
+%The phenomenological noise model assumes not just that we have some finite circuit $C$, but that this circuit in fact implements some dynamic stabilizer code $\OOO$.
+%This means the following: letting $T+1$ denote the number of timesteps in $C$, where operations occur only on even timesteps $t \geq 0$, we require that $C$ is equivalent as a linear map to the circuit $C'$ that consists of applying exactly the sets of operations $\OOO_0, \ldots, \OOO_T$.
+%It may be that $C$ is exactly $C'$!
+%But it need not be -- for example, in order to implement Pauli measurements, the circuit $C$ may introduce auxiliary qubits and perform extra entangling operations on these.
+%For example, we can perform a $Z_1 Z_2$ measurement via an auxiliary qubit, two CNOTs and a single-qubit $Z$ measurement:
+%\begin{equation}
+%    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_direct}
+%    \quad = \quad
+%    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_indirect}
+%\end{equation}
+%Call the $n$ qubits of the operation sequence $\OOO$ the \textit{data qubits}, in contrast to the $m$ \textit{auxiliary qubits}.
+%Let the data qubits be the first $n$ qubits in the indexing of the total $n + m$ qubits.
+%Per the convention in the preceding paragraphs, we'll say the operations in $\OOO_j$ occur at timestep $2j$ in the circuit $C$.
+The phenomenological noise model assumes not just that we have some finite circuit $C$, but that the qubits in this circuit are partitioned into \textit{data qubits} and \textit{auxiliary qubits}.
+Assume without loss of generality that all operations in $C$ happen at even timesteps, and write $\OOO_j$ for the set of all operations in $C$ at timestep $2j$.
 Intuitively, the phenomenological noise model is defined as follows: after each round of operations $\OOO_j$, exactly one of the four single-qubit Paulis $X$, $Y$ and $Z$ and $I$ can occur on any of the $n$ data qubits, with probabilities $p_X$, $p_Y$, $p_Z$ and $p_I = 1 - p_X - p_Y - p_Z$ respectively, and every measurement can be erroneous with probability $p_M$.
 In the notation defined above, we write this as the set $\FFF_{\text{Ph}}$ consisting of the following probability distributions over atomic errors.
 First, for all $1 \leq j \leq n$ and odd $0 \leq j \leq 2T+1$, we have $\FFF_{j,t} \in \FFF_{\text{Ph}}$, where:
@@ -93,7 +93,7 @@ Then for each measurement $j$ we have $\FFF_j \in \FFF_{\text{Ph}}$, where:
 \subsection{Circuit-level noise}
 
 The phenomenological noise model was historically popular because it's simple to analyse, but these days the gold standard is the more realistic circuit-level noise model.
-Here, we make no distinction between data and auxiliary qubits, so we don't need to explicitly assume that $C$ implements a dynamic stabilizer code (though every circuit consisting of Cliffords and Pauli measurements can be viewed as one).
+Here, we make no distinction between data and auxiliary qubits.
 Instead, intuitively, we just assume that after every operation $O$ at time $t$ on $q$ qubits, any weight-$q$ Pauli operator $P$ can occur on these qubits with some probability, and additionally if the operation is a measurement then the outcome can be erroneous.
 Formally, we define $\FFF_{\text{CL}}$ as follows.
 For every operation $O$, let $supp(O)$ denote the support of $O$ (whether $O$ is a Clifford or a measurement).
@@ -283,11 +283,37 @@ Similarly, a circuit-level noise model is only unbiased if all operations are eq
 The latter in particular is a tall order!
 So most realistic examples of noise models are biased in some way or another.
 For the phenomenological noise model, we will quantify this; we define the \textit{measurement bias} to be $\eta_M = p_M/(p_X + p_Y + p_Z)$, and the \textit{$Z$ bias} as $\eta_Z = 2p_Z/(p_X+p_Y)$.
+%
+%\subsection{ZX noise model}
+%
+%In \Cref{subsec:detecting_webs_detect_errors}, we took a ZX-centric approach to errors, defining an error on a diagram $D$ with edges $E$ to be any element of $\PPP_{|E|}$.
+%In this section, we've taken a very circuit-centric view of errors.
+%But since circuits are just a subset of ZX-diagrams, we could have written everything in this section in terms of the ZX-calculus too.
+%The reason we stuck with the circuit-based approach here is because the paper the next chapter is based on took this approach.
+%But conversely the reason for mentioning that we could have just stuck with the ZX-calculus in this section is because in part two of this thesis we will do exactly this.
 
-\subsection{ZX noise model}
+\subsection{Distance}\label{subsec:distance}
 
-In \Cref{subsec:detecting_webs_detect_errors}, we took a ZX-centric approach to errors, defining an error on a diagram $D$ with edges $E$ to be any element of $\PPP_{|E|}$.
-In this section, we've taken a very circuit-centric view of errors.
-But since circuits are just a subset of ZX-diagrams, we could have written everything in this section in terms of the ZX-calculus too.
-The reason we stuck with the circuit-based approach here is because the paper the next chapter is based on took this approach.
-But conversely the reason for mentioning that we could have just stuck with the ZX-calculus in this section is because in part two of this thesis we will do exactly this.
+Every circuit has a \textit{distance}.
+To define it, we need to define a few preliminary terms.
+We say an error $F$ on a circuit $C$ is \textit{trivial} iff $C^F \propto C$, and non-trivial otherwise.
+Examples of trivial errors are stabilizers (by definition!).
+We also define the \textit{weight} of an error $F$ under a noise model $\FFF$ to be the least number of atomic errors that can be multiplied together to give $F$.
+Recall also that an error is undetectable iff it violates no detectors, and we will characterise exactly when this happens in \Cref{subsec:detecting_webs_detect_errors}.
+Then:
+
+\begin{definition}\label{defn:logical_error}
+    A logical error on a circuit $C$ under noise model $\FFF$ is a non-trivial undetectable error $F$ on $C$.
+\end{definition}
+
+\begin{definition}\label{defn:distance}
+    The distance of a circuit $C$ under a noise model $\FFF$ is the least-weight logical error $F$ on $C$.
+\end{definition}
+
+This particular definition of distance is sometimes called the \textit{fault distance} of a circuit, with distance being reserved for what we'll call \textit{algebraic distance}.
+The algebraic distance of a stabilizer code $\SSS$ is the least-weight non-trivial logical operator $L \in \NNN(\SSS) - \SSS$.
+It can also be viewed as just a special case of our definition of distance above.
+Let $C$ be the circuit $\Pi_\SSS \circ \Pi_\SSS$ consisting of just the codespace projector twice, with all qubits defined to be data qubits, and let $\FFF$ be the phenomenological noise model but restricted to just the timestep in between the two projections.
+So for this circuit, since there are no measurements, this just means single-qubit Pauli errors can occur on any of the data qubits after the first projection.
+Because the projection is repeated, each stabilizer $S \in \SSS$ forms a detector.
+Therefore the algebraic distance of $\SSS$ is exactly the distance of $C$ under $\FFF$.

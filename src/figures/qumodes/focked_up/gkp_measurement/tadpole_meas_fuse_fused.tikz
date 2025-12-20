@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=rn] (0) at (0, 0) {};
+		\node [style=none] (1) at (-2, 0) {};
+		\node [style=none] (2) at (0.5, -1.75) {};
+		\node [style={rn_phase}] (5) at (2, 0) {$\chi_{d_j}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (2.center);
+		\draw (0) to (1.center);
+		\draw (5) to (0);
+	\end{pgfonlayer}
+\end{tikzpicture}

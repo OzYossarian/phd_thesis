@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={gn_phase}] (3) at (-3, 2.5) {$0_\square$};
+		\node [style=none] (6) at (1.5, 2.5) {};
+		\node [style=none] (7) at (1.75, 1) {};
+		\node [style={gn_phase}] (14) at (-3, 1) {$0_\square$};
+		\node [style=gn] (15) at (0, 2.5) {};
+		\node [style=gn] (16) at (0.5, 1) {};
+		\node [style={rn_phase}] (23) at (0.25, 1.75) {$\chi_{b_1}$};
+		\node [style={gn_phase}] (24) at (-3, -1) {$0_\square$};
+		\node [style=none] (25) at (1.5, -1) {};
+		\node [style=none] (26) at (1.75, -2.5) {};
+		\node [style={gn_phase}] (27) at (-3, -2.5) {$0_\square$};
+		\node [style=gn] (28) at (0, -1) {};
+		\node [style=gn] (29) at (0.5, -2.5) {};
+		\node [style={rn_phase}] (30) at (0.25, -1.75) {$\chi_{b_{m/2}}$};
+		\node [style=none] (31) at (-3, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style=none] (32) at (0.25, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style={rn_phase}] (33) at (-1.5, 2.5) {$\chi_{\epsilon_1}$};
+		\node [style={rn_phase}] (34) at (-1.5, 1) {$\chi_{\epsilon_2}$};
+		\node [style={rn_phase}] (35) at (-1.5, -1) {$\chi_{\epsilon_{m-1}}$};
+		\node [style={rn_phase}] (36) at (-1.5, -2.5) {$\chi_{\epsilon_{m}}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (15) to (16);
+		\draw (3) to (6.center);
+		\draw (14) to (7.center);
+		\draw (28) to (29);
+		\draw (24) to (25.center);
+		\draw (27) to (26.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

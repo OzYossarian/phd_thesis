@@ -59,7 +59,7 @@
 \tikzstyle{arrow}=[>]
 
 % Edge styles
-\tikzstyle{mid_arrow}=[->]
+\tikzstyle{mid_arrow}=[-, decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction={decorate}]
 \tikzstyle{black_brace}=[-, decorate, decoration={brace, amplitude=2mm, raise=-1mm}]
 \tikzstyle{grey_brace}=[-, draw=gray, decorate, decoration={brace, amplitude=2mm, raise=-1mm}]
 \tikzstyle{blue_edge}=[-, very thick, draw=blue]

@@ -14,8 +14,8 @@
 		\node [style={rn_phase}] (11) at (1.5, 1) {$\chi_{-a}$};
 		\node [style={rn_phase}] (12) at (1.5, -1) {$\chi_{-a}$};
 		\node [style={gn_phase}] (13) at (8, 0) {$f(x + a)$};
-		\node [style=none] (14) at (9.5, 0) {\raisebox{1.3ex}{$\vdots$}};
-		\node [style=none] (15) at (6.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (14) at (10, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (15) at (5.75, 0) {\raisebox{1.3ex}{$\vdots$}};
 		\node [style=none] (16) at (5.5, 2.25) {};
 		\node [style=none] (17) at (10.5, 1) {};
 		\node [style=none] (18) at (10.5, -1) {};
@@ -36,8 +36,8 @@
 		\node [style=none] (35) at (11.5, -1) {};
 		\node [style=none] (36) at (4.5, 2.25) {};
 		\node [style={gn_phase}] (38) at (16, 0) {$f(x + a)$};
-		\node [style=none] (39) at (17.5, 0) {\raisebox{1.3ex}{$\vdots$}};
-		\node [style=none] (40) at (14.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (39) at (18, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (40) at (14, 0) {\raisebox{1.3ex}{$\vdots$}};
 		\node [style=none] (41) at (13.5, 2.25) {};
 		\node [style=none] (42) at (18.5, 1) {};
 		\node [style=none] (43) at (18.5, -1) {};

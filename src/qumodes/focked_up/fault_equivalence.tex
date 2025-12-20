@@ -5,37 +5,47 @@ But it says nothing about the behaviour of the two diagrams under noise.
 The go-to example of this in the qubit ZX-calculus is the following.
 Suppose we have four qubits, and we measure $Z^{\otimes 4}$ and get outcome $m$.
 Letting $m^+ = \frac{1 - m}{2}$, we showed earlier (\Cref{subsec:qubit_pauli_measurements}) we can write the corresponding projector $\Pi_{mZ^{\otimes 4}}$ in the ZX-calculus as:
-
-TODO
+\begin{equation}
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_spec}
+\end{equation}
 
 Just by spider unfusion, this diagram is equivalent to the following one, consisting of more familiar quantum circuit operations:
-
-TODO
+\begin{equation}
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_circuit}
+\end{equation}
 
 Now, suppose we imagine noise can occur.
 Specifically, consider a very simple noise model, where we suppose a single $Z$ gate can occur on any edge of a given diagram.
 In the first diagram, no matter where this single $Z$ error occurs, it will be equivalent to a single $Z$ error on an output edge.
 For example:
-
-TODO
+\begin{equation}
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_spec_z_error_in}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_spec_z_error_internal}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_spec_z_error_out}
+\end{equation}
 
 However, in the second diagram, there's one edge where, should a $Z$ error occur, it's equivalent to two errors on output edges:
-
-TODO
+\begin{equation}
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_circuit_z_error_bad_1}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/fault_equivalence/qubit_z4_meas_circuit_z_error_bad_4}
+\end{equation}
 
 In general, this is the sort of thing we want to avoid when trying to implement a given linear map.
 Very loosely speaking, if a diagram $D_1$ is equal to a diagram $D_2$, and there are no edges in $D_2$ where errors can spread like in the example above, then we say the rewrite $D_1 \mapsto D_2$ is \textit{fault-accounting}.
-\teague{Check what Ben calls this one-way relation!}
 If the rewrite $D_2 \mapsto D_1$ is also fault-accounting, then we say the diagrams $D_1$ and $D_2$ are fault-equivalent.
 In this section, we'll make this rigorous for the Focked up ZX-calculus, and discuss some fault-equivalent rewrite rules.
-Note that while we've used the term `errors' throughout this thesis, Ben Rodatz used `faults' -- we've stuck with his terminology in the specific phrases `fault-accounting' and `fault-equivalent'.
+Note that while we've used the term `errors' throughout this thesis, Rodatz et al.\ used `faults', and we've stuck with their terminology in the specific phrases `fault-accounting' and `fault-equivalent'.
 
 \subsection{Fault-equivalent diagrams}
 
-The definition of fault-equivalent diagrams straightforwardly generalises Rodatz' definition for the qubit case.
+We start by giving rigorous definitions of the key concepts.
+These are straightforward generalisations of Rodatz et al.'s definition for the qubit case.
 
 \begin{definition}\label{defn:fault_accounting}
-    Given two equivalent ZX-diagrams $D_1 = D_2$ with edges $E_1$ and $E_2$ respectively, we say the rewrite $D_1 \mapsto D_2$ is $w$-fault-accounting under a weighted noise model $\FFF$ iff, for all errors $F_2 \in \hat{\DDD}_{|E_2}$ of weight $\wt(F_2) \leq w$, either this error is detectable, or there is an equivalent error $F_1 \in \hat{\DDD}_{|E_1}$ with $\wt(F_1) \leq \wt(F_2)$.
+    Given two equivalent ZX-diagrams $D_1 = D_2$ with edges $E_1$ and $E_2$ respectively, we say the rewrite $D_1 \mapsto D_2$ is $w$-fault-accounting under a weighted noise model $\FFF$ iff, for all errors $F_2 \in \hat{\DDD}_{|E_2|}$ of weight $\wt(F_2) \leq w$, either this error is detectable, or there is an equivalent error $F_1 \in \hat{\DDD}_{|E_1|}$ with $\wt(F_1) \leq \wt(F_2)$.
     It's fault-accounting iff it's $w$-fault-accounting for all $w \in \RR$.
 \end{definition}
 
@@ -44,42 +54,103 @@ The definition of fault-equivalent diagrams straightforwardly generalises Rodatz
     They're fault-equivalent iff they're $w$-fault-equivalent for all $w \in \RR$.
 \end{definition}
 
-We can start with some simple examples and non-examples of fault-equivalent diagrams.
+We can then give a simple example and non-example of fault-equivalent diagrams.
 
-\begin{proposition}\label{prop:tadpole_rule_fe}
+\begin{proposition}\label{prop:id_rule_fault_equiv}
     The following diagrams are fault-equivalent under the ZX noise model:
-    \begin{equation}\label{eq:ghz_gets_tadpole}
-        \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state}
-        \quad = \quad
-        \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole}
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/fault_equivalence/id}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/fault_equivalence/id_green}
     \end{equation}
     \begin{proof}
-        \teague{Swap $q$ and $p$ round throughout! Gahhhh}
+        Denote these diagrams as $D_1 = D_2$.
+        Note that there are no detectors in either diagram.
+        Start with the trivial case of $D_2 \mapsto D_1$.
+        Any error $F_1$ on $D_1$ is immediately equivalent to `the same error' $F_2$ in $D_2$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/fault_equivalence/id_error}
+            ~~=~~
+            \tikzfig{qumodes/focked_up/fault_equivalence/id_green_error_left}
+        \end{equation}
+        Certainly here $\wt(F_2) = \wt(F_1)$.
+        In the other direction $D_1 \mapsto D_2$, a general error $F_2$ in $D_2$ is equivalent to the following error $F_1$ in $D_1$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/fault_equivalence/id_green_error_left_right}
+            ~~=~~
+            \tikzfig{qumodes/focked_up/fault_equivalence/id_error_combined}
+        \end{equation}
+        In this case, we have:
+        \begin{equation}
+            \begin{aligned}
+                \wt(F_1)
+                &= \twonorm{\tbinom{a + c}{b + d} + \tbinom{c}{d}} \\
+                &= \twonorm{\tbinom{a}{b} + \tbinom{c}{d}} \\
+                &\leq \twonorm{\tbinom{a}{b}} + \twonorm{\tbinom{c}{d}} \\
+                &= \onenorm{(\twonorm{\tbinom{a}{b}}, \twonorm{\tbinom{c}{d}})^T)} \\
+                &= \wt(F_1)
+            \end{aligned}
+        \end{equation}
+        So all errors in both directions are accounted for, hence the diagrams are fault-equivalent.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    The following diagrams are not fault-equivalent under the ZX noise model, for any $r \neq 0, 1$:
+    \begin{equation}
+        \tikzfig{qumodes/focked_up/fault_equivalence/identity_equals_multipliers}
+    \end{equation}
+    \begin{proof}
+        Denoting the diagrams as $D_1 = D_2$, the problem is going from $D_1$ to $D_2$.
+        This introduces a new internal edge.
+        If $|r| < 1$, a displacement $F_2 = \hat{D}(\binom{p}{0})$ on this edge suffices to cause a problem; it's undetectable, and there is no equivalent error $F_1$ in $D_1$ with weight less than or equal to that of $F_2$.
+        To see this, work backwards; if we start from the diagram $D_2^{F_2}$, note that no matter which way we `push' the error to a boundary edge in order to cancel out the multipliers, its weight will increase:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/fault_equivalence/red_fault_inside_multipliers_bad}
+        \end{equation}
+        Similarly if $|r| > 1$ a displacement $F_2 = \hat{D}(\binom{0}{q})$ causes a problem:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/fault_equivalence/green_fault_inside_multipliers_bad}
+        \end{equation}
+    \end{proof}
+\end{proposition}
+
+We'll give a few more fault-equivalent rewrites here for use later.
+This is the natural place in the text for these, but they're pretty dull statements and proofs, so feel free to skip over them and come back later if desired.
+
+\begin{proposition}\label{prop:tadpole_rule_fault_equiv}
+    The following diagrams are fault-equivalent under the ZX noise model:
+    \begin{equation}\label{eq:ghz_gets_tadpole}
+    \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state}
+    \quad = \quad
+    \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole}
+    \end{equation}
+    \begin{proof}
         Note there are no detectors in the diagram, so to check for fault-equivalence we just need to check if errors in one diagram are equivalent to errors in the other.
         In one direction there's nothing to prove; all errors $F$ in the left hand side diagram $D_1$ are exactly equivalent to the corresponding errors in the right hand side diagram $D_2$:
         \begin{equation}\label{eq:ghz_state_gets_tadpole_boundary_only_faults}
-            \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_gets_tadpole_boundary_only_faults}
+        \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_gets_tadpole_boundary_only_faults}
         \end{equation}
         In the other direction, the equality above also shows that errors that only act non-trivially on the boundary edges of $D_2$ are accounted for in $D_1$.
         So it remains to check errors that act non-trivially on the internal edge of $D_2$ too.
         First consider an error $\hat{D}(\binom{p}{q})$ that acts only on this internal edge; this is equivalent to a $\hat{D}(\binom{0}{q}) = \hat{Z}(q)$ error on any one edge of $D_1$:
         \begin{equation}\label{eq:ghz_state_with_tadpole_internal_fault_fine}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole_internal_fault_fine}
+        \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole_internal_fault_fine}
         \end{equation}
         Since $wt(\hat{D}(\binom{0}{q})) = \sqrt{q^2} = q$ is less than or equal to $wt(\hat{D}(\binom{p}{q})) = \sqrt{p^2 + q^2}$, this error is no problem.
         We can then use the above equation to show that any error $F_2$ in $D_2$ is accounted for in $D_1$.
         First, we see that $F_2$ is equivalent to an error $F_1$ in $D_1$:
         \begin{equation}\label{eq:ghz_state_with_tadpole_any_fault_fine}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole_any_fault_fine}
+        \tikzfig{qumodes/focked_up/fault_equivalence/ghz_state_with_tadpole_any_fault_fine}
         \end{equation}
         So we just have to show that $wt(F_1) \leq wt(F_2)$.
         \begin{equation}\label{eq:ghz_state_with_tadpole_any_fault_fine_inequality}
-            \begin{aligned}
-                wt(F_1) &\leq wt(F_2) \\
-                \iff \abs{\sqrt{p_1^2 + (q_1 + q_3)^2}} + \abs{\sqrt{p_2^2 + q_2^2}} &\leq \sum_{j=1}^3 \abs{\sqrt{p_j^2 + q_j^2}} \\
-                \iff \abs{\sqrt{p_1^2 + (q_1 + q_3)^2}} &\leq \abs{\sqrt{p_1^2 + q_1^2}} + \abs{\sqrt{p_3^2 + q_3^2}} \\
-                \iff \sqrt{p_1^2 + (q_1 + q_3)^2} &\leq \sqrt{p_1^2 + q_1^2} + \sqrt{p_3^2 + q_3^2} \\
-            \end{aligned}
+        \begin{aligned}
+            wt(F_1) &\leq wt(F_2) \\
+            \iff \abs{\sqrt{p_1^2 + (q_1 + q_3)^2}} + \abs{\sqrt{p_2^2 + q_2^2}} &\leq \sum_{j=1}^3 \abs{\sqrt{p_j^2 + q_j^2}} \\
+            \iff \abs{\sqrt{p_1^2 + (q_1 + q_3)^2}} &\leq \abs{\sqrt{p_1^2 + q_1^2}} + \abs{\sqrt{p_3^2 + q_3^2}} \\
+            \iff \sqrt{p_1^2 + (q_1 + q_3)^2} &\leq \sqrt{p_1^2 + q_1^2} + \sqrt{p_3^2 + q_3^2} \\
+        \end{aligned}
         \end{equation}
         To finish, note that by the triangle inequality for the 2-norm we have:
         \begin{equation}
@@ -92,184 +163,225 @@ We can start with some simple examples and non-examples of fault-equivalent diag
             \end{aligned}
         \end{equation}
     \end{proof}
-\end{proposition}
+    \end{proposition}
 
-\begin{proposition}
-    The following diagrams are not fault-equivalent under the ZX noise model, for any $r \neq 0, 1$:
-    \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/fault_equivalence/identity_equals_multipliers}
-    \end{equation}
+\begin{proposition}\label{prop:colour_change_rules_fault_equiv}
+    The colour change rules are fault-equivalent rewrites:
+    \begin{equation*}
+        \tikzfig{qumodes/prelims/zx/spider_red}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_green_fouriered}
+        \qqquad
+        \tikzfig{qumodes/prelims/zx/spider_green}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_red_fouriered}
+    \end{equation*}
     \begin{proof}
-        Denoting the diagrams as $D_1 = D_2$, the problem is going from $D_1$ to $D_2$.
-        This introduces a new internal edge.
-        If $|r| < 1$, a displacement $F_2 = \hat{D}(\binom{p}{0})$ on this edge suffices to cause a problem; it's undetectable, and there is no equivalent error $F_1$ in $D_1$ with weight less than or equal to that of $F_2$.
-        To see this, work backwards; if we start from the diagram $D_2^{F_2}$, note that no matter which way we `push' the error to a boundary edge, its weight will increase:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/red_fault_inside_multipliers_bad}
-        \end{equation}
-        Similarly if $|r| > 1$ a displacement $F_2 = \hat{D}(\binom{0}{q})$ causes a problem:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/green_fault_inside_multipliers_bad}
-        \end{equation}
-        \teague{this is really just a sketch proof, full proof TODO}
-    \end{proof}
-
-\end{proposition}
-
-\subsection{Fault-equivalent rewrites for GKP spiders}
-
-Suppose we have an $n$-legged $0_L$-labelled spider.
-What fault-equivalent diagram rewrites can we find?
-Let's again start with some instructive non-examples.
-
-\begin{proposition}
-    The following diagrams are not fault-equivalent, for any $n > 1$:
-    \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_tadpole}
-    \end{equation}
-    \begin{proof}
-        Going from left $D_1$ to right $D_2$ is the problem.
-        So consider a displacement error $F_2 = \hat{D}(\binom{p}{0})$ on the internal edge of $D_2$.
-        If $p \in \ZZ$ then it's a stabilizer of the diagram, so it's equivalent to the trivial error on $D_1$ and we're fine.
-        So assume $p \notin \ZZ$.
-        There are no detectors in $D_2$, so this is an undetectable error.
-        We can show that there's no equivalent error on $D_1$ of equal or smaller weight.
-        Specifically, can show the only equivalent errors on $D_1$ are of the form:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_tadpole_internal_fault_equivalent_faults}
-        \end{equation}
-        where $\sum_{j=1}^n q_j \in \ZZ$.
-        The error $F_1$ of this form with least weight is the one with all $q_j = 0$, which has weight:
-        \begin{equation}
-            wt(F_1) = \sum_{j=1}^n \abs{\sqrt{p^2 + 0}} = n|p|
-        \end{equation}
-        For $n > 1$ this is strictly greater than $wt(F_2) = \sqrt{p^2} = |p|$ (we can't have $p = 0$, because $p \notin \mathbb{Z}$).
-        \teague{TODO: actually show only equivalent errors are of this form!}
+        We just give the crux of the proof for the first rule (the other is proved identically).
+        Denoting the diagrams $D_1 = D_2$, the only potential problem is the introduction of new internal edges going from $D_1 \mapsto D_2$.
+        So consider any error $F_2 = \hat{X}(b)\hat{Z}(a)$ on one such internal edge.
+        This can be pushed through the (inverse) Fourier transform onto a boundary edge via \Cref{lem:fourier_commutation_rules}.
+        At most this may change the error to $\hat{X}(\pm b)\hat{Z}(\pm a)$, which has the same weight:
+        \begin{equation*}
+            \tikzfig{qumodes/focked_up/fault_equivalence/colour_change_internal_error}
+            ~~=~~
+            \tikzfig{qumodes/focked_up/fault_equivalence/colour_change_internal_error_pushed_out}
+            ~~=~~
+            \tikzfig{qumodes/focked_up/fault_equivalence/colour_change_internal_error_pushed_out_cc}
+        \end{equation*}
+        So now $F_1 = \hat{X}(\pm b)\hat{Z}(\pm a)$ is an equivalent error on $D_1$ with equal weight, so this error $F_2$ is accounted for.
+        To complete the proof, one should proceed as we did in \Cref{prop:tadpole_rule_fault_equiv} -- that is, one should consider a general error $F_2$ on $D_2$, use the above to push all errors onto boundary edges, and show the weight of this equivalent error $F_1$ in $D_1$ is less than or equal to that of $F_2$.
     \end{proof}
 \end{proposition}
 
-If we're still determined to `pull out' one-legged $0_L$-spiders from this $n$-legged $0_L$ spider (and we will see later why we might be), then perhaps the next thing to try is introducing a detector to the diagram:
-\begin{equation}\label{eq:0L_ghz_state_with_2_tadpoles_web}
-    \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_2_tadpoles}
-    \qqquad{\text{with}}\qqquad
-    \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_web}
-\end{equation}
-where $k \in \ZZ$.
-Now for any displacement error $F_2 = \hat{D}(\binom{p}{0})$ for non-stabilizer $p \notin \mathbb{Z}$ on just one internal edge of $D_2$, we can always choose $k$ such that $F_2$ is detectable:
-\begin{equation}
-    \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_web_single_internal_fault}
-\end{equation}
-Specifically, by \Cref{prop:detecting_web_detects_error} we have that $F_2$ is detectable iff $-pk \notin \ZZ$, i.e.\ iff $k \notin \frac{-1}{p} \cdot \mathbb{Z}$.
-So the only way we wouldn't be able to choose such an integer $k$ is if $\frac{-1}{p} \cdot \mathbb{Z}$ actually contains all the integers.
-But this is the case iff $p$ is an integer, which is precisely the form we said it can't have!
-
-However, there are errors we can't deal with; namely errors of the form:
-\begin{equation}\label{eq:0L_ghz_state_with_2_tadpoles_undetectable_error}
-    \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_double_internal_fault}
-\end{equation}
-
-\begin{proposition}\label{prop:0L_ghz_state_gets_2_tadpoles_fault_equivalent}
-    The following diagrams are not fault-equivalent, for any $n > 2$:
+\begin{proposition}\label{prop:multipliers_copy_rule_fault_equiv}
+    For $m \in {1, -1}$, the multiplier copy rules of \Cref{lem:multipliers_copy_rule} are fault-equivalent:
     \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_2_tadpoles}
+        \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_1}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_3}
+        \qqquad
+        \tikzfig{qumodes/prelims/zx/spider_red_multiplier_one_leg_1}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_red_multiplier_one_leg_3}
     \end{equation}
     \begin{proof}
-        First, we'll show that any non-trivial error $F_2$ of the form in~\eqref{eq:0L_ghz_state_with_2_tadpoles_undetectable_error} above on $D_2$ is undetectable, and then that there's no equivalent error of the same weight or less on $D_1$.
-        For the former, first note that detectors of the form in~\eqref{eq:0L_ghz_state_with_2_tadpoles_web} for $k \in \ZZ$ are the only possible detectors on $D_2$.
-        But by \Cref{prop:detecting_web_detects_error} no choice of $k$ exists that detects $F_2$, because we always have $kp - kp = 0 \in \ZZ$.
-        So as long as $p \notin \ZZ$, $F_2$ is both non-trivial and undetectable.
-        To prove the latter part, note via the gate copy rule of \Cref{prop:gate_copy} that the only errors $F_1$ in $D_1$ equivalent to $F_2$ are those of the form:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_equivalent_faults}
-        \end{equation}
-        where $\sum_{j=1}^n q_j \in \ZZ$ -- exactly as in the previous proof.
-        So things proceed as exactly as before: the error $F_1$ of this form with least weight is the one with all $q_j = 0$, which has weight:
-        \begin{equation}
-            wt(F_1) = \sum_{j=1}^n \abs{\sqrt{p^2 + 0}} = n|p|
-        \end{equation}
-        For $n > 2$ this is strictly greater than $wt(F_2) = 2\sqrt{p^2} = 2|p|$ (we can't have $p = 0$, because $p \notin \mathbb{Z}$).
+        First, for $m=1$, the multipliers are the identity, so there's nothing to prove.
+        For $m=-1$, the proof is exactly the same as in the previous proposition!
+        Because in this case the multipliers are dualisers~\eqref{eq:mult_default_is_dualiser}, so by \Cref{lem:fourier_commutation_rules} a displacement $\hat{X}(b)\hat{Z}(a)$ on an internal error commutes past the dualiser to become $\hat{X}(-b)\hat{Z}(-a)$, which has the same weight.
     \end{proof}
 \end{proposition}
 
-These non-examples suggest a fix, however -- just pull out at least as many 1-legged $0_L$ spiders $m$ as there are legs $n$ of the original spider.
-
-\begin{proposition}
-    The following diagrams are fault-equivalent under the ZX noise model, for any $n \geq 1$ and $m \geq n$:
+\begin{proposition}\label{prop:fourier_decomposed_dualiser_fault_equiv}
+    The following rules are fault-equivalent rewrites:
     \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_m_tadpoles}
+        \tikzfig{qumodes/focked_up/fault_equivalence/inv_fourier_dualiser_right}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/fault_equivalence/fourier}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/fault_equivalence/inv_fourier_dualiser_left}
+        ~~=~~
     \end{equation}
     \begin{proof}
-        The right hand side diagram $D_2$ has detecting webs only of the following form, for all integers $\sum_{j=1}^m {k_j} = 0$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_web}
-        \end{equation}
-        So consider any error $F_2$ consisting of position displacements on internal edges.
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_web_faults}
-        \end{equation}
-        We can assume each $p_j \notin \ZZ$, else that particular displacement $\hat{X}(p_j)$ is a stabilizer of the diagram.
-        Now, for each $j \geq 2$, consider the web $W_j$ obtained by setting $k_{1} = k$, $k_{j} = -k$, for some to-be-determined non-zero integer $k$, and all other $k_l$ to $0$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_pairwise_web_faults}
-        \end{equation}
-        By the same reasoning as in the non-example in \Cref{prop:0L_ghz_state_gets_2_tadpoles_fault_equivalent} above, if $F_2$ is to be undetectable, we must have $p_j = p_1$ for all $2 \leq j \leq m$.
-        So in fact the only undetectable such errors are of the form:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_undetectable_faults}
-        \end{equation}
-        But then these are equivalent to the following error $F_1$ in $D_1$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_undetectable_faults_fine}
-        \end{equation}
-        Indeed, as in the previous proofs, we can show this $F_1$ is in fact the least weight equivalent error.
-        Since it has weight $wt(F_1) = n|p|$, which is less than or equal to $wt(F_2) = m|p|$, error $F_2$ is accounted for.
+        Exactly the same as the last two proofs!
+        We're just pushing displacement errors past Fourier/inverse Fourier transforms, so weights don't change.
     \end{proof}
 \end{proposition}
 
-\subsection{Fault-equivalent rewrites for phaseless spiders}
-
-\begin{proposition}
-    The following diagrams are fault-equivalent, for even $n \geq 4$:
-    \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_fault_equivalent}
-    \end{equation}
-    \begin{proof}
-        \teague{Again just give crux of proof here, full proof appendix or somewhere - TODO.}
-        Denote the diagrams as $D_1 = D_2$.
-        Note that $D_2$ has Pauli webs of the following form, for all choices of $a_j \in \RR$ such that $\sum_{j=1}^{n/2} = 0$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_web}
-        \end{equation}
-        In particular, it has webs of the following form, for each $2 \leq j \leq \frac{n}{2}$ and all $a \in \RR$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_pairwise_web}
-        \end{equation}
-        Now, consider position displacement errors on internal edges of $D_2$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault}
-        \end{equation}
-        The existence of the web above means that if such an error is going to be undetectable, then by TODO it must satisfy $e^{i2\pi(a p_1 - a r_1 - a p_j + a r_j)} = 1$ for each $2 \leq j \leq \frac{n}{2}$ and all $a \in \RR$:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_pairwise_web_internal_fault}
-        \end{equation}
-        First note that if $a = 0$ this web is essentially non-existent so certainly can't detect this error.
-        So instead consider all other $a \neq 0$; we have that the error is undetectable iff:
-        \begin{equation}
-            \begin{aligned}
-                \phantom{\iff}&& e^{i2\pi(a p_1 - a r_1 - a p_j + a r_j)} &= 1 \\
-                \iff&& a(p_1 - r_1 - p_j + r_j) &\in \ZZ \\
-                \iff&& p_1 - r_1 - p_j + r_j &\in \frac{1}{a}\ZZ \\
-            \end{aligned}
-        \end{equation}
-        The only element in the intersection of $\cap_{0\neq a\in \RR} \frac{1}{a} \ZZ$ is $0$, so for the error to be undetectable we must have $p_1 - r_1 - p_j + r_j = 0$ exactly.
-        Our next trick is to note that we can pull out a stabilizer of the diagram; we can add a displacement error $D(p_1 - r_1)$ to each of the $\frac{n}{2}$ legs of the bottom left spider.
-        Combining this with the fact established above that $p_1 - r_1 + r_j = p_j$ for each $2 \leq j \leq \frac{n}{2}$, we get:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault_stabilizer_added}
-        \end{equation}
-        Finally, we can see that this is equivalent to an error $F_1$ on $D_1$ with weight equal to that of $F_2$, so error $F_2$ is accounted for:
-        \begin{equation}
-            \tikzfig{figures/qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault_fine}
-        \end{equation}
-    \end{proof}
-\end{proposition}
+%\subsection{Fault-equivalent rewrites for GKP spiders}
+%
+%Suppose we have an $n$-legged $0_L$-labelled spider.
+%What fault-equivalent diagram rewrites can we find?
+%Let's again start with some instructive non-examples.
+%
+%\begin{proposition}
+%    The following diagrams are not fault-equivalent, for any $n > 1$:
+%    \begin{equation}
+%        \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_tadpole}
+%    \end{equation}
+%    \begin{proof}
+%        Going from left $D_1$ to right $D_2$ is the problem.
+%        So consider a displacement error $F_2 = \hat{D}(\binom{p}{0})$ on the internal edge of $D_2$.
+%        If $p \in \ZZ$ then it's a stabilizer of the diagram, so it's equivalent to the trivial error on $D_1$ and we're fine.
+%        So assume $p \notin \ZZ$.
+%        There are no detectors in $D_2$, so this is an undetectable error.
+%        We can show that there's no equivalent error on $D_1$ of equal or smaller weight.
+%        Specifically, can show the only equivalent errors on $D_1$ are of the form:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_tadpole_internal_fault_equivalent_faults}
+%        \end{equation}
+%        where $\sum_{j=1}^n q_j \in \ZZ$.
+%        The error $F_1$ of this form with least weight is the one with all $q_j = 0$, which has weight:
+%        \begin{equation}
+%            wt(F_1) = \sum_{j=1}^n \abs{\sqrt{p^2 + 0}} = n|p|
+%        \end{equation}
+%        For $n > 1$ this is strictly greater than $wt(F_2) = \sqrt{p^2} = |p|$ (we can't have $p = 0$, because $p \notin \mathbb{Z}$).
+%        \teague{TODO: actually show only equivalent errors are of this form!}
+%    \end{proof}
+%\end{proposition}
+%
+%If we're still determined to `pull out' one-legged $0_L$-spiders from this $n$-legged $0_L$ spider (and we will see later why we might be), then perhaps the next thing to try is introducing a detector to the diagram:
+%\begin{equation}\label{eq:0L_ghz_state_with_2_tadpoles_web}
+%    \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_2_tadpoles}
+%    \qqquad{\text{with}}\qqquad
+%    \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_web}
+%\end{equation}
+%where $k \in \ZZ$.
+%Now for any displacement error $F_2 = \hat{D}(\binom{p}{0})$ for non-stabilizer $p \notin \mathbb{Z}$ on just one internal edge of $D_2$, we can always choose $k$ such that $F_2$ is detectable:
+%\begin{equation}
+%    \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_web_single_internal_fault}
+%\end{equation}
+%Specifically, by \Cref{prop:detecting_web_detects_error} we have that $F_2$ is detectable iff $-pk \notin \ZZ$, i.e.\ iff $k \notin \frac{-1}{p} \cdot \mathbb{Z}$.
+%So the only way we wouldn't be able to choose such an integer $k$ is if $\frac{-1}{p} \cdot \mathbb{Z}$ actually contains all the integers.
+%But this is the case iff $p$ is an integer, which is precisely the form we said it can't have!
+%
+%However, there are errors we can't deal with; namely errors of the form:
+%\begin{equation}\label{eq:0L_ghz_state_with_2_tadpoles_undetectable_error}
+%    \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_double_internal_fault}
+%\end{equation}
+%
+%\begin{proposition}\label{prop:0L_ghz_state_gets_2_tadpoles_fault_equivalent}
+%    The following diagrams are not fault-equivalent, for any $n > 2$:
+%    \begin{equation}
+%        \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_2_tadpoles}
+%    \end{equation}
+%    \begin{proof}
+%        First, we'll show that any non-trivial error $F_2$ of the form in~\eqref{eq:0L_ghz_state_with_2_tadpoles_undetectable_error} above on $D_2$ is undetectable, and then that there's no equivalent error of the same weight or less on $D_1$.
+%        For the former, first note that detectors of the form in~\eqref{eq:0L_ghz_state_with_2_tadpoles_web} for $k \in \ZZ$ are the only possible detectors on $D_2$.
+%        But by \Cref{prop:detecting_web_detects_error} no choice of $k$ exists that detects $F_2$, because we always have $kp - kp = 0 \in \ZZ$.
+%        So as long as $p \notin \ZZ$, $F_2$ is both non-trivial and undetectable.
+%        To prove the latter part, note via the gate copy rule of \Cref{prop:gate_copy} that the only errors $F_1$ in $D_1$ equivalent to $F_2$ are those of the form:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_2_tadpoles_equivalent_faults}
+%        \end{equation}
+%        where $\sum_{j=1}^n q_j \in \ZZ$ -- exactly as in the previous proof.
+%        So things proceed as exactly as before: the error $F_1$ of this form with least weight is the one with all $q_j = 0$, which has weight:
+%        \begin{equation}
+%            wt(F_1) = \sum_{j=1}^n \abs{\sqrt{p^2 + 0}} = n|p|
+%        \end{equation}
+%        For $n > 2$ this is strictly greater than $wt(F_2) = 2\sqrt{p^2} = 2|p|$ (we can't have $p = 0$, because $p \notin \mathbb{Z}$).
+%    \end{proof}
+%\end{proposition}
+%
+%These non-examples suggest a fix, however -- just pull out at least as many 1-legged $0_L$ spiders $m$ as there are legs $n$ of the original spider.
+%
+%\begin{proposition}
+%    The following diagrams are fault-equivalent under the ZX noise model, for any $n \geq 1$ and $m \geq n$:
+%    \begin{equation}
+%        \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_gets_m_tadpoles}
+%    \end{equation}
+%    \begin{proof}
+%        The right hand side diagram $D_2$ has detecting webs only of the following form, for all integers $\sum_{j=1}^m {k_j} = 0$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_web}
+%        \end{equation}
+%        So consider any error $F_2$ consisting of position displacements on internal edges.
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_web_faults}
+%        \end{equation}
+%        We can assume each $p_j \notin \ZZ$, else that particular displacement $\hat{X}(p_j)$ is a stabilizer of the diagram.
+%        Now, for each $j \geq 2$, consider the web $W_j$ obtained by setting $k_{1} = k$, $k_{j} = -k$, for some to-be-determined non-zero integer $k$, and all other $k_l$ to $0$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_pairwise_web_faults}
+%        \end{equation}
+%        By the same reasoning as in the non-example in \Cref{prop:0L_ghz_state_gets_2_tadpoles_fault_equivalent} above, if $F_2$ is to be undetectable, we must have $p_j = p_1$ for all $2 \leq j \leq m$.
+%        So in fact the only undetectable such errors are of the form:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_undetectable_faults}
+%        \end{equation}
+%        But then these are equivalent to the following error $F_1$ in $D_1$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/0L_ghz_state_with_m_tadpoles_undetectable_faults_fine}
+%        \end{equation}
+%        Indeed, as in the previous proofs, we can show this $F_1$ is in fact the least weight equivalent error.
+%        Since it has weight $wt(F_1) = n|p|$, which is less than or equal to $wt(F_2) = m|p|$, error $F_2$ is accounted for.
+%    \end{proof}
+%\end{proposition}
+%
+%\subsection{Fault-equivalent rewrites for phaseless spiders}
+%
+%\begin{proposition}
+%    The following diagrams are fault-equivalent, for even $n \geq 4$:
+%    \begin{equation}
+%        \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_fault_equivalent}
+%    \end{equation}
+%    \begin{proof}
+%        \teague{Again just give crux of proof here, full proof appendix or somewhere - TODO.}
+%        Denote the diagrams as $D_1 = D_2$.
+%        Note that $D_2$ has Pauli webs of the following form, for all choices of $a_j \in \RR$ such that $\sum_{j=1}^{n/2} = 0$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_web}
+%        \end{equation}
+%        In particular, it has webs of the following form, for each $2 \leq j \leq \frac{n}{2}$ and all $a \in \RR$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_pairwise_web}
+%        \end{equation}
+%        Now, consider position displacement errors on internal edges of $D_2$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault}
+%        \end{equation}
+%        The existence of the web above means that if such an error is going to be undetectable, then by TODO it must satisfy $e^{i2\pi(a p_1 - a r_1 - a p_j + a r_j)} = 1$ for each $2 \leq j \leq \frac{n}{2}$ and all $a \in \RR$:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_pairwise_web_internal_fault}
+%        \end{equation}
+%        First note that if $a = 0$ this web is essentially non-existent so certainly can't detect this error.
+%        So instead consider all other $a \neq 0$; we have that the error is undetectable iff:
+%        \begin{equation}
+%            \begin{aligned}
+%                \phantom{\iff}&& e^{i2\pi(a p_1 - a r_1 - a p_j + a r_j)} &= 1 \\
+%                \iff&& a(p_1 - r_1 - p_j + r_j) &\in \ZZ \\
+%                \iff&& p_1 - r_1 - p_j + r_j &\in \frac{1}{a}\ZZ \\
+%            \end{aligned}
+%        \end{equation}
+%        The only element in the intersection of $\cap_{0\neq a\in \RR} \frac{1}{a} \ZZ$ is $0$, so for the error to be undetectable we must have $p_1 - r_1 - p_j + r_j = 0$ exactly.
+%        Our next trick is to note that we can pull out a stabilizer of the diagram; we can add a displacement error $D(p_1 - r_1)$ to each of the $\frac{n}{2}$ legs of the bottom left spider.
+%        Combining this with the fact established above that $p_1 - r_1 + r_j = p_j$ for each $2 \leq j \leq \frac{n}{2}$, we get:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault_stabilizer_added}
+%        \end{equation}
+%        Finally, we can see that this is equivalent to an error $F_1$ on $D_1$ with weight equal to that of $F_2$, so error $F_2$ is accounted for:
+%        \begin{equation}
+%            \tikzfig{qumodes/focked_up/fault_equivalence/n_leg_ghz_state_internal_fault_fine}
+%        \end{equation}
+%    \end{proof}
+%\end{proposition}

@@ -12,17 +12,21 @@ Whereas for qubits we started with the green and red spiders, for qumodes we wil
     \sum_{n \in \NN_0} f(n) \ket{n}_F^{\otimes m}\bra{n}_F^{\otimes l}
 \end{align}
 Here $f$ can be any function $\NN_0 \to \CC$.
+Anytime the function label is omitted from a spider, it means the function is the map $x \mapsto 1$.
 Throughout, we will use the shorthand $\isarg{x}$ to denote that $x$ is the variable in a single-argument function.
 For example, the expression $i^{\isarg{n}}$ is a shorthand for the function $n \mapsto i^{n}$.
 Examples of familiar objects defined using the Fock basis are:
 \begin{equation}\label{eq:fock_spider_examples}
     \tikzfig{qumodes/prelims/zx/state_fock} ~~=~~ \ket{m}_F
     \qqquad
-    \tikzfig{qumodes/prelims/zx/fourier_transform} ~~=~~ \mathcal{F}
+    \tikzfig{qumodes/prelims/zx/fourier_transform_inverse} ~~=~~ \mathcal{F}
     \qqquad
-    \tikzfig{qumodes/prelims/zx/fourier_transform_inverse} ~~=~~ \mathcal{F}^{-1}
+    \tikzfig{qumodes/prelims/zx/fourier_transform} ~~=~~ \mathcal{F}^{-1}
 \end{equation}
-Anytime the function label is omitted from a spider, it means the function is the map $x \mapsto 1$.
+The Fourier and inverse Fourier transforms can be generalised to a rotation gate:
+\begin{equation}\label{eq:rotation_gate}
+    \tikzfig{qumodes/prelims/zx/rotation} ~~=~~ \hat{R}(\theta)
+\end{equation}
 Next we introduce the green and red spiders:
 \begin{align}\label{eq:green_and_fock_spiders_defn}
     \tikzfig{qumodes/prelims/zx/spider_green_braces}
@@ -39,9 +43,32 @@ These two spiders are related via Fourier transforms; graphically, this is:
     \quad=\quad
     \tikzfig{qumodes/prelims/zx/spider_green_fouriered}
 \end{equation}
-Letting the function $\chi_a(x) = e^{-i2\pi ax}$, we can write down some familiar objects via the green and red spiders:
+Letting the function $\chi_a(x) = e^{-i2\pi ax}$, we can write down some familiar objects via the green and red spiders.
+First, position and momentum eigenstates:
 \begin{equation}
-    TODO
+    \begin{aligned}
+        \tikzfig{qumodes/prelims/zx/state_red_chi}
+        &= \int_\mathbb{R} dp\ e^{-i2\pi qp} \ket{p}_P
+        = \mathcal{F} \ket{q}_P
+        = \ket{q}_Q \\
+        \tikzfig{qumodes/prelims/zx/state_green_chi}
+        &= \int_\mathbb{R} dq\ e^{i2\pi pq} \ket{q}_Q
+        = \mathcal{F}^{-1} \ket{p}_Q
+        = \ket{p}_P
+    \end{aligned}
+\end{equation}
+Next, displacements, via the spectral theorem of \Cref{eq:position_momentum_spectral_theorem}:
+\begin{equation}
+    \begin{aligned}
+        \tikzfig{qumodes/prelims/zx/gate_red_chi}
+        &= \int_\mathbb{R} dp\ e^{-i2\pi qp} \ket{p}_P \bra{p}_P
+        = e^{-i2\pi q\hat{p}}
+        = \hat{X}(q) \\
+        \tikzfig{qumodes/prelims/zx/gate_green_chi}
+        &= \int_\mathbb{R} dq\ e^{i2\pi pq} \ket{q}_Q \bra{q}_Q
+        = e^{i2\pi p\hat{q}}
+        = \hat{Z}(p)
+    \end{aligned}
 \end{equation}
 Importantly, unlike in the qubit case, the green cup is not equal to the red cup:
 \begin{equation}
@@ -50,9 +77,33 @@ Importantly, unlike in the qubit case, the green cup is not equal to the red cup
     \tikzfig{qubits/prelims/zx/state_bell_red}
 \end{equation}
 So whereas in the qubit case we could define the `spiderless' cup to be the green or red cup without any problems, we can't do this for qumodes.
-There are multiple ways to handle this -- the most common is just to define the spiderless cup to be the green cup.
-We won't take this approach -- we'll instead forbid cups and caps from being spiderless.
-Whatever resolution we choose, a consequence is that we lose the very desirable property that only connectivity matters!
+The most common solution here is just to define the spiderless cup to be the green cup.
+We will essentially take this approach -- we'll forbid cups and caps from being explicitly spiderless, but update any definitions that relied on spiderless cups and caps to use green ones.
+For example, we said in the qubit case the transpose of a diagram was formed by bending outputs to inputs and vice versa using spiderless cups and caps.
+In the Focked up case, we'll use green cups and caps:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/diagram}
+    ~~\xmapsto{(-)^T}~~
+    \tikzfig{qumodes/prelims/zx/diagram_transposed}
+    ~~\eqqcolon~~
+    \tikzfig{qumodes/prelims/zx/diagram_transposed_straightened}
+\end{equation}
+%The result of this is that green cups and caps will behave exactly like spiderless ones did -- for example, gates can still slide around green cups and caps like beads on a string:
+%\begin{equation}
+%    \tikzfig{qumodes/prelims/zx/cup_green_gate_top}
+%    ~~=~~
+%    \tikzfig{qumodes/prelims/zx/cup_green_gate_top_unyanked}
+%    ~~=~~
+%    \tikzfig{qumodes/prelims/zx/cup_green_gate_top_unyanked_dashed}
+%    ~~=~~
+%    \tikzfig{qumodes/prelims/zx/cup_green_gate_top_unyanked_yanked}
+%\end{equation}
+%This isn't true for red cups and caps, however.
+A consequence of this is that we lose the very desirable property that only connectivity matters!
+Specifically, the cost of changing the direction of an edge between a red and green spider is the addition of a Fock gate labelled $(-1)^{\isarg{n}}$ (sometimes called a \textit{dualiser}) to that edge:
+\begin{equation}\label{eq:spider_green_red_change_order_adds_dualiser}
+    \tikzfig{qumodes/prelims/zx/spider_green_red_change_order_short}
+\end{equation}
 For example, we can no longer draw (the CV analogue of) the CNOT gate with a vertical edge, because it's ambiguous which of two unequal diagrams this would mean:
 \begin{equation}
     \tikzfig{qumodes/prelims/zx/cnot_green_first}
@@ -62,14 +113,11 @@ For example, we can no longer draw (the CV analogue of) the CNOT gate with a ver
 We must therefore make clear whether an edge is an input or output of a given spider.
 This could be indicated by making edges directed, which restores only connectivity matters, but I personally find this even more confusing:
 \begin{equation}
-    TODO
+    \tikzfig{qumodes/prelims/zx/cnot_green_first_arrow}
+    \quad \coloneqq \quad
+    \tikzfig{qumodes/prelims/zx/cnot_red_first}
 \end{equation}
 So instead we'll define that edges incident to the leftmost half of a generator are strictly inputs, and edges incident to the rightmost half of a generator are strictly outputs.
-The cost of changing the direction of an edge between a red and green spider is the addition of a \textit{dualiser} to that edge:
-\begin{equation}\label{eq:}
-    TODO
-\end{equation}
-
 The final non-trivial generator we'll need is the multiplier:
 \begin{equation}\label{eq:multiplier_defn}
     \tikzfig{qumodes/prelims/zx/multiplier}
@@ -85,10 +133,62 @@ This can be expressed in terms of existing generators:
         \tikzfig{qumodes/prelims/zx/multiplier_decomposed_0_padded} &\text{ if $m = 0$}
     \end{cases}
 \end{equation}
+The multiplier appears in the diagrams for the $\CX(s)$ and $\CZ(s)$ gates:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/cxs} ~~=~~ \CX(s)
+    \qqqquad
+    \tikzfig{qumodes/prelims/zx/czs} ~~=~~ \CZ(s)
+\end{equation}
+When $s=1$, it can be checked that the multiplier is just the identity, so we get
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/cx} ~~=~~ \CX
+    \qqqquad
+    \tikzfig{qumodes/prelims/zx/cz} ~~=~~ \CZ
+\end{equation}
 
-As with qubits, vertical and horizontal composition of diagrams correspond respectively to tensor products and composition of linear maps.
-Conjugation of a diagram corresponds to conjugating all labels, transposition corresponds to reflection across a vertical line, and taking the adjoint means performing both of these operations.
+Conjugation of a diagram corresponds to conjugating all labels, transposition (as we've seen) corresponds to reflection across a vertical line, and taking the adjoint means performing both of these operations.
 We also classify the identity and SWAP maps as generators.
+
+\subsection{Combining diagrams}
+
+We can again compose diagrams vertically (tensor product) and horizontally (composition of operators).
+But it's worth discussing briefly what operator composition in particular means, given that we'll end up with expressions with continuous functionals in them.
+For example, expressions that might reasonably cause us a headache are those of the form:
+\begin{equation}
+    \begin{aligned}
+        \tikzfig{qumodes/prelims/zx/gate_fg_green}
+        ~~&= \int_{\mathbb{R}} dq\ g(q) \ket{q}_Q \bra{q}_Q \circ \int_{\mathbb{R}} dq'\ f(q') \ket{q'}_Q \bra{q'}_Q \\
+        &= \int_{\mathbb{R}} \int_{\mathbb{R}} dq\ dq' g(q) f(q') \ket{q}_Q \prepostsub{Q}{\braket{q|q'}}{Q} \bra{q'}_Q \\
+    \end{aligned}
+\end{equation}
+So here we have a functional $\prepostsub{Q}{\braket{q|q'}}{Q} = \delta_{q - q'}$ under an integral -- it's not at all clear what this could mean!
+Annoyingly, the interpretation here is that the integral is no longer an actual integral, but rather very involved notation for functional application.
+That is, for functional $F$, the expression $\int dx f(x) F$ is just alternative notation for $F(f)$.
+So in the scenario above we can interpret this expression as:
+\begin{equation}
+    \begin{aligned}
+        &\phantom{=} \int_{\mathbb{R}} \int_{\mathbb{R}} dq\ dq' g(q) f(q') \ket{q}_Q \prepostsub{Q}{\braket{q|q'}}{Q} \bra{q'}_Q \\
+        &= \int_{\mathbb{R}} dq\ g(q) \ket{q}_Q  \int_{\mathbb{R}} dq'\ f(q') \prepostsub{Q}{\braket{q|q'}}{Q} \bra{q'}_Q \\
+        &= \int_{\mathbb{R}} dq\ g(q) \ket{q}_Q  \int_{\mathbb{R}} dq'\ f(q') \bra{q'}_Q \delta_{q - q'}  \\
+    \end{aligned}
+\end{equation}
+Thus in the expression $\int_{\mathbb{R}} dq'\ f(q') \bra{q'}_Q \delta_{q - q'}$ we're really saying apply the functional $\delta_{q - q'}$ to the function $f(q') \bra{q'}_Q$.
+But this is still ill-defined, because $f(q') \bra{q'}_Q$ isn't a Schwartz function -- it's not even a function.
+So the application of $\delta_{q - q'}$ to this (evaluation at $q' = q$) is purely formal, giving the result $f(q) \bra{q}_Q$.
+Therefore the final expression is:
+\begin{equation}
+    \begin{aligned}
+        &\phantom{=} \int_{\mathbb{R}} dq\ g(q) \ket{q}_Q  \int_{\mathbb{R}} dq'\ f(q') \bra{q'}_Q \delta_{q - q'} \\
+        &= \int_{\mathbb{R}} dq\ g(q) \ket{q}_Q  f(q) \bra{q}_Q \\
+        &= \int_{\mathbb{R}} dq\ g(q) f(q) \ket{q}_Q \bra{q}_Q
+    \end{aligned}
+\end{equation}
+We'll see in a second that this does indeed match up with what we'd get by graphically simplifying the expression:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/gate_fg_green}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/gate_fg_green_fused}
+\end{equation}
 
 \subsection{Rewrite rules}
 
@@ -104,6 +204,12 @@ Here we give the subset of those rules that involve the three spider species and
     \tikzfig{qumodes/prelims/zx/spider_fock_unfused}
     ~~=~~
     \tikzfig{qumodes/prelims/zx/spider_fock_fused}
+\end{equation}
+\vspace{5pt}
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/spider_red}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/spider_green_fouriered}
 \end{equation}
 \vspace{5pt}
 \begin{equation}\label{eq:copy_state_green_red}
@@ -128,7 +234,7 @@ Here we give the subset of those rules that involve the three spider species and
     \tikzfig{qumodes/prelims/zx/bialgebra_bipartite}
 \end{equation}
 \vspace{5pt}
-\begin{equation}
+\begin{equation}\label{eq:multiplier_spider_rules}
     \tikzfig{qumodes/prelims/zx/spider_green_multiplied_unfused}
     ~~=~~
     \tikzfig{qumodes/prelims/zx/spider_green_multiplied_fused}
@@ -175,7 +281,7 @@ Here we give the subset of those rules that involve the three spider species and
     ~~=~~ \tikzfig{qumodes/prelims/zx/id}
 \end{equation}
 \vspace{5pt}
-\begin{equation}
+\begin{equation}\label{eq:multiplier_rules}
     \tikzfig{qumodes/prelims/zx/multiplier_unmultiplied}
     ~~=~~
     \tikzfig{qumodes/prelims/zx/multiplier_multiplied}
@@ -195,29 +301,35 @@ Many of these rules will look familiar from the qubit case.
 Numerous useful rules can then be derived from these.
 For example, we can extend the green and red `state copy' rules~\eqref{eq:copy_state_green_red} to `gate copy' rules.
 This requires a couple of preparatory lemmas.
-Will use shorthand:
+We'll use the shorthand:
 \begin{equation}\label{eq:mult_default}
 \tikzfig{qumodes/focked_up/pauli_webs/right_mult_default}
 \qqqqqquad
 \tikzfig{qumodes/focked_up/pauli_webs/left_mult_default}
 \end{equation}
 
-Recall also that:
-\begin{equation}\label{eq:mult_inverse_mult_fourier}
-\tikzfig{qumodes/focked_up/pauli_webs/mult_inverse}
-\qqqqqquad
-\tikzfig{qumodes/focked_up/pauli_webs/mult_fourier}
+The following identities can also be proved (\cite[Figure 2]{TODO}):
+\begin{equation}\label{eq:multiplier_rules_corollaries}
+    \begin{gathered}
+        \tikzfig{qumodes/focked_up/pauli_webs/mult_inverse}
+        \qqqqqquad
+        \tikzfig{qumodes/focked_up/pauli_webs/mult_fourier} \\[10pt]
+        \tikzfig{qumodes/prelims/zx/multipliers_facing}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/id}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/multipliers_facing_away}
+    \end{gathered}
 \end{equation}
 
-Hence:
-\begin{equation}\label{eq:mult_default_with_fourier}
+So we have a shorthand for the dualiser:
+\begin{equation}\label{eq:mult_default_is_dualiser}
 \tikzfig{qumodes/focked_up/pauli_webs/mult_default_with_fourier}
 \end{equation}
 
 Now, consider the case of `copying' a position or momentum displacement operator through a one-legged spider.
 
 \begin{lemma}\label{lem:gate_absorb}
-\teague{Check plus/minus signs really correct}
 \begin{equation}\label{eq:gate_absorb}
 \tikzfig{qumodes/focked_up/pauli_webs/red_gate_absorb}
 \qqquad
@@ -226,14 +338,14 @@ Now, consider the case of `copying' a position or momentum displacement operator
 \begin{proof}
     Start with the first equation.
     We can change the one-legged spider's colour twice, using fusion in between:
-    \begin{equation}\label{eq:gate_absorb_red_proof}
+    \begin{equation*}\label{eq:gate_absorb_red_proof}
     \tikzfig{qumodes/prelims/zx/gate_absorb_red_proof_1}
-    \end{equation}
+    \end{equation*}
     Then just use the standard Fourier transform property introduced in \Cref{eq:fourier_chi_relations}: $\mathcal{F}^{-1}(\mathcal{F}(f(x)) \cdot \chi_a) = f(x - a)$.
     The second equation is proved almost identically, making use of the dual property $\mathcal{F}(\mathcal{F}^{-1}(f(x)) \cdot \overline{\chi}_a) = f(x - a)$:
-    \begin{equation}\label{eq:gate_absorb_green_proof}
+    \begin{equation*}
     \tikzfig{qumodes/prelims/zx/gate_absorb_green_proof_1}
-    \end{equation}
+    \end{equation*}
 \end{proof}
 \end{lemma}
 
@@ -263,43 +375,60 @@ Then consider the case of copying through a phaseless spider.
 Now we can prove the full result.
 
 \begin{proposition}\label{prop:gate_copy}
-\teague{Check plus/minus signs really correct}
-\begin{equation}\label{eq:gate_copy}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy}
-\qqquad
-\tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy}
-\end{equation}
+\begin{equation*}\label{eq:gate_copy}
+    \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy}
+    \qqquad
+    \tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy}
+\end{equation*}
 \begin{proof}
-    \begin{equation}\label{eq:red_gate_copy_proof}
+    Again both results are proved identically, so we just show one:
+    \begin{equation*}\label{eq:red_gate_copy_proof}
     \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_proof}
-    \end{equation}
+    \end{equation*}
 \end{proof}
 \end{proposition}
 
 This in turn can be extended to the case where just one of many input and output legs has a position or momentum displacement on it.
-
 \begin{lemma}\label{lem:red_gate_copy_multi_inputs}
-\begin{equation}\label{eq:red_gate_copy_multi_inputs}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input}
-\end{equation}
+    \begin{equation}\label{eq:red_gate_copy_multi_inputs}
+        \begin{aligned}
+            \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input}
+            \\[20pt]
+            \tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy_multi_input}
+        \end{aligned}
+    \end{equation}
+    \begin{proof}
+        Again, just prove one colour.
+        Turn input legs into output legs via unfusion, so we can apply the previous lemma:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input_proof_1}
+        \end{equation}
+        Now effecively turn them back into input legs -- this involves changing whether edges between red and green spiders are inputs of the red one and outputs of the green one and vice versa, and we said in \Cref{eq:spider_green_red_change_order_adds_dualiser} that the cost of this is the addition of dualisers, which can then be absorbed by changing $a \mapsto -a$:
+        \begin{equation}
+            \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_multi_input_proof_2}
+        \end{equation}
+    \end{proof}
 \end{lemma}
 
 Or we can rephrase this in terms of displacement operators `stabilizing' the diagram, up to changing the argument to $f$.
 
 \begin{lemma}\label{lem:red_gate_copy_cancel}
-\begin{equation}\label{eq:red_gate_copy_cancel}
-\tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_cancel}
-\end{equation}
+    \begin{equation}\label{eq:red_gate_copy_cancel}
+        \begin{aligned}
+            \tikzfig{qumodes/focked_up/pauli_webs/red_gate_copy_cancel} \\[20pt]
+            \tikzfig{qumodes/focked_up/pauli_webs/green_gate_copy_cancel}
+        \end{aligned}
+    \end{equation}
 \end{lemma}
 
 An important special case of this rule is the commutation relation between displacement operators $\hat{X}(a)$ and $\hat{Z}(b)$.
 
 \begin{lemma}\label{lem:displacement_commutation_relation_zx}
     \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_red_green}
+        \tikzfig{qumodes/focked_up/pauli_webs/displacements_commute_red_green}
     \end{equation}
     \begin{equation}
-        \tikzfig{figures/qumodes/focked_up/pauli_webs/displacements_commute_green_red}
+        \tikzfig{qumodes/focked_up/pauli_webs/displacements_commute_green_red}
     \end{equation}
     \begin{proof}
         The first follows from the first equation of \Cref{lem:gate_copy_blank_spider}, with $f(x) = \overline{\chi}_a(x) = e^{i2\pi ax}$.
@@ -317,6 +446,108 @@ An important special case of this rule is the commutation relation between displ
 \end{lemma}
 
 These rules are key to defining and working with Focked up Pauli webs, as we'll see in the next chapter.
+The next few rules will be useful when we discuss fault-equivalence shortly -- in particular for the measurement-based implementation of the square single-mode GKP code in \Cref{subsec:measurement-based-gkp-code}.
+
+\begin{lemma}\label{lem:colour_change_rule_reverse}
+    The following equality holds in the ZX-calculus:
+    \begin{equation}
+        \tikzfig{qumodes/prelims/zx/spider_green}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_red_fouriered}
+    \end{equation}
+    \begin{proof}
+        Via Fock spider fusion and the original colour change rule:
+        \begin{equation}
+            \tikzfig{qumodes/prelims/zx/spider_green}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/spider_green_fouriered_twice}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/spider_red_fouriered}
+        \end{equation}
+    \end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lem:multipliers_copy_rule}
+    The following equalities hold in the ZX-calculus:
+    \begin{equation}
+        \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_1}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_3}
+        \qqquad
+        \tikzfig{qumodes/prelims/zx/spider_red_multiplier_one_leg_1}
+        ~~=~~
+        \tikzfig{qumodes/prelims/zx/spider_red_multiplier_one_leg_3}
+    \end{equation}
+    \begin{proof}
+        Via~\eqref{eq:multiplier_rules_corollaries} and~\eqref{eq:multiplier_spider_rules}.
+        We just show the green case -- the red case is identical.
+        \begin{equation}\label{eq:}
+            \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_1}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_2}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/spider_green_multiplier_one_leg_3}
+        \end{equation}
+    \end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lem:fourier_commutation_rules}
+    \begin{equation}
+        \begin{aligned}
+            \tikzfig{qumodes/prelims/zx/gate_green_f_fourier_commute_1}
+            &~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_fourier_commute_3}
+            \\[10pt]
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_1}
+            &~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_7}
+            \\[10pt]
+            \tikzfig{qumodes/prelims/zx/gate_red_f_fourier_commute_1}
+            &~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_red_f_fourier_commute_2}
+            \\[10pt]
+            \tikzfig{qumodes/prelims/zx/gate_red_f_inv_fourier_commute_1}
+            &~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_red_f_inv_fourier_commute_2}
+        \end{aligned}
+    \end{equation}
+    \begin{proof}
+        In each pair of equations, one's dead simple to prove, while the other requires some extra steps.
+        We'll just prove the first two -- the bottom two are proved identically.
+        For the easier one, we just use the colour change rule and tidy up with Fock fusion:
+        \begin{equation*}
+            \tikzfig{qumodes/prelims/zx/gate_green_f_fourier_commute_1}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_fourier_commute_2}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_fourier_commute_3}
+        \end{equation*}
+        For the more involved one, we start in the same way, but rather than fusion giving us an identity wire we get a dualiser:
+        \begin{equation*}
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_1}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_2}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_3}
+        \end{equation*}
+        Recalling that the dualiser is just the multiplier with $-1$ label~\eqref{eq:mult_default_is_dualiser}, we can use~\eqref{lem:multipliers_copy_rule} to commute this through the red spider at the cost of negating the function argument:
+        \begin{equation*}
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_3}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_4}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_5}
+        \end{equation*}
+        Now we just use fusion to tidy up:
+        \begin{equation*}
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_5}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_6}
+            ~~=~~
+            \tikzfig{qumodes/prelims/zx/gate_green_f_inv_fourier_commute_7}
+        \end{equation*}
+    \end{proof}
+\end{lemma}
 
 \subsection{The Gaussian + combs fragment}
 
@@ -342,7 +573,7 @@ So:
        0 &\text{ else}
    \end{cases}
 \end{equation}
-We call spiders with these labels \textit{comb spiders}:
+We call spiders with these labels \textit{comb spiders}, per the discussion earlier around \Cref{eq:dirac_comb_as_real_function}:
 \begin{align}\label{eq:green_and_red_comb_spiders}
     \tikzfig{qumodes/prelims/zx/spider_green_comb}
     \quad &= \quad
@@ -351,20 +582,81 @@ We call spiders with these labels \textit{comb spiders}:
     \quad &= \quad
     \sum_{k \in \ZZ} \ket{c + kr}_P^{\otimes m} \bra{c + kr}_P^{\otimes l}
 \end{align}
-The name comes from the fact that one-legged comb spiders are infinite sums of Dirac distributions $\ket{q}_Q$ (in the green spider case) and the Fourier transform of these $\ket{p}_P$ (in the red spider case).
-The Dirac distribution $\delta_c$ is often informally pictured as the limit of the Gaussian curve $\delta_{c,\epsilon}(x) = (2\pi\epsilon)^{-1/2} e^{-(x-c)^2/(2\epsilon)}$ as $\epsilon \to 0^+$, i.e.\ as this gets narrower and taller.
-Hence a sum of a regularly spaced set of such distributions as in the spiders below resembles a comb.
-\begin{align}\label{eq:green_and_red_comb_states}
-    \tikzfig{qumodes/prelims/zx/state_green_comb}
-    \quad &= \quad
-    \sum_{k \in \ZZ} \ket{c + kr}_Q \\
-    \tikzfig{qumodes/prelims/zx/state_red_comb}
-    \quad &= \quad
-    \sum_{k \in \ZZ} \ket{c + kr}_P
-\end{align}
 
-\subsection{GKP spiders}
+In particular, we can represent codestates of GKP codes as comb spiders.
+For example, in \Cref{eq:single_mode_square_GKP_computational_codestates} we determined the codestates $\ket{0}_L$ and $\ket{1}_L$ of the square single-mode GKP code, which we will henceforth denote with a square subscript:
+\begin{equation}\label{eq:single_mode_square_GKP_computational_codestates_square_subscript}
+    \begin{aligned}
+        \tikzfig{qumodes/prelims/zx/state_GKP_square_green_0_indicator}
+        &~~=~ \sum_{k \in \ZZ} \ket{\sqrt{2}k}_Q
+        = \sum_{k \in \ZZ} \delta_{\sqrt{2}k}
+        = \ket{0_\square} \\
+        \tikzfig{qumodes/prelims/zx/state_GKP_square_green_1_indicator}
+        &~~=~ \sum_{k \in \ZZ} \ket{1/\sqrt{2} + \sqrt{2}k}_Q
+        = \sum_{k \in \ZZ} \delta_{1/\sqrt{2} + \sqrt{2}k}
+        = \ket{1_\square}
+    \end{aligned}
+\end{equation}
+As a result, we'll in future use $0_\square$ as a shorthand for the function $\indicator{x \eqmod{\sqrt{2}} 0}$, and $1_\square$ for $\indicator{x \eqmod{\sqrt{2}} 1/\sqrt{2}}$.
 
-TODO
+\subsection{Homodyne and GKP measurements}\label{subsec:homodyne_and_gkp_measurements}
 
+In \Cref{subsec:qubit_pauli_measurements} we showed how to represent a Pauli measurement with outcome $m \in \{-1, 1\}$ in the ZX-calculus.
+The analogous case we'll need here is that of homodyne and GKP measurements,
+These will turn out to look almost identical, which shouldn't be so surprising, given that we said in \Cref{subsec:gkp} that GKP measurements are just homodyne measurements mod 1.
+Once again, the diagrams we'll really draw don't represent the measurements themselves, but rather the result of getting outcome $a$ in such a measurement.
+In other words, for a measurement consisting of operators $\{M_a\}$, we'll give the diagram for $M_a$.
 
+One can derive this diagram in the same way as we did for the qubit case in \Cref{subsec:qubit_pauli_measurements}, where we performed some ZX-rewrites until we had decomposed our diagram into a sum of Pauli operators.
+Alternatively, we can be lazy and just find circuits for performing homodyne and GKP measurements in the literature and translate them into ZX-diagrams.
+Either way, given $m$ qumodes, let $\hat{D}(\tbinom{\bsym{v}}{\bsym{u}}) = e^{-i2\pi \hat{\bsym{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}})}$ be a displacement operator, with $\hat{\bsym{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}})$ the corresponding quadrature operator.
+As in the qubit case, the `core' of the diagram will be the measurement of the GKP stabilizer/quadrature operator in the case that $\hat{\boldsymbol{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}}) = \hat{p}_1 + \ldots + \hat{p}_n$, i.e.\ the case $\tbinom{\boldsymbol{v}}{\boldsymbol{u}} = \tbinom{\boldsymbol{1}}{\boldsymbol{0}}$.
+For the homodyne measurement, the diagram for this is:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_all_z}
+\end{equation}
+To convert this into a GKP measurement, we intuitively just have to add the `mod 1' part.
+We do this by adding a comb function to the `measurement spider':
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_gkp_all_z}
+\end{equation}
+As a sanity check, we can note that $\indicator{x \eqmod{1} 0} \cdot \chi_{a + k} = \indicator{x \eqmod{1} 0} \cdot \chi_{a}$ for all $k \in \ZZ$, hence our measurement outcome $a$ really is only given mod 1.
+Then for more general measurements, we can convert each pair of phase space coordinates $(v_j, u_j)$ to polar form $r_j e^{i\theta_j}$, and rotate/stretch phase space on each qumode accordingly, so that instead of measuring $\hat{p}_1 + \ldots + \hat{p}_n = \hat{\boldsymbol{r}}(\tbinom{\boldsymbol{1}}{\boldsymbol{0}})$ we're measuring $\hat{\boldsymbol{r}}(\tbinom{\boldsymbol{v}}{\boldsymbol{u}})$.
+For the homodyne and GKP measurements respectively, this looks like:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_homodyne}
+    \qqqqquad
+    \tikzfig{qumodes/prelims/zx/meas_gkp}
+\end{equation}
+It's worth familiarising ourselves now with a couple of examples of homodyne measurements.
+Firstly, for a single qumode, the position and momentum homodyne measurements are respectively:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_z}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_z_split}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_x}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_x_split}
+\end{equation}
+These are non-destructive measurements; their destructive counterparts are even simpler:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_z_destructive}
+    \qqqqquad
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_x_destructive}
+\end{equation}
+In the coming sections we'll also see their two-qumode counterparts:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_zz}
+    \qqquad
+    \tikzfig{qumodes/prelims/zx/meas_homodyne_xx}
+\end{equation}
+The other important thing to point out now is that it doesn't really matter whether we use `mod 1' or `mod $r$' for some other $r$ -- by~\eqref{eq:multiplier_spider_rules} and~\eqref{eq:multiplier_rules} they're equivalent up to rescaling the outcome $a$ and vector lengths $r_j$:
+\begin{equation}
+    \tikzfig{qumodes/prelims/zx/meas_gkp}
+    ~~=~~
+    \tikzfig{qumodes/prelims/zx/meas_gkp_mod_r}
+%    ~~=~~
+%    \tikzfig{qumodes/prelims/zx/meas_gkp_mod_r_fused}
+\end{equation}
+Therefore in much of the rest of this thesis we will encounter these diagrams with some other choice of $r$, e.g.\ $r = \sqrt{2}$ in the function $0_\square = \indicator{x \eqmod{\sqrt{2}} 0}$.

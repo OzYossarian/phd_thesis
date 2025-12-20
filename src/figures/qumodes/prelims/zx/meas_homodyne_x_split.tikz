@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-2, 0) {};
+		\node [style=none] (1) at (2, 0) {};
+		\node [style={gn_phase}] (3) at (-0.75, 0) {$\chi_{-a}$};
+		\node [style={gn_phase}] (4) at (0.75, 0) {$\chi_a$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (4) to (1.center);
+		\draw (3) to (0.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

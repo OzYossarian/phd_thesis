@@ -41,7 +41,7 @@ Hence we get group homomorphisms
 \end{equation}
 where each $\phi_j = \prod_{O \in \OOO_j} \phi_O$.
 
-After establishment at time $T$, we never again measure a logical operator of the code (\textbf{Case 3} of the Pauli measurements).
+After establishment at time $T$, we never again measure a logical operator of the code (\hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}).
 So for all $t > T$ the codespace map (plus post-measurement renormalisation) is always a unitary map from $\VVV_{t-1}$ to $\VVV_t$, as shown in \Cref{subsec:evolution-of-codespace}.
 Likewise, as per \Cref{subsec:evolution_of_logical_pauli_group}, the logical Pauli group homomorphism $\phi_t$ is now always an isomorphism $\LLL_t \to \LLL_{t-1}$ (so if we like we can now think about its inverse $\phi_t^{-1}$ instead, which goes in the `right' direction).
 
@@ -56,18 +56,43 @@ Suppose at some post-establishment time $t$ our stabilizer group is $\SSS_t = \l
 That is, the stabilizer groups at $t$ and $t'$ are \textit{equal up to signs}.
 Then the logical Pauli groups $\LLL_t$ and $\LLL_{t'}$ can be presented using the same representatives $\XXX_j$ and $\ZZZ_j$ at both timesteps.
 Let $\phi_{t, t'} = (\phi_{t+1} \circ \ldots \circ \phi_{t'})^{-1}$ be the induced isomorphism from $\LLL_{t}$ to $\LLL_{t'}$.
-This therefore uniquely (up to global phase) defines a logical Clifford; namely the Clifford $U$ that acts by conjugation on $\ol{\XXX_j}$ and $\ol{\ZZZ_j}$ as $U\ol{\XXX_j} U^\dagger = \phi_{t,t'}(\ol{\XXX_j})$ and $U\ol{\ZZZ_j} U^\dagger = \phi_{t,t'}(\ol{\ZZZ_j})$.
+This therefore uniquely (up to global phase) defines a logical Clifford; namely the Clifford $U$ that acts by conjugation on $\ol{\XXX_j}$ and $\ol{\ZZZ_j}$ as $U\ol{\XXX_j} U^\dagger = \phi_{t,t'}(\ol{\XXX_j})$ and $U\ol{\ZZZ_j}
+U^\dagger = \phi_{t,t'}(\ol{\ZZZ_j})$.
+
+\subsection{Distance}\label{subsec:dynamic_distance}
+
+We said that a static stabilizer code $\SSS$ has an algebraic distance; the minimum-weight non-trivial logical operator in $\NNN(\SSS) - \SSS$, or equivalently the distance of $\Pi_{\SSS} \circ \Pi_{\SSS}$ under the phenomenological noise model $\FFF$ restricted to the timestep between the two projectors.
+The community hasn't settled on a definition of algebraic distance for a dynamic stabilizer code -- see, for example, TODO Fu and Gottesman's paper investigating this.
+Two generalisations suggest themselves based on our static definition.
+
+The first is the minimum-weight non-trivial logical operator across all timesteps, i.e.\ across all $\LLL_t = \NNN(\SSS_t)/\SSS_t$.
+Though immediately this seems to have some problems -- for example, at $t = -1$ we have $\SSS_{-1} = \{I\}$, hence $\LLL_{-1}$ can be presented via single qubit Paulis $X_j$ and $Z_j$, meaning the algebraic distance would always be 1!
+So it seems reasonable to restrict this to all $t \geq T$, where $T$ is the establishment time.
+But then the next problem is that this only captures logical errors that occur entirely within one timestep -- what if there's a logical error consisting entirely of data qubit errors but supported across multiple timesteps?
+
+The second suggestion fixes the latter problem.
+Algebraic distance could be defined as the distance of the circuit $C = \ldots \circ \Pi_{\SSS_t} \circ \ldots \circ \Pi_{\SSS_0}$ under phenomenological noise restricted to acting at certain timesteps.
+By the same reasoning as above, we take these restricted timesteps to be $t \geq T$, where $T$ is the establishment time.
+Note that the circuit $C$ is infinitely long!
+This is necessary -- for a Floquet code (one with finite operation schedule $\OOO$), the pattern of detectors and logical operators eventually repeats, so we could truncate the circuit at some point without losing any essential information.
+But for a general dynamic stabilizer code with possibly infinite operation schedule $\OOO$, we can't.
+
+Unlike in the static case, these two definitions are no longer equivalent -- indeed, we said the second definition explicitly fixes a blind spot in the first one.
+The second definition is in fact a strict generalisation of the first, in the sense that any non-trivial logical operator in $\LLL_t$ for $t \geq T$ is also a logical error that can occur in the circuit $C$ under $\FFF$.
+We take the second suggestion to be our definition of algebraic distance for a dynamic stabilizer code.
 
 \subsection{Implementation}
 
 To implement a dynamic stabilizer code, one just takes a system of $n$ qubits and performs all of the operations in $\mathcal{O}_0$, then in $\mathcal{O}_1$, and so on.
 Every time we measure some $P$ such that $\pm P$ was already in the stabilizer group, we form a detector.
-If instead $P$ anti-commuted with some at least one stabilizer, we move unitarily from some codespace $\VVV$ to a new one $\VVV'$, as per \Cref{prop:A_m_unitary_up_to_normalisation}, and possibly have to update the representatives of our logical operators, as per Lemma TODO.
+If instead $P$ anti-commuted with some at least one stabilizer, we move unitarily from some codespace $\VVV$ to a new one $\VVV'$, as per \Cref{prop:A_m_unitary_up_to_normalisation}, and possibly have to update the representatives of our logical operators, as per \Cref{lem:logical_presentation_WLOG_case_2}.
 As in the static case, the set of all violated detectors form the syndrome, and this is passed to a decoder, whose job it is to figure out what errors occurred and correct them.
 
 \begin{example}
     Recall \Cref{ex:bacon_shor_stabilizer_group_updates,ex:bacon_shor_codespace_updates,ex:bacon_shor_logical_pauli_group_updates}, in which we repeatedly measured $X_1 X_2$, $X_3 X_4$, $Z_1 Z_3$ and $Z_2 Z_4$, in that order.
-    We can now view this as a dynamic stabilizer code; we define the operation sequence to be:
+    We can now view this as a dynamic stabilizer code.
+    Since the only operations will be measurements, we abuse notation slightly and write $P$ rather than $M_P$ to denote the measurement of $P$.
+    So the operation sequence is defined as:
     \begin{equation}
         \OOO = (\OOO_1 = \{X_1 X_2, X_3 X_4\}, \OOO_2 = \{Z_1 Z_3, Z_2 Z_4\})
     \end{equation}

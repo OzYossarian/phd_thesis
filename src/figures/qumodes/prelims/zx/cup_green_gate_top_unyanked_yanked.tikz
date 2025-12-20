@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (7) at (-0.5, 0) {};
+		\node [style=none] (10) at (2.5, 1) {};
+		\node [style=none] (11) at (1, 1) {};
+		\node [style=none] (19) at (1, -1) {};
+		\node [style=none] (20) at (2.5, -1) {};
+		\node [style=squareNW] (17) at (1, -1) {$D$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=-180, out=75] (7) to (11.center);
+		\draw (11.center) to (10.center);
+		\draw [in=180, out=-75] (7) to (19.center);
+		\draw (20.center) to (19.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

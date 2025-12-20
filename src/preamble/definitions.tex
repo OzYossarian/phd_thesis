@@ -86,6 +86,7 @@
 \newcommand{\PPP}{\mathcal{P}}
 \newcommand{\SSS}{\mathcal{S}}
 \newcommand{\TTT}{\mathcal{T}}
+\newcommand{\UUU}{\mathcal{U}}
 \newcommand{\VVV}{\mathcal{V}}
 \newcommand{\WWW}{\mathcal{W}}
 \newcommand{\XXX}{\mathcal{X}}
@@ -101,7 +102,10 @@
 \newcommand{\qqqqquad}{\quad\qqqquad}
 \newcommand{\qqqqqquad}{\quad\qqqqquad}
 \newcommand{\bsym}[1]{\boldsymbol{#1}}
-\newcommand{\presub}[2]{{}_{#1}\!{#2}}
+%\newcommand{\presub}[2]{{}_{#1}\!{#2}}
+\newcommand{\prepostsub}[3]{\!\tensor*[^{}_{#1}]{#2}{^{}_{#3}}}
+\newcommand{\presub}[2]{\!\tensor*[^{}_{#1}]{#2}{}}
+
 
 % GENERAL MATHS
 \newcommand{\after}{\circ}
@@ -120,6 +124,8 @@
 \newcommand{\rank}{\operatorname{rank}}
 \newcommand{\im}{\operatorname{im}}
 \newcommand{\wt}{\operatorname{wt}}
+\newcommand{\CX}{\operatorname{CX}}
+\newcommand{\CZ}{\operatorname{CZ}}
 
 % QUANTUM
 

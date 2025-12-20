@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-2.25, 1) {};
+		\node [style=none] (1) at (2.25, 1) {};
+		\node [style=none] (2) at (-2.25, -1) {};
+		\node [style=none] (3) at (2.25, -1) {};
+		\node [style=gn] (4) at (-1, 1) {};
+		\node [style=gn] (5) at (1, -1) {};
+		\node [style=SEmat] (6) at (-0.5, 0.5) {$s$};
+		\node [style={fn_phase}] (7) at (0.25, -0.25) {$(-i)^{\isarg{n}}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0.center) to (1.center);
+		\draw (2.center) to (3.center);
+		\draw (4) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

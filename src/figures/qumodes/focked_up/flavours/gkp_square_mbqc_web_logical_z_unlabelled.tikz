@@ -1,0 +1,47 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-7, 0) {};
+		\node [style=gn] (1) at (-5, 0) {};
+		\node [style={rn_phase}] (2) at (-6.5, -1.5) {$0_\square$};
+		\node [style={rn_phase}] (4) at (-4, -1.5) {$0_\square$};
+		\node [style={rn_phase}] (6) at (-1.5, -1.5) {$0_\square$};
+		\node [style={rn_phase}] (8) at (1, -1.5) {$0_\square$};
+		\node [style=none] (9) at (7, 0) {};
+		\node [style={rn_phase}] (23) at (3.5, -1.5) {$0_\square$};
+		\node [style={fn_phase}] (24) at (-3.75, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (26) at (-1.25, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (27) at (1.25, 0) {$i^{\isarg{n}}$};
+		\node [style={fn_phase}] (29) at (3.75, 0) {$i^{\isarg{n}}$};
+		\node [style={gn_phase}] (30) at (-3.5, 1.5) {$\chi_{c_1}$};
+		\node [style=gn] (31) at (-2.5, 0) {};
+		\node [style={gn_phase}] (32) at (-1, 1.5) {$\chi_{c_2}$};
+		\node [style=gn] (33) at (0, 0) {};
+		\node [style={gn_phase}] (34) at (1.5, 1.5) {$\chi_{c_3}$};
+		\node [style=gn] (35) at (2.5, 0) {};
+		\node [style={gn_phase}] (36) at (4, 1.5) {$\chi_{c_4}$};
+		\node [style=gn] (37) at (5, 0) {};
+		\node [style={gn_phase}] (38) at (6.5, 1.5) {$\chi_{c_5}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (30);
+		\draw [style=xweb] (31) to (32);
+		\draw [style=xweb] (31) to (4);
+		\draw (33) to (34);
+		\draw (33) to (6);
+		\draw [style=xweb] (35) to (36);
+		\draw [style=xweb] (35) to (8);
+		\draw (37) to (38);
+		\draw (37) to (23);
+		\draw [style=zweb] (0.center) to (1);
+		\draw (2) to (1);
+		\draw [style=zweb] (1) to (24);
+		\draw [style=xweb] (24) to (31);
+		\draw [style=xweb] (31) to (26);
+		\draw [style=zweb] (26) to (33);
+		\draw [style=zweb] (33) to (27);
+		\draw [style=xweb] (27) to (35);
+		\draw [style=xweb] (35) to (29);
+		\draw [style=zweb] (29) to (37);
+		\draw [style=zweb] (37) to (9.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

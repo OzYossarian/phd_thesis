@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-2.5, -2.5) {};
+		\node [style=none] (1) at (-0.5, -2.5) {};
+		\node [style=none] (2) at (-1.5, -2.25) {$\ldots$};
+		\node [style=none] (3) at (0.5, -2.5) {};
+		\node [style=none] (4) at (2.5, -2.5) {};
+		\node [style=none] (5) at (1.5, -2.25) {$\ldots$};
+		\node [style=violated] (6) at (-1.5, -1.5) {$(D_2, -1)$};
+		\node [style=box] (7) at (0, 0) {$(f_2, p_2)$};
+		\node [style=violated] (8) at (1.5, -1.5) {$(D_4, -1)$};
+		\node [style=violated] (9) at (1.5, 1.5) {$(D_3, -1)$};
+		\node [style=violated] (10) at (-1.5, 1.5) {$(D_1, -1)$};
+		\node [style=box] (11) at (-3, 0) {$(f_1, p_1)$};
+		\node [style=none] (12) at (-2.5, 2.5) {};
+		\node [style=none] (13) at (-0.5, 2.5) {};
+		\node [style=none] (14) at (-1.5, 2.25) {$\ldots$};
+		\node [style=none] (15) at (0.5, 2.5) {};
+		\node [style=none] (16) at (2.5, 2.5) {};
+		\node [style=none] (17) at (1.5, 2.25) {$\ldots$};
+		\node [style=box] (18) at (3, 0) {$(f_3, p_3)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (7) to (6);
+		\draw (7) to (10);
+		\draw (7) to (9);
+		\draw (7) to (8);
+		\draw (10) to (11);
+		\draw (11) to (6);
+		\draw (10) to (12.center);
+		\draw (10) to (13.center);
+		\draw (15.center) to (9);
+		\draw (9) to (16.center);
+		\draw (6) to (0.center);
+		\draw (6) to (1.center);
+		\draw (3.center) to (8);
+		\draw (8) to (4.center);
+		\draw (9) to (18);
+		\draw (8) to (18);
+	\end{pgfonlayer}
+\end{tikzpicture}

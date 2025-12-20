@@ -1,0 +1,148 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style={rn_phase}] (0) at (-3.25, 2.5) {$\pm\frac{\pi}{2}$};
+		\node [style=none] (1) at (-4.75, 4) {};
+		\node [style=none] (2) at (-4.75, 1) {};
+		\node [style=none] (3) at (-1.75, 4) {};
+		\node [style=none] (4) at (-1.75, 1) {};
+		\node [style=none] (5) at (-1.75, 3) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (-4.75, 2) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (7) at (-4.75, 3) {};
+		\node [style=none] (8) at (-1.75, 2) {};
+		\node [style={gn_phase}] (9) at (-5.75, 3) {$\pi$};
+		\node [style={gn_phase}] (10) at (-5.75, 4) {$\pi$};
+		\node [style=none] (11) at (-6.5, 4) {};
+		\node [style=none] (12) at (-6.5, 3) {};
+		\node [style=none] (13) at (-6.5, 1) {};
+		\node [style=none] (14) at (-1, 4) {};
+		\node [style=none] (15) at (-1, 2) {};
+		\node [style=none] (16) at (-1, 1) {};
+		\node [style={gn_phase}] (17) at (-5.75, 1) {$\pi$};
+		\node [style={gn_phase}] (18) at (-1.75, 4) {$\pi$};
+		\node [style={gn_phase}] (19) at (-1.75, 2) {$\pi$};
+		\node [style={gn_phase}] (20) at (-1.75, 1) {$\pi$};
+		\node [style={rn_phase}] (21) at (-0.75, -2.5) {$\mp\frac{\pi}{2}$};
+		\node [style=none] (22) at (-2.25, -1) {};
+		\node [style=none] (23) at (-2.25, -4) {};
+		\node [style=none] (24) at (0.75, -1) {};
+		\node [style=none] (25) at (0.75, -4) {};
+		\node [style=none] (26) at (1.25, -2) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (27) at (-2.75, -3) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (28) at (-2.25, -2) {};
+		\node [style=none] (29) at (0.75, -3) {};
+		\node [style={gn_phase}] (30) at (-3.25, -2) {$\pi$};
+		\node [style={gn_phase}] (31) at (-2.25, -2) {$\pi$};
+		\node [style=none] (32) at (-4, -1) {};
+		\node [style=none] (33) at (-4, -2) {};
+		\node [style=none] (34) at (-4, -4) {};
+		\node [style=none] (35) at (2.5, -1) {};
+		\node [style=none] (36) at (2.5, -3) {};
+		\node [style=none] (37) at (2.5, -4) {};
+		\node [style={gn_phase}] (38) at (-3.25, -4) {$\pi$};
+		\node [style={gn_phase}] (39) at (1.75, -1) {$\pi$};
+		\node [style={gn_phase}] (40) at (1.75, -3) {$\pi$};
+		\node [style={gn_phase}] (41) at (1.75, -4) {$\pi$};
+		\node [style=none] (42) at (0, 2.5) {$=$};
+		\node [style={gn_phase}] (43) at (-2.25, -4) {$\pi$};
+		\node [style={gn_phase}] (44) at (0.75, -4) {$\pi$};
+		\node [style={gn_phase}] (45) at (0.75, -3) {$\pi$};
+		\node [style={gn_phase}] (46) at (0.75, -1) {$\pi$};
+		\node [style=none] (63) at (-5, -2.5) {$e^{\mp i\frac{\pi}{2}}$};
+		\node [style={rn_phase}] (64) at (-4.75, 4) {$\pi$};
+		\node [style={rn_phase}] (82) at (7.5, -2.5) {$\pm\frac{\pi}{2}$};
+		\node [style=none] (83) at (6, -1) {};
+		\node [style=none] (84) at (6, -4) {};
+		\node [style=none] (85) at (9, -1) {};
+		\node [style=none] (86) at (9, -4) {};
+		\node [style=none] (87) at (8.75, -2) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (88) at (6.25, -3) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (89) at (6, -2) {};
+		\node [style=none] (90) at (9, -3) {};
+		\node [style=none] (91) at (6, -1) {};
+		\node [style=none] (92) at (6, -2) {};
+		\node [style=none] (93) at (6, -4) {};
+		\node [style=none] (94) at (9, -1) {};
+		\node [style=none] (95) at (9, -3) {};
+		\node [style=none] (96) at (9, -4) {};
+		\node [style=none] (97) at (3.5, -2.5) {$=$};
+		\node [style=none] (98) at (5, -2.5) {$e^{\mp i\frac{\pi}{2}}$};
+		\node [style={rn_phase}] (99) at (3.25, 2.5) {$\mp\frac{\pi}{2}$};
+		\node [style=none] (100) at (1.75, 4) {};
+		\node [style=none] (101) at (1.75, 1) {};
+		\node [style=none] (102) at (4.75, 4) {};
+		\node [style=none] (103) at (4.75, 1) {};
+		\node [style=none] (104) at (4.75, 3) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (105) at (1.75, 2) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (106) at (1.75, 3) {};
+		\node [style=none] (107) at (4.75, 2) {};
+		\node [style={gn_phase}] (108) at (1.75, 3) {$\pi$};
+		\node [style={gn_phase}] (109) at (1.75, 4) {$\pi$};
+		\node [style=none] (110) at (1, 4) {};
+		\node [style=none] (111) at (1, 3) {};
+		\node [style=none] (112) at (1, 1) {};
+		\node [style=none] (113) at (5.5, 4) {};
+		\node [style=none] (114) at (5.5, 2) {};
+		\node [style=none] (115) at (5.5, 1) {};
+		\node [style={gn_phase}] (116) at (1.75, 1) {$\pi$};
+		\node [style={gn_phase}] (117) at (4.75, 4) {$\pi$};
+		\node [style={gn_phase}] (118) at (4.75, 2) {$\pi$};
+		\node [style={gn_phase}] (119) at (4.75, 1) {$\pi$};
+		\node [style=none] (120) at (-6.5, -2.5) {$=$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (1.center) to (0);
+		\draw (13.center)
+			 to (2.center)
+			 to [in=255, out=0] (0);
+		\draw [in=-180, out=75] (0) to (3.center);
+		\draw [in=180, out=-75] (0) to (4.center);
+		\draw (12.center)
+			 to (7.center)
+			 to [in=150, out=0] (0);
+		\draw [in=180, out=-30] (0) to (8.center);
+		\draw (1.center) to (11.center);
+		\draw (3.center) to (14.center);
+		\draw (8.center) to (15.center);
+		\draw (4.center) to (16.center);
+		\draw (32.center)
+			 to (22.center)
+			 to [in=105, out=0] (21);
+		\draw [in=255, out=0] (23.center) to (21);
+		\draw [in=-180, out=75] (21) to (24.center);
+		\draw [in=180, out=-75] (21) to (25.center);
+		\draw [bend left=15] (28.center) to (21);
+		\draw [in=180, out=-30] (21) to (29.center);
+		\draw (28.center) to (33.center);
+		\draw (34.center) to (23.center);
+		\draw (24.center) to (35.center);
+		\draw (29.center) to (36.center);
+		\draw (25.center) to (37.center);
+		\draw [in=105, out=0] (83.center) to (82);
+		\draw [in=255, out=0] (84.center) to (82);
+		\draw [in=-180, out=75] (82) to (85.center);
+		\draw [in=180, out=-75] (82) to (86.center);
+		\draw [bend left=15] (89.center) to (82);
+		\draw [in=180, out=-30] (82) to (90.center);
+		\draw (83.center) to (91.center);
+		\draw (89.center) to (92.center);
+		\draw (93.center) to (84.center);
+		\draw (85.center) to (94.center);
+		\draw (90.center) to (95.center);
+		\draw (86.center) to (96.center);
+		\draw (110.center)
+			 to (100.center)
+			 to [in=105, out=0] (99);
+		\draw (112.center)
+			 to [in=180, out=0] (101.center)
+			 to [in=255, out=0] (99);
+		\draw [in=-180, out=75] (99) to (102.center);
+		\draw [in=180, out=-75] (99) to (103.center);
+		\draw (99)
+			 to [in=0, out=150] (106.center)
+			 to (111.center);
+		\draw [in=180, out=-30] (99) to (107.center);
+		\draw (102.center) to (113.center);
+		\draw (107.center) to (114.center);
+		\draw (103.center) to (115.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

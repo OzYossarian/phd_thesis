@@ -36,14 +36,17 @@ We denote the group of all detectors on a given circuit by $\DDD$.
 
 Explainer over -- let's get back to it.
 If a detector $D = m_1 \ldots m_d$ deterministically evaluates to $\pm 1$ in the absence of errors, but during a given implementation of the code evaluates to $\mp 1$ instead, then we say the detector has been \textit{violated}.
-The set of all violated detectors during this implementation of the code is the \textit{syndrome}.
+We will give an exact condition on when an error violates a detector in \Cref{subsec:detecting_webs_detect_errors}.
+An error that never violates any detectors is called \textit{undetectable}.
+The set of all violated detectors during a given implementation of the code is the \textit{syndrome}.
 The syndrome is what's passed to a \textit{decoder}.
 A decoder is a classical algorithm whose job is to figure out what errors are likely to have caused these detectors to be violated, then correct these errors.
 We will discuss this later in \Cref{sec:decoding}.
 
 \begin{example}\label{ex:422_stabilizer_code}
     Consider $\SSS = \langle X_1 X_2 X_3 X_4, Z_1 Z_2 Z_3 Z_4 \rangle \leq \PPP_4$, as in \Cref{ex:422_stabilizer_group_updates}.
-    Viewed as a stabilizer code, this is called the $\qcode{4, 2, 2}$ code (it uses $4$ physical qubits to encode $2$ logical qubits with an \textit{algebraic distance} of $2$; more on distance later).
+    Viewed as a stabilizer code, this is called the $\qcode{4, 2, 2}$ code (it uses $4$ physical qubits to encode $2$ logical qubits with an \textit{algebraic distance} of $2$.
+    We'll define distance properly later in \Cref{subsec:distance}).
     It has logical Pauli group:
     \begin{equation}
         \mathcal{N(S)/S} = \langle
@@ -58,12 +61,19 @@ We will discuss this later in \Cref{sec:decoding}.
     In the notation of \Cref{ex:422_stabilizer_group_updates}, every $a_j a_{j+1}$ and $b_j b_{j+1}$ will be a detector, for all $j \geq 0$.
 \end{example}
 
+\begin{figure}[tbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/qubits/prelims/stabilizer_codes/colour_code_stabilizers_logicals}
+    \caption{Left: white circles indicate qubits in the support of the two face operators on the face shaded dark pink. Right: four loops are shown: two cyan, two pink, one of each colour being vertical and one horizontal. Each of these loops support a logical $X$ and $Z$ operator, as indicated by the white circles. The two white circles with a double border are the qubits on which logical operators anti-commute.}
+    \label{fig:colour_code_stabilizers_logicals}
+\end{figure}
+
 \begin{example}\label{ex:colour_code_stabilizer_code}
-    Suppose we place a honeycomb lattice on a torus, as in Figure TODO.
+    Suppose we place a honeycomb lattice on a torus, as in \Cref{fig:colour_code_stabilizers_logicals}.
     Let $V, E, F$ denote the vertices, edges and faces of this lattice respectively.
     The honeycomb lattice has the property that it's three-valent; every vertex has degree three.
     It's also three-face-colourable; every face can be assigned one of three colours such that no faces that share an edge have the same colour.
-    (In fact, we can define the colour code on any planar graph with this property -- it need not be the honeycomb code specifically.)
+    (In fact, any planar graph with these two properties would do  -- it need not be the honeycomb code specifically.)
     Edges then inherit a colouring -- an edge $e$ that borders faces $f_{\kappa}$ and $f_{\kappa'}$ of colours $\kappa \neq \kappa'$ respectively is assigned the third colour $\kappa''$.
     Throughout this thesis, we use colours cyan ($\colourful{c}$), magenta ($\colourful{m}$) and yellow ($\colourful{y}$).
     So we can partition faces $F$ into $F = F_{\colourful{c}} \cup F_{\colourful{m}} \cup F_{\colourful{y}}$, and edges $E = E_{\colourful{c}} \cup E_{\colourful{m}} \cup E_{\colourful{y}}$.
@@ -77,7 +87,7 @@ We will discuss this later in \Cref{sec:decoding}.
     On a torus it has logical Pauli group $\NNN(\SSS)/\SSS \cong \PPP_4$, so encodes $4$ logical qubits.
     For any edge $e = (u, v)$, define \textit{edge operators} $\dcccOp{e}{\kappa}{X} = X_u X_v$ and $\dcccOp{e}{\kappa}{Z} = Z_u Z_v$.
     We can choose representatives $\XXX_j$ and $\ZZZ_j$ for a generating set of cosets of $\NNN(\SSS)/\SSS$ to be certain `loops' of these edge operators.
-    That is, we can arbitrarily pick two colours $\kappa$ and $\kappa'$, and consider `loop' operators as shown in Figure TODO for Paulis $X$ and $Z$.
+    That is, we can arbitrarily pick two colours $\kappa$ and $\kappa'$, and consider `loop' operators as shown in \Cref{fig:colour_code_stabilizers_logicals} for Paulis $X$ and $Z$.
     We have two Paulis $X$ and $Z$, two non-trivial loops on a torus, and two colours; each of these eight combinations gives one of $\XXX_1, \ZZZ_1, \ldots, \XXX_4, \ZZZ_4$.
 
     To implement this code, we again just measure the given generators of $\SSS$ -- here it's the $X$ and $Z$ face operators.

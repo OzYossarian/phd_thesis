@@ -1,0 +1,66 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=gn] (0) at (-6.5, 5.25) {};
+		\node [style=gn] (1) at (-4.5, 5.25) {};
+		\node [style=gn] (2) at (-6.5, 2.75) {};
+		\node [style=gn] (3) at (-4.5, 2.75) {};
+		\node [style=none] (4) at (-8, 5.25) {};
+		\node [style=none] (5) at (-8, 2.75) {};
+		\node [style={rn_phase}] (8) at (-6.5, 3.5) {$a\pi$};
+		\node [style={rn_phase}] (9) at (-4.5, 3.5) {$b\pi$};
+		\node [style={dash_circ}] (12) at (-6.5, 4.5) {};
+		\node [style={dash_circ}] (13) at (-4.5, 4.5) {};
+		\node [style=gn] (18) at (-2.5, 5.25) {};
+		\node [style=gn] (19) at (-2.5, 2.75) {};
+		\node [style=none] (20) at (-1, 2.75) {};
+		\node [style=none] (21) at (-1, 5.25) {};
+		\node [style={rn_phase}] (22) at (-2.5, 3.5) {$c\pi$};
+		\node [style={dash_circ}] (23) at (-2.5, 4.5) {};
+		\node [style=none] (24) at (0, 4) {$\mapsto$};
+		\node [style=greybox] (25) at (4.5, 4) {$(m_a m_b, 1)$};
+		\node [style=greybox] (26) at (9.5, 4) {$(m_b m_c, 1)$};
+		\node [style=box] (27) at (7, 4) {$(\neg,  p)$};
+		\node [style=box] (28) at (12, 4) {$(\neg,  p)$};
+		\node [style=box] (29) at (2, 4) {$(\neg,  p)$};
+		\node [style=none] (30) at (0, 0) {$\mapsto$};
+		\node [style=greybox] (31) at (4.5, -1) {$(m_a m_b, 1)$};
+		\node [style=greybox] (32) at (9.5, -1) {$(m_b m_c, 1)$};
+		\node [style=box] (33) at (7, -1) {$(\neg,  p)$};
+		\node [style=box] (34) at (12, -1) {$(\neg,  p)$};
+		\node [style=box] (35) at (2, -1) {$(\neg,  p)$};
+		\node [style=greybox] (36) at (7, 1) {$(m_a m_c, 1)$};
+		\node [style=none] (37) at (0, -5) {$\mapsto$};
+		\node [style=greybox] (38) at (4.5, -6) {$(m_a m_b, 1)$};
+		\node [style=greybox] (39) at (9.5, -6) {$(m_b m_c, 1)$};
+		\node [style=none] (42) at (4.5, -4.75) {\scriptsize$(\neg,  p)$};
+		\node [style=greybox] (43) at (7, -4) {$(m_a m_c, 1)$};
+		\node [style=none] (44) at (7, -6.75) {\scriptsize$(\neg,  p)$};
+		\node [style=none] (45) at (9.5, -4.75) {\scriptsize$(\neg,  p)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (3);
+		\draw (0) to (2);
+		\draw (5.center) to (2);
+		\draw (2) to (3);
+		\draw (4.center) to (0);
+		\draw (0) to (1);
+		\draw (18) to (19);
+		\draw (19) to (20.center);
+		\draw (18) to (21.center);
+		\draw (3) to (19);
+		\draw (1) to (18);
+		\draw (35) to (36);
+		\draw (36) to (34);
+		\draw (38) to (43);
+		\draw (38) to (39);
+		\draw (43) to (39);
+		\draw (29) to (25);
+		\draw (25) to (27);
+		\draw (27) to (26);
+		\draw (26) to (28);
+		\draw (35) to (31);
+		\draw (31) to (33);
+		\draw (33) to (32);
+		\draw (32) to (34);
+	\end{pgfonlayer}
+\end{tikzpicture}

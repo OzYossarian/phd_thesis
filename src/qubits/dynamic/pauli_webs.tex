@@ -1,6 +1,7 @@
 \section{Pauli webs}\label{sec:pauli-webs}
 
-\teague{Change convetion throughout -- have used $(a, b)$ labels in webs to mean $X^bZ^a$, essentially. Clashes with Pauli convention of writing $X^a Z^b$. Change all diagramas!! Sad times.}
+We've now introduced all the stabilizer formalism content we'll need for the rest of this thesis.
+The next step is to recast it in a graphical rather than algebraic light, via \textit{Pauli webs}.
 There are two complementary ways of thinking about Pauli webs; either as notation for tracking which Paulis stabilize which spiders within a diagram, or for tracking how Paulis propagate through a diagram.
 Pauli webs are particular \textit{highlightings} of ZX-diagrams.
 We start by defining a highlighting of a single generator.
@@ -24,9 +25,8 @@ In what follows, it might help to temporarily think of the identity and swap map
 \end{equation}
 
 \begin{definition}\label{defn:highlighting_single_generator}
-    A \textit{highlighting} $H$ of a generator $f$ is an assignment of a tuple $(a_j, b_j) \in \mathbb{F}_2^2$ of binary numbers to each edge $e_j$.
-    So for a generator with $l+m$ legs total, a highlighting is an element $H \in \mathbb{F}_2^{2(l+m)}$.
-    Graphically, we label each wire with its tuple $(a_j, b_j)$ and highlight the edges green and red:
+    A \textit{highlighting} $H$ of a generator $f$ with $l$ input legs and $m$ output legs is an element $\tbinom{\bsym{a}}{\bsym{b}} \in \FF_2^{2(l+m)}$.
+    Graphically, we label the $j$th edge with its tuple $(a_j, b_j)$ and highlight the edges green and red:
     \begin{equation}
         \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator}
     \end{equation}
@@ -58,13 +58,13 @@ For specific highlightings, the group product corresponds to `overlaying' one di
 
 Next we define highlightings on diagrams consisting of multiple generators.
 For a diagram $D$ with edges $E$, we will write the internal edges as $E_\circ$ and the boundary edges as $E_{\boundary}$.
-We now declare that internal edges are in fact made of two \textit{half-edges}, and boundary edges are all half-edges.
-So we write these as $E_{1/2} = E_\circ \sqcup E_\circ \cup E_\boundary$, where we use $\sqcup$ to specifically denote the disjoint union, i.e.\ we take two copies of the internal edges.
+We now declare that internal edges are in fact made of two \textit{half-edges}, and all boundary edges are half-edges.
+We write the set of all half-edges as $E_{1/2} = E_\circ \sqcup E_\circ \cup E_\boundary$, where we use $\sqcup$ to specifically denote the disjoint union, i.e.\ we take two copies of the internal edges.
 Note that in accordance with our disclaimer~\eqref{eq:qubit_generators_id_swap_explicit} above, the identity map consists of two half-edges and the swap map of four half-edges.
 
 \begin{definition}\label{defn:highlighting_general}
-    A highlighting $H$ of a general diagram $D$ is an assignment of a tuple $(a_j, b_j) \in \mathbb{F}_2^2$ to each half-edge $e_j$.
-    In other words, a highlighting on $D$ is an element of the group $H \in \mathbb{F}_2^{2|E_{1/2}|}$.
+    A highlighting $H$ of a general diagram $D$ with edges $E$ is an element $\tbinom{\bsym{a}}{\bsym{b}} \in \FF_2^{2|E_{1/2}|}$.
+    That is, each half-edge $e_j$ is assigned a tuple $(a_j, b_j) \in \mathbb{F}_2^2$.
     Graphically:
     \begin{equation}
         \tikzfig{qubits/prelims/pauli_webs/highlighting_fg}
@@ -89,17 +89,17 @@ Formally, we phrase this in terms of \textit{firing} generators.
 Firing a generator $f$ according to a highlighting $H$ means adding $X$ gates around $f$ if its incident legs are highlighted red, and then $Z$ gates for incident legs highlighted green.
 For example, suppose we have the following diagram:
 \begin{equation}
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_eg}
+    \tikzfig{qubits/prelims/pauli_webs/highlighting_fg_eg'}
 \end{equation}
 On the left below we fire both generators $f$ and $g$, while on the right we fire just $g$:
-\begin{equation}
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
+\begin{equation}\label{eq:firing_generators_example_qubit}
+    \tikzfig{qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
     \qqqqquad
-    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
+    \tikzfig{qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
 \end{equation}
 We choose the convention that $X$ gates are added first around each generator (they're the `inner gates') and then $Z$ gates (`outer gates') -- it isn't important which way round we choose this, just that we pick one option and stick with it.
-Given a diagram $D$ generators $V$ and a highlighting $H$, we write the diagram with all generators fired according to $H$ as $D^H$.
-If only firing a subset of generator $V' \subseteq V$, we write the resulting diagram as $D^{H|_{V'}}$.
+Given a diagram $D$ with generators $V$ and a highlighting $H$, we write the diagram with all generators fired according to $H$ as $D^H$.
+If only firing a subset of generators $V' \subseteq V$, we write the resulting diagram as $D^{H|_{V'}}$.
 
 \begin{definition}\label{defn:pauli_web_single_generator}
     A Pauli web $W$ on a generator $f$ is a highlighting $W$ on $f$ with the property that $f^W \propto f$:
@@ -241,7 +241,6 @@ We start by giving a set of Pauli webs on each of these two types of spider.
         For the webs in which pairs of edges are highlighted green, we again just use spider fusion, as in the proof above.
         For the first web, we use almost the same proof as above, except now when applying the gate copy rule we negate the phase $\pm \frac{\pi}{2}$ to $\mp \frac{\pi}{2}$.
         But the extra green highlighted leg fixes this up:
-        \teague{Split into multiple tikzfigures, align right}
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/spider_Clifford_green_web_red_realised}
         \end{equation}
@@ -283,8 +282,15 @@ Hopefully from these generating sets one can read off the form of any Pauli web 
     A highlighting on a strictly Clifford spider is a Pauli web iff all legs highlighted red and an odd number of legs are highlighted green, or no legs are highlighted red and an even number are highlighted green.
 \end{proposition}
 
+In particular, note that while spider labels are defined mod $2\pi$, Pauli webs only care about labels mod $\pi$.
+We will say more about this in \Cref{subsec:zx_mod_pi}, but for now we'll just write it as an official remark so we can reference it again later:
+
+\begin{remark}\label{rem:pauli_webs_only_care_mod_pi}
+    The group of Pauli webs on a Clifford spider is fully determined by the spider's phase mod $\pi$.
+\end{remark}
+
 Now let's consider general Clifford ZX-diagrams, consisting of many of the spiders given above.
-One can again show that by bending legs around so that they're all output legs, any Clifford ZX-diagram is (up to normalisation) a stabilizer state \teague{cite Coco book}.
+One can again show that once we've bent legs around so that they're all output legs, any Clifford ZX-diagram is (up to normalisation) a stabilizer state~\cite[Theorem 6.3.18]{KissingerWetering2024Book}.
 So a Clifford ZX-diagram with $l+m$ legs will again have a Pauli web group generated by $l+m$ Pauli webs.
 Since Pauli webs on general diagrams must restrict to Pauli webs on each generating spider in the diagram, the generating sets of Pauli webs on individual spiders above effectively extend to generating sets of Pauli webs on general Clifford diagrams -- we just need to ensure the that half-edges that make up internal edges have the same highlighting.
 
@@ -363,11 +369,6 @@ Then for strictly Clifford:
     \tikzfig{qubits/prelims/pauli_webs/spider_Clifford_red_web_green_realised_exact}
 \end{equation}
 
-\subsection{The $\text{ZX}/\pi$ calculus}
-
-TODO? Say that Pauli webs don't care about $\pi$-spiders.
-Definition some kind of `$D$ has same QEC properties as $D'$' relationship iff they're equal in the ZX$_{\pi}$ calculus?
-
 \subsection{Categorising Pauli webs}
 
 We can categorise Pauli webs on Clifford ZX-diagrams into three categories: detecting webs, (co)stabilizing webs, and logical webs.
@@ -437,7 +438,7 @@ We'll denote this group of logical webs by $\WWW_\LLL(D) \coloneqq \WWW(D)/\WWW_
 Now let's come back to our claim that each type of web corresponds to an object from the stabilizer formalism,
 for diagrams $D$ formed from Clifford unitaries and Pauli measurements.
 By the stabilizer formalism, each such diagram as a stabilizer group associated to it, which we'll write as $\SSS_D$; this is the group that results from starting with $\SSS = \{I\}$ and updating after every Clifford unitary and Pauli measurement.
-We've shown by this point that stabilizing webs correspond to stabilizers $S \in \SSS_D$ up to scalar, under the mapping $W \mapsto Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$.
+We've shown by this point that stabilizing webs correspond to stabilizers $S \in \SSS_D$ up to scalar, under the mapping $W \mapsto Z^{\bsym{a}}X^{\bsym{b}} = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$.
 \begin{equation}\label{eq:stabilizer_web_to_pauli_map}
     \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_stabilizer}
     \quad \mapsto \quad
@@ -447,9 +448,9 @@ We've shown by this point that stabilizing webs correspond to stabilizers $S \in
 The converse is also true, and in fact we get a stronger result.
 
 \begin{proposition}\label{prop:stabilizer_webs_iso}
-    For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\SSS(D)/\WWW_\DDD(D)$ of stabilizing webs modulo detecting webs is isomorphic to the associated stabilizer group $\SSS_D$.
+    \cite[Proposition A.3]{rodatz2024floquetifying} For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\SSS(D)/\WWW_\DDD(D)$ of stabilizing webs modulo detecting webs is isomorphic to the associated stabilizer group $\SSS_D$.
     \begin{proof}
-        A full proof is given in Rodatz' paper TODO.
+        A full proof is given in Rodatz et al's paper~\cite{rodatz2024floquetifying}.
         Here we just state that the group isomorphism is indeed the mapping given in \Cref{eq:stabilizer_web_to_pauli_map}; it's simple to show this is indeed a group homomorphism, and it can also be shown that this has an inverse, hence is a bijection.
     \end{proof}
 \end{proposition}
@@ -458,11 +459,12 @@ Similarly, we get a group isomorphism between logical webs and the logical Pauli
 But to simplify the discussion here we haven't gone down this route.}
 
 \begin{proposition}\label{prop:logical_webs_iso}
-    For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\LLL \coloneqq \WWW_(D)/\WWW_\SSS^\SSS(D)$ of logical webs is isomorphic to the associated logical Pauli group modulo phases: $(\NNN(\SSS_D)/\pres{i})/(\SSS_D/\pres{i})$.
+    \cite[Proposition A.6]{rodatz2024floquetifying} For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\LLL \coloneqq \WWW_(D)/\WWW_\SSS^\SSS(D)$ of logical webs is isomorphic to the associated logical Pauli group modulo phases: $(\NNN(\SSS_D)/\pres{i})/(\SSS_D/\pres{i})$.
     \begin{proof}
-        Again, a full proof is given in Rodatz' paper TODO.
+        Again, a full proof is given in Rodatz et al's paper~\cite{rodatz2024floquetifying}.
         Here we just state the actual isomorphism -- it's analogous to the one in the previous proof, only we're now mapping into a quotient group.
-        For logical web $W$, we map the coset $\overline{W} = W \cdot \WWW_\SSS^\SSS(D)$ to $\ol{Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}} = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} \cdot \SSS_D$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$:
+%        For logical web $W$, we map the coset $\overline{W} = W \cdot \WWW_\SSS^\SSS(D)$ to $\ol{Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}} = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} \cdot \SSS_D$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$:
+        For logical web $W$, we map the coset $\overline{W} = W \cdot \WWW_\SSS^\SSS(D)$ to $\ol{Z^{\bsym{a}}X^{\bsym{b}}} = Z^{\bsym{a}}X^{\bsym{b}} \cdot \SSS_D$, where $(a_j, b_j)$ is the label in $W$ of the $j$th output edge of $D$:
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_logical_Z}
             ~~\mapsto~~
@@ -492,9 +494,8 @@ We start with a couple of lemmas.
     \begin{proof}
         By contradiction.
         Since adjoints of Clifford unitaries are again Clifford unitaries, the same argument applies whether we're considering a stabilizing or costabilizing web.
-        So without loss of generality, consider Clifford unitary $U$ on $m$ qubits with non-trivial costabilizing web $W$.
-        Let $(a_j, b_j)$ be the label in $W$ of the $j$th input leg of $U$.
-        Define $P = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, which by assumption is not $I$.
+        So without loss of generality, consider Clifford unitary $U$ on $m$ qubits with non-trivial costabilizing web $W = \tbinom{\bsym{a}}{\bsym{b}}$, so $(a_j, b_j)$ is the label in $W$ of the $j$th input leg of $U$.
+        Define $P = Z^{\bsym{a}}X^{\bsym{b}}$, which by assumption is not $I$.
         The existence of this web is telling us that $UP \propto U$:
         \begin{equation}
             \tikzfig{qubits/prelims/pauli_webs/Clifford_unitary_web_costabilizing}
@@ -510,7 +511,7 @@ We start with a couple of lemmas.
             \tikzfig{qubits/prelims/pauli_webs/Clifford_unitary}
         \end{equation}
         Equivalently, it's saying $UPU^\dagger \propto I$, i.e. $UPU^\dagger = \lambda I$ for some\footnote{In fact, if we wanted, we could show $\lambda = i^a$ for some integer $a$.} non-zero $\lambda \in \mathbb{C}$
-        Now, recall two standard results: firstly, for every non-identity Pauli $P$ we can find a Pauli $Q$ that anti-commutes with it, and secondly, conjugating Paulis by Clifford unitaries preserves their (anti)-commutation relations.
+        Now, recall two standard results: firstly, for every non-identity Pauli $P$ we can find a Pauli $Q$ that anti-commutes with it~\cite[Lemma 3.15]{gottesman2024surviving}, and secondly, conjugating Paulis by Clifford unitaries preserves their (anti)-commutation relations~\cite[Section 6.1.4]{gottesman2024surviving}.
         But there is no Pauli that anti-commutes with $\lambda I$!
         So it's not possible for $UQU^{\dagger}$ to anti-commute with $UPU^\dagger = \lambda I$.
         So such a $U$ cannot exist in the first place.
@@ -518,7 +519,7 @@ We start with a couple of lemmas.
 \end{lemma}
 
 \begin{lemma}\label{lem:only_costabilizing_web_on_pauli_measurement}
-    The projector $\Pi_{cP}$ corresponding to measuring non-identity $P = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$ and getting outcome $c$ has a single non-identity costabilizing web, namely $W = (a_1, b_1, \ldots, a_m, b_m)$.
+    The projector $\Pi_{cP}$ corresponding to measuring non-identity $P = Z^{\bsym{a}}X^{\bsym{b}}$ and getting outcome $c$ has a single non-identity costabilizing web, namely $W = \tbinom{\bsym{a}}{\bsym{b}}$.
     \begin{proof}
         Projectors are self-adjoint, so we can actually read right to left and view $W$ as a stabilizing web on the projector $\Pi_{cP}^\dagger = \Pi_{cP}$.
         Now use our result from \Cref{prop:stabilizer_webs_iso} earlier; the group of stabilizer webs here is isomorphic to the associated stabilizer group $\SSS_D$.
@@ -567,16 +568,16 @@ The latest operation with the property above is the second measurement of $Z_1 Z
     \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_web_detector_truncated}
 \end{equation}
 Since the restriction of the non-truncated web $W$ to this final operation is a non-identity costabilizing web, this operation must be a measurement, by \Cref{lem:Clifford_unitary_no_stabilizing_web}.
-Therefore, by \Cref{lem:only_costabilizing_web_on_pauli_measurement}, the Pauli being measured must be $P = Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m}$, where $(a_j, b_j)$ is the label of output edge $j$ in the stabilizing web $W_T$.
+Therefore, by \Cref{lem:only_costabilizing_web_on_pauli_measurement}, the Pauli being measured must be $P = Z^{\bsym{a}}X^{\bsym{b}}$, where $(a_j, b_j)$ is the label of output edge $j$ in the stabilizing web $W_T$.
 By \Cref{prop:stabilizer_webs_iso}, this $P$ is a stabilizer $S \in \SSS_{D_T}$ right before it gets measured.
 Hence when it's measured its outcome should be deterministic, i.e.\ a detector is formed.
 
 The converse is also true; every detector corresponds to a detecting web.
 To see this, let the measurement of $P_T$ at time $T$ be the final measurement in the detector.
 So right before $P_T$ is measured, $\pm P_T$ must be in the stabilizer group $\SSS_{D_T}$.
-Therefore by \Cref{prop:stabilizer_webs_iso} there's a stabilizing web $W_T$ that corresponds to this, in that the output legs are labelled $(a_j, b_j)$ such that $Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} = \pm P_T$.
+Therefore by \Cref{prop:stabilizer_webs_iso} there's a stabilizing web $W_T$ that corresponds to this, in that the output legs are labelled $(a_j, b_j)$ such that $Z^{\bsym{a}}X^{\bsym{b}} = \pm P_T$.
 (In fact, there's an equivalence class $W_T \cdot \WWW_\DDD(D_T)$).
-And by \Cref{lem:only_costabilizing_web_on_pauli_measurement} there's a costabilizing web on the measurement of $P_T$ whose input legs are also labelled $(a_j, b_j)$ such that $Z_1^{a_1} X_1^{b_1} \ldots Z_m^{a_m} X_m^{b_m} = \pm P_T$.
+And by \Cref{lem:only_costabilizing_web_on_pauli_measurement} there's a costabilizing web on the measurement of $P_T$ whose input legs are also labelled $(a_j, b_j)$ such that $Z^{\bsym{a}}X^{\bsym{b}} = \pm P_T$.
 The composition of these two webs then forms a detecting web.
 
 So we have an iff relation, and with a little more careful thinking about the equivalence class $W_T \cdot \WWW_\DDD(D_T)$ in the proof above, we in fact get a bijection, which we record as a proposition.
@@ -591,22 +592,21 @@ We've shown that detecting webs correspond to detectors, and detectors detect er
 So if this isn't the case, an error must have occurred.
 Question is -- which error!?
 We answer this question in this subsection.
-We will take a very ZX-centric view of errors; in the next section we will take a deeper dive, giving a more traditional definition of an error model, but will also show that this definition is already encompassed by the ZX-centric one we use here.
-Since this subsection will again end up being quite verbose, we start with an example.
-\teague{TODO}
 
-Diving in, given a ZX-diagram $D$ with edges $E$, we say an \textit{error} (or sometimes \textit{fault}, from which we derive our notation $F$ in what follows) is an element $F \in \PPP_{|E|}$.
+Given a ZX-diagram $D$ with edges $E$, we say an \textit{error} (or sometimes \textit{fault}, from which we derive our notation $F$ in what follows) is an element $F \in \PPP_{|E|}$.
 More generally, we will call this a \textit{Pauli operator on the edges of $D$}.
 An analogous definition gives a \textit{Pauli operator on the half-edges of $D$} -- this is just an element of $\PPP_{|E_{1/2}|}$.
+Note this seems to differ from our definition of errors from \Cref{sec:noise-models}, but isn't really true -- this ZX-centric definition of errors can be shown to encompass the circuit-centric view~\cite{rodatz2025faulttoleranceconstruction}, just as ZX-diagrams encompass all circuits.
+
 We write $D^F$ to mean the diagram $D$ with the error $F$ applied to it -- for example, let $F = X_3 Y_4 Z_5 \in \PPP_8$ and $D$ be defined below, so that $D^F$ is:\footnote{Technically this is ill-defined -- if we have a vertical edge in our diagram $D$ that we want to apply a $Y$ gate to, it's ambiguous in what order we should apply the red and green spiders to that edge in the decomposition $Y = iXZ$. However, this won't cause us any issues -- we can just arbitrarily choose a convention and stick with it.}
 \begin{equation}
-    D = \tikzfig{figures/qubits/prelims/pauli_webs/measure_ZZ_twice_1_outcomes_edges_labelled}
+    D = \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_1_outcomes_edges_labelled}
     \qqquad
-    D^F = \tikzfig{figures/qubits/prelims/pauli_webs/measure_ZZ_twice_1_outcomes_edges_labelled_error_applied}
+    D^F = \tikzfig{qubits/prelims/pauli_webs/measure_ZZ_twice_1_outcomes_edges_labelled_error_applied}
 \end{equation}
 Likewise if $F$ is a Pauli operator on the half-edges of $D$, we can write $D^F$ for the diagram $D$ with this Pauli applied to these half-edges.
 Note the similarity with the notation for firing spiders -- and for good reason.
-Given an error $F = X_1^{a_1}Z_1^{b_1} \ldots X_{|E_{1/2}|}^{a_{|E_{1/2}|}}Z_{|E_{1/2}|}^{b_{|E_{1/2}|}}$ on half-edges, consider the corresponding highlighting $H = (a_1, b_1, \ldots, a_{|E_{1/2}|}, b_{|E_{1/2}|})$.
+Given an error $F = Z^{\bsym{a}}X^{\bsym{b}}$ on half-edges, consider the corresponding highlighting $H = \tbinom{\bsym{a}}{\bsym{b}}$.
 We have $D^F \propto D^H$; that is, up to global scalar, the diagram $D^F$ with error $F$ applied is equal to the result $D^H$ of firing all generators according to $H$.
 (The possible difference in global scalar comes from the fact that we defined a specific ordering of `inner' $X$ and `outer' $Z$ gates when firing generators).
 
@@ -615,14 +615,14 @@ We have $D^F \propto D^H$; that is, up to global scalar, the diagram $D^F$ with 
 %Since the definition is going to be very wordy, but the actual concept is straightforward, we'll give an example now to guide the way.
 %Suppose we have the following diagram:
 %\begin{equation}
-%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_eg}
+%    \tikzfig{qubits/prelims/pauli_webs/highlighting_eg}
 %\end{equation}
 %Firing a generator $f$ according to a highlighting $H$ essentially means adding $X$ gates around $f$ if its incident legs are highlighted red, and then $Z$ gates for incident legs highlighted green.
 %For example, on the left below, we fire both generators, while on the right, we fire just the rightmost one:
 %\begin{equation}
-%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
+%    \tikzfig{qubits/prelims/pauli_webs/highlighting_fg_eg'_both_spiders_fired}
 %    \qqqqquad
-%    \tikzfig{figures/qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
+%    \tikzfig{qubits/prelims/pauli_webs/highlighting_fg_eg'_2nd_spider_fired}
 %\end{equation}
 %We choose the convention that $X$ gates are added first (they're the `inner gates') and then $Z$ gates (`outer gates') -- it isn't important which way round we choose this, just that we pick one option and stick with it.
 %Now for the formal definition.
@@ -671,8 +671,6 @@ For the main result of this subsection, we will need a lemma concerning $\lambda
 First, note that if a ZX-diagram $D$ satisfies $D = \lambda D$ for $\lambda \in \CC$ other than $1$, then it must be zero.
 To see this, just recall that $D$ is nothing other than a linear map, so we can rearrange: $D = \lambda D \iff (1 - \lambda)D = 0$, and since $(1 - \lambda) \neq 0$ we must have $D = 0$.
 Then we have:
-
-\teague{Maybe easier just to include the correct phases in the firing in the first place -- then can easily see the rule about phases on spiders opposite colour to web highlighting them need to sum to zero mod $2\pi$.}
 
 \begin{lemma}\label{lem:firing_detector_web_propto}
     Given a detecting web $W$ on a non-zero diagram $D$ with generators $V$, the scalar $\lambda_W$ such that $D^{W} = \lambda_W D$ must be $1$.
@@ -737,9 +735,8 @@ For a general detecting web $W$ on a non-zero diagram $D$ consisting of Clifford
 
 This corollary also tells us exactly which errors are detected by a detector!
 Suppose by the above we've found the condition on $m_1 \ldots m_d$ -- say it must equal $e = \pm 1$ in the absence of any errors.
-Now consider an error $F = i^k Z_1^{a_1}X_1^{b_1} \ldots Z_{|E|}^{a_{|E|}}X_{|E|}^{b_{|E|}}$ on the edges of $D$.
-Since we've defined errors to be Paulis, the detecting web $W$ on $D$ extends to a detecting web $W^F$ on $D^F$.
-\teague{Separate result for this somewhere!}
+Now consider an error $F = i^k Z^{\bsym{a}}X^{\bsym{b}}$ on the edges of $D$.
+Since we've defined errors to be Paulis, by \Cref{rem:pauli_webs_only_care_mod_pi} the detecting web $W$ on $D$ extends to a detecting web $W^F$ on $D^F$.
 Every $X_j^{b_j}$ spider in $D^F$ with both legs highlighted green by $W^F$ contributes a global scalar of $e^{ia_j\pi}$ when all spiders are fired according to $W^F$, as does every $Z_j^{a_j}$ spider with both legs highlighted red.
 So if there are an odd number of such spiders, the overall global phase becomes $-1$, the diagram becomes zero, and the specific sequence of measurements $m_1, \ldots, m_d$ has probability zero of occurring.
 Therefore the final measurement outcome $m_d$ will be negated, giving $m_1 \ldots m_d = -e$, alerting us to the fact that an error has occurred.
@@ -803,9 +800,22 @@ So this detector is violated by $F$.
 %
 %
 
+\subsection{The $\text{ZX}/\pi$ calculus}\label{subsec:zx_mod_pi}
 
+We said in \Cref{rem:pauli_webs_only_care_mod_pi} that Pauli webs only care about spider phases mod $\pi$, despite spider phases being defined mod $2\pi$.
+Phrased differently (and using a bit of spider fusion), the group of Pauli webs on a diagram $D$ is essentially unchanged if we add the following extra rule to the ZX-calculus:
+\begin{equation}\label{eq:pauli_gate_is_id}
+    \tikzfig{qubits/prelims/pauli_webs/z_gate} ~~=~~ \tikzfig{qubits/prelims/pauli_webs/id}
+\end{equation}
 
+Let's give this new calculus a name:
+\begin{definition}\label{defn:zx_mod_pi}
+    The $\zxmodpi$-calculus is the quotient calculus formed by the equivalence relation $D \sim_\pi D'$ iff $D$ and $D'$ are equal if spider phases are defined mod $\pi$ rather than mod $2\pi$.
+    Equivalently, it's the quotient calculus defined by adding~\eqref{eq:pauli_gate_is_id} to the set of rules.
+\end{definition}
 
-%Since it's the last paragraph of this section, I'll indulge in a needless comment: in reference to the phrase `how much wood could a woodchuck chuck if a woodchuck could chuck wood?', I wanted to title this subsection `exactly which errors can a detecting web detect since a detecting web can detector errors?'.
-%But it sounds rubbish!
-%Alas.
+Now, from a QEC perspective, the only things we care about in a circuit are its detectors, stabilizers and logical operators.
+We've seen that (up to global phases, at least), these are in bijective correspondence with types of Pauli webs (\Cref{prop:stabilizer_webs_iso,prop:logical_webs_iso,prop:detecting_webs_bijection}).
+Since Pauli webs are invariant (up to global phase) under taking any representative of a diagram in the $\zxmodpi$-calculus, all of a diagram's error correcting properties are too!
+So, for example, in a diagram $D$, we can omit spiders labelled $a_j\pi$ that correspond to Pauli measurements with outcomes $m_j = (-1)^{a_j}$ without essentially changing any of the error correcting properties of the diagram.
+Or conversely, we can add in `measurement spiders' labelled $a_j\pi$.

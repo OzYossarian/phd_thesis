@@ -1,9 +1,6 @@
 \section{The ZX-calculus}\label{sec:the-zx-calculus}
 
-In the last section we rephrased the stabilizer formalism in QEC language and got dynamic stabilizer codes.
-We can rephrase the stabilizer formalism once again, this time diagrammatically; this gives us Pauli webs on ZX-diagrams.
-Before we can say anything about Pauli webs, we must introduce ZX-diagrams.
-That is, we must introduce the ZX-calculus.
+In addition to the stabilizer formalism, the other fundamental tool we'll use throughout this thesis is the ZX-calculus.
 
 \subsection{Generators}
 
@@ -141,10 +138,12 @@ To conjugate a diagram, we negate all the phases of all the spiders:
     \qqquad
     \tikzfig{qubits/prelims/zx/spider_red} \xmapsto{(-)^*} \tikzfig{qubits/prelims/zx/spider_red_conjugate}
 \end{equation}
-To transpose a diagram, we reflect it left to right:
+To transpose a diagram, we bend outputs to inputs and vice versa -- equivalently, we reflect it left to right:
 \begin{equation}
     \tikzfig{qubits/prelims/zx/diagram}
     ~~\xmapsto{(-)^T}~~
+    \tikzfig{qubits/prelims/zx/diagram_transposed}
+    ~~=~~
     \tikzfig{qubits/prelims/zx/diagram_transposed_straightened}
 \end{equation}
 Finally, the adjoint of a diagram is its conjugate transpose; we reflect it and then negate all phases.
@@ -218,7 +217,7 @@ On top of this, we can show that all of these rules hold when the roles of green
 \subsection{Pauli measurements}\label{subsec:qubit_pauli_measurements}
 
 Particularly important diagrams for us will be those that correspond to Pauli measurements.
-We say `correspond to' because the diagrams we'll actually write down are the Pauli projections $\{\Pi_{+P}, \Pi_{-P}\}$ that make up a Pauli measurement (we can without loss of generality assume the Pauli is Hermitian).
+We say `correspond to' because the diagrams we'll actually write down are the Pauli projections $\{\Pi_{+P}, \Pi_{-P}\}$ that make up a Pauli measurement (we can without loss of generality assume the Pauli is Hermitian), i.e.\ the Pauli measurement if we assume we got a certain outcome.
 To write down ZX-diagrams that truly represent Pauli measurements, we would have to leave the realm of pure state quantum information theory; this can absolutely be done in the ZX-calculus, but we won't need do it in this thesis.
 As a reminder, given state $\ket{\psi}$, if we measure $P$ and get outcome $\pm 1$, then the resulting post-measurement state is $p(m | \psi)^{-\frac{1}{2}} \Pi_{\pm P} \ket{\psi}$.
 That is, up to renormalisation, we just apply the corresponding projection $\Pi_{\pm P}$ to our state $\ket{\psi}$.

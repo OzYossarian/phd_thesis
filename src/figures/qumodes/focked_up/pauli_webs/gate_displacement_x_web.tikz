@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (1) at (1.5, 0) {};
+		\node [style={rn_phase}] (2) at (0, 0) {$\chi_q$};
+		\node [style=none] (3) at (-1.5, 0) {};
+		\node [style={gn_web}] (4) at (-1, 1.25) {$a$};
+		\node [style={rn_web}] (5) at (-1, 0.625) {$b$};
+		\node [style={gn_web}] (6) at (1, 1.25) {$-a$};
+		\node [style={rn_web}] (7) at (1, 0.625) {$-b$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=yweb] (3.center) to (1.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

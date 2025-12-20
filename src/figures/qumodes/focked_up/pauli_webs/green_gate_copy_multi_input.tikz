@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (0, 0) {$=$};
+		\node [style={rn_phase}] (45) at (3.5, 0) {$f(x + a)$};
+		\node [style={gn_phase}] (46) at (2, 1) {$\overline{\chi}_{-a}$};
+		\node [style=none] (47) at (5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (48) at (2, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (49) at (1, 2) {};
+		\node [style=none] (50) at (6, 1) {};
+		\node [style=none] (51) at (6, -1) {};
+		\node [style=none] (52) at (1, 1) {};
+		\node [style={gn_phase}] (53) at (5, 1) {$\overline{\chi}_a$};
+		\node [style={gn_phase}] (54) at (2, -1) {$\overline{\chi}_{-a}$};
+		\node [style={gn_phase}] (55) at (5, -1) {$\overline{\chi}_a$};
+		\node [style=none] (56) at (1, -1) {};
+		\node [style={rn_phase}] (57) at (-3.5, 0) {$f(x)$};
+		\node [style=none] (58) at (-2, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (59) at (-5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (60) at (-6, 2) {};
+		\node [style=none] (61) at (-1, 1) {};
+		\node [style=none] (62) at (-1, -1) {};
+		\node [style=none] (63) at (-6, 1) {};
+		\node [style=none] (64) at (-6, -1) {};
+		\node [style={gn_phase}] (65) at (-5, 2) {$\overline{\chi}_a$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=180, out=60] (45) to (50.center);
+		\draw [in=180, out=-60] (45) to (51.center);
+		\draw [in=120, out=0] (52.center) to (45);
+		\draw [in=105, out=0] (49.center) to (45);
+		\draw [in=0, out=-120] (45) to (56.center);
+		\draw [in=180, out=60] (57) to (61.center);
+		\draw [in=180, out=-60] (57) to (62.center);
+		\draw [in=120, out=0] (63.center) to (57);
+		\draw [in=0, out=-120] (57) to (64.center);
+		\draw [in=105, out=0, looseness=0.75] (65) to (57);
+		\draw (60.center) to (65);
+	\end{pgfonlayer}
+\end{tikzpicture}

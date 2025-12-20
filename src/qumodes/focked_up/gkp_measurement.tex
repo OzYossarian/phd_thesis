@@ -1,25 +1,27 @@
-\section{Measuring GKP code stabilizers}
+\section{Fault-equivalent GKP measurements}
 
 A second application of our CV fault-equivalence is in coming up with good stabilizer measurement circuits (often called \textit{syndrome extraction circuits}) for general GKP codes.
 Suppose we have an $m$-qumode GKP code defined by the stabilizer group:
 \begin{equation}
     \SSS = \langle \hat{D}(\tbinom{\bsym{q}_1}{\bsym{p}_1}), \ldots, \hat{D}(\tbinom{\bsym{q}_{2m}}{\bsym{p}_{2m}}) \rangle
 \end{equation}
-Recall that GKP codes are implemented by measuring $\hat{H}_j \bmod 1$ for $1 \leq j \leq 2m$, where $\hat{H}_j = \tbinom{\bsym{q}_j}{\bsym{p}_j} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}$, hence $\hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j}) = e^{-i2\pi\hat{H}}$.
+Recall that GKP codes are implemented by measuring $\hat{\boldsymbol{r}}_j \bmod 1$ for $1 \leq j \leq 2m$, where $\hat{\boldsymbol{r}}_j = \tbinom{\bsym{q}_j}{\bsym{p}_j} \odot \tbinom{\bsym{\hat{q}}}{\bsym{\hat{p}}}$, hence $\hat{D}(\tbinom{\bsym{q}_j}{\bsym{p}_j}) = e^{-i2\pi\hat{\boldsymbol{r}_j}}$.
 The projector associated with the outcome $a \in \mathbb{R}$ of this measurement is:
 \begin{equation}
     \Pi_j \coloneqq \sum_{k \in \ZZ} e^{-i2\pi a k}\hat{D}(\tbinom{\bsym{q_j}}{\bsym{p_j}})^{a k}
 \end{equation}
 For clarity, let's drop the subscript $j$ temporarily, and call this $\Pi$.
 We will need polar coordinates: for $\tbinom{\bsym{q}}{\bsym{p}} = (q_1, \ldots, q_m, p_1, \ldots, p_m)$, define $r_j e^{i\theta_j} = q_j + ip_j$.
-We showed in TODO that we can represent this projector in the ZX-calculus as:
-\begin{equation}
+We showed in \Cref{subsec:homodyne_and_gkp_measurements} that we can represent this projector in the ZX-calculus as:
+\begin{equation}\label{eq:measurement_gkp_general}
     \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement_outcome_a}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement_outcome_a_split}
 \end{equation}
-Since we only care about the error correcting properties of this diagram, we can choose the representative of this diagram in the $\zxmodchi$-calculus that has $a = 0$:
-\begin{equation}\label{eq:measurement_general_displacement}
-    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement}
-\end{equation}
+%Since we only care about the error correcting properties of this diagram, we can choose the representative of this diagram in the $\zxmodchi$-calculus that has $a = 0$:
+%\begin{equation}\label{eq:measurement_general_displacement}
+%    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_general_displacement}
+%\end{equation}
 This diagram features an $m$-legged $0_\square$-labelled spider; this represents a GHZ state in the multimode square GKP code.
 %This diagram features an $m$-legged $0_\square$-labelled spider; this represents a \textit{cat state} in the multimode square GKP code.
 %A cat state is just a $\ket{\text{GHZ}_m}$ state but in the other basis:
@@ -28,9 +30,9 @@ This diagram features an $m$-legged $0_\square$-labelled spider; this represents
 %\end{equation}
 Preparing this state with a low error rate is tricky.
 Supposing we wanted to actually implement this diagram, it would be more realistic to assume that at best we can start with single-qumode square GKP states $\ket{+_\square}$.
-So a natural question is: can we find a circuit that's fault-equivalent to the diagram in~\eqref{eq:measurement_general_displacement} above, but which only uses single-qumode GKP states?
+So a natural question is: can we find a circuit that's fault-equivalent to the diagram in~\eqref{eq:measurement_gkp_general} above, but which only uses single-qumode GKP states?
 In other words, can we find a circuit that measures this GKP stabilizer generator and has the same behaviour under noise as the diagram above (at least for the ZX noise model)?
-The following proposition is all we need.
+The following result is essentially all we'll need.
 
 \begin{proposition}\label{prop:GHZ_prep_even_fault_equiv}
     For all real $r \neq 0$ and integer $m \geq 1$, the following diagrams are fault-equivalent:
@@ -91,7 +93,7 @@ The following proposition is all we need.
             \wt(F_2) &= \sum_{j=1}^m |t_j| + |u_j| + |v_j| \geq \sum_{j=1}^m |t_j| + \sum_{j=1}^m |v_j - u_j| \\
             \wt(F_1) &= \sum_{j=1}^m |v_j| + \sum_{j=1}^m |v_j - u_j|
         \end{align}
-        So if $\sum_{j=1}^m |v_j| \leq \sum_{j=1}^m |t_j|$, we're in business.
+        Thus if $\sum_{j=1}^m |v_j| \leq \sum_{j=1}^m |t_j|$, we're in business.
         Unfortunately we don't have such a guarantee, but all is not lost!
         Had we swapped the roles of the $t_j$ and $v_j$ terms throughout, we would have ended up with a different equivalent error $F_1'$ for $F_2$:
         \begin{equation}
@@ -109,52 +111,151 @@ The following proposition is all we need.
     \end{proof}
 \end{proposition}
 
-Let's look at this in action.
+It just remains to turn this into a diagram that contains circuit components only -- currently it contains projections that we can't implement deterministically.
+Instead, we can try to implement this via measurements and fed-forward corrections, for suitably chosen $c_j$ and $d_j$ terms that can depend on the $b_j$ terms:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive}
+    ~~\overset{?}{=}~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct}
+\end{equation}
 
-\begin{example}
-    The $E_8$ lattice in $\RR^{8}$ is defined as the span of the columns of the following \textit{generator matrix}:
-    \begin{equation}\label{eq:E8_lattice_generator}
-        M =
-        \begin{pmatrix}
-            1 & 0 & 0 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
-            -1 & 1 & 0 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
-            0 & -1 & 1 & 0 & 0 & 0 & 0 & \frac{1}{2} \\
-            0 & 0 & -1 & 1 & 0 & 0 & 0 & \frac{1}{2} \\
-            0 & 0 & 0 & -1 & 1 & 0 & 0 & \frac{1}{2} \\
-            0 & 0 & 0 & 0 & -1 & 1 & 0 & \frac{1}{2} \\
-            0 & 0 & 0 & 0 & 0 & -1 & 1 & \frac{1}{2} \\
-            0 & 0 & 0 & 0 & 0 & 0 & -1 & \frac{1}{2}
-        \end{pmatrix}
-    \end{equation}
-    For any integer $d \geq 2$, this lattice gives rise to a four-qumode GKP code encoding four $d$-dimensional qudits.
-    Define $M_d = \sqrt{d}M$ and let the lattice $\Lambda_d$ be the span of the columns of $M_d$.
-    We'll take $d = 2$, so that this encodes four qubits.
-    Take column $j$ of $M_d$, reorder it into $qqpp$ order (\Cref{subsec:phase_space}), and denote it by $\boldsymbol{\xi}_j$.
-    The GKP code is defined by the stabilizer group:
+We can use similar reasoning as in the result above to narrow down what these corrections need to satisfy.
+First we can note that in the error-free case all measurement outcomes $b_j$ will be multiples of $r$, because of the following webs, which exist for each $1 \leq j \leq m$ and all $a_j \in \frac{1}{r}\mathbb{Z}$:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_web_j}
+\end{equation}
+And furthermore, in the error-free case, all measurement outcomes $b_1, \ldots, b_m$ will in fact be equal, thanks to the $m-1$ webs of the following form, valid for all real $a$:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_web_1_j}
+\end{equation}
+So let's write $kr = b_1 = \ldots = b_m$.
+To cancel these out, we can set $c_1 = \ldots = c_m = kr$ and $d_1 = \ldots = d_m = 0$:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct_kr_1}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct_kr_2}
+\end{equation}
+And note that the spiders labelled $\chi_{kr}$ form a stabilizer of the comb spider labelled $\indicator{x \eqmod{r} 0}$:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct_kr_2}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct_kr_3}
+\end{equation}
+
+This is a bit better -- we now have a diagram that actually corresponds to a circuit and works in the error-free case, but of course this whole thesis is about error correction, so it seems silly to assume there'll be no errors.
+In the qubit case, since there are only finitely many possible measurement outcomes, we could just say that if we see measurement outcomes we weren't expecting we should throw the whole thing away and start again.
+In the qumode case, this too seems silly -- we may well be expecting all outcomes $b_j$ to be multiples of $r$ in the absence of errors, but if we throw the whole thing away anytime we see a tiny deviation like $b_j = k_j r + \epsilon_j$ we'd never get anywhere.
+
+Instead, we can do the following: we can just round every outcome $b_j$ to the nearest multiple of $r$. (Effectively, this means we're doing GKP decoding on the encoded GKP states).
+Write $[b_j]$ to mean $b_j$ after rounding to the nearest multiple of $r$.
+This in a sense discretizes the errors -- now if we see something unexpected, like $[b_j] \neq [b_k]$ for some $j$ and $k$, we can indeed just throw the whole thing away and start again, because we shouldn't expect this to happen too often.
+So the final diagram we get is the following, where we post-select to guarantee that $[b_1] = \ldots = [b_m]$:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_rounded}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_inductive_meas_correct_kr_3}
+\end{equation}
+
+The last thing we note is that this is a fault-equivalent diagram equality.
+It just uses two rewrites -- the stabilizer of the comb spider, and the copy rule.
+
+\begin{lemma}\label{lem:post_selected_cat_state_prep_fault_equiv}
+    The following two rules are fault-equivalent rewrites:
     \begin{equation}
-        \SSS = \pres{\hat{D}(\boldsymbol{\xi}_1), \ldots, \hat{D}(\boldsymbol{\xi}_n)}
-    \end{equation}
-    So to implement it, we need to measure a generating set for it -- may as well choose the one we've given above.
-    And the generator we're particularly interested in is the one corresponding to the final column of $M_2$:
-    \begin{equation}
-        \hat{D}(\boldsymbol{\xi}_8) = \hat{D}(\sqrt{2}(\frac{1}{2}, \ldots, \frac{1}{2})^T)
-    \end{equation}
-    To write the corresponding projector in the ZX-calculus, we need polar coordinates: $\sqrt{2}(\frac{1}{2} + \frac{1}{2}i) = e^{i\pi / 4}$.
-    Then the projector is:
-    \begin{equation}
-        \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8}
-    \end{equation}
-    In particular, the given diagram contains a 4-qumode GHZ state.
-    We saw in \Cref{prop:GHZ_prep_even_fault_equiv} above how to rewrite this fault-equivalently to a diagram containing only one-legged $0_L$ states:
-    \begin{equation}
-        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4}
+        \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0}
         ~~=~~
-        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2}
+        \tikzfig{qumodes/focked_up/gkp_measurement/cat_state_comb_0_stabilizer}
+        \qqquad
+        \tikzfig{qumodes/focked_up/gkp_measurement/copy_gate_green_uncopied}
         ~~=~~
-        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1}
+        \tikzfig{qumodes/focked_up/gkp_measurement/copy_gate_green_copied}
     \end{equation}
-    TODO continue -- how to post-select away the bad measurement outcomes?
+    \begin{proof}
+        In both cases, and in both directions $D_1 \mapsto D_2$ and $D_2 \mapsto D_1$, any error on a newly created internal edge can be commuted past the neighbouring $\chi_a$ or $\chi_{kr}$ spider (up to global phase) so it's on a boundary edge.
+        This then gives an equivalent error on the original diagram of equal weight.
+        So now do exactly as in \Cref{prop:tadpole_rule_fault_equiv} and the lemmas below it; consider a general error on the rewritten diagram and use what we know about individual errors on internal edges to show we have an equivalent error on the original diagram of less or equal weight.
+    \end{proof}
+\end{lemma}
+
+Let's now look at this in action, finally.
+Recall the multimode GKP code we defined via the $E_8$ lattice in $\RR^{8}$ in \Cref{ex:E8_gkp}.
+This lattice has the following \textit{generator matrix}, where vectors are in $qpqp$ order (\Cref{subsec:phase_space}):
+\begin{equation}\label{eq:E8_lattice_generator}
+    M =
+    \begin{pmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 1/2 \\
+        -1 & 1 & 0 & 0 & 0 & 0 & 0 & 1/2 \\
+        0 & -1 & 1 & 0 & 0 & 0 & 0 & 1/2 \\
+        0 & 0 & -1 & 1 & 0 & 0 & 0 & 1/2 \\
+        0 & 0 & 0 & -1 & 1 & 0 & 0 & 1/2 \\
+        0 & 0 & 0 & 0 & -1 & 1 & 0 & 1/2 \\
+        0 & 0 & 0 & 0 & 0 & -1 & 1 & 1/2 \\
+        0 & 0 & 0 & 0 & 0 & 0 & -1 & 1/2
+    \end{pmatrix}
+\end{equation}
+Then as a GKP code the lattice $\Lambda = \sqrt{d}M$ encodes four qubits into four modes.
+Explicitly, take column $j$ of $\Lambda$, reorder it into $qqpp$ order, and denote it by $\boldsymbol{\xi}_j$.
+The GKP code is defined by the stabilizer group:
+\begin{equation}
+    \SSS = \pres{\hat{D}(\boldsymbol{\xi}_1), \ldots, \hat{D}(\boldsymbol{\xi}_n)}
+\end{equation}
+So to implement it, we need to measure a generating set for it -- may as well choose the one we've given above.
+And the generator we're particularly interested in is the one corresponding to the final column of $\Lambda$:
+\begin{equation}
+    \hat{D}(\boldsymbol{\xi}_8) = \hat{D}(\sqrt{2}(\frac{1}{2}, \ldots, \frac{1}{2})^T)
+\end{equation}
+To write the corresponding projector in the ZX-calculus, we need polar coordinates: $\sqrt{2}(\frac{1}{2} + \frac{1}{2}i) = e^{i\pi / 4}$.
+Then the projector is as follows, where $d = d_1 + \ldots + d_4$:
+\begin{equation}\label{eq:measurement_e8_outcome_d}
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d_unfused}
+\end{equation}
+We will quickly note that the rewrite above is fault-equivalent, as is one extra rewrite we'll need in a second.
+\begin{lemma}
+    For $d = d_1 + \ldots + d_m$, the following two rewrites are fault-equivalent:
     \begin{equation}
-        \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1_meas1}
+        \tikzfig{qumodes/focked_up/gkp_measurement/spider_red_f_chi_d_unsplit}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/gkp_measurement/spider_red_f_chi_d_split}
+        \qqquad
+        \tikzfig{qumodes/focked_up/gkp_measurement/tadpole_meas_fuse_unfused}
+        ~~=~~
+        \tikzfig{qumodes/focked_up/gkp_measurement/tadpole_meas_fuse_fused}
     \end{equation}
-\end{example}
+    \begin{proof}
+        Entirely identical to \Cref{lem:post_selected_cat_state_prep_fault_equiv}.
+    \end{proof}
+\end{lemma}
+
+With that, we can finally put everything together to give a post-selected circuit for implementing this GKP measurement, where the outcome will be $d_1 + d_2 + d_3 + d_4$.
+The original diagram~\eqref{eq:measurement_e8_outcome_d} contains a 4-qumode GHZ state;
+we saw in \Cref{prop:GHZ_prep_even_fault_equiv} above how to rewrite this fault-equivalently to a post-selected circuit containing only one-qumode GKP states:
+%\begin{equation}
+%    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4}
+%    ~~=~~
+%    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2}
+%    ~~=~~
+%    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1}
+%\end{equation}
+%And then we discussed how to view this as a post-selected circuit:
+\begin{equation}
+    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4}
+%    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1_meas_correct_blank}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/ghz_4_2_1_meas_correct}
+\end{equation}
+So overall we can fault-equivalently rewrite our projector into the following post-selected circuit:
+\begin{align}
+    &\phantom{~~=~~}
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d_dummy_space}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d_unfused} \\[20pt]
+    &~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d_unfused_tadpoles}
+    ~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_outcome_d_unfused_meas} \\[20pt]
+    &~~=~~
+    \tikzfig{qumodes/focked_up/gkp_measurement/measurement_e8_cat_prep_meas}
+\end{align}
+In other words, we have a syndrome extraction scheme for the tricky stabilizer of the $E8$ GKP code, and a guarantee that it behaves no worse under the ZX noise model than the `natural' diagram for this stabilizer measurement.

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (2, 1) {};
+		\node [style=none] (1) at (2, -1) {};
+		\node [style={rn_phase}] (3) at (0, 0) {$f$};
+		\node [style=none] (18) at (1.75, 0) {$\raisebox{1.3ex}{\vdots}$};
+		\node [style={rn_phase}] (19) at (1.75, 1) {$\chi_{d_1}$};
+		\node [style={rn_phase}] (21) at (1.75, -1) {$\chi_{d_m}$};
+		\node [style=none] (22) at (3, 1) {};
+		\node [style=none] (23) at (3, -1) {};
+		\node [style=none] (24) at (3, 1) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=-60, out=180] (1.center) to (3);
+		\draw [in=60, out=-180] (0.center) to (3);
+		\draw (0.center) to (24.center);
+		\draw (1.center) to (23.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

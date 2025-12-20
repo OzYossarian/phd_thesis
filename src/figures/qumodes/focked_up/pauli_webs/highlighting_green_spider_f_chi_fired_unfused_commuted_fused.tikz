@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (9) at (2.5, 1) {};
+		\node [style=none] (10) at (2.5, -1) {};
+		\node [style=none] (11) at (2, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (16) at (-2.5, 1) {};
+		\node [style=none] (17) at (-2.5, -1) {};
+		\node [style=none] (18) at (-2, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={gn_phase}] (19) at (0, 0) {$f$};
+		\node [style={gn_phase}] (20) at (-1, 0.75) {$\chi_c$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [in=360, out=135] (19) to (16.center);
+		\draw [in=0, out=-135] (19) to (17.center);
+		\draw [in=180, out=45] (19) to (9.center);
+		\draw [in=180, out=-45] (19) to (10.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

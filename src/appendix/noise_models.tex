@@ -1,0 +1,293 @@
+\chapter{Noise models}
+
+In the last section we said an error on a diagram $D$ with edges $E$ could be any element of $\PPP_{|E|}$.
+This is, in effect, a choice of \textit{noise model} (also called an \textit{error model}, or \textit{fault model}).
+In this section, we give a proper definition of a noise model in traditional circuit-centric language, introduce the two most common examples, and then relate them to the non-traditional ZX-centric approach we used throughout the last section.
+
+Throughout, suppose we have some quantum circuit $C$ on $n$ qubits consisting of Cliffords and Pauli measurements.
+Every operation $O$ in this circuit happens at some integer timestep $t$ starting at $0$.
+Let $T$ denote the timestep of the final layer of operations, so there are in total $T+1$ layers of operations.
+We will immediately relabel these timesteps so that all operations are applied at even timesteps $0, 2, \ldots, 2T$.
+Let $M$ be the set of all Pauli measurements in $C$; each measurement can uniquely be identified by the set of qubits $J$ it acts on and the time $t$ at which it takes place.
+As well as the $n$ qubits, we can consider our system to also have $|M|$ classical registers, in which the outcomes of the measurements are stored.
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/circuit}
+    \quad = \quad
+    \tikzfig{qubits/prelims/noise_models/circuit_zx}
+\end{equation}
+
+We will define the set of \textit{Pauli error locations} $L_\PPP$ to be pairs consisting of a qubit index and an odd timestep, and the set of \textit{measurement error locations} $L_M$ to be the integers $1 \leq j \leq |M|$ that index the measurements:
+\begin{equation}\label{eq:pauli_and_measurement_error_locations}
+    \begin{aligned}
+        L_\PPP &= \{(j, t) : j \in \{1, \ldots, n\}, \text{ odd } -1 \leq t \leq 2T+1\} \\
+        L_M &= \{j : 1 \leq j \leq |M|\}
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/circuit_locations}
+    \quad = \quad
+    \tikzfig{qubits/prelims/noise_models/circuit_zx_locations}
+\end{equation}
+
+We define \textit{Pauli errors} to be elements of $\PPP_{|L_\PPP(C)|}$, much like we defined errors in the previous section to be Paulis on edges of ZX-diagrams.
+Supposing we have a Pauli operator $P = P_1 \otimes \ldots \otimes P_m$ acting on qubits $J = (j_1, \ldots, j_m)$ entirely within one timestep $t$, we will allow ourselves to write this as $P_{J, t}$.
+In what follows, we will also often consider the group $\ol{\PPP}_{m} \coloneqq \PPP/\pres{i}$, in which we only care about Paulis up to scalar.
+Elements of this group are cosets $\ol{P} \coloneqq P\pres{i} = \{P, iP, -P, -iP\}$.
+Whenever we write $\ol{P}$, we will freely be able to assume that the representative $P$ is the one with overall scalar $\omega = 1$ when put in standard form (\Cref{subsec:pauli_group}).
+We show an example of a Pauli error in both circuit notation and ZX notation:
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/circuit_pauli_error}
+    \quad = \quad
+    \tikzfig{qubits/prelims/noise_models/circuit_zx_pauli_error}
+\end{equation}
+
+We then define a measurement error to be a map $\neg$ on the classical register that stores the outcome of measurement $j$, where $\neg: \{1, -1\} \to \{1, -1\}$ is the classical gate $m \mapsto -m$.
+So a measurement error negates the reported measurement outcome, falsely reporting a $\pm 1$ outcome as $\mp 1$.
+%The superscript in $\neg^\times$ serves to remind us that this map applies to the multiplicative group $\{1, -1\}$ rather than the additive group $\{0, 1\}$ that we usually consider when discussing classical registers.
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/circuit_meas_error}
+    \quad = \quad
+    \tikzfig{qubits/prelims/noise_models/circuit_zx_meas_error}
+\end{equation}
+
+We define errors in general to be arbitrary products of Pauli and measurement errors.
+As in the previous section, we will write $C^F$ to denote the circuit $C$ with the error $F$ applied to it.
+Finally, we can define a \textit{noise model} $\FFF$ on such a circuit $C$.
+This is a set of probability distributions $\FFF = \{\FFF_1, \ldots, \FFF_m\}$, where each distribution $\FFF_j = \{(F_{j,1}, p_{j,1}), \ldots, (F_{j,r_j}, p_{j,r_j})\}$ consists of \textit{atomic errors} $F_{j,k}$ and their probability $p_{j,k}$ of occurring.
+
+
+%We say two errors $F$ and $F'$ are \textit{equivalent} if $C^F$ and $C^{F'}$ are equal as linear maps.
+%\teague{Maybe also define trivial errors here: $C^F = C^I = C$. And logical errors? $F$ undetectable but non-trivial: $C^F \not\propto C$.}
+%So, for example, since all our measurements are Paulis, it turns out we can already model measurement errors just using the Pauli errors above.
+%To see this, note a measurement error $\neg^\times_{J,t}$ when measuring Pauli $P$ on qubits $J = \{j_1, \ldots, j_m\}$ at time $2t$ is equivalent to the Pauli error $Q_{j_1, 2t-1} Q_{j_1, 2t+1}$, where $Q$ is some single-qubit Pauli that anti-commutes with $P$.
+
+%\teague{example}
+
+\subsection{Phenomenological noise}
+
+The phenomenological noise model assumes not just that we have some finite circuit $C$, but that this circuit in fact implements some dynamic stabilizer code $\OOO$.
+This means the following: letting $T+1$ denote the number of timesteps in $C$, where operations occur only on even timesteps $t \geq 0$, we require that $C$ is equivalent as a linear map to the circuit $C'$ that consists of applying exactly the sets of operations $\OOO_0, \ldots, \OOO_T$.
+It may be that $C$ is exactly $C'$!
+But it need not be -- for example, in order to implement Pauli measurements, the circuit $C$ may introduce auxiliary qubits and perform extra entangling operations on these.
+For example, we can perform a $Z_1 Z_2$ measurement via an auxiliary qubit, two CNOTs and a single-qubit $Z$ measurement:
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_direct}
+    \quad = \quad
+    \tikzfig{qubits/prelims/noise_models/zx_meas_zz_indirect}
+\end{equation}
+Call the $n$ qubits of the operation sequence $\OOO$ the \textit{data qubits}, in contrast to the $m$ \textit{auxiliary qubits}.
+Let the data qubits be the first $n$ qubits in the indexing of the total $n + m$ qubits.
+Per the convention in the preceding paragraphs, we'll say the operations in $\OOO_j$ occur at timestep $2j$ in the circuit $C$.
+
+Intuitively, the phenomenological noise model is defined as follows: after each round of operations $\OOO_j$, exactly one of the four single-qubit Paulis $X$, $Y$ and $Z$ and $I$ can occur on any of the $n$ data qubits, with probabilities $p_X$, $p_Y$, $p_Z$ and $p_I = 1 - p_X - p_Y - p_Z$ respectively, and every measurement can be erroneous with probability $p_M$.
+In the notation defined above, we write this as the set $\FFF_{\text{Ph}}$ consisting of the following probability distributions over atomic errors.
+First, for all $1 \leq j \leq n$ and odd $0 \leq j \leq 2T+1$, we have $\FFF_{j,t} \in \FFF_{\text{Ph}}$, where:
+\begin{equation}
+    \FFF_{j,t} = \{(X_{j,t}, p_X), (Y_{j,t}, p_Y), (Z_{j,t}, p_Z), (I_{j,t}, p_I)\}
+\end{equation}
+Then for each measurement $j$ we have $\FFF_j \in \FFF_{\text{Ph}}$, where:
+\begin{equation}
+    \FFF_j = \{(\neg_j, p_M), (id, 1 - p_M)\}
+\end{equation}
+
+\subsection{Circuit-level noise}
+
+The phenomenological noise model was historically popular because it's simple to analyse, but these days the gold standard is the more realistic circuit-level noise model.
+Here, we make no distinction between data and auxiliary qubits, so we don't need to explicitly assume that $C$ implements a dynamic stabilizer code (though every circuit consisting of Cliffords and Pauli measurements can be viewed as one).
+Instead, intuitively, we just assume that after every operation $O$ at time $t$ on $q$ qubits, any weight-$q$ Pauli operator $P$ can occur on these qubits with some probability, and additionally if the operation is a measurement then the outcome can be erroneous.
+Formally, we define $\FFF_{\text{CL}}$ as follows.
+For every operation $O$, let $supp(O)$ denote the support of $O$ (whether $O$ is a Clifford or a measurement).
+Start by defining $\FFF_{O, t}$ for every even timestep $t$, which says which Pauli errors can occur after $O$:
+\begin{equation}
+    \FFF_{O, t} = \{(P_{supp(O), t+1}, p_{P, O, t+1}) : \ol{P} \in \ol{\PPP}_{|supp(O)|}\}
+\end{equation}
+Then if $O$ is in fact a measurement (the $j$th one in the circuit), further define:
+\begin{equation}
+    \FFF_{O, t}' = \FFF_{O, t} \times \{(\neg_j, p_j), (id_j, 1 - p_j)\}
+\end{equation}
+Here $\times$ denotes not the Cartesian product but the multiplication of two probability distributions, which gives another probability distribution.
+Finally, we define the error model to be:
+\begin{equation}
+    \begin{aligned}
+        \FFF_{\text{CL}}
+        =\ &\{\FFF_{O, t} : \text{ Clifford } O, \text{ even } 0 \leq t \leq 2T \} \\
+        &\cup \{\FFF'_{O, t} : \text{ measurement } O, \text{ even } 0 \leq t \leq 2T \}
+    \end{aligned}
+\end{equation}
+
+So for example, the first two errors below are atomic errors in both the phenomenological and circuit-level noise models, but the rightmost error is only an atomic error in the circuit-level noise model.
+It can still occur in a simulation of a circuit under phenomenological noise, but it must do so as a product of atomic errors.
+\begin{equation}
+    \tikzfig{qubits/prelims/noise_models/meas_zz_phenom_meas_error}
+    \qqquad
+    \tikzfig{qubits/prelims/noise_models/meas_zz_phenom_pauli_error}
+    \qqquad
+    \tikzfig{qubits/prelims/noise_models/meas_zz_cl_error}
+\end{equation}
+
+\begin{example}
+    The go-to circuit-level noise model is the standard depolarizing (SD) nosie model.
+    This assumes the circuit $C$ can only perform weight-one Pauli measurements directly (i.e.\ auxiliary qubits are needed to measure higher weight Paulis).
+    It is parametrised by some probability $p$, in terms of which probabilities of specific errors are defined.
+    First, after initialising a qubit in a Pauli eigenstate, the following errors can occur:
+    \begin{equation}
+        \begin{aligned}
+            \FFF_{\ket{0}} &= \{(X, p), (I, 1-p)\}\\
+            \FFF_{\ket{+}} &= \{(Y, p), (I, 1-p)\}\\
+            \FFF_{\ket{i}} &= \{(Z, p), (I, 1-p)\}
+        \end{aligned}
+    \end{equation}
+    Then, after each controlled gate $CX$, $CY$ or $CZ$, any two-qubit Pauli error can occur:
+    \begin{equation}
+            \FFF_{CP} = \{(P \otimes Q, p) : P \otimes Q \in \{I, X, Y, Z\}^{\otimes 2} - \{I \otimes I\}\} \cup \{(I \otimes I, 1-15p)\}
+    \end{equation}
+    Every single-qubit measurement can experience a measurement error:
+    \begin{equation}
+        \FFF_M = \{(\neg, p), (id, 1-p)\}
+    \end{equation}
+    And finally, idling qubits can experience errors too:
+    \begin{equation}
+        \FFF_{\text{Idle}} = \{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}
+    \end{equation}
+\end{example}
+
+\begin{example}
+    As the name suggests, the superconducting-inspired (SI) noise model tries to capture the sort of noise that's likely to occur in superconducting hardware.
+    We again assume the circuit $C$ can only perform weight-one Pauli measurements directly, and parametrise the whole thing by some probability $p$.
+    We model initialisations as relatively noisier than before:
+    \begin{equation}
+        \begin{aligned}
+            \FFF_{\ket{0}} &= \{(X, 2p), (I, 1-2p)\}\\
+            \FFF_{\ket{+}} &= \{(Y, 2p), (I, 1-2p)\}\\
+            \FFF_{\ket{i}} &= \{(Z, 2p), (I, 1-2p)\}
+        \end{aligned}
+    \end{equation}
+    Noise after controlled gates is exactly as before:
+    \begin{equation}
+        \FFF_{CP} = \{(P \otimes Q, p) : P \otimes Q \in \{I, X, Y, Z\}^{\otimes 2} - \{I \otimes I\}\} \cup \{(I \otimes I, 1-15p)\}
+    \end{equation}
+    Single-qubit measurements are particularly noisy (relatively speaking):
+    \begin{equation}
+        \FFF_M = \{(\neg, 5p), (id, 1-5p)\}
+    \end{equation}
+    Idling qubits are split into two categories -- qubits idling while at least one other qubit is being reset or measured are said to be resonator-idling, else they're just idling.
+    The former are noisier than the latter:
+    \begin{equation}
+        \begin{aligned}
+            \FFF_{\text{Idle}} &= \{(P, \frac{p}{10}) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3\frac{p}{10})\}\\
+            \FFF_{\text{Res}} &= \{(P, 2p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 6p)\}
+        \end{aligned}
+    \end{equation}
+\end{example}
+
+\begin{example}
+    Unlike the previous two examples, the entangling measurements (EM) noise model supposes the circuit $C$ performs non-destructive weight-two Pauli measurements directly, and doesn't require controlled unitaries.
+    We model initialisations as in the standard depolarizing case:
+    \begin{equation}
+        \begin{aligned}
+            \FFF_{\ket{0}} &= \{(X, p), (I, 1-p)\}\\
+            \FFF_{\ket{+}} &= \{(Y, p), (I, 1-p)\}\\
+            \FFF_{\ket{i}} &= \{(Z, p), (I, 1-p)\}
+        \end{aligned}
+    \end{equation}
+    Non-destructive two-qubit measurements can experience a two-qubit Pauli error and a measurement error:
+    \begin{equation}
+        \begin{aligned}
+            \FFF_{M_2}
+            =\ &\{((P \otimes Q, f), p) : (P \otimes Q, f) \in \{I, X, Y, Z\}^{\otimes 2} \\
+            &\times \{\neg, id\} - \{(I \otimes I, id)\}\} \cup \{((I \otimes I, id), 1 - 31p)\}
+        \end{aligned}
+    \end{equation}
+    Single-qubit measurements are also permitted:
+    \begin{equation}
+        \FFF_{M_1} = \{(\neg, p), (id, 1-p)\}
+    \end{equation}
+    And idling qubits are simplified again:
+    \begin{equation}
+        \FFF_{\text{Idle}} = \{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}
+    \end{equation}
+\end{example}
+
+%\begingroup
+%\renewcommand*{\arraystretch}{1.2}
+%\begin{table}
+%    \centering
+%    \begin{tabular}{|c|c|c|}
+%        \hline
+%        Operation $O$ & Model & Distribution $\FFF_O$ \\
+%        \hline
+%        \hline
+%        \multirow{3}{*}{CX, CY, CZ} & SD & $\{(P, p) : P \in \{I, X, Y, Z\}^{\otimes 2} - \{I \otimes I\}\} \cup \{(I, 1-15p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(P, p) : P \in \{I, X, Y, Z\}^{\otimes 2} - \{I \otimes I\}\} \cup \{(I, 1-15p)\}$ \\
+%        \cline{2-3}
+%        & EM & - \\
+%        \hline
+%        \multirow{3}{*}{Init $\ket{0}$} & SD & $\{(X, p), (I, 1-p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(X, 2p), (I, 1-2p)\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(X, p), (I, 1-p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Init.\ $\ket{i}$} & SD & $\{(Y, p), (I, 1-p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(Y, 2p), (I, 1-2p)\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(Y, p), (I, 1-p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Init $\ket{+}$} & SD & $\{(Z, p), (I, 1-p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(Z, 2p), (I, 1-2p)\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(Z, p), (I, 1-p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Meas.\ $X, Y, Z$} & SD & $\{(\neg^\times, p), (id, 1-p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(\neg^\times, 5p), (id, 1-5p)\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(\neg^\times, p), (id, 1-p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Idle} & SD & $\{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(P, \frac{p}{10}) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3\frac{p}{10})\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Resonator idle} & SD & $\{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}$ \\
+%        \cline{2-3}
+%        & SI & $\{(P, 2p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 6p)\}$ \\
+%        \cline{2-3}
+%        & EM & $\{(P, p) : P \in \{X, Y, Z\}\} \cup \{(I, 1 - 3p)\}$ \\
+%        \hline
+%        \multirow{3}{*}{Meas. $P_1 P_2$ } & SD & $\{((P, f), p) : (P, f) \in \{I, X, Y, Z\}^{\otimes 2} \times \{\neg^\times, id\} - \{(I \otimes I, id)\}\} \cup \{((I \otimes I, id), 1 - 31p)\}$ \\
+%        \cline{2-3}
+%        & SI & - \\
+%        \cline{2-3}
+%        & EM & - \\
+%        \hline
+%        \hline
+%    \end{tabular}
+%    \caption{\teague{Redo}Defining error probabilities for the SD, SI and EM noise models.
+%    The leftmost column contains all types of operations that are applied in the circuits.
+%    The second column lists which errors have a non-zero probability of occurring after a given operation.
+%    The latter three columns give the probabilities of these errors occurring after the given operation.
+%    `Resonator idle' refers to a circuit location during which a qubit is not measured or reset, in a time step during which other qubits are being measured or reset.}
+%    \label{tab:noise_model_params}
+%\end{table}
+
+\subsection{Biased noise}
+
+Any noise model can be biased towards a certain type of noise.
+A phenomenological noise model is only unbiased if $p_X = p_Y = p_Z$, so no particular non-identity Pauli is more likely to occur than any other, and $p_X + p_Y + p_Z = p_M$, so Pauli errors and measurement errors are equally likely.
+Similarly, a circuit-level noise model is only unbiased if all operations are equally likely to suffer an error, and all errors associated to a particular operation $O$ are equally likely.
+The latter in particular is a tall order!
+So most realistic examples of noise models are biased in some way or another.
+For the phenomenological noise model, we will quantify this; we define the \textit{measurement bias} to be $\eta_M = p_M/(p_X + p_Y + p_Z)$, and the \textit{$Z$ bias} as $\eta_Z = 2p_Z/(p_X+p_Y)$.
+
+\subsection{ZX noise model}
+
+In \Cref{subsec:detecting_webs_detect_errors}, we took a ZX-centric approach to errors, defining an error on a diagram $D$ with edges $E$ to be any element of $\PPP_{|E|}$.
+In this section, we've taken a very circuit-centric view of errors.
+But since circuits are just a subset of ZX-diagrams, we could have written everything in this section in terms of the ZX-calculus too.
+The reason we stuck with the circuit-based approach here is because the paper the next chapter is based on took this approach.
+But conversely the reason for mentioning that we could have just stuck with the ZX-calculus in this section is because in part two of this thesis we will do exactly this.

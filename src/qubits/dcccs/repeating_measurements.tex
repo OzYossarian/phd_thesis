@@ -602,6 +602,34 @@ and under belief matching (\Cref{fig:phenomenological_noise_volume_plot_beliefma
 This chimes with the intuition that repeating measurements gives us more confidence about faulty measurements.
 At the same time it seems to contradict the intuition that repeating measurements might improve performance in general (\Cref{dif:repeating_detectors,dif:repeating_decoding_graph_degrees}), and particularly in the case of $Z$-biased noise by spending more time measuring certain operators (\Cref{dif:repeating_asymmetric_schedule}). That said, we only tested a $Z$-noise bias of up to $\eta_Z = 16$, whereas in other work orders of magnitude higher values are considered -- e.g.\ bias of up to $\eta_Z = 10^6$ is considered in \Ccite{Chamberland_2022}.
 
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{figures/qubits/dcccs/introduction/spacetime_volume_heatmap_pymatching}
+    \caption{Squares in the top patchwork plot are red (green) if the code with the smallest teraquop volume is an $X^aZ^b$ code ($X^aZ^bY^c$ code).
+    A darker shade indicates a higher volume.
+    The four bar plots show the footprints of the 10 best codes at the four limits of the simulated biases.
+    The error bars are explained in \Cref{sec:methodology}.
+    Decoding is performed using MWPM.
+    For all noise models investigated here, the $X^a Z^b$ code outperforms the $X^a Y^b Z^c$ code.
+    Repeating measurements improves performance when the noise is biased strongly towards measurement errors only, and has negligible effect otherwise.
+    For noise model details, definitions, and naming conventions see Table \ref{tab:glossary}.
+    }
+    \label{fig:phenomenological_noise_volume_plot_pymatching}
+\end{figure}
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/qubits/dcccs/introduction/spacetime_volume_heatmap_beliefmatching}
+    \caption{
+        Same plot as in \Cref{fig:phenomenological_noise_volume_plot_pymatching} but with decoding performed using belief matching.
+        In contrast to \Cref{fig:phenomenological_noise_volume_plot_pymatching}, for all noise models investigated here, the $X^a Y^b Z^c$ code outperforms the $X^a Z^b$ code.
+        However, as before, repeating measurements improves performance when the noise is biased strongly towards measurement errors only, but has negligible effect otherwise.
+    }
+    \label{fig:phenomenological_issing_beliefmatching}
+\end{figure}
+
 \subsection{Circuit-level noise results}\label{subsec:repeating_measurements_circuit_level_noise}
 
 \Cref{fig:pymatching_circuit_level_noise_volume_plot,fig:beliefmatching_circuit_level_noise_volume_plot} show the teraquop volumes of the best codes under the three circuit-level noise models, decoded with MWPM and belief matching respectively.
@@ -614,7 +642,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{figures/qubits/dcccs/repeating_measurements/X1Y1Z1_X2Y2Z2_X3Y3Z3_comparison.pdf}
+    \includegraphics[width=\linewidth]{figures/qubits/dcccs/repeating_measurements/X1Y1Z1_X2Y2Z2_X3Y3Z3_comparison}
     \caption{
         Teraquop volumes of the $X^aY^bZ^c$ code for phenomenological noise with measurement bias 16,
         and an increasing number $a + b + c$ of repeated rounds of measurements.
@@ -639,7 +667,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\linewidth]{figures/qubits/dcccs/repeating_measurements/timelike_distance.pdf}
+    \includegraphics[width=\linewidth]{figures/qubits/dcccs/repeating_measurements/timelike_distance}
     \caption{
         Plots showing the timelike distances of $(n_E, n_M, h)$-blocks of $X^a Y^b Z^c$ and $X^a Z^b$ codes under different noise models as a fraction of the block height $h$.
         Since standard depolarizing noise and superconducting-inspired noise differ only in the probabilites of the certain gates occuring, and not in which gates can occur, any notions of distance are identical across both models.
@@ -651,3 +679,25 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
     }
     \label{fig:repeated_measurements_timelike_distances}
 \end{figure}
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/qubits/dcccs/introduction/volumes_cln_pymatching}
+    \caption{Teraquop volumes of $X^a Y^b Z^c$ and $X^a Z^b$ codes for three circuit-level noise models; standard depolarizing noise with $p=0.0005$, superconducting inspired noise with $p=0.00025$, and entangling measurement noise with $p=0.0025$. Decoding is performed using MWPM. In each case, the code with the best teraquop volume is from the $X^a Z^b$ family, though the difference
+    is small.
+    Repeating measurements broadly has negligible effect, though does seem to improve the performance of the $X^1 Y^1 Z^1$ code in the superconducting inspired noise model, which features a moderate measurement bias.
+    The error bars are explained in \Cref{sec:methodology}.}
+    \label{fig:pymatching_circuit_level_noise_volume_plot}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/qubits/dcccs/introduction/volumes_cln_beliefmatching}
+    \caption{Teraquop volumes of $X^a Y^b Z^c$ and $X^a Z^b$ codes for three circuit-level noise models; standard depolarizing noise with $p=0.001$, superconducting inspired noise with $p=0.0005$, and entangling measurement noise with $p=0.005$. Decoding is performed using belief matching.
+    In contrast to \Cref{fig:pymatching_circuit_level_noise_volume_plot}, now in each case the code with the best teraquop volume is from the $X^a Y^b Z^c$ family.
+    As before, repeating measurements broadly has negligible effect, though does improve the performance of the $X^1 Z^1$ code in the entangling measurements noise model.
+    The error bars are explained in \Cref{sec:methodology}.}
+    \label{fig:beliefmatching_circuit_level_noise_volume_plot}
+\end{figure}
+

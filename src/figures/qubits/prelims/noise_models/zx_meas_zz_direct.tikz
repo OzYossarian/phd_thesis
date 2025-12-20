@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (14) at (-1.5, 0.75) {};
+		\node [style=none] (15) at (-1.5, -0.75) {};
+		\node [style=none] (16) at (1.5, 0.75) {};
+		\node [style=none] (17) at (1.5, -0.75) {};
+		\node [style=gn] (18) at (0, 0.75) {};
+		\node [style=gn] (19) at (0, -0.75) {};
+		\node [style={rn_phase}] (20) at (0, 0) {$a\pi$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (14.center) to (16.center);
+		\draw (15.center) to (17.center);
+		\draw (19) to (18);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-2, -1) {};
+		\node [style={gn_phase}] (1) at (-2, -1) {$\overline{\chi}_{a_l}$};
+		\node [style=none] (2) at (-2, 1) {};
+		\node [style=none] (3) at (-3.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={rn_phase}] (4) at (-4, -1) {$\chi_{b_l - b_1}$};
+		\node [style=none] (5) at (-5.5, 1) {};
+		\node [style=none] (6) at (-5.5, -1) {};
+		\node [style={gn_phase}] (7) at (2, 1) {$\overline{\chi}_{a_{l+1}}$};
+		\node [style={gn_phase}] (8) at (2, -1) {$\overline{\chi}_{a_{l+m}}$};
+		\node [style=none] (9) at (3.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (10) at (2, 1) {};
+		\node [style=none] (11) at (2, -1) {};
+		\node [style=none] (12) at (6, 1) {};
+		\node [style=none] (13) at (6, -1) {};
+		\node [style={rn_phase}] (14) at (4.5, 1) {$\chi_{b_{l+1} + b_1}$};
+		\node [style={rn_phase}] (15) at (4.5, -1) {$\chi_{b_{l+m} + b_1}$};
+		\node [style={gn_phase}] (16) at (0, 0) {$\indicator{\isarg{x} \eqmod{r} - b_1}$};
+		\node [style={gn_phase}] (17) at (-2, 2) {$\overline{\chi}_{a_1}$};
+		\node [style=none] (18) at (-2, 2) {};
+		\node [style=none] (19) at (-5.5, 2) {};
+		\node [style={gn_phase}] (20) at (-2, 1) {$\overline{\chi}_{a_2}$};
+		\node [style={rn_phase}] (21) at (-4, 1) {$\chi_{b_2 - b_1}$};
+		\node [style=none] (22) at (-6, 0) {$\lambda$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (6.center) to (0.center);
+		\draw (5.center) to (2.center);
+		\draw (13.center) to (11.center);
+		\draw (12.center) to (10.center);
+		\draw (19.center) to (18.center);
+		\draw [in=120, out=0, looseness=0.50] (18.center) to (16);
+		\draw [in=0, out=135, looseness=0.75] (16) to (2.center);
+		\draw [in=0, out=-135, looseness=0.75] (16) to (0.center);
+		\draw [in=180, out=45, looseness=0.75] (16) to (10.center);
+		\draw [in=180, out=-45, looseness=0.75] (16) to (11.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

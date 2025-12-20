@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3.5, 0) {};
+		\node [style=none] (1) at (3.5, 0) {};
+		\node [style={rn_phase}] (2) at (0, 0) {$f(x)$};
+		\node [style=lmat] (3) at (2, 0) {$-1$};
+		\node [style={fn_phase}] (4) at (-2, 0) {$(-i)^{\isarg{n}}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0.center) to (1.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

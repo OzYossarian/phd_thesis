@@ -1,0 +1,71 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (12) at (0, 0) {$=$};
+		\node [style={gn_phase}] (13) at (3.5, 0) {$f(x)$};
+		\node [style={rn_phase}] (14) at (2, 0) {$\chi_a$};
+		\node [style=none] (15) at (5.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (17) at (5.75, -4.25) {};
+		\node [style=none] (18) at (1, 0) {};
+		\node [style=none] (19) at (6, 1) {};
+		\node [style=none] (20) at (6, -1) {};
+		\node [style=none] (21) at (5.75, -2.75) {};
+		\node [style=none] (22) at (1.5, -3.5) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (23) at (7, 0) {$=$};
+		\node [style=none] (37) at (1, -2.75) {};
+		\node [style=none] (38) at (1, -4.25) {};
+		\node [style={gn_phase}] (39) at (10.5, 0) {$f(x + a)$};
+		\node [style=none] (41) at (12.5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (42) at (12.75, -4.25) {};
+		\node [style=none] (43) at (8.5, 0) {};
+		\node [style=none] (44) at (13.25, 1) {};
+		\node [style=none] (45) at (13.25, -1) {};
+		\node [style=none] (46) at (12.75, -2.75) {};
+		\node [style=none] (47) at (10, -3.5) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (49) at (9.5, -2.75) {};
+		\node [style=none] (50) at (9.5, -4.25) {};
+		\node [style={rn_phase}] (51) at (12.5, 1) {$\chi_a$};
+		\node [style={rn_phase}] (52) at (12.5, -1) {$\chi_a$};
+		\node [style={rn_phase}] (53) at (12.5, -2) {$\chi_a$};
+		\node [style={rn_phase}] (54) at (12.5, -3.25) {$\chi_a$};
+		\node [style={gn_phase}] (87) at (-3.5, 0) {$f(x)$};
+		\node [style=none] (89) at (-2, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (90) at (-5, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (91) at (-6, 2) {};
+		\node [style=none] (92) at (-1, 1) {};
+		\node [style=none] (93) at (-1, -1) {};
+		\node [style=none] (94) at (-6, 1) {};
+		\node [style=none] (98) at (-6, -1) {};
+		\node [style={rn_phase}] (99) at (-5, 2) {$\chi_a$};
+		\node [style=gn] (104) at (6.125, -2.625) {};
+		\node [style=gn] (105) at (6.125, -4.125) {};
+		\node [style=gn] (106) at (13.125, -2.625) {};
+		\node [style=gn] (107) at (13.125, -4.125) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (14) to (13);
+		\draw (18.center) to (14);
+		\draw [in=180, out=60] (13) to (19.center);
+		\draw [in=180, out=-60] (13) to (20.center);
+		\draw (13)
+			 to [in=0, out=-90, looseness=0.75] (17.center)
+			 to (38.center);
+		\draw (37.center)
+			 to (21.center)
+			 to [in=-75, out=0] (13);
+		\draw [in=180, out=60] (39) to (44.center);
+		\draw [in=180, out=-60] (39) to (45.center);
+		\draw (39)
+			 to [in=0, out=-90, looseness=0.75] (42.center)
+			 to (50.center);
+		\draw (49.center)
+			 to (46.center)
+			 to [in=-75, out=0] (39);
+		\draw (43.center) to (39);
+		\draw [in=180, out=60] (87) to (92.center);
+		\draw [in=180, out=-60] (87) to (93.center);
+		\draw [in=120, out=0] (94.center) to (87);
+		\draw [in=0, out=-120] (87) to (98.center);
+		\draw [in=105, out=0, looseness=0.75] (99) to (87);
+		\draw (91.center) to (99);
+	\end{pgfonlayer}
+\end{tikzpicture}

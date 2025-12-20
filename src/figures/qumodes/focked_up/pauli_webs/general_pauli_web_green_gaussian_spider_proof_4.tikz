@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (3, -1) {};
+		\node [style=none] (1) at (3, 1) {};
+		\node [style=none] (2) at (-3, 2) {};
+		\node [style=none] (3) at (-3, -1) {};
+		\node [style=none] (4) at (-3, 1) {};
+		\node [style=none] (5) at (-3, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style={rn_phase}] (6) at (-3, -1) {$\chi_{b_l - b_1}$};
+		\node [style=none] (7) at (-4.5, 1) {};
+		\node [style=none] (8) at (-4.5, -1) {};
+		\node [style=none] (9) at (3, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (10) at (4.5, 1) {};
+		\node [style=none] (11) at (4.5, -1) {};
+		\node [style={rn_phase}] (12) at (3, 1) {$\chi_{b_{l+1} + b_1}$};
+		\node [style={rn_phase}] (13) at (3, -1) {$\chi_{b_{l+m} + b_1}$};
+		\node [style=none] (14) at (-5.5, 0) {$\lambda e^{i(u b_1 + v b_1^2)}$};
+		\node [style={gn_phase}] (15) at (0, 0) {$e^{i2\pi(t + (u + 2vb)\isarg{x} + v\isarg{x}^2)}\overline{\chi}_a$};
+		\node [style=none] (16) at (-4.5, 2) {};
+		\node [style={rn_phase}] (17) at (-3, 1) {$\chi_{b_2 - b_1}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (8.center) to (3.center);
+		\draw (7.center) to (4.center);
+		\draw (11.center) to (0.center);
+		\draw (10.center) to (1.center);
+		\draw (16.center) to (2.center);
+		\draw [in=120, out=0, looseness=0.75] (2.center) to (15);
+		\draw [in=0, out=135, looseness=0.75] (15) to (4.center);
+		\draw [in=0, out=-135, looseness=0.75] (15) to (3.center);
+		\draw [in=180, out=45, looseness=0.75] (15) to (1.center);
+		\draw [in=180, out=-45, looseness=0.75] (15) to (0.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
