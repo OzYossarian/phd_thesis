@@ -80,11 +80,11 @@ We can then give a simple example and non-example of fault-equivalent diagrams.
             ~~=~~
             \tikzfig{qumodes/focked_up/fault_equivalence/id_error_combined}
         \end{equation}
-        In this case, we have:
+        In this case, the triangle inequality tells us that:
         \begin{equation}
             \begin{aligned}
                 \wt(F_1)
-                &= \twonorm{\tbinom{a + c}{b + d} + \tbinom{c}{d}} \\
+                &= \twonorm{\tbinom{a + c}{b + d}} \\
                 &= \twonorm{\tbinom{a}{b} + \tbinom{c}{d}} \\
                 &\leq \twonorm{\tbinom{a}{b}} + \twonorm{\tbinom{c}{d}} \\
                 &= \onenorm{(\twonorm{\tbinom{a}{b}}, \twonorm{\tbinom{c}{d}})^T)} \\

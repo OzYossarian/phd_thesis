@@ -266,16 +266,18 @@ Finally, recalling the form of $X$ and $Z$ rotation gates in the ZX-calculus (\C
     \tikzfig{qubits/prelims/zx/measurement_IXYZ_correct_step_5}
 \end{equation}
 So, up to normalisation, we've got the linear map $I + (-1)^a I_1 X_2 Y_3 Z_4 = I + mP \propto \Pi_{mP}$ as required.
-
 In general, to represent $\Pi_{mP}$ for arbitrary $P$, we first define single-qubit \textit{Pauli boxes}:
 \begin{equation}\label{eq:pauli_boxes}
     \tikzfig{qubits/prelims/zx/pauli_box_all}
 \end{equation}
-Then for $P = P_1 \ldots P_n$, we have:
+Then for $P = P_1 \ldots P_n$, we define the multi-qubit Pauli box:
+\begin{equation}
+    \tikzfig{qubits/prelims/zx/pauli_box_multiqubit}
+\end{equation}
+Finally, we can plug in a normalised $a\pi$-spider to this box to represent a measurement with outcome $m = (-1)^a$:
 \begin{equation}\label{eq:measurement_mP}
     \tikzfig{qubits/prelims/zx/measurement_mP_circuit_zx}
 \end{equation}
-\teague{Improve -- define combination of two Pauli boxes, end up with long grey Pauli boxes.}
 
 Particularly important for this thesis will be weight-two $X \otimes X$ and $Z \otimes Z$ measurements.
 The corresponding projectors are:

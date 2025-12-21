@@ -45,7 +45,7 @@ After establishment at time $T$, we never again measure a logical operator of th
 So for all $t > T$ the codespace map (plus post-measurement renormalisation) is always a unitary map from $\VVV_{t-1}$ to $\VVV_t$, as shown in \Cref{subsec:evolution-of-codespace}.
 Likewise, as per \Cref{subsec:evolution_of_logical_pauli_group}, the logical Pauli group homomorphism $\phi_t$ is now always an isomorphism $\LLL_t \to \LLL_{t-1}$ (so if we like we can now think about its inverse $\phi_t^{-1}$ instead, which goes in the `right' direction).
 
-\subsection{Induced logical Cliffords}
+\subsection{Induced logical Cliffords}\label{subsec:induced-logical-cliffords}
 
 One interesting feature of dynamic stabilizer codes is that logical Cliffords can be applied just by performing the sequence of operations in the operation sequence $\OOO$, as discussed in \Cref{subsec:the-induced-homomorphism}.
 Of course, there are trivial ways in which this is true -- e.g.\ choose your favourite static stabilizer code with a transversal Clifford gate, then define a dynamic stabilizer code whose operation sequence is `measure the stabilizers of the static code then at some point apply the transversal Clifford gate'.
@@ -62,7 +62,7 @@ U^\dagger = \phi_{t,t'}(\ol{\ZZZ_j})$.
 \subsection{Distance}\label{subsec:dynamic_distance}
 
 We said that a static stabilizer code $\SSS$ has an algebraic distance; the minimum-weight non-trivial logical operator in $\NNN(\SSS) - \SSS$, or equivalently the distance of $\Pi_{\SSS} \circ \Pi_{\SSS}$ under the phenomenological noise model $\FFF$ restricted to the timestep between the two projectors.
-The community hasn't settled on a definition of algebraic distance for a dynamic stabilizer code -- see, for example, TODO Fu and Gottesman's paper investigating this.
+The community hasn't settled on a definition of algebraic distance for a dynamic stabilizer code -- see, for example, \Ccite{Fu_2025} which investigates this.
 Two generalisations suggest themselves based on our static definition.
 
 The first is the minimum-weight non-trivial logical operator across all timesteps, i.e.\ across all $\LLL_t = \NNN(\SSS_t)/\SSS_t$.
@@ -80,6 +80,7 @@ But for a general dynamic stabilizer code with possibly infinite operation sched
 Unlike in the static case, these two definitions are no longer equivalent -- indeed, we said the second definition explicitly fixes a blind spot in the first one.
 The second definition is in fact a strict generalisation of the first, in the sense that any non-trivial logical operator in $\LLL_t$ for $t \geq T$ is also a logical error that can occur in the circuit $C$ under $\FFF$.
 We take the second suggestion to be our definition of algebraic distance for a dynamic stabilizer code.
+But we note that in practice we're not actually that interested in this quantity -- what really counts is the distance of the circuit used to implement any given code.
 
 \subsection{Implementation}
 

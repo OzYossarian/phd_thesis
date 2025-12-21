@@ -54,12 +54,14 @@
 \tikzstyle{paulibox}=[shape=squareNE, draw=black, fill=lightgray, inner sep=0.5mm, minimum height=6mm, minimum width=4mm, font={\footnotesize}, tikzit shape=rectangle]
 \tikzstyle{medpbox}=[shape=squareNE, draw=black, fill=lightgray, inner sep=0.5mm, minimum height=12mm, minimum width=4mm, font={\footnotesize}, tikzit shape=rectangle]
 \tikzstyle{longpbox}=[shape=squareNE, draw=black, fill=lightgray, inner sep=0.5mm, minimum height=18mm, minimum width=4mm, font={\footnotesize}, tikzit shape=rectangle]
+\tikzstyle{vlongpbox}=[shape=squareNE, draw=black, fill=lightgray, inner sep=0.5mm, minimum height=24mm, minimum width=4mm, font={\footnotesize}, tikzit shape=rectangle]
 \tikzstyle{dash_circ}=[shape=circle, draw=black, dashed, inner sep=0.7mm, minimum width=3mm, minimum height=3mm, tikzit fill={rgb,255: red,128; green,128; blue,128}]
 \tikzstyle{boundary}=[shape=circle, draw=black, inner sep=0.5mm]
 \tikzstyle{arrow}=[>]
 
 % Edge styles
-\tikzstyle{mid_arrow}=[-, decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction={decorate}]
+\tikzstyle{arrow}=[->]
+\tikzstyle{mid_arrow}=[-, decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate]
 \tikzstyle{black_brace}=[-, decorate, decoration={brace, amplitude=2mm, raise=-1mm}]
 \tikzstyle{grey_brace}=[-, draw=gray, decorate, decoration={brace, amplitude=2mm, raise=-1mm}]
 \tikzstyle{blue_edge}=[-, very thick, draw=blue]
@@ -74,3 +76,5 @@
 \tikzstyle{xweb}=[-, preaction={draw={zx_red}, line width=2pt, opacity=1}, draw=black, tikzit fill={rgb,255: red,239; green,190; blue,190}, tikzit draw={rgb,255: red,239; green,190; blue,190}]
 \tikzstyle{yweb}=[-, preaction={draw={zx_green}, line width=4pt, opacity=1}, preaction={draw={zx_red}, line width=2pt, opacity=1}, draw=black, tikzit fill={rgb,255: red,169; green,199; blue,255}, tikzit draw={rgb,255: red,169; green,199; blue,255}]
 \tikzstyle{zweb}=[-, preaction={draw={zx_green}, line width=3pt, opacity=1}, draw=black, tikzit fill={rgb,255: red,216; green,248; blue,216}, tikzit draw={rgb,255: red,216; green,248; blue,216}]
+\tikzstyle{fill grey}=[-, fill={rgb,255: red,191; green,191; blue,191}, fill opacity=0.7]
+\tikzstyle{fill blue}=[-, fill={rgb,255: red,99; green,99; blue,255}, fill opacity=0.7]

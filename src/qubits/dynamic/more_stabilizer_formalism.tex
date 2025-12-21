@@ -5,13 +5,21 @@ But to be able to talk about dynamic stabilizer codes, we need to know a bit mor
 
 \subsection{Evolution of $\VVV_\SSS$}\label{subsec:evolution-of-codespace}
 
+\begin{figure}[tb!]
+    \centering
+    \tikzfig{qubits/dynamic/codespace_transformation}
+    \caption{The effect of applying a Clifford unitary $U$ or performing a Pauli measurement $M_P$ on a codespace $\VVV_\SSS$.
+    The former maps $\VVV_\SSS$ unitarily to $\VVV_{\SSS'} = U\VVV_{\SSS}U^\dagger$.
+    The latter splits into three cases; \hyperref[thm:stabilizer_group_update_measurement:case1]{Case 1} does nothing, \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2} maps $\VVV_\SSS$ unitarily to an orthogonal codespace $\VVV_{\SSS'}$, and \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3} projects $\VVV_\SSS$ to a subspace $\VVV_{\SSS'}$ of half the size.}
+    \label{fig:codespace_transformation}
+\end{figure}
+
 The result of applying a Clifford or measuring a Pauli and getting outcome $m$ is that a linear map $A_m$ is applied to our system of $n$ qubits -- i.e.\ to the Hilbert space $\mathcal{H}$.
 If a Clifford unitary $U$ is applied, the map $A_m$ is simply this Clifford.
 If a Pauli $P$ is measured, and outcome $m$ obtained, then the map $A_m$ is the projector $\Pi_{mP}$.
 In this case, after $A_m$ is applied, the post-measurement state is also renormalised.
 We are only interested in the restriction $A_m|_{\VVV_\SSS} : \VVV_\SSS \to \VVV_{\SSS'}$ of this map to the codespace $\VVV_\SSS$.
-
-\teague{Add figure of all four cases}
+We summarise this in \Cref{fig:codespace_transformation} before looking into each case.
 
 The most straightforward case is when $A_m$ is a Clifford unitary $U$.
 Then the restriction $A_m|_{\VVV_\SSS}$ is a unitary map $\VVV_\SSS \to \VVV_{\SSS'}$.
@@ -128,6 +136,9 @@ We can package all of the above into a single theorem.
         \xrightarrow{\Pi_{b_1 X_3 X_4}|_{\VVV_{\SSS_{0}}}}
         \VVV_{\SSS_0'}
     \end{equation}
+    \begin{equation}
+        \scalebox{0.8}{\tikzfig{qubits/dynamic/codespace_transformation_example_1}}
+    \end{equation}
     The next measurement $Z_1 Z_3$ is in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}, so maps us unitarily to the next codespace $\SSS_0''$.
     Then the measurement $Z_2 Z_4$ is in \hyperref[thm:stabilizer_group_update_measurement:case3]{Case 3}, so another projector is applied, mapping from $\SSS_0''$ to the new codespace $\SSS_0'''$, which is again half the size:
     \begin{equation}
@@ -136,6 +147,9 @@ We can package all of the above into a single theorem.
         \VVV_{\SSS_0''}
         \xrightarrow{\Pi_{d_0 Z_2 Z_4}|_{\VVV_{\SSS_{0}''}}}
         \VVV_{\SSS_0'''}
+    \end{equation}
+    \begin{equation}
+        \scalebox{0.8}{\tikzfig{qubits/dynamic/codespace_transformation_example_2}}
     \end{equation}
     Now we start the next round of measurements.
     Measuring $X_1 X_2$ is this time in \hyperref[thm:stabilizer_group_update_measurement:case2]{Case 2}.
@@ -153,6 +167,9 @@ We can package all of the above into a single theorem.
         \xrightarrow{\sqrt{2}\Pi_{a_1 X_1 X_2}|_{\VVV_{\SSS_1'}}}
         \VVV_{\SSS_2}
         \ldots
+    \end{equation}
+    \begin{equation}
+        \scalebox{0.8}{\tikzfig{qubits/dynamic/codespace_transformation_example_3}}
     \end{equation}
 \end{example}
 

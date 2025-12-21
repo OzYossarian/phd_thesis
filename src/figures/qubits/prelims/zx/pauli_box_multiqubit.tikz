@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3, 2) {};
+		\node [style=none] (1) at (-3, 0.5) {};
+		\node [style=none] (2) at (-3, -2) {};
+		\node [style=none] (3) at (2, 2) {};
+		\node [style=none] (4) at (2, 0.5) {};
+		\node [style=none] (5) at (2, -2) {};
+		\node [style=paulibox] (6) at (0, -2) {$P_n$};
+		\node [style=rn] (7) at (-2, 3) {};
+		\node [style=paulibox] (8) at (0, 2) {$P_1$};
+		\node [style=paulibox] (9) at (0, 0.5) {$P_2$};
+		\node [style=none] (10) at (-2.5, -0.75) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (11) at (1.5, -0.75) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (12) at (0, -0.75) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (13) at (-4.5, 0.25) {$\sqrt{2}^{n-1}$};
+		\node [style=none] (14) at (-3, 3) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0.center) to (3.center);
+		\draw (1.center) to (4.center);
+		\draw (2.center) to (5.center);
+		\draw (2.center) to (5.center);
+		\draw (0.center) to (3.center);
+		\draw (1.center) to (4.center);
+		\draw (6) to (7);
+		\draw (7) to (8);
+		\draw (7) to (9);
+		\draw (14.center) to (7);
+	\end{pgfonlayer}
+\end{tikzpicture}

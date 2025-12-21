@@ -388,29 +388,6 @@ the pink and orange lines respectively in the following diagram:
 \includegraphics[width=200pt, valign=c]{figures/qubits/floquetifying/colour_code/rows_columns}
 \end{equation}
 
-Suppose we now have a parallelogrammatic colour code with algebraic distance $d$.
-The geometry of the parallelogram forces $d$ to be even.
-Such a code occupies $\frac{3d}{2} - 1$ rows and $\frac{3d}{2} - 1$ columns in the honeycomb lattice.
-%and vice versa.
-After every $d$ rounds of stabilizer measurements,
-the code needs to have moved $4d$ rows forwards and $d$ columns rightwards in the honeycomb lattice
-in order to cancel out the drift the Floquetification process would bring.
-It's most convenient to expand and contract the colour code by multiples of $3$ rows or columns,
-so let's also assume that $d$ is an even multiple of $3$.
-Thus, during an expansion phase, the code occupies $\frac{3d}{2} - 1 + 4d$ rows and $\frac{3d}{2} - 1 + d$ columns.
-The distance of the code during such a phase is therefore
-$\frac{11d}{3}$ in the forwards direction and $\frac{5d}{3}$ in the rightwards direction.
-We sketch this in \Cref{fig:floquetified_planar_colour_code_cancelling_drift}.
-
-The extra complication that this idea entails is that we now have also timelike boundaries to Floquetify.
-These are points at which pairs of qubits either become Bell states and get entangled into the code,
-or get measured out in the Bell basis.
-We could just do the same thing in our Floquetified code, but while the pairs of qubits to be entangled/measured
-are all neighbours in the honeycomb lattice, they are not all neighbours in the square lattice of the Floquetified code.
-This is shown in \Cref{fig:floquetified_planar_colour_code_measuring_out}.
-Fortunately, as shown in that \Cref{fig:floquetified_planar_colour_code_local_readout_circuit},
-we can construct a circuit on groups of four qubits which achieves the same thing
-but respects the nearest neighbour connectivity of the square lattice.
 
 \begin{figure}[p]
     \centering
@@ -469,3 +446,27 @@ but respects the nearest neighbour connectivity of the square lattice.
     }
     \label{fig:floquetified_planar_colour_code_timelike_boundaries}
 \end{figure}
+
+Suppose we now have a parallelogrammatic colour code with algebraic distance $d$.
+The geometry of the parallelogram forces $d$ to be even.
+Such a code occupies $\frac{3d}{2} - 1$ rows and $\frac{3d}{2} - 1$ columns in the honeycomb lattice.
+%and vice versa.
+After every $d$ rounds of stabilizer measurements,
+the code needs to have moved $4d$ rows forwards and $d$ columns rightwards in the honeycomb lattice
+in order to cancel out the drift the Floquetification process would bring.
+It's most convenient to expand and contract the colour code by multiples of $3$ rows or columns,
+so let's also assume that $d$ is an even multiple of $3$.
+Thus, during an expansion phase, the code occupies $\frac{3d}{2} - 1 + 4d$ rows and $\frac{3d}{2} - 1 + d$ columns.
+The distance of the code during such a phase is therefore
+$\frac{11d}{3}$ in the forwards direction and $\frac{5d}{3}$ in the rightwards direction.
+We sketch this in \Cref{fig:floquetified_planar_colour_code_cancelling_drift}.
+
+The extra complication that this idea entails is that we now have also timelike boundaries to Floquetify.
+These are points at which pairs of qubits either become Bell states and get entangled into the code,
+or get measured out in the Bell basis.
+We could just do the same thing in our Floquetified code, but while the pairs of qubits to be entangled/measured
+are all neighbours in the honeycomb lattice, they are not all neighbours in the square lattice of the Floquetified code.
+This is shown in \Cref{fig:floquetified_planar_colour_code_measuring_out}.
+Fortunately, as shown in that \Cref{fig:floquetified_planar_colour_code_local_readout_circuit},
+we can construct a circuit on groups of four qubits which achieves the same thing
+but respects the nearest neighbour connectivity of the square lattice.

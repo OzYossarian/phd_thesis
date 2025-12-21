@@ -1,1 +1,13 @@
 \section{Outro}
+
+I've spent way less time thinking about qumodes than qubits, so I don't feel I'm particularly well-placed to discuss possible future directions and open questions.
+I can certainly at least start with the obvious loose ends.
+In the qubit case we built took a very close look at the stabilizer formalism and gave a general definition of dynamic stabilizer codes, long before we turned to a graphical approach via the ZX-calculus and Pauli webs.
+The qumode case is missing this -- it would be great to formally connect Focked up Pauli webs to a CV stabilizer formalism like we did in \Cref{ch:floquetifying}.
+The other obvious loose end is that we're missing a definition of a (weighted) circuit-level noise model for CV circuits, which would allow us to follow Rodatz et al.'s example from \Ccite{rodatz2025faulttoleranceconstruction} and determine when a circuit under circuit-level noise is fault-equivalent to a ZX-diagram under ZX noise.
+We're essentially just not sure what weight to assign to an error $\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})$ after a multimode gate, in order for this to be a realistic noise model!
+Certain choices then make finding fault-equivalent diagrams easier or harder.
+
+Neither of these loose ends should be too difficult to make progress on.
+And one can imagine a number of further directions that could then be pursued -- one could think a bit more about this Gaussian+combs fragment and how it compares to the Gaussian fragment, or about a complete set of fault-equivalent rewrite rules à la \Ccite{rüsch2025completenessfaultequivalenceclifford}, or about applying these rules to optimise circuits for realistic CV codes, such as concatenated GKP-qubit codes.
+But personally, as is probably in evidence from \Cref{ch:qumode_prelims}, I find CV quantum information rather terrifying and will gratefully be returning to the safer shores of the qubit realm, thank you very much.

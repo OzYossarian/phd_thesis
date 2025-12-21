@@ -137,10 +137,16 @@ If only firing a subset of generators $V' \subseteq V$, we write the resulting d
             \tikzfig{qubits/prelims/pauli_webs/highlighting_single_generator_product}
         \end{equation}
         Firing the generator according to $W + W'$, we see that the defining equation does indeed hold:
-        \teague{break tikzfig into many, allow page break between them. Doesn't work for aligned inside equation env, need to use align directly.}
-        \begin{equation}\label{eq:webs_single_generator_form_subgroup}
-        \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup}
-        \end{equation}
+        \begingroup
+        \allowdisplaybreaks
+        \begin{align}
+            &\phantom{~~=~~} \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup_1} \\[20pt]
+            &~~=~~ \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup_2} \\[20pt]
+            &~~ \propto ~~ \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup_3} \\[20pt]
+            &~~ \propto ~~ \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup_4} \\[20pt]
+            &~~ \propto ~~ \tikzfig{qubits/prelims/pauli_webs/webs_single_generator_form_subgroup_5}
+        \end{align}
+        \endgroup
     \end{proof}
 \end{proposition}
 

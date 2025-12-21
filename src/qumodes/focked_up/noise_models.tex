@@ -16,14 +16,15 @@ We can take a dual approach that's a little simpler but less accurate; rather th
 For this approach to be useful, a higher weight should correspond to a lower probability.
 We can then define the weight of a general error $F \in \hat{\DDD}_{|E|}$ as some combination of weights of atomic errors that can be composed to make $F$.
 How exactly this is defined isn't fixed -- we can choose.
-If we want to distinguish this weighted approach from the one that used probabilities, we call this a \textit{weighted noise model}.
+We effectively did this without explicitly stating it in \Cref{subsec:distance} for qubits.
+If we want to distinguish this weighted approach from the probability-based one, we call this a \textit{weighted noise model}.
 
 For example, given diagram $D$ with edges $E$, consider the (weighted) noise model in which atomic errors are displacements $D(\binom{v_j}{u_j})$ on each edge $e_j$, and each such atomic error has weight:
 \begin{equation}\label{eq:weight_atomic_error_zx_noise}
     \wt(\hat{D}(\tbinom{v_j}{u_j})) = \twonorm{\tbinom{v_j}{u_j}} = \sqrt{v_j^2 + u_j^2}
 \end{equation}
 Then define the weight of a general error $\hat{D}(\binom{\bsym{v}}{\bsym{u}})$ as:
-\begin{equation}\label{eq:weight_atomic_error_zx_noise}
+\begin{equation}\label{eq:weight_general_error_zx_noise}
     \begin{aligned}
         \wt(\hat{D}(\tbinom{\bsym{v}}{\bsym{u}}))
         &= \wt(\hat{D}(\tbinom{v_1}{u_1}) \otimes \ldots \otimes \hat{D}(\tbinom{v_{|E|}}{u_{|E|}})) \\
@@ -36,4 +37,4 @@ We will call this noise model the \textit{(Focked up) ZX noise model}.
 
 A natural question to ask, perhaps, is why not just use the 2-norm for everything?
 That is, for general error $\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})$, why not just define $\wt(\hat{D}(\tbinom{\bsym{v}}{\bsym{u}})) = \twonorm{\tbinom{\bsym{v}}{\bsym{u}})}$?
-The intuition behind mixing the 1-norm and 2-norm is to represent noise on each edge being independent, much like the phenomenological noise in the circuit-based approach assumes each qumode experiences noise independently.
+The intuition behind mixing the 1-norm and 2-norm is to represent noise on each edge being independent, much like the phenomenological noise model in the circuit-based approach assumes each qumode experiences noise independently.

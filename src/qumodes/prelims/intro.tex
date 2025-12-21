@@ -2,9 +2,18 @@
 
 In the second half of this thesis, we leave the comforts of the qubit realm behind, and bring the ZX-calculus to bear on the world of continuous-variable QEC.
 Historically, extending the ZX-calculus from qubits to all finite-dimensional qudits was relatively straightforward, but extending this again to infinite-dimensional quantum systems -- i.e.\ continuous-variable (CV) systems -- proved less so.
-The roadblock was essentially an annoying technical hurdle from category theory, and the solution employed by Shaikh, Yeh and Gogioso in TODO was a fun detour into the land of non-standard analysis.
-Interesting as they are, we concern ourselves in this thesis with neither of these points; all we care about is that a ZX-calculus for CV quantum mechanics has now been defined, and therefore many topics in CV QEC have become accessible to the integrally-challenged but diagrammatically-inclined.
+The solution employed by Shaikh et al.\ in \Ccite{shaikh2024fockedupzxcalculuspicturing} was a fun detour into the land of non-standard analysis.
+Interesting as this is, we don't concern ourselves with it in this thesis; we just give thanks that a ZX-calculus for CV quantum mechanics has now been defined, and therefore many topics in CV QEC have become accessible to the integrally-challenged but diagrammatically-inclined.
 A key feature of this CV ZX-calculus is the introduction of a third spider, the \textit{Fock spider}, from which the calculus derives its tongue-in-cheek name, the \textit{Focked up ZX-calculus}.
 
-Within CV QEC, we focus entirely on Gottesman-Kitaev-Preskill (GKP) codes, which can be viewed as the CV analogue of Pauli stabilizer codes in qubit-land.
-We start this chapter with introductions to CV quantum information, GKP codes and the Focked up ZX-calculus, before defining generalisations of Pauli webs and fault-equivalent rewrites to the CV world, and finally applying these tools to the problem of designing good syndrome extraction circuits for general GKP codes.
+We start with a preliminary chapter introducing CV quantum information, GKP codes and the Focked up ZX-calculus.
+%Unlike in the qubit case, where the preliminary material was a bit of a breeze, we spend rather a long time setting this up in the CV case.
+The main theme that emerges in this chapter (at least, in my eyes!) is just how bloody awkward things get in infinite dimensions.
+For the uninitiated, the plot twist in CV quantum information is that, while we do have a Hilbert space $\mathcal{H}$, states aren't always elements of it!
+In general, states are elements of a certain dual space, only some of which can be identified with elements of $\mathcal{H}$ itself.
+This means we're quite often caught between a rock and a hard place; we'd like to be mathematically rigorous, but to do so would take up enough pages to fill a whole second thesis!
+Indeed, de la Madrid~\cite{delamadrid2001quantum} did essentially exactly that, and it still seems certain objects are just not well-defined -- a general braket $\braket{\psi|\phi}$, for example.
+
+The approach I've taken is to try and least give correct definitions and results, specialised to our specific use cases if necessary, though perhaps without actually defining all the words in such a definition or result.
+In particular, I've tried to never write something that's just straight-up mathematically incorrect.
+This seemed more appealing than other approaches; for example, one can declare that these awkward states outside of $\mathcal{H}$ aren't physical, so we should just approximate them by physical states in $\mathcal{H}$ -- but the maths involved in justifying these approximations seemed at least as scary to me as the maths involved in the approach I've gone with.

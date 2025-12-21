@@ -1,1 +1,31 @@
 \chapter{Outro}
+
+Having discussed open questions in the outro section of each chapter, I guess all that really remains for this overall outro is to muse on the legacy of this thesis.
+I suppose I am reasonably happy with the second half of it -- I think Pauli webs will be a very useful tool for qumodes just as they have been for qubits, and in fact I think CV quantum information is arguably more in need of graphical tools that its finite dimensional counterpart, just because it's a good deal more complicated!
+Though maybe that's just my prejudice (i.e.\ fear of calculus!) coming through.
+The wider usefulness of this CV stuff probably depends on the success (or not) of CV quantum computing/error correction as a whole, and being a humble qubit fan at heart that's not something I reckon I'm qualified to speculate on.
+
+I have more mixed feelings about the first half of this thesis.
+On the one hand, I hope \Cref{ch:dynamic-stabilizer-codes} ends up being a nice resource for learning about dynamic stabilizer codes, filling a bit of a gap in the literature.
+Furthermore, the work done in \Cref{ch:floquetifying} was the first time in my PhD I really got the research bug, staying up late drawing silly ZX-diagrams and being excited to share progress the next day.
+This was a welcome change from the first few months of my PhD where I wanted to become an LDPC code king, but in hindsight went about it in rather the wrong way and ended up feeling quite lonely and disenchanted.
+On the other hand, I think it's already clear that this chapter won't stand the test of time!
+Firstly, the fact that one can reinterpret a static stabilizer code as a dynamic stabilizer code turned out not be as interesting as first hoped -- as we've now seen, \textit{any} circuit implementing the static code can be viewed as a dynamic stabilizer code in its own right.
+Secondly, we made no attempt to think about behaviour of our new dynamic stabilizer code under noise, and indeed it turned out that our proposed code was laughably bad in a practical sense.
+
+The saving grace seems to be that this work played a small part in Rodatz et al.\ going on to do what I reckon is genuinely excellent work on fault-equivalence~\cite{rodatz2024floquetifying,rodatz2025faulttoleranceconstruction,rüsch2025completenessfaultequivalenceclifford}.
+It's very likely they'd have got there anyway given that we didn't do much more than PsiQuantum had already done in \Ccite{Bombin_2024} for the surface code, but if that ends up being the legacy of these four years then I'm more than okay with it.
+It's been a lovely four years, in any case.
+
+\pagebreak
+
+\textit{Acknowledgements.} First, I wish to thank the head of the Eisert empire, Jens Eisert himself, for taking me on (despite him being a ZX-calculus skeptic at the time), providing us with total academic freedom, shielding us from a lot of the boring stuff, and being very generous re: attending workshops, summer schools, conferences, and so on.
+Like any good zealot, I am happy to have played a small part in changing his mind on the ZX-calculus over the last few years.
+I'm very grateful to our admin team Claudia Thomas and Felix Witte too, for keeping our frankly monstrous group on an even keel throughout this time.
+
+Big thanks to my QEC office mates PJ Derks, Ansgar Burchards and Johannes Frank, for making the day-to-day fun.
+I'm grateful to everyone I've collaborated with over the course of my PhD -- Markus Kesselring, Julio Magdalena de la Fuente, Oscar Higgott, Ben Brown, Josias Old, Razin Shaikh, Ben Cichos and Henri Wegener.
+More widely, I'm grateful to everyone I've had discussions with over the years -- too many to name, but I'd like to give a particular shoutout to everyone in the QEC subgroup here in Berlin, to Dan Litinski and Fernando Pastawski for the webs, and to Ben Rodatz.
+
+By far the most important event during my PhD was the IBM QEC Summer School in 2022, where I learned loads and made a ton of close friendships -- again, too many to name.
+For this, I'm hugely thankful to Drew Vandeth and Anamaria Rojas for the inception and organisation, and to all the lecturers who gave their time.

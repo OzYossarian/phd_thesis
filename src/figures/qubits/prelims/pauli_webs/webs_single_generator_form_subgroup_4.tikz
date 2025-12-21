@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=squareNE] (0) at (0, 0) {$f$};
+		\node [style=none] (1) at (-1.5, 1) {};
+		\node [style=none] (2) at (-1.5, -1) {};
+		\node [style=none] (3) at (1.5, 1) {};
+		\node [style=none] (4) at (1.5, -1) {};
+		\node [style=none] (5) at (-2.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+		\node [style=none] (6) at (4, 1) {};
+		\node [style=none] (7) at (4, -1) {};
+		\node [style=none] (8) at (-4, 1) {};
+		\node [style=none] (9) at (-4, -1) {};
+		\node [style={gn_phase}] (10) at (3, 1) {$c_1\pi$};
+		\node [style={rn_phase}] (11) at (1.5, 1) {$d_1\pi$};
+		\node [style={gn_phase}] (12) at (3, -1) {$c_m\pi$};
+		\node [style={rn_phase}] (13) at (1.5, -1) {$d_m\pi$};
+		\node [style={gn_phase}] (14) at (-3, 1) {$a_1\pi$};
+		\node [style={rn_phase}] (15) at (-1.5, 1) {$b_1\pi$};
+		\node [style={gn_phase}] (16) at (-3, -1) {$a_l\pi$};
+		\node [style={rn_phase}] (17) at (-1.5, -1) {$b_l\pi$};
+		\node [style=none] (18) at (2.25, 0) {\raisebox{1.3ex}{$\vdots$}};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left] (1.center) to (0);
+		\draw [bend right] (2.center) to (0);
+		\draw [bend left] (0) to (3.center);
+		\draw [bend right] (0) to (4.center);
+		\draw (4.center) to (7.center);
+		\draw (3.center) to (6.center);
+		\draw [in=180, out=0] (8.center) to (1.center);
+		\draw (9.center) to (2.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

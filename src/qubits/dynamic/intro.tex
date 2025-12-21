@@ -1,1 +1,38 @@
 \section{Intro}
+
+With the background material covered, we can start getting to the good stuff.
+%Overall, this chapter is a mixture of stuff that one can find already in the literature (but perhaps not all in one place), and new results that are essentially just me digging a little deeper into the basic material behind dynamic stabilizer codes.
+%We begin with a thorough introduction to said codes.
+In this chapter, we give a thorough introduction to dynamic stabilizer codes.
+As mentioned in \Cref{ch:intro}, these first appeared in Hastings' and Haah's paper \Ccite{Hastings_2021} in 2021.
+
+We begin by diving deeper into the stabilizer formalism, since we'll need a much better understanding of it in order to introduce dynamic stabilizer codes.
+Much of the content in \Cref{sec:more-stabilizer-formalism} is standard, if underrepresented in the literature -- in particular, the main source for this section is Gottesman's lecture notes \Ccite{gottesman2024surviving}.
+However, I'm always a little unsatisfied by any existing presentation I can find of this content.
+Primarily, my gripe is that in the few sources that discuss how $\NNN(\SSS)/\SSS$ changes under the certain operations (Cliffords and Pauli measurements), this is phrased in terms of simple update rules -- i.e.\ how to present the new group $\NNN(\SSS')/\SSS'$ given a presentation for the old one $\NNN(\SSS)/\SSS$.
+But this misses the most interesting and important part -- namely which logical operators in $\NNN(\SSS)/\SSS$ before the operation correspond to which logical operators in $\NNN(\SSS')/\SSS'$ after the operation!
+
+Indeed, this perspective is key to understanding what I consider to be the most interesting feature of dynamic stabilizer codes -- that just by dint of the sequence of Cliffords and Pauli measurements that defines them (their \textit{operation schedule}), they can `naturally' perform logical Clifford operations.
+For example, take the honeycomb code defined by Hastings and Haah in the paper that introduced dynamic stabilizer codes~\cite{Hastings_2021}.
+When implemented on a torus, this encodes two qubits, and every three timesteps performs the logical gate $\pm (H \otimes H) \SWAP$.
+Or better still, consider Davydova et al.'s scheme for implementing the entire multi-qubit logical Clifford group just by changing the operation schedule of a certain dynamic stabilizer code (which one can consider to be a \textit{Floquet colour code} -- more on this later)~\cite{Davydova_2024}.
+We therefore take the time to spell this relationship out; for any Clifford unitary or Pauli measurement, we define an \textit{induced homomorphism} $\phi: \NNN(\SSS')/\SSS' \to \NNN(\SSS)/\SSS$ that tracks how the logical operators before and after the operation are related to one another.
+
+We then give a definition of a general dynamic stabilizer code.
+As a community, it seems we still haven't settled on any one definition for a dynamic stabilizer code.
+The story from my perspective is something like this -- initially, Hastings and Haah's original paper just gave a couple of examples of dynamic stabilizer codes, and no general definition.
+Christophe Vuillot's paper \Ccite{vuillot2021planarfloquetcodes} then introduced the name \textit{Floquet code} for a specific type of dynamic stabilizer code derivable from the colour code, of which Hasting's and Haah's code is one example.
+This family was given other names in other places -- dynamic tree codes~\cite{Davydova_2023}, dynamically condensed colour codes~\cite{Kesselring_2024}, etc.
+But then, over the next few months (now years), `Floquet code' seemed to come to mean any code defined by a schedule of Pauli measurements and Clifford operations~\cite{bauer2025xyfloquetcodesimple}.
+While suitably general, this had the drawback that `Floquet' in physics apparently usually means `periodic', so it was perhaps a little confusing to view codes with infinite schedules~\cite{gidney2023baconthreshold} as Floquet codes.
+
+Therefore, to be as general as possible while remaining within the stabilizer formalism framework, we sidestep the word `Floquet' and define a \textit{dynamic stabilizer code} to be any sequence (perhaps infinite) of Pauli measurements and Clifford unitaries.
+In other words, any circuit consisting of Cliffords and Pauli measurements is a QEC code!
+This is the mantra we mentioned in \Cref{ch:intro}, and has been one of the major themes in QEC over the last few years; circuits have been upgraded from objects that \textit{implement} codes to objects that \textit{are} codes.
+
+Having introduced dynamic codes algebraically, we then take a look at them graphically via \textit{Pauli webs}.
+Pauli webs first appeared independently in two papers, one from PsiQuantum~\cite{Bombin_2024} and one from Google~\cite{McEwen_2023}.
+As mentioned in the introduction to this thesis, one can think of Pauli webs as graphical stabilizer formalism, which explains why they come up when discussing dynamic stabilizer codes.
+For me personally, they turn working with dynamic stabilizer codes from something fiddly and offputting to something more tractable and rather fun.
+In \Cref{sec:pauli-webs} we therefore give a thorough first principles introduction to them, then connect them to the stabilizer formalism and dynamic stabilizer codes.
+Throughout this section, we often reference Rodatz et al.'s excellent papers~\cite{rodatz2024floquetifying,rodatz2025faulttoleranceconstruction}.
