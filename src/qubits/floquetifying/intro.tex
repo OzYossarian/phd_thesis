@@ -1,8 +1,9 @@
 \section{Intro}
 
-In this chapter, we look at how we can take a static stabilizer code defined by measurements of weight perhaps more than two, and reinterpret it as a dynamic stabilizer code in which all measurements are of weight at most two.
-The specific static code we look at is the colour code.
-One reading of this chapter is that we've taken the PsiQuantum paper \Ccite{Bombin_2024}, which Floquetified the surface code (amongst other things!), and done the same thing for the colour code.
+In this chapter, we look at how we can take a static stabilizer code (the colour code) defined by measurements of weight more than two, and reinterpret it as a dynamic stabilizer code in which all measurements are of weight at most two.
+The content herein is based entirely on the paper \textit{Floquetifying the Colour Code}~\cite{Townsend_Teague_2023}.
+
+One reading of this chapter is that we've taken paper \Ccite{Bombin_2024} from PsiQuantum, which Floquetified the surface code (amongst other things!), and done the same thing for the colour code.
 The idea at the outset was that, since the colour code can implement the full Clifford group transversally, this process this might lead us to a dynamic stabilizer code in which we could implement the full Clifford group just by adjusting the operation schedule, per \Cref{subsec:induced-logical-cliffords}.
 In the end, Davydova et al.\ managed this in \Ccite{Davydova_2024} in a much more satisfactory fashion without using the ZX-calculus.
 
@@ -24,5 +25,5 @@ The key thing from a QEC perspective is to ensure that throughout the procedure 
 
 I confess that this is something we absolutely did not do during this work!
 My excuse is that this was the early days of the Floquet code craze, and it was novel back then to show that such a Floquetification procedure could even be found for a particular code.
-As has since been made crystal clear by Rodatz et al. in \Ccite{rodatz2024floquetifying}, one can indeed do this for all stabilizer codes, and in a much more sensible `distance-preserving' way.
+As has since been made crystal clear by Rodatz et al.\ in \Ccite{rodatz2024floquetifying}, one can indeed do this for all stabilizer codes, and in a much more sensible `distance-preserving' way.
 As such, in hindsight I regard this work as very much being a product of its time; its legacy is more that it was another stepping stone along the path to viewing circuits as codes, and perhaps another stepping stone in the ZX-calculus' march into mainstream QEC, rather than being of much practical use.

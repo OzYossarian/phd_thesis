@@ -5,16 +5,17 @@
 \title{Picturing Quantum Error Correction}
 
 \begin{document}
-    \input{titlepages}
-    \newpage
+    \input{titlepages/main}
+
+    \hypersetup{linkcolor=black}
     \tableofcontents
+    \hypersetup{linkcolor=cyan}
 
     \input{intro/main}
 
     \part{Qubits}
     \input{qubits/prelims/main}
     \input{qubits/dynamic/main}
-%    \input{qubits/dcccs/main}
     \input{qubits/floquetifying/main}
 
     \part{Qumodes}
@@ -26,9 +27,4 @@
     \bibliographystyle{alpha}
     \bibliography{main}
 
-%    \appendix
-%
-%    \input{appendix/noise_models}
-%    \input{appendix/decoding}
-%    \input{appendix/teraquop_volume}
 \end{document}
