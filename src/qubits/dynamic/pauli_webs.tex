@@ -268,7 +268,7 @@ For the individual spiders we're considering here, this is:
 \end{equation}
 
 So these spiders are isomorphic to stabilizer states, up to normalisation.
-Now note that Pauli webs are exactly telling us which Pauli operators stabilize these stabilizer states.\footnote{One might think Pauli webs are actually only telling us which Pauli operators stabilize these states \textit{up to a global phase}, because we've used $\propto$ rather than $=$ in \Cref{eq:spider_Pauli_green_web_red_iso_state}. But it turns out this global phase is alawys $i^a$ for some integer $a$, so can be absorbed into the Pauli operator.}
+Now note that Pauli webs are exactly telling us which Pauli operators stabilize these stabilizer states.\footnote{One might think Pauli webs are actually only telling us which Pauli operators stabilize these states \textit{up to a global phase}, because we've used $\propto$ rather than $=$ in \Cref{eq:spider_Pauli_green_web_red_iso_state}. But it turns out this global phase is always $i^a$ for some integer $a$, so can be absorbed into the Pauli operator.}
 For example:
 \begin{equation}\label{eq:spider_Pauli_green_web_red_iso_state}
     \tikzfig{qubits/prelims/pauli_webs/spider_Pauli_green_web_red_iso_state}
@@ -465,7 +465,7 @@ Similarly, we get a group isomorphism between logical webs and the logical Pauli
 But to simplify the discussion here we haven't gone down this route.}
 
 \begin{proposition}\label{prop:logical_webs_iso}
-    \cite[Proposition A.6]{rodatz2024floquetifying} For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\LLL \coloneqq \WWW_(D)/\WWW_\SSS^\SSS(D)$ of logical webs is isomorphic to the associated logical Pauli group modulo phases: $(\NNN(\SSS_D)/\pres{i})/(\SSS_D/\pres{i})$.
+    \cite[Proposition A.6]{rodatz2024floquetifying} For a diagram $D$ formed from Clifford unitaries and Pauli measurements, the group $\WWW_\LLL(D) \coloneqq \WWW(D)/\WWW_\SSS^\SSS(D)$ of logical webs is isomorphic to the associated logical Pauli group modulo phases: $(\NNN(\SSS_D)/\pres{i})/(\SSS_D/\pres{i})$.
     \begin{proof}
         Again, a full proof is given in Rodatz et al.'s paper~\cite{rodatz2024floquetifying}.
         Here we just state the actual isomorphism -- it's analogous to the one in the previous proof, only we're now mapping into a quotient group.

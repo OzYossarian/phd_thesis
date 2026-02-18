@@ -83,7 +83,7 @@ For example, we can now write down the Hadamard gate in the ZX-calculus:
 
 At this point it's worth mentioning the distinction between input and output edges of a spider, and input and output edges of the overall diagram.
 The leftmost edge here is not only an input edge of the leftmost spider, but also an input edge of the overall diagram.
-The second leftmost edge is an output of the leftmost spider and an input of the middle one, but is neither an input or output edge of the overall diagram.
+The second leftmost edge is an output of the leftmost spider and an input of the middle one, but is neither an input nor output edge of the overall diagram.
 We will often call input and output edges of the overall diagram \textit{boundary edges}, and other edges \textit{internal edges}.
 If we like, we can imagine boundary edges to have an invisible \textit{boundary spider} at their endpoint that isn't a red or green spider:
 \begin{equation}
@@ -218,7 +218,7 @@ On top of this, we can show that all of these rules hold when the roles of green
 
 Particularly important diagrams for us will be those that correspond to Pauli measurements.
 We say `correspond to' because the diagrams we'll actually write down are the Pauli projections $\{\Pi_{+P}, \Pi_{-P}\}$ that make up a Pauli measurement (we can without loss of generality assume the Pauli is Hermitian), i.e.\ the Pauli measurement if we assume we got a certain outcome.
-To write down ZX-diagrams that truly represent Pauli measurements, we would have to leave the realm of pure state quantum information theory; this can absolutely be done in the ZX-calculus, but we won't need do it in this thesis.
+To write down ZX-diagrams that truly represent Pauli measurements, we would have to leave the realm of pure state quantum information theory; this can absolutely be done in the ZX-calculus, but we won't need to do it in this thesis.
 As a reminder, given state $\ket{\psi}$, if we measure $P$ and get outcome $\pm 1$, then the resulting post-measurement state is $p(m | \psi)^{-\frac{1}{2}} \Pi_{\pm P} \ket{\psi}$.
 That is, up to renormalisation, we just apply the corresponding projection $\Pi_{\pm P}$ to our state $\ket{\psi}$.
 
