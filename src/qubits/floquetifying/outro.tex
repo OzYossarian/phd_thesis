@@ -4,7 +4,7 @@ We've shown we can use the ZX-calculus to reinterpret static stabilizer codes as
 Depending on your viewpoint, this may or may not be interesting -- if you take the view that any circuit implementing the static code is itself a dynamic stabilizer code already, then we're just turning one dynamic stabilizer code into another.
 Either way, it's very hard to claim that this work is of any practical relevance, since we didn't think to take practical concerns into account when we did it.
 Indeed, in Rodatz et al.'s framework of fault-equivalence~\cite{rodatz2024floquetifying}, the Floquetified colour code we found in this chapter is far from fault-equivalent to the original, so we shouldn't be at all surprised if its behaviour under noise is much worse than that of the colour code.
-In fact, a master's student Henri Wegener investigated this exact question, and found that the Floquetified code did indeed perform badly in realistic simulations.
+In fact, a master's student Henri Wegener and I investigated this exact question, and found that the Floquetified code did indeed perform badly in realistic simulations.
 
 We also note that Rodatz et al.\ have essentially closed the story here in terms of `Floquetification' -- in \Ccite{rodatz2024floquetifying}, they give an algorithm that takes any static stabilizer code and returns a fault-equivalent dynamic stabilizer code in which all measurements have weight at most two.
 
@@ -13,7 +13,7 @@ Well, if we choose to focus less on the dynamic vs static debate (as I reckon we
 For example, these days we know of various \textit{asymptotically good} LDPC codes~\cite{panteleev2022asymptoticallygoodquantumlocally,Breuckmann_2021,leverrier2022quantumtannercodes}, and many more that are at least practically promising, if not fully asymptotically good~\cite{yoder2025tourgrossmodularquantum}.
 These codes typically have stabilizers of weights high enough that coming up with good circuits to measure them is no easy task.
 Using fault-equivalent rewrites (a \textit{complete} set of which are now known~\cite{rüsch2025completenessfaultequivalenceclifford}), and starting from the `natural' ZX-diagram for implementing this measurement~\cite[Proposition 6.7]{rodatz2025faulttoleranceconstruction}, one can then rapidly explore new circuits for accomplishing this task, while maintaining the desirable behaviour under noise.
-Some early results in this direction come from Poór et al.~\cite{poór2025ultralowoverheadsyndrome}, where they use these ideas to come up with improved syndrome extraction circuits for the 7-qubit colour code -- an already much-studied and highly optimised code.
+Some early results in this direction come from Poór et al.~\cite{poór2025ultralowoverheadsyndrome}, where they use these ideas to come up with improved syndrome extraction circuits for the 7-qubit colour code -- no easy feat, given that this code has already been heavily studied and syndrome extraction circuits for it have been highly optimised.
 
 This raises another question concerning ZX and QEC in general -- that of using ZX ideas like these not just for low-level questions, but also higher-level ones.
 That is, all the discussion here is of starting with a certain code and using the ZX-calculus to find a nice circuit implementing it -- what about coming up with codes in the first place?

@@ -22,9 +22,30 @@ As such, after an initial hot dynamic QEC summer, interest in the topic feels an
 The ZX-calculus~\cite{Coecke_2011}, on the other hand, has experienced a very different trajectory.
 No bursting onto the scene here; instead, over the course of the last decade or so, the ZX-calculus has slowly won over skeptics to take its current place as a useful tool in the quantum computer scientist's toolbox.
 The ZX-calculus is a graphical language for reasoning about quantum mechanics, in the same way that linear algebra is a symbolic language for reasoning about quantum mechanics.
+Personally I like to say that it's just really really good notation for linear maps, but it can be approached from many different angles depending on your background -- most physicists seem happiest when they're told ZX-diagrams are just tensor networks.
 The secret to its success (so I claim!) is simply that humans have been designed by evolution to be better at reasoning graphically than symbolically.
 In addition, the ZX-calculus is a fairly simple language; there are just two generators, the green and red spiders, and just seven rules are needed to fully reason about quantum mechanics up to the second level of the Clifford hierarchy.
 Happily, this fragment contains many of the QEC primitives we wish to reason about, and the first half of this thesis takes place inside it.
+To give a sneak preview, let's define the two generators (they're just linear maps):
+\begin{align}\label{eq:green_spider_defn_intro}
+%    \tikzfig{qubits/prelims/zx/spider_green_braces_defn}
+\tikzfig{qubits/prelims/zx/spider_green_braces}
+\quad &= \quad
+\ket{0}^{\otimes b}\bra{0}^{\otimes a} + e^{i\alpha}\ket{1}^{\otimes b}\bra{1}^{\otimes a} \\
+%\end{equation}
+%\begin{equation}\label{eq:red_spider_defn}
+%    \tikzfig{qubits/prelims/zx/spider_red_braces_defn}
+\tikzfig{qubits/prelims/zx/spider_red_braces}
+\quad &= \quad
+\ket{+}^{\otimes b}\bra{+}^{\otimes a} + e^{i\alpha}\ket{-}^{\otimes b}\bra{-}^{\otimes a}
+\end{align}
+
+While we're at it let's also give an example of an equality between diagrams (meaning the two diagrams represent the same linear map) -- don't worry if all this means nothing to you at this stage!
+\begin{equation}\label{eq:copy_rules_intro}
+\tikzfig{qubits/prelims/zx/copy_gate_red_uncopied} ~=~ \tikzfig{qubits/prelims/zx/copy_gate_red_copied}
+%\qqquad
+%\tikzfig{qubits/prelims/zx/copy_state_red_uncopied} ~=~ \tikzfig{qubits/prelims/zx/copy_state_red_copied}
+\end{equation}
 
 Within the ZX-calculus, Pauli webs~\cite{McEwen_2023,Bombin_2024} are a graphical language for reasoning about the stabilizer formalism.
 Since the stabilizer formalism is the basis for defining dynamic stabilizer codes, it isn't surprising that Pauli webs have become an invaluable tool for reasoning about such codes.
@@ -36,7 +57,31 @@ Errors are detected by comparing the results of these measurements in consecutiv
 Dynamic stabilizer codes, on the other hand, can get rather fiddly rather quickly -- just from writing down the sequence of measurements and Cliffords to be performed, it's not at all obvious which measurements might be combined to detect errors or what a representative of a particular logical operator might be after a certain number of operations.
 Pauli webs make all this graphical, and therefore a lot more tractable for us humans and our good old visual cortexes.
 
-In the second half of this thesis, we essentially extend the ideas of the first half into the world of continuous variable (CV) quantum information theory.
-Here we meet GKP codes, the analogue of Pauli stabilizer codes, and are introduced to the green and red spiders' Focked up cousin.
-We're able to generalise Pauli webs to this new setting, and then use them to introduce and explore dynamic CV quantum error correction.
-Moreover, we do this in \textit{fault-equivalent} manner~\cite{rodatz2025faulttoleranceconstruction}, guaranteeing that the graphical manipulations we're performing do not adversely impair the behaviour of our diagrams under noise.
+In the first half of this thesis, we make two contributions.
+First, in \Cref{ch:dynamic-stabilizer-codes} we give a comprehensive introduction to dynamic quantum error correction, from both an algebraic (stabilizer formalism) and graphical (Pauli webs) perspective, and show how these two relate.
+This is (I hope!) a very useful resource and not something one can readily find in the literature.
+
+Next, in \Cref{ch:floquetifying}, we use the tools set out in \Cref{ch:dynamic-stabilizer-codes} to derive new dynamic stabilizer codes from existing static stabilizer codes, and discuss the pros and cons this brings.
+Summarizing this discussion here briefly, at the time we were working on this project, just finding examples of dynamic stabilizer codes was interesting to the community, since only one family of them was already known.
+To our knowledge, our Floquetified colour code was the first example of a dynamic stabilizer code outside of this family.
+Furthermore, our new code seemed to resolve some key issues that prevented the colour code from being practically implementable; chiefly, our code required only weight-one and -two measurements rather than weight-six, which are much easier to implement and therefore much less noisy.
+However, this turns out to be a trade-off rather than a free lunch, for reasons we discuss more in the intro and outro of \Cref{ch:floquetifying}.
+For certain hardware platforms that support direct measurements of weight-two Paulis, simulations suggests this might well be a positive trade-off overall~\cite{dessertaine2025enhancedfaulttolerancephotonicquantum}, but certainly not the killer blow we were perhaps initially hoping for.
+
+In the second half of this thesis, we essentially extend the fundamental tools and ideas from the first half into the world of continuous variable (CV) quantum information theory.
+A satisfactory generalisation of the ZX-calculus for CV systems has only recently been defined~\cite{shaikh2024fockedupzxcalculuspicturing}, and the first two contributions in the second half of this thesis are to generalise the notion of Pauli webs to this setting, and then to use them to introduce and explore dynamic CV quantum error correction.
+To our knowledge, this is the first appearance of a dynamic CV error correcting code in the literature.
+
+Like in the first half of this thesis, we derive our new dynamic code from an existing static code -- namely a GKP code~\cite{Gottesman_2001}, the CV analogue of a stabilizer code generated by Paulis.
+However, unlike in the first half of the thesis, we do all this in a \textit{fault-equivalent} manner.
+Fault-equivalence is another relatively new tool, introduced in \Ccite{rodatz2024floquetifying,rodatz2025faulttoleranceconstruction} for the qubit ZX-calculus.
+In a nutshell, an equality between ZX-diagrams is fault-equivalent under a given noise model iff the two ZX-diagrams not only represent the same linear map, but also have the same properties as one another under noise.
+Without this stronger equivalence of diagrams, one has no guarantee that a ZX-diagram $D'$ derived from $D$ by a set of rewrite rules will have a similar performance in a noisy setting.
+Indeed, this is another shortcoming of \Cref{ch:floquetifying}, which we didn't understand well enough to notice at the time!
+
+If instead one restricts oneself to a set of rewrite rules that have been proven to be fault-equivalent, one automatically guarantees that the graphical manipulations being performed preserve the behaviour of the initial diagram under noise.
+The final contribution of this thesis is to extend the definition of fault-equivalence to the CV ZX-calculus, find a set of useful fault-equivalent rewrites, and use these to derive new circuits for implementing GKP codes, with guarantees about behaviour under noise.
+
+We will pick up this high-level thread again in the thesis outro in \Cref{ch:outro}, where we will muse on the overall impact and legacy of these 150 pages.
+In addition to this top-level intro and outro, each chapter has its own intro and outro, where more focused high-level discussion takes place.
+Intros will generally set the scene for each chapter and outros will be a place for reflection and discussion of future directions.
